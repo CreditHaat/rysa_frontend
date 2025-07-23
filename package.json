@@ -9,15 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "canvas-confetti": "^1.9.3",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "lucide-react": "^0.525.0",
+    "next": "15.4.2",
     "react": "19.1.0",
+    "react-datepicker": "^8.4.0",
     "react-dom": "19.1.0",
-    "next": "15.4.2"
+    "react-icons": "^5.5.0",
+    "react-select": "^5.10.2"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4"
   }
 }

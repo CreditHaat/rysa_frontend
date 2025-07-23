@@ -1,0 +1,224 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  min-height: 100vh;
+  /* padding: 20px; */
+}
+
+.card {
+  width: 432px;
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  /* background: linear-gradient(90deg, #f272f4ca, #bba3ff); */
+  /* border-radius: 16px; */
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-height: 550px;
+}
+
+.header {
+  padding: 19px 16px;
+  height: auto;
+}
+
+.title {
+  color: white;
+
+  font-size: 20px;
+  font-weight: bold;
+  margin: 7px;
+}
+
+.cardForm {
+  /* margin-top: 5px; */
+  padding-left: 5rem;
+  padding-top: 30px;
+  padding: 0;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  background: #F7F6FD;
+  min-height: 472px;
+  /* justify-content: center; */
+  justify-items: center;
+}
+
+.content {
+  padding: 16px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  color: #000;
+}
+
+.labelBlock {
+  width: 170px; /* fixed width */
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 500;
+  color: #000;
+}
+
+.sublabel {
+  font-size: 12px;
+  color: #555;
+  margin-top: 2px;
+}
+
+.divDout {
+  width: 10px; /* fixed width for colon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centerDout {
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+}
+
+.divValue {
+  width: 120px; /* fixed width for value */
+  text-align: right;
+  white-space: nowrap;
+}
+
+.value {
+  font-weight: bold;
+  color: #000;
+}
+
+.summarySection {
+  border-top: 1px solid #ccc;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summaryField {
+  display: flex;
+  font-size: 14px;
+  color: #000;
+}
+
+.summaryLabelBlock {
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+}
+
+.summaryLabel {
+  font-weight: 500;
+  color: #000;
+}
+
+.summaryValue {
+  width: 120px;
+  text-align: right;
+  font-weight: bold;
+  color: #000;
+}
+
+/* button css */
+.btnContainer{
+    position: fixed;
+    padding: 3px;
+    width: 432px;
+    background-color: rgb(255, 255, 255);
+    bottom: 0;
+    transform: translate(-66px); 
+    
+    /* align-items: center; */
+    /* justify-content: center; */
+    justify-items: center;
+      z-index: 999;
+  display: flex;
+  justify-content: center;
+}
+.nextBtn {
+    /* width: 432px; */
+    width: 395px;
+  /* position: fixed; */
+  /* transform: translate(-1px); */
+  /* transform: translateX(-5%); */
+  /* left: 0; */
+  /* right: 0; */
+  /* bottom: 0; */
+  margin: 3px;
+  padding: 14px 0;
+  font-size: 15px;
+  font-weight: 600;
+  background: #6039D2;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nextBtn:hover {
+  opacity: 0.9;
+}
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .btnContainer {
+    width: 100%;  /* Full width on mobile */
+    padding: 0 10px;  /* Add some padding on the sides */
+  }
+
+  .nextBtn {
+    width: 100%;  /* Make the button fill the width on mobile */
+    max-width: 432px;  /* Set a max-width to prevent it from becoming too wide */
+    margin: 0 auto;  /* Center it */
+  }
+}
+
+@media (max-width: 480px) {
+  .nextBtn {
+    font-size: 14px;  /* Slightly smaller font on very small screens */
+    padding: 12px 0;  /* Adjust padding for smaller screens */
+  }
+}
+/* .nextBtn {
+  width: 300px;
+  margin-top: 16px;
+  padding: 14px 0;
+  font-size: 15px;
+  font-weight: 600;
+  background: #6039D2;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nextBtn:hover {
+  opacity: 0.9;
+} */
+

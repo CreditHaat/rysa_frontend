@@ -1,0 +1,1615 @@
+/* nav.module.css */
+/* ----------nav section------------ */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to right, #f197b6, #8563ec);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Navigation Styles */
+.navbar {
+  background-color: #797777;
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  /* justify-content: space-between;  */
+  align-items: center;
+  /* padding: 0 2rem; */
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 2rem; 
+}
+
+.navLinks {
+  display: flex;
+  gap: 0rem; 
+  margin-right: 1rem; 
+  margin-left: 50rem;
+}
+
+.navLink {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 2.9rem;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 10px 15px;
+  border-radius: 0.5rem;
+}
+
+.navLink:hover {
+  background-color: #f0ecf4;
+  font-size: 1.1rem;
+  color: #260bf3;
+  border-radius: 1rem;
+  /* transform: scale(1.1); */
+}
+/*  Login Button  */
+.loginBtn {
+  padding: 0.6rem 1.5rem;
+  background-color: #5f57f6;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginBtn:hover {
+  background-color: #2511f8;
+  color: #d7bdf0;
+  font-size: 1rem;
+  /* border: 3px solid #ffffff; */
+  /* text-decoration: none; */
+}
+
+.loginBtn:active {
+  background-color: #120999;
+  transform: scale(1.1);
+  border: 3px solid #ffffff;
+  /* text-decoration: none; */
+}
+/* ---------Hero Section---------- */
+.heroSection {
+  padding: 4rem 0;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+}
+
+.heroContainer {
+  max-width: 1200px;
+  /* margin: 0 auto; */
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.heroContent {
+  padding-top: 3rem;
+  flex: 1;
+  max-width: 800px;
+}
+
+.heroTitle {
+  font-size: 6rem;
+  font-weight: 750;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 1.0rem;
+}
+
+.heroSubtitle {
+  font-size: 1.30rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.applyBtn {
+  background: rgb(72, 126, 244);
+  backdrop-filter: blur(10px);
+  color: white;
+  /* border: 2px solid rgba(255, 255, 255, 0.3); */
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  /* cursor: pointer; */
+  /* transition: all 1.0s ease; */
+}
+
+.applyBtn:hover {
+  background: rgb(9, 83, 243);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.heroImageContainer {
+  flex: 0 0 400px;
+  height: 500px;
+  position: relative;
+  
+}
+.heroImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: -75px;
+  left: 95px;
+  /* width: 100px; Adjust as needed
+  height: auto; */
+}
+
+/* --------------------Features Section-------------------- */
+.featuresSection {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 3rem 0 0 0;
+  margin-top: 0rem;
+}
+
+/* card feature section  */
+.loanFeaturesSection {
+  display: flex;
+  height: 20rem;
+  width: 100%;
+  /* justify-content: space-between; */
+  background: linear-gradient(to left, #bb78e7, #9d51d1,#9d51d1, #b142ed, #cb8df5);
+  /* padding: 3rem 1rem; */
+  color: white;
+  text-align: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  /* gap: 1rem; */
+}
+/* Feature Box 1 */
+.featureBox{
+  transition: transform 0.3s ease;
+}
+.featureBox:hover{
+   transform: scale(1.1);
+}
+.featureBox1 {
+  flex: 1 1 30%;
+  background: linear-gradient(to bottom, #8961f7, #3814b0);
+  padding: 2rem;
+  height: 20rem;
+  width: 421.5px;
+  border-radius: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  justify-items: center;
+  /* transition: transform 0.3s ease; Smooth transition for scale effect */
+}
+/* Feature Box 2 */
+.featureBox2 {
+  flex: 1 1 30%;
+  background-image: linear-gradient(to top, #8d61f4, #7d7deb);
+  padding: 2rem;
+  height: 20rem;
+  width: 421.5px;
+  border-radius: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  justify-items: center;
+  transition: transform 0.3s ease; /* Smooth transition for scale effect */
+}
+
+/* Feature Box 3 */
+.featureBox3 {
+  flex: 1 1 30%;
+  background-image: linear-gradient(to bottom, #8961f7, #3814b0);
+  padding: 2rem;
+  height: 20rem;
+  width: 421.0px;
+  border-radius: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  justify-items: center;
+  transition: transform 0.3s ease; /* Smooth transition for scale effect */
+}
+
+.emptychild1{
+  background: #6a51f7;
+  /* flex: 1;       प्रत्येक child समान वाटा घेईल */
+  height: 35px;
+   width: 100.33%;
+}
+.emptychild2{
+  background: #8d60f7;
+  /* flex: 1;       प्रत्येक child समान वाटा घेईल */
+  height: 35px;
+   width: 100.33%;
+}
+.emptychild3 {
+  background: #6a51f7;
+  /* flex: 1;       प्रत्येक child समान वाटा घेईल */
+  height: 35px;
+   width: 100.33%;
+}
+
+.icon {
+  font-size: 3.0rem;
+  margin-bottom: 1rem;
+}
+
+.featureBox h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.featureBox p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Hamburger Button - फक्त mobile view साठी */
+.hamburgerBtn {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: none; /* default: hidden */
+}
+
+/* Humberger wrapper right ला */
+.navRightHumberger {
+  display: none;
+}
+
+/* Dropdown view for mobile nav */
+.humberView {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px; /* nav खाली */
+  right: 1rem;
+  background-color: #676363;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(28, 28, 28, 0.3);
+  z-index: 999;
+}
+
+/* Individual nav links in hamburger dropdown */
+.navLinkHumberger {
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-bottom: 1px solid #666;
+  font-size: 1rem;
+}
+
+.navLinkHumberger:last-child {
+  border-bottom: none;
+}
+
+.navLinkHumberger:hover {
+  background-color: #f7f0f0;
+  color: rgb(0, 0, 0);
+  border-radius: 0.3rem;
+}
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+
+  .navRight {
+    display: none; 
+  }
+
+  .navRightHumberger {
+    display: block; 
+  }
+
+  .hamburgerBtn {
+    display: block; 
+  }
+
+  .loginBtn {
+    display: none; 
+  }
+
+  .navContainer {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .navLinks {
+    display: none; 
+  }
+
+  .navRight {
+    display: none; 
+  }
+
+  .navRightHumberger {
+    display: block;
+    margin-left: auto; 
+  }
+
+  .hamburgerBtn {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .loginBtn {
+    display: none;
+  }
+
+  .navContainer {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  .humberView {
+    top: 60px;
+    right: 1rem;
+    width: 200px;
+    background-color: #444;
+  }
+
+  .navLinkHumberger {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+}
+@media (max-width: 768px) {
+  .heroContainer {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  .heroImageContainer {
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+
+  .heroImage {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .loanFeaturesSection {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .featureBox1,
+  .featureBox2,
+  .featureBox3 {
+    width: 100%;
+    margin-bottom: 1rem;
+    height: auto;
+  }
+
+  .featureBox h3 {
+    font-size: 1.2rem;
+  }
+
+  .featureBox p {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 480px) {
+  .heroContainer {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  .heroImageContainer {
+    margin-bottom: -65px;
+  padding-bottom: 0px;
+    width: 100%;
+    height: auto;
+    /* position: static; */
+  }
+
+  .heroImage {
+    bottom: -200rem;
+    /* position: ; */
+    width: 100%;
+    height: auto;
+  }
+}
+/* -----------------------middle page css ------------------------*/
+
+/* Main container styles */
+/* .main {
+  background-color: #ecf4ff;
+  width: 100%;
+  padding-bottom: 4rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+} */
+
+/* CSS for full-page scroll */
+.mainDiv {
+  display: flexbox;
+  height: 100vh;
+  overflow: hidden; /* scroll block */
+}
+
+.stickyContainer {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+
+.Card {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.Card.show {
+  display: block;
+}
+
+/* Common styles for all parts */
+.firstPart, .secondPart, .thirdPart, .fourthPart {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 20px 0;
+  position: relative; /* Parent container needs relative positioning for absolute children */
+  padding-top: 3rem;
+}
+
+.circle {
+  width: 300px;  /* सर्कलचा आकार */
+  height: 300px;  /* सर्कलचा उंची */
+  border-radius: 50%;  /* सर्कल बनवण्यासाठी */
+  background-color: rgb(235, 204, 209);  /* सर्कलला रंग देणे */
+  position: absolute;  /* सर्कलला ओळखण्यासाठी 'absolute' पोजिशन */
+  top: 50%;  /* सर्कलला पॅरेन्ट डिवच्या मध्यभागी ठेवा */
+  left: -30px;  /* टेक्स्ट बॉक्सच्या डाव्या बाजूस सर्कल ठेवा */
+  z-index: 3;  /* सर्कल टेक्स्ट बॉक्सच्या वर असावा, त्यामुळे जास्त 'z-index' */
+  opacity: 0.8; 
+}
+/* ==========================
+  FIRST PART STYLES
+  ========================== */
+.firstPart {
+  padding-left: 14rem;
+  padding-bottom: 3rem;
+  flex-direction: row; /* Change this from 'row-reverse' to 'row' to show text box before image */
+  position: relative; /* Make sure the parent container is relative for absolute children */
+}
+
+.firstPart .circle {
+  background-color: #c7bff4;
+  top: 45px;  /* Circle will appear above the text box */
+  left: 140px; /* Circle will be on the left side of the text box */
+  width: 200px; /* Smaller circle size */
+  height: 200px; /* Same size for height */
+  opacity: 0.5;
+}
+.firstPart .textBox:hover ~ .circle {
+  transform: scale(0.6); /* Reduce the circle size by 40% */
+} 
+
+.firstPart .textBox {
+  background-color: #eddaf8;
+  width: 600px;  /* Adjust the text box width */
+  height: 300px; /* Adjust the text box height */
+  margin-left: 10px;
+  position: relative;
+  z-index: 2;
+  padding-top: 7rem;
+  padding: 2rem;
+  border-top-left-radius: 10px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-bottom-left-radius: 10px;
+  border-left: 5px solid transparent; /* Initially transparent border */
+  border-right: 5px solid transparent; /* Initially transparent border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+.firstPart .textBox:hover {
+  background-color: rgba(237, 218, 248, 0.7);  /* Light blur effect (transparency) */
+  backdrop-filter: blur(5px);  /* Apply blur on background */
+  border-left: 5px solid pink;  /* Apply pink border on left */
+  border-bottom: 5px solid pink; /* Apply pink border on right */
+  transform: scale(1.2); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* इमेजला छाया देणे */
+  z-index: 3;
+}
+/* ==========================
+  Pseudo Elements for Pink Lines on Hover
+  ========================== */
+.firstPart .textBox::before,
+.firstPart .textBox::after {
+  content: '';
+  position: absolute;
+  background-color: pink;
+  transition: all 0.3s ease;
+}
+
+.firstPart .textBox::before {
+  width: 5px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: scaleY(0); /* Initially scale it down */
+}
+
+.firstPart .textBox::after {
+  width: 100%;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0); /* Initially scale it down */
+}
+
+.firstPart .textBox:hover::before {
+  transform: scaleY(1); /* Expand vertically on hover (left to bottom) */
+}
+
+.firstPart .textBox:hover::after {
+  transform: scaleX(1); /* Expand horizontally on hover (bottom left to right) */
+}
+.firstPart .textBox .htag {
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.firstPart .textBox .ptag {
+  font-size: 1.1rem;  /* fixed spacing */
+}
+
+.firstPart .imageContainer {
+  width: 400px;  /* Image width */
+  height: 500px; /* Image height */
+  position: relative;
+  margin-right: 0; /* Remove margin to ensure image touches the right side */
+  z-index: 3;
+}
+.firstPart .imageContainer img {
+  width: 100%;  /* इमेज पूर्ण कंटेनरमध्ये फैलावलेली */
+  height: 100%; /* इमेज पूर्ण कंटेनरमध्ये फैलावलेली */
+  object-fit: cover; /* इमेज योग्य प्रकारे फिट होईल */
+  border-top-left-radius: 60px;   /* गोलाकार कोपरे */
+  border-top-right-radius: 60px;  /* गोलाकार कोपरे */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease; /* होव्ह इफेक्टसाठी ट्रांझिशन */
+}
+.firstPart .imageContainer:hover img {
+  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+  z-index: 3;
+}
+
+/* ==========================
+  SECOND PART STYLES
+  ========================== */
+
+/* Second Part: Image → Text Box → Circle Line (Image on the left) */
+.secondPart {
+  margin-left: 1rem;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  flex-direction: row; /* Image on the left */
+}
+
+.secondPart .imageContainer {
+  width: 400px;  
+  height: 500px; 
+  z-index: 3;
+}
+
+.secondPart .textBox {
+  background-color: #ccc6ec;
+  width: 600px;  /* Adjust the text box width */
+  height: 300px; /* Adjust the text box height */
+  /* margin-left: 10px; */
+  padding-top: 2rem;
+  padding-left: 4rem;
+  position: relative;
+  z-index: 1;
+  border-top-right-radius: 10px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-bottom-right-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+.secondPart .textBox:hover {
+  background-color: #ccc6ec;  /* Light blur effect (transparency) */
+  backdrop-filter: blur(5px);  /* Apply blur on background */
+  border-right: 5px solid pink;  /* Apply pink border on right */
+  border-bottom: 5px solid pink; /* Apply pink border on bottom */
+  transform: scale(1.2); /* Enlarges box by 20% */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); /* Apply shadow effect */
+  z-index: 1; /* Make sure it's above other elements */
+}
+
+/* ==========================
+  Pseudo Elements for Pink Lines on Hover
+  ========================== */
+.secondPart .textBox::before,
+.secondPart .textBox::after {
+  content: '';
+  position: absolute;
+  background-color: pink;
+  transition: all 0.3s ease;
+}
+
+.secondPart .textBox::before {
+  width: 5px;
+  height: 100%;
+  top: 0;
+  right: 0; /* Correct position: to make it appear on the right side */
+  transform: scaleY(0); /* Initially scale it down */
+}
+
+.secondPart .textBox::after {
+  width: 100%;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0); /* Initially scale it down */
+}
+
+.secondPart .textBox:hover::before {
+  transform: scaleY(1); /* Expand vertically on hover (right side) */
+}
+
+.secondPart .textBox:hover::after {
+  transform: scaleX(1); /* Expand horizontally on hover (bottom) */
+}
+.secondPart .textBox .htag {
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.secondPart .textBox .ptag {
+  font-size: 1.1rem;  /* fixed spacing */
+}
+
+.secondPart .circleLine {
+  /* width: 40px;
+  height: 40px; */
+  border-radius: 50%;
+  background-color: #edd7f9; /* Light pink circle */
+  position: absolute;
+  z-index: 1;
+  top: 20px;  /* Circle will appear above the text box */
+  left: 59rem; /* Circle will be on the left side of the text box */
+  width: 100px; /* Smaller circle size */
+  height: 100px; /* Same size for height */
+}
+
+.secondPart .imageContainer img {
+  object-fit: cover;
+  width: 100%;  /* Ensures the image takes full container size */
+  height: 100%; /* Ensures the image takes full container size */
+  border-top-left-radius: 60px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-top-right-radius: 60px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+.secondPart .imageContainer:hover img {
+  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+  z-index: 3;
+}
+
+/* ==========================
+  THIRD PART STYLES
+  ========================== */
+
+/* Third Part: Circle → Text Box → Image (Image on the right) */
+.thirdPart {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  padding-left: 14rem;
+  flex-direction: row; /* Change this from 'row-reverse' to 'row' to show text box before image */
+}
+
+.thirdPart .circle {
+  background-color: #ccc6ec;
+ top: 40px;  /* Circle will appear above the text box */
+ left: 12rem; /* Circle will be on the left side of the text box */
+  width: 100px; /* Smaller circle size */
+  height: 100px; /* Same size for height */
+}
+
+.thirdPart .textBox {
+  background: linear-gradient( #f1d9f8);
+  margin-top: 20px;
+  width: 600px;  /* Adjust the text box width */
+  height: 300px; /* Adjust the text box height */
+  margin-left: 10px;
+  padding-left: 2rem;
+  padding-top: 2rem;
+  position: relative;
+  z-index: 2;
+  border-top-left-radius: 10px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-bottom-left-radius: 10px;
+}
+.thirdPart .textBox:hover {
+  background-color: rgba(237, 218, 248, 0.7);  /* Light blur effect (transparency) */
+  backdrop-filter: blur(5px);  /* Apply blur on background */
+  border-left: 5px solid pink;  /* Apply pink border on left */
+  border-bottom: 5px solid pink; /* Apply pink border on right */
+  transform: scale(1.2); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); /* इमेजला छाया देणे */
+  z-index: 3;
+}
+/* ==========================
+  Pseudo Elements for Pink Lines on Hover
+  ========================== */
+.thirdPart .textBox::before,
+.thirdPart .textBox::after {
+  content: '';
+  position: absolute;
+  background-color: pink;
+  transition: all 0.3s ease;
+}
+
+.thirdPart .textBox::before {
+  width: 5px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: scaleY(0); /* Initially scale it down */
+}
+
+.thirdPart .textBox::after {
+  width: 100%;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0); /* Initially scale it down */
+}
+
+.thirdPart .textBox:hover::before {
+  transform: scaleY(1); /* Expand vertically on hover (left to bottom) */
+}
+
+.thirdPart .textBox:hover::after {
+  transform: scaleX(1); /* Expand horizontally on hover (bottom left to right) */
+}
+.thirdPart .textBox .htag {
+  padding-top: 3rem;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.thirdPart .textBox .ptag {
+  font-size: 1.1rem;  /* fixed spacing */
+}
+
+.thirdPart .imageContainer {
+  width: 400px;  /* Image width */
+  height: 500px; /* Image height */
+  position: relative;
+  z-index: 3;
+  margin-right: 0; /* Remove margin to ensure image touches the right side */
+}
+
+.thirdPart .imageContainer img {
+  object-fit: cover;
+  border-top-left-radius: 60px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-top-right-radius: 60px;
+  width: 100%;  /* Ensures the image takes full container size */
+  height: 100%; /* Ensures the image takes full container size */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+.thirdPart .imageContainer:hover img {
+  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+  z-index: 3;
+}
+
+/* ==========================
+  FOURTH PART STYLES
+  ========================== */
+
+/* Fourth Part: Image → Text Box → Circle Line (Image on the left) */
+.fourthPart {
+  flex-direction: row; /* Image on the left */
+}
+
+.fourthPart .imageContainer {
+  width: 400px;  /* Image width */
+  height: 500px; /* Image height */
+  z-index: 3;
+}
+
+.fourthPart .textBox {
+  background-color: #d9c9f7;
+  width: 600px;  /* Adjust the text box width */
+  height: 300px; /* Adjust the text box height */
+  padding-top: 3rem;
+  padding-left: 4rem;
+  position: relative;
+  z-index: 2;
+  border-top-right-radius: 10px;   /* डाव्या वरच्या काठाला गोलाकार */
+  border-bottom-right-radius: 10px;
+  transition: all 0.3s ease; /* Transition for smooth hover effect */
+}
+
+.fourthPart .textBox:hover {
+  background-color: #ccc6ec;  /* Light blur effect (transparency) */
+  backdrop-filter: blur(5px);  /* Apply blur on background */
+  border-right: 5px solid pink;  /* Apply pink border on right */
+  border-bottom: 5px solid pink; /* Apply pink border on bottom */
+  transform: scale(1.2); /* Enlarges box by 20% */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); /* Apply shadow effect */
+  z-index: 1; /* Make sure it's above other elements */
+}
+
+/* ==========================
+  Pseudo Elements for Pink Lines on Hover
+  ========================== */
+.fourthPart .textBox::before,
+.fourthPart .textBox::after {
+  content: '';
+  position: absolute;
+  background-color: pink;
+  transition: all 0.3s ease;
+}
+
+.fourthPart .textBox::before {
+  width: 5px;
+  height: 100%;
+  top: 0;
+  right: 0; /* Correct position: to make it appear on the right side */
+  transform: scaleY(0); /* Initially scale it down */
+}
+
+.fourthPart .textBox::after {
+  width: 100%;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0); /* Initially scale it down */
+}
+
+.fourthPart .textBox:hover::before {
+  transform: scaleY(1); /* Expand vertically on hover (right side) */
+}
+
+.fourthPart .textBox:hover::after {
+  transform: scaleX(1); /* Expand horizontally on hover (bottom) */
+}
+
+.fourthPart .textBox .htag {
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.fourthPart .textBox .ptag {
+  font-size: 1.1rem;  /* fixed spacing */
+}
+
+.fourthPart .circleLine {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #f1d9f8; /* Light pink circle */
+  position: absolute;
+  z-index: 3;
+  top: 40px;  /* Circle will appear above the text box */
+  left: 56rem; /* Circle will be on the left side of the text box */
+  opacity: 0.8;
+  transition: all 0.3s ease; /* Transition for smooth effect */
+}
+
+/* When text box is hovered, reduce circle size */
+.fourthPart .textBox:hover ~ .circleLine {
+  transform: scale(0.6); /* Reduce the circle size by 40% */
+}
+
+.fourthPart .imageContainer img {
+  object-fit: cover;
+  width: 100%;  /* Ensures the image takes full container size */
+  height: 100%; /* Ensures the image takes full container size */
+  border-top-left-radius: 60px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-top-right-radius: 60px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+}
+.fourthPart .imageContainer:hover img {
+  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+  z-index: 3;
+}
+/* ==========================
+  MOBILE RESPONSIVE STYLES
+  ========================== */
+
+/* General Settings for Small Screens */
+@media screen and (max-width: 768px) {
+  
+  /* Main Container */
+  .mainDiv {
+    flex-direction: column; /* Stack elements vertically */
+    height: auto; /* Allow height to adjust according to content */
+    overflow: visible; /* Allow scrolling */
+  }
+  
+  /* Sticky Container */
+  .stickyContainer {
+    position: relative; /* Make sticky container non-sticky on small screens */
+    height: auto;
+  }
+  
+  /* Card Styles */
+  .Card {
+    width: 100%;
+    height: auto; /* Adjust the height based on content */
+    padding: 10px;
+  }
+
+  /* First Part */
+  .firstPart {
+    padding-left: 1rem; /* Adjust padding */
+    flex-direction: column; /* Stack vertically */
+    align-items: center; /* Center content */
+    margin-bottom: 3rem;
+  }
+
+  .firstPart .circle {
+    width: 150px; /* Smaller circle */
+    height: 150px;
+    top: 0; /* Position circle above text box */
+    left: 0; /* Center circle with text box */
+  }
+
+  .firstPart .textBox {
+    width: 90%;  /* Adjust width */
+    height: auto; /* Adjust height to content */
+    margin-left: 0;
+    padding-top: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 10px; /* Round corners */
+  }
+
+  .firstPart .textBox:hover {
+    transform: scale(1.1); /* Reduce scaling */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .firstPart .imageContainer {
+    width: 100%; /* Full-width on mobile */
+    height: auto; /* Auto adjust height */
+    margin-top: 2rem; /* Space between image and text box */
+  }
+
+  .firstPart .imageContainer img {
+    width: 100%; /* Full width of the container */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Second Part */
+  .secondPart {
+    flex-direction: column; /* Stack vertically */
+    margin-left: 0;
+    padding-left: 1rem;
+  }
+
+  .secondPart .textBox {
+    width: 90%; /* Full width of container */
+    margin-left: 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 2rem;
+    height: auto; /* Adjust height for content */
+  }
+
+  .secondPart .imageContainer {
+    width: 100%; /* Full width of container */
+    height: auto; /* Adjust based on content */
+    margin-top: 2rem; /* Space between image and text box */
+  }
+
+  .secondPart .imageContainer img {
+    width: 100%; /* Full width of the container */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Third Part */
+  .thirdPart {
+    padding-left: 1rem; /* Adjust padding */
+    flex-direction: column; /* Stack vertically */
+  }
+
+  .thirdPart .circle {
+    width: 120px; /* Smaller circle */
+    height: 120px;
+    top: 0;
+    left: 0;
+  }
+
+  .thirdPart .textBox {
+    width: 90%; /* Full width */
+    margin-left: 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 2rem;
+    height: auto;
+  }
+
+  .thirdPart .imageContainer {
+    width: 100%; /* Full width */
+    height: auto; /* Adjust height */
+    margin-top: 2rem;
+  }
+
+  .thirdPart .imageContainer img {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Fourth Part */
+  .fourthPart {
+    flex-direction: column; /* Stack vertically */
+    padding-top: 3rem;
+  }
+
+  .fourthPart .textBox {
+    width: 90%; /* Full width */
+    margin-left: 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 2rem;
+    height: auto;
+  }
+
+  .fourthPart .imageContainer {
+    width: 100%; /* Full width */
+    height: auto; /* Adjust based on content */
+    margin-top: 2rem;
+  }
+
+  .fourthPart .imageContainer img {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Reduce Circle Size on Hover */
+  .fourthPart .textBox:hover ~ .circleLine,
+  .thirdPart .textBox:hover ~ .circle {
+    transform: scale(0.5); /* Reduce the circle size */
+  }
+
+  /* Text Adjustments */
+  .firstPart .textBox .htag,
+  .secondPart .textBox .htag,
+  .thirdPart .textBox .htag,
+  .fourthPart .textBox .htag {
+    font-size: 1.5rem; /* Reduce font size */
+  }
+
+  .firstPart .textBox .ptag,
+  .secondPart .textBox .ptag,
+  .thirdPart .textBox .ptag,
+  .fourthPart .textBox .ptag {
+    font-size: 1rem; /* Reduce font size */
+  }
+
+  /* Additional adjustments for image size */
+  .imageContainer img {
+    object-fit: contain; /* Maintain aspect ratio */
+  }
+}
+
+/* ==========================
+  VERY SMALL SCREEN (Mobile Phones)
+  ========================== */
+@media screen and (max-width: 480px) {
+  
+  /* Adjust Padding and Margin for Small Phones */
+  .firstPart, .secondPart, .thirdPart, .fourthPart {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .firstPart .textBox, 
+  .secondPart .textBox, 
+  .thirdPart .textBox, 
+  .fourthPart .textBox {
+    width: 100%;  /* Full width */
+    margin-left: 0;
+  }
+
+  /* Further reduce circle size for very small screens */
+  .firstPart .circle, .secondPart .circleLine, 
+  .thirdPart .circle, .fourthPart .circleLine {
+    width: 80px;
+    height: 80px;
+    top: 0;
+    left: 0;
+  }
+
+  .firstPart .circle {
+    left: 0;
+    top: 0;
+  }
+
+  /* Image styling for small screens */
+  .imageContainer img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  /* Adjust fonts further for small phones */
+  .firstPart .textBox .htag,
+  .secondPart .textBox .htag,
+  .thirdPart .textBox .htag,
+  .fourthPart .textBox .htag {
+    font-size: 1.2rem; /* Smaller font */
+  }
+
+  .firstPart .textBox .ptag,
+  .secondPart .textBox .ptag,
+  .thirdPart .textBox .ptag,
+  .fourthPart .textBox .ptag {
+    font-size: 0.9rem; /* Smaller font */
+  }
+
+}
+/* ---------------footer css ----------------------*/
+/* footerPage.module.css */
+
+/* Main Background */
+.footerMain {
+ 
+  background-color: #ecf4ff;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+/* Image Section */
+.footerHeroSection {
+  position: relative;
+  margin-bottom: -50px;
+  width: 100%;
+  height: 800px;
+  background-image: url('/sharing-moment-friendship.jpg');
+  background-size: 1400px 700px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.footerHeroText {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: white;
+  padding: 0 40px;
+  margin: 20px;
+  margin-bottom: 3rem;
+  max-width: 80%;
+  line-height: 1.2;
+  white-space: normal;
+}
+/* Stats Section */
+.footerStatsSection {
+  margin-top: 0;
+  position: relative;
+  width: 100%;
+  background-color: #e9d8fd;
+  padding-top: 12px;
+  padding-bottom: 20px;
+  border-radius: 0 0 100px 100px;
+}
+
+.footerStatsText {
+  text-align: center;
+}
+
+.footerstatsNumber {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #5f4dee;
+}
+
+.footerstatsLabel {
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.footerstatsItems {
+  display: flex;
+  flex-direction: row; /* Make them inline (side by side) */
+  justify-content: center; /* Align items centrally */
+  gap: 9rem;
+  padding: 5rem 8rem;
+}
+/* ========================
+   MOBILE RESPONSIVE STYLES
+   ========================= */
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+
+  
+  .footerHeroSection {
+    height: 400px;
+    background-size: cover; 
+  }
+
+  .footerHeroText {
+    font-size: 2.5rem; 
+    max-width: 90%; 
+    margin: 20px;
+  }
+
+  
+  .footerStatsSection {
+    padding-top: 20px; 
+    padding-bottom: 20px;
+  }
+
+  .footerStatsText {
+    font-size: 1.2rem; 
+    justify-content: center;
+  }
+
+  .footerstatsItems {
+    flex-direction: column; 
+    padding: 2rem;
+  }
+}
+@media (max-width: 480px) {
+
+  
+  .footerHeroSection {
+    height: 300px; 
+  }
+
+  .footerHeroText {
+    font-size: 2rem;
+    width: 100%;
+    /* max-width: 200%; */
+    padding-bottom: 45px;
+  }
+  .footerStatsSection {
+    padding-top: 12px;
+    padding-bottom: 15px;
+  }
+  .footerstatsItems{
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .footerStatsText {
+    font-size: 1rem;
+  }
+
+  .footerstatsItems {
+    flex-direction: column; 
+    padding: 1.5rem 2rem; 
+  }
+}
+
+/* ===============
+   Footer Section 
+   ==============*/
+.footer {
+  background-color: #5f4dee;
+  color: white;
+  padding: 12px 6px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Footer Grid Layout /------*/
+.footerMainContainer {
+  width: 100%;
+  padding-left: 40px;
+  display: flex;
+  flex-wrap: wrap;                  /* allows wrapping to next row */
+  gap: 60px;                        /* space between columns */
+}
+
+.footerlogoAndText{
+  flex: 1 1 200px;                  
+  min-width: 180px;              
+} 
+.footerCityLinks{
+  margin-left: 50px;
+  padding-top: 50px;
+  padding-left: 120px;
+  flex: 1 1 200px;                  
+  min-width: 180px;
+  position: relative;  
+  z-index: 1;
+} 
+.footerLoanLinks{
+  margin-left: 70px;
+  padding-left: 120px;
+  padding-top: 50px;
+  flex: 1 1 200px;                  
+  min-width: 180px; 
+  z-index: 3;               
+} 
+.footerNavLink {
+  flex: 1 1 200px;                  
+  min-width: 180px;                
+}
+
+/* Move Column 4 to second row under Column 2 */
+.footerNavLink {
+  justify-items: center;
+  padding-top: 30px;
+  order: 4;                        
+  flex: 1 1 200px;
+}
+
+/* Ensure columns 1-3 keep their order */
+.footerlogoAndText { order: 1; }
+.footerCityLinks { order: 2; }
+.footerLoanLinks { order: 3; }
+/* hover part */
+.footeraboutText{
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 6px 0;
+}
+.footeraboutText:hover{
+  color: #f0a500;
+}
+.footerloanText {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 6px 0;
+}
+.footerloanText:hover {
+  color: #f0a500; 
+}
+.footercityText {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 4px 0;
+}
+.footercityText:hover {
+  color: #f0a500; 
+}
+.footernavPtag{
+ font-weight: bold;
+ font-size: 1.2rem;
+}
+.footernavUrl {  
+  list-style-type: disc; 
+}
+.footernavItem {
+  /* padding-left: 4rem; */
+  font-size: 1rem;
+  color: #ffffff;
+  
+  margin: 8px 0;
+}
+.footernavItem:hover {
+  color: #f0a500; 
+}
+.footersocialIcons {
+
+  padding-left: 67rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding-right: 3rem;
+  font-size: 1.5rem;
+  color: white;
+
+}
+.iconInstagram, 
+.iconFacebook, 
+.iconLinkedin {
+  font-size: 1.5rem; /* Set the size of the icons to 1.5rem */
+  color: white; /* Default color of the icons is white */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+/* Hover effect to change icon color to #f0a500 */
+.iconInstagram:hover,
+.iconFacebook:hover,
+.iconLinkedin:hover {
+  color: #f0a500; /* Change color on hover */
+}
+.footersocialIcons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconInstagram {
+  color: #E4405F; /* Instagram color */
+  transition: color 0.3s ease;
+}
+
+.iconInstagram:hover {
+  color: #F56040; /* Pink hover color */
+}
+
+.iconFacebook {
+  color: #3b5998; /* Facebook color */
+  transition: color 0.3s ease;
+}
+
+.iconFacebook:hover {
+  color: #1877F2; /* Blue hover color */
+}
+
+.iconLinkedin {
+  color: #0077B5; /* LinkedIn color */
+  transition: color 0.3s ease;
+}
+
+.iconLinkedin:hover {
+  color: #0e76a8; /* LinkedIn hover color */
+}
+/* ===========================
+   mobile responsive code here 
+   =========================== */
+   @media (max-width: 768px) {
+  .footerMainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footerlogoAndText,
+  .footerCityLinks,
+  .footerLoanLinks,
+  .footerNavLink {
+    flex: 1 1 45%;
+    min-width: 200px;
+  }
+  .footerNavLink {
+    order: 4; /* Put Quick Links last */
+  }
+}
+
+/* Mobile: 480px and below */
+@media (max-width: 480px) {
+  .footerMainContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Reset all ordering */
+  .footerlogoAndText{
+    margin-left: -60px;
+    flex: none;
+    width: 100%;
+    order: 0;
+  }
+  .footerCityLinks{
+    margin-left: -300px;
+    padding-right: -10;
+    flex: none;
+    width: 100%;
+    order: 0;
+  }
+  .footerLoanLinks{
+    margin-top: -200px;
+    /* margin-left: -0px; */
+    margin-right: -10px;
+    padding-left: -10px;
+    flex: none;
+    width: 100%;
+    order: 0;
+  }
+  .footerNavLink {
+    flex: none;
+    width: 100%;
+    order: 0;
+  }
+
+  .footerlogoAndText {
+    order: 1;
+  }
+  .footerCityLinks {
+    order: 2;
+  }
+  .footerLoanLinks {
+    order: 2;        /* Same as city to appear next to it */
+    max-width: 50%;
+  }
+  .footerNavLink {
+    order: 3;
+    max-width: 60%;  /* Center width */
+  }
+
+  .footerNavLink {
+    margin: 40px auto; /* Center the 4th column */
+  }
+}
+@media (max-width: 768px) {
+  .footersocialIcons {
+    justify-content: center;  /* center-align on smaller screens */
+    gap: 12px;
+    padding: 0 1rem;
+  }
+  .iconInstagram, .iconFacebook, .iconLinkedin {
+    font-size: 1.3rem;         /* slightly smaller icons */
+  }
+}
+
+/* Mobile: 480px and below */
+@media (max-width: 480px) {
+  .footersocialIcons {
+    margin-right: 15px;
+    justify-content: right; 
+    gap: 10px;
+    padding: 0.5rem 0;
+  }
+  .iconInstagram, .iconFacebook, .iconLinkedin {
+    font-size: 1rem;         /* mobile-optimized size */
+  }
+  .iconInstagram:hover, .iconFacebook:hover, .iconLinkedin :hover {
+    color: #f0a500;
+  }
+}
+
