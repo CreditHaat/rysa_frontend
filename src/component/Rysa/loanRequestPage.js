@@ -2,9 +2,11 @@
 // loanRequestPage.js
 "use client";
 import { useState } from "react";
+import Image from 'next/image';
 import React from "react";
 import styles from "./loanRequestPage.module.css";
 import LoanDetailsModal from "./LoanDetailsModal.js";
+import hdb from '../../../public/Jays/HDB.png';
 
 const loanData = [
   {
@@ -33,7 +35,16 @@ const LoanRequestPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.topSection}></div>
+      {/* <div className={styles.topSection}></div> */}
+      <div className={styles.headerTop}>
+         <div className={styles.headerLogo}>
+                  <Image
+                    src={hdb}
+                    alt="Hdb tag"
+                    style={{alignContent:"center",width:"auto",height:"auto", top:"-4"}}
+                  />
+                </div>
+      </div>
       <div className={styles.header}>
         Open Loan Request (10)
         <span className={styles.dropdown}>▼</span>

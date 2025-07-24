@@ -118,7 +118,7 @@ export default function RepaymentPage() {
           <div className={styles.footer}>Need help? Contact support</div>
           {errors.method && <div className={styles.error}>{errors.method}</div>}
           <div className={styles.btnContainer}>
-          <button type="submit" className={styles.payBtn}>
+          <button type="submit" className={styles.nextBtn}>
             Pay Now
           </button>
           </div>

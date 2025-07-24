@@ -3,13 +3,19 @@
   margin: 0px auto;
   background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
   /* background: #f3f4f6; */
-  min-height:100vh;
+  min-height: 620px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Align items vertically */
   /* border-radius: 15px; */
 }
+ @media screen {
+  .container {
+  width: auto;
+  height: 750px;
+}
+ }
 
 .headingDiv { 
   height: auto;
@@ -41,7 +47,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Make the button stick to the bottom */
-  height: 380px; /* Allow card to take the full height of its container */
+  height: 350px; /* Allow card to take the full height of its container */
 }
 
 .row {
@@ -103,29 +109,29 @@
   font-size: 14px;
 }
 
-.btnContainer{
-    position: fixed;
-    padding: 3px;
-    width: 432px;
-    background-color: rgb(255, 255, 255);
-    bottom: 0;
-    transform: translate(-46px); 
-    justify-items: center;
-      z-index: 999;
+.btnContainer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 40px;
+  border-top: 1px solid #e5e7eb;
+  background-color: white;
   display: flex;
   justify-content: center;
+  align-items: center;   
 }
-.payBtn {
-    width: 395px;
-  margin: 3px;
-  padding: 14px 0;
-  font-size: 15px;
-  font-weight: 600;
-  background: #6039D2;
-  color: #ffffff;
+
+.nextBtn {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #6039D2;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  width: 100%;
+  color: white;
+  cursor: pointer;    
 }
 
 .payBtn:hover {
@@ -138,6 +144,7 @@
   font-size: 12px;
   font-weight: 600;
   color: white;
+  height: 2px;
 }
 
 .error {

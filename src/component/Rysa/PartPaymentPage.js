@@ -87,7 +87,7 @@ export default function PartPaymentPage() {
         {error && <div className={styles.error}>{error}</div>}
         {success && <div className={styles.success}>{success}</div>}
         <div className={styles.btnContainer}>
-        <button type="submit" className={styles.payBtn}>
+        <button type="submit" className={styles.nextBtn}>
           Pay Now
         </button>
         </div>

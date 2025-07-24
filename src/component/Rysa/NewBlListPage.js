@@ -23,9 +23,9 @@ const NewBlListPage = ({ companies, getLoanBackendMethod, redirectLinkMethod, mo
   };
 
   const slides = [
-    { title: 'Simple Loans,<br> Big Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/young-girl.png' },
-    { title: 'Low‑interest,<br> Fast Approval', subtitle: 'Apply today, funded tomorrow.', img: '/happy-man.png' },
-    { title: 'Flexible EMIs,<br> More Freedom', subtitle: 'Repay the way that suits you.', img: '/young-girl.png' },
+    { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s12.png' },
+    { title: 'Festive Loan,<br> Bonanza!', subtitle: 'Exclusive benefits for limited period.', img: '/s171.png' },
+    { title: 'Easy Loans, Happy<br> Moments!', subtitle: 'Quick money,zero worries.', img: '/s11.png' },
   ];
 
   const [currentSlide, setSlide] = useState(0);
@@ -38,9 +38,9 @@ const NewBlListPage = ({ companies, getLoanBackendMethod, redirectLinkMethod, mo
 
   return (
     <>
-      <main className={styles.container1}>
-        <section className={styles.card1}>
-          <header className={styles.hero1}>
+   <div className={styles.numberStart}>
+            <div className={styles.numberOneDiv}> {/*header*/}
+              <header className={styles.hero1}>
             {/* <button className={styles.backBtn1} onClick={() => history.back()}>&lt; Back</button> */}
             <div className={styles.heroText1}>
               <h1 className={styles.title1} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }} />
@@ -55,10 +55,9 @@ const NewBlListPage = ({ companies, getLoanBackendMethod, redirectLinkMethod, mo
               <Image src={slides[currentSlide].img} alt="Hero visual" fill priority style={{ objectFit: 'cover' }} />
             </div>
           </header>
-        </section>
-      </main>
-
-      <div className={`${roboto.className} ${styles.listpageContainer}`}>
+            </div>{/*header end*/}
+            <div className={styles.numberTwoDiv}>
+                <div className={`${roboto.className} ${styles.listpageContainer}`}>
         {
           companies ? (
             <>
@@ -105,6 +104,8 @@ const NewBlListPage = ({ companies, getLoanBackendMethod, redirectLinkMethod, mo
           )
         }
       </div>
+            </div>{/*secondend*/}
+        </div>{/*numberStart div*/}
     </>
   );
 };

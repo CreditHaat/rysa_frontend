@@ -8,24 +8,44 @@
 }
 
 /* ——— टॉप ग्रॅडियंट हेडर ——— */
-.header {
+	  .header {
+  width: 100%;
+  max-width: 432px;
+  /* height: 200px; */
+  padding: 0px 0 0 4px;
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  /* background: red; */
+  font-size: 17px;
+  z-index: 1;
+   /* margin-top: -20px; */
+  margin-bottom: 0px; 
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.headerLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 10px 10px 0px 0px;
+    padding-bottom: 12px;
+ }
+/* .header {
   width: 100%;
   max-width: 432px;
   height: 200px;
   position: relative;
   padding-top: 6px;
   padding-left: 4px;
-  /* padding: 22px 16px; */
   background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%);
-  /* background: linear-gradient(135deg, #ff8bb3 0%, #8d5dfb 100%); */
   color: #ffffff;
   font-size: 16px;
   font-weight: 600;
-  /* border-top-left-radius: 24px; */
-  /* border-top-right-radius: 24px; */
   line-height: 1.35;
   z-index: 1;
-}
+} */
 
 /* ——— कार्ड — पांढरट बॉडी ——— */
 .card {
@@ -44,6 +64,7 @@
   align-items: center;
   margin-top: -20px;
   z-index: 3;
+  height: 75vh;
 }
 
 /* लोगो बॉक्स */
@@ -179,31 +200,55 @@
 /* ────────────────────────
    CTA button
 ────────────────────────── */
-.btnContainer{
+.btnContainer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 40px;
+  border-top: 1px solid #e5e7eb;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;   
+}
+
+.nextBtn {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #6039D2;
+  border: none;
+  width: 100%;
+  color: white;
+  cursor: pointer;    
+}
+/* .btnContainer{
     position: fixed;
     padding: 3px;
     width: 432px;
     background-color: rgb(255, 255, 255);
     bottom: 10;
-    transform: translate(-0px); 
+    transform: translate(-0px);  */
     
     /* align-items: center; */
     /* justify-content: center; */
-    justify-items: center;
+    /* justify-items: center;
       z-index: 999;
   display: flex;
   justify-content: center;
-}
-.nextBtn {
+} */
+/* .nextBtn { */
     /* width: 432px; */
-    width: 395px;
+    /* width: 395px; */
   /* position: fixed; */
   /* transform: translate(-1px); */
   /* transform: translateX(-5%); */
   /* left: 0; */
   /* right: 0; */
   /* bottom: 0; */
-  margin: 3px;
+  /* margin: 3px;
   padding: 14px 0;
   font-size: 15px;
   font-weight: 600;
@@ -212,7 +257,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-}
+} */
 
 .nextBtn:hover {
   opacity: 0.9;

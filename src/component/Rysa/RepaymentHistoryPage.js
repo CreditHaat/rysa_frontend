@@ -1,6 +1,7 @@
 import React from 'react';
+import Image from 'next/image';
 import styles from './repaymentHistoryPage.module.css';
-
+import hdb from '../../../public/Jays/HDB.png';
 const RepaymentHistoryPage = ({ 
   loanData = {
     loanAmount: 56666,
@@ -39,7 +40,14 @@ const RepaymentHistoryPage = ({
     <div className={styles.container}>
     <div className={styles.card}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Repayment History Loan</h1>
+        {/* <h1 className={styles.title}>Repayment History Loan</h1> */}
+        <div className={styles.headerLogo}>
+                  <Image
+                    src={hdb}
+                    alt="Hdb tag"
+                    style={{alignContent:"center",width:"auto",height:"auto", top:"-10px", }} //{/*top:"-10px",position: "relative",*/}
+                  />
+                </div>
       </div>
       <div className={styles.cardForm}>
         <div className={styles.content}>

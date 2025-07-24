@@ -7,19 +7,42 @@
   align-items: center;
   min-height: 100vh;
   background: white;
-  /* padding: 20px; */
-
 }
 
 .card {
+   width: 432px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+  position: relative;
+
+}
+.numberOneDiv {
+  /* width: 432px;
+  height: 200px;
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px; */
+  /* new */
+   width: 100%;                  /* Ensures the div takes up the full width of its container */
+  max-width: 432px;             /* Caps the width to 432px on larger screens */
+  height: 200px;                /* Fixed height */
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  /* border-top-left-radius: 15px; */
+  /* border-top-right-radius: 15px; */
+  box-sizing: border-box;       /* Includes padding and border in the element's total width and height */
+  margin: 0 auto; 
+}
+
+.numberTwoDiv {
   width: 432px;
-  /* border-radius: 16px; */
-  background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%);
-  /* background: linear-gradient(135deg, #f26bff 0%, rgb(151, 125, 227) 100%); */
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  /* border-top-left-radius: 6px;
-  border-top-right-radius: 6px; */
+  height: calc(100vh - 100px); /* 30px overlap included */
+  background-color: #F7F6FD;
+  margin-top: -30px; /* to overlap 30px on numberOneDiv */
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ────────────────────────
@@ -27,26 +50,14 @@
 ────────────────────────── */
 .hero {
   position: relative;
-  /* background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%); */
   padding: 24px 20px 10px 20px;
   min-height: 190px;
   color: #ffffff;
-}
-
-.backBtn {
-  background: none;
-  border: none;
-  color: black;
-  cursor: pointer;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-.backBtn:hover{
- color:#2f0606;
- font-size: 15px;
+  /* background-color: red; */
 }
 
 .heroText {
+  padding-top: 15px;
   position: relative;
   z-index: 2;
 }
@@ -65,7 +76,7 @@
 /* dots */
 .progressBar {
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 35px;
   display: flex;
   gap: 6px;
 }
@@ -83,60 +94,43 @@
 .dotActive {
   background: #ffffff;
 }
-/* .progressBar {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-}
-
-.dotActive {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.dot:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-} */
 
 /* hero image (touching the form) */
 .imgWrap {
+  /* background-color: red; */
   position: absolute;
-  right: 0px;
-  bottom: -1px;
+  right: 2px;
+  bottom: 0px;
   width: 180px;
   height: 170px;
   border-radius: 8px;
   overflow: hidden;
+  /* padding-bottom: 30px; */
+  margin-bottom: 20px;
 }
-
 /* ────────────────────────
    Form container
 ────────────────────────── */
 .formBlock {
   background: #F7F6FD;
-  border-radius: 20px;
-  /* border-top-left-radius: 50px;
-  border-top-right-radius: 50px; */
+  /* border-radius: 16px; */
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
   padding-top: 24px;
+  padding-bottom: 33px;
+  height: 102vh;
 }
 
 .form {
   padding: 0 20px 28px 20px;
   display: flex;
   flex-direction: column;
-   border-top-left-radius: 50px;
+  border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   gap: 14px;
   background-color: #F7F6FD;
+  /* padding-bottom: 12px; */
+  margin-bottom: 30px;
 }
 
 /* ────────────────────────
@@ -154,10 +148,6 @@
 
 .step {
   margin-left: 0rem;
-  /* width: 32px; */
-  /* height: 32px; */
-  /* border-radius: 50%; */
-  /* background: #ccc; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,33 +155,19 @@
   z-index: 1;
 }
 
-/* .stepActive {
-  background: #7b5dff; 
-  color: white;
-} */
 
 .underLineNO {
   flex: 1;
   margin-top: 30px;
   height: 5px;
   width: 185px;
-  /* background: #f26bff; */
   left: -1;
    transform: translateX(-4%);
    border-radius: 3px;
    position: relative;
-  background: #f26bff33; /* हलका base रंग */
+  background: #f26bff33; 
   border-radius: 3px;
-  /* flex: 1;
-  height: 4px;
-  background: #c95b5b;
-  border-radius: 2px;
-  margin: auto 8px 0 8px;
-  position: relative;
-  top: 10px; 
-  left:0;
-  transform: translateX(-60%); */
-  /* top: 42px; */
+
 }
 .underLineFill {
   position: absolute;
@@ -204,39 +180,6 @@
   width: 0;
   z-index: 2;
 }
-
-/* .stepContainer {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  padding-top: 2rem;
-}
-
-.step {
-  same as before
-}
-
-.stepActive {
-  same as before
-}
-
-.stepLine {
-  padding-bottom: 3px;
-  flex: 1;
-  height: 4px;
-  background: #d4d4d4;
-  border-radius: 2px;
-  overflow: hidden;
-  margin-left: 8px;
-}
-
-.stepLineFill {
-  height: 100%;
-  background: #7b5dff;
-  border-radius: 2px;
-  transition: width 0.3s ease;
-} */
 /* ────────────────────────
    Input fields
 ────────────────────────── */
@@ -246,7 +189,7 @@
 
 .input {
   width: 100%;
-  padding: 12px 46px 12px 14px;     /* right‑padding for icon        */
+  padding: 12px 46px 12px 14px;     
   font-size: 14px;
   border: 1px solid #dadada;
   border-radius: 8px;
@@ -293,21 +236,33 @@
 /* ────────────────────────
    CTA button
 ────────────────────────── */
-.nextBtn {
-  /* position: sticky; */
-  margin-top: 16px;
-  padding: 14px 0;
-  font-size: 15px;
-  font-weight: 600;
-  background: #6039D2;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+.btnContainer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 40px;
+  border-top: 1px solid #e5e7eb;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;   
 }
 
+.nextBtn {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #6039D2;
+  border: none;
+  width: 100%;
+  color: white;
+  cursor: pointer;    
+}
 .nextBtn:hover {
   opacity: 0.9;
+  background: #420fdd;
 }
 /* drop Dwon */
 .dropdownContainer {
@@ -429,4 +384,115 @@
   accent-color: #7b5dff;
   width: 16px;
   height: 16px;
+}
+
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  .numberOneDiv {
+  width: 100%;                  /* Ensures the div takes up the full width of its container */
+  max-width: 432px;             /* Caps the width to 432px on larger screens */
+  height: 200px;                /* Fixed height */
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  /* border-top-left-radius: 15px; */
+  /* border-top-right-radius: 15px; */
+  box-sizing: border-box;       /* Includes padding and border in the element's total width and height */
+  margin: 0 auto;               /* Centers the div horizontally */
+}
+  .numberTwoDiv {
+    width: 100%;
+    border-radius: 0;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+
+  .numberTwoDiv {
+    margin-top: -20px; /* slightly reduce overlap */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .imgWrap {
+    width: 140px;
+    height: 130px;
+    right: 8px;
+    bottom: -8px;
+  }
+
+  .hero {
+    /* padding-top: 28px; */
+    padding: 20px 16px 28px;
+  }
+
+  .title {
+    margin-top: 15px;
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .form {
+    padding: 0 16px 24px;
+    margin-bottom: 20px;
+    border-radius: 30px 30px 0 0;
+  }
+
+  .steps {
+    margin: 0 16px 16px;
+  }
+
+  .dropdownList, .dropdownList2 {
+    width: calc(100% - 32px);
+    left: 16px;
+  }
+
+  .formBlock {
+    padding: 24px 0 80px;
+    height: auto;
+  }
+
+  .btnContainer {
+    padding: 16px;
+  }
+
+  .nextBtn {
+    font-size: 15px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .underLineNO {
+  flex: 1;
+  margin-top: 30px;
+  height: 5px;
+  width: 140px;
+  left: -1;
+   transform: translateX(-4%);
+   border-radius: 3px;
+   position: relative;
+  background: #f26bff33; 
+  border-radius: 3px;
+
+}
+.underLineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #7b5dff;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0;
+  z-index: 2;
+}
 }

@@ -16,87 +16,111 @@
   /* border-radius: 16px; */
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
-  background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%);
-  /* background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%); */
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   /* border-top-left-radius: 6px;
   border-top-right-radius: 6px; */
+   width: 432px;
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+}
+.numberOneDiv {
+  width: 432px;
+  height: 200px;
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  
 }
 
+.numberTwoDiv {
+  width: 432px;
+  height: calc(100vh - 200px); /* 30px overlap included */
+  background-color: #F7F6FD;
+  margin-top: -30px; /* to overlap 30px on numberOneDiv */
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
 /* ────────────────────────
    Hero banner
 ────────────────────────── */
-.hero {
+.hero1 {
+  /* position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px; */
   position: relative;
-  /* background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%); */
+  /* background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%);  */
   padding: 24px 20px 10px 20px;
-  min-height: 190px;
+  /* min-height: 190px; */
   color: #ffffff;
 }
 
-.backBtn {
-  background: none;
-  border: none;
-  color: black;
-  cursor: pointer;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-.backBtn:hover{
- color:#2f0606;
- font-size: 15px;
-}
-
-.heroText {
-  position: relative;
+.heroText1 {
+  padding-top: 20px;
   z-index: 2;
+  text-align: left;
+  /* position: relative;
+  z-index: 2; */
 }
 
-.title {
+.title1 {
   font-size: 22px;
   font-weight: 700;
   line-height: 1.2;
+  /* font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2; */
 }
 
-.subtitle {
+.subtitle1 {
   font-size: 14px;
   margin-top: 4px;
+  /* font-size: 14px;
+  margin-top: 4px; */
 }
 
-/* dots */
-.progressBar {
+.progressBar1 {
+  display: flex;
   justify-content: center;
+  /* margin-top: 10px; */
+  gap: 6px;
+  /* justify-content: center;
   margin-top: 10px;
   display: flex;
-  gap: 6px;
+  gap: 6px; */
 }
 
-.dot,
-.dotActive {
-  align-items: center;
-  padding-left: 10px;
+.dot1,
+.dotActive1 {
+  margin-top: 2rem;
   width: 28px;
   height: 6px;
   border-radius: 2px;
   background: #ffffff66;
   cursor: pointer;
 }
-.dotActive {
+
+.dotActive1 {
   background: #ffffff;
+   /* background: #ffffff; */
 }
-.imgWrap {
-   /* position: relative;   ensures Image fill works properly */
-  overflow: visible; 
+
+.imgWrap1 {
   position: absolute;
-  right: -12px;
-  bottom: -38px;
-  width: 300px;
-  height: 270px;
+  margin-top: 60px;
+  right: 2;
+  bottom: 0px;
+  width: 180px;
+  height: 170px;
+  overflow: none;
   border-radius: 8px;
-  overflow: hidden;
-  padding-right: 10px;
-  object-fit: contain; 
 }
 
 /* ────────────────────────
@@ -104,17 +128,18 @@
 ────────────────────────── */
 .formBlock {
   background: #F7F6FD;
-  border-radius: 20px;
+  border-radius: 16px;
   /* border-top-left-radius: 50px;
   border-top-right-radius: 50px; */
   padding-top: 24px;
+  height: 75vh;
 }
 
 .form {
   padding: 0 20px 70px 20px;
   display: flex;
   flex-direction: column;
-   border-top-left-radius: 50px;
+  border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   gap: 14px;
   background-color: #F7F6FD;
@@ -175,65 +200,36 @@
 /* ────────────────────────
    CTA button
 ────────────────────────── */
-.btnContainer{
-    position: fixed;
-    margin-top: 50px;
-    padding: 3px;
-    width: 432px;
-    background-color: rgb(255, 255, 255);
-    bottom: 0;
-    transform: translate(-20px); 
-    
-    /* align-items: center; */
-    /* justify-content: center; */
-    justify-items: center;
-      z-index: 999;
+.btnContainer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 40px;
+  border-top: 1px solid #e5e7eb;
+  background-color: white;
   display: flex;
   justify-content: center;
+  align-items: center;   
 }
+
 .nextBtn {
-    /* width: 432px; */
-    width: 395px;
-  /* position: fixed; */
-  /* transform: translate(-1px); */
-  /* transform: translateX(-5%); */
-  /* left: 0; */
-  /* right: 0; */
-  /* bottom: 0; */
-  margin: 3px;
-  padding: 14px 0;
-  font-size: 15px;
-  font-weight: 600;
-  background: #6039D2;
-  color: #ffffff;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  background-color: #6039D2;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  width: 100%;
+  color: white;
+  cursor: pointer;    
 }
 
 .nextBtn:hover {
   opacity: 0.9;
 }
 /* Mobile responsiveness */
-@media (max-width: 768px) {
-  .btnContainer {
-    width: 100%;  /* Full width on mobile */
-    padding: 0 10px;  /* Add some padding on the sides */
-  }
 
-  .nextBtn {
-    width: 100%;  /* Make the button fill the width on mobile */
-    max-width: 432px;  /* Set a max-width to prevent it from becoming too wide */
-    margin: 0 auto;  /* Center it */
-  }
-}
-
-@media (max-width: 480px) {
-  .nextBtn {
-    font-size: 14px;  /* Slightly smaller font on very small screens */
-    padding: 12px 0;  /* Adjust padding for smaller screens */
-  }
-}
 /* .nextBtn {
   margin-top: 16px;
   padding: 14px 0;
@@ -249,3 +245,49 @@
 .nextBtn:hover {
   opacity: 0.9;
 } */
+@media (max-width: 480px) {
+   .numberOneDiv {
+  width: 100%;                  /* Ensures the div takes up the full width of its container */
+  max-width: 432px;             /* Caps the width to 432px on larger screens */
+  height: 200px;                /* Fixed height */
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-sizing: border-box;       /* Includes padding and border in the element's total width and height */
+  margin: 0 auto;               /* Centers the div horizontally */
+}
+    .numberTwoDiv {
+    width: 100%;
+    border-radius: 0;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+
+  .numberTwoDiv {
+    margin-top: -20px; /* slightly reduce overlap */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  
+  .imgWrap {
+    width: 140px;
+    height: 130px;
+    right: 0px;
+    bottom: -5px;
+    /* right: -12px; */
+  }
+
+  .hero1 {
+    /* padding-top: 28px; 28*/
+    padding: 20px 16px 35px;
+  }
+
+  .title {
+    margin-top: 15px;
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+}

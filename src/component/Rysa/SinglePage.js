@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import styles from './singlePage.module.css';
 import logo from "../../../public/logo.png";
+import { useRouter } from 'next/navigation';
 export default function SinglePage() {
    const [isOpen, setIsOpen] = useState(false); 
 
@@ -42,6 +43,13 @@ export default function SinglePage() {
         setTimeout(() => (isThrottled.current = false), 600);
       }
     };
+
+    // Inside your component
+const router = useRouter();
+
+const handleApplyClick = () => {
+  router.push('/LoanForm');
+};
   
     useEffect(() => {
       const container = containerRef.current;
@@ -115,7 +123,9 @@ export default function SinglePage() {
               Loans up to ₹10Lacs. Low interest and zero paperwork. 
               Disbursal in 24 hours.
             </p>
-            <button className={styles.applyBtn}>Apply Now</button>
+            <button className={styles.applyBtn} onClick={handleApplyClick}>
+  Apply Now
+</button>
           </div>
 
           {/* Right Image */}
