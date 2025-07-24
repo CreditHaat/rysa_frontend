@@ -25,7 +25,6 @@
  .header-block {
   margin-top: -20px;
   margin-bottom: -13px; 
-  height: 100%;
 }
 .cardForm-block {
   padding-left: 5rem;
@@ -36,33 +35,11 @@
   background: #F7F6FD;
   min-height: 472px;
   justify-items: center;
-  height: 590px;
+  height: 90vh;
 }
-@media (max-width: 480px) {
-  .cardForm-block {
-    padding-left: 1rem; 
-    padding-top: 15px; 
-    padding-right: 1rem;
-    min-height: 86vh; 
-    /* height: auto;  */
-  }
-}
-/* button css */
-.btnContainer{
-    position: fixed;
-    padding: 3px;
-    width: 432px;
-    background-color: rgb(255, 255, 255);
-    bottom: 0;
-    transform: translate(-50px); 
-    justify-items: center;
-      z-index: 999;
-  display: flex;
-  justify-content: center;
-}
-.nextBtn {
-    width: 395px;
-  margin: 3px;
+.nextBtn-block {
+  width: 300px;
+  /* margin-top: 60px; */
   padding: 14px 0;
   font-size: 15px;
   font-weight: 600;
@@ -71,24 +48,12 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transform: translate(10px, 10px);
 }
 
-.nextBtn:hover {
+.nextBtn-block:hover {
   opacity: 0.9;
 }
-@media (max-width: 480px) {
-  .btnContainer{
-    align-content: center;
-    width: 400px;
-  }
-    .nextBtn {
-      width: 320px;
-        padding: 10px 0; 
-        font-size: 13px; 
-    }
-}
-/* Mobile responsiveness */
-/* end button css */
 .content-block {
   padding: 20px;
 }
@@ -97,11 +62,10 @@
   color: #777777;
   text-align: center;
   margin-top: -13px;
-  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .fill-form {
-    margin-top: 10px;
     margin-bottom: 25px;
 }
 
@@ -112,6 +76,7 @@
     border: 1px solid #ccc;
     border-radius:10px;
     box-shadow: 5px 5px 5px #eee;
+    background-color: #fff;
 }
 
 .error {
@@ -120,7 +85,7 @@
   font-weight: bold;
   margin-left: 2%;
 }
-.form-submit {
+.short-submit {
       width: 100%;
       padding: 10px;
       background-color: #6039D2;
@@ -131,7 +96,7 @@
       font-size: 16px;
   }
  
-  .Long-button {
+  .short-button {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -142,6 +107,7 @@
     background-color: white;
     border-top: 1px solid #e5e7eb;
   }
+  
 
  
 

@@ -9,10 +9,11 @@ import Image from "next/image";
 import HeaderPart from "./HeaderPart";
 import SmsWaiting from "./SmsWaiting";
 // import CallbackListener from "../CallbackListener";
-import SelfieWaiting from "./WaitingPageforReferencedetails";
+import SelfieWaiting from "./WaitingPage";
 import WaitingPageLoanAgreement from "./WaitingPageLoanAgreement";
 import { useSearchParams, useRouter } from "next/navigation";
-import hdb from "../../../public/Jays/HDB.png";
+import hdb from "../Yubi/newplimages/HDB.png";
+import "react-datepicker/dist/react-datepicker.css";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -43,6 +44,42 @@ const NewReferenceDt = () => {
   const interestRate = searchParams.get("interestRate") || "";
   const clientLoanId = searchParams.get("client_loan_id") || "";
   const salarySlipLink = searchParams.get("salarySlipLink") || "";
+
+ const handleContactPicker = async (fieldName) => {
+    try {
+      // Check if Contact Picker API is supported
+
+      if ('contacts' in navigator && 'select' in navigator.contacts) {
+        const contacts = await navigator.contacts.select(['name', 'tel'], { multiple: false });
+        if (contacts.length > 0) {
+          const contact = contacts[0];
+          const phoneNumber = contact.tel && contact.tel.length > 0 ? contact.tel[0] : '';
+          const contactName = contact.name && contact.name.length > 0 ? contact.name[0] : '';
+          // Update the mobile field
+          setFormData(prev => ({
+            ...prev,
+            [fieldName]: phoneNumber
+          }));
+
+          // Also update the name field if it's empty
+          const nameField = fieldName === 'ref1Mobile' ? 'ref1Name' : 'ref2Name';
+          if (contactName && !formData[nameField]) {
+            setFormData(prev => ({
+              ...prev,
+              [nameField]: contactName
+            }));
+          }
+        }
+      } else {
+        // Fallback for devices that don't support Contact Picker API
+        alert('Contact picker is not supported on this device. Please enter the number manually.');
+      }
+    } catch (error) {
+      console.error('Error accessing contacts:', error);
+      // Fallback - you could show a message or handle the error differently
+      alert('Unable to access contacts. Please enter the number manually.');
+    }
+  };
 
   // ✅✅✅ ADD CALLBACK HANDLER
   const handleFinalSanctionReady = () => {
@@ -303,7 +340,8 @@ const NewReferenceDt = () => {
         
           {/* <div className="Formal-Card" style={{ boxSizing: "content-box" }}> */}
            
-            {/* <form onSubmit={handleSubmit}> */}
+            <form onSubmit={handleSubmit}>
+              <p className="para-para">Please provide your reference details</p>
               {/* Mother's name Field */}
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
@@ -416,6 +454,8 @@ const NewReferenceDt = () => {
                     transform: "translateY(-50%)",
                     color: "#00000061",
                   }}
+                  onClick={() => handleContactPicker('ref1Mobile')}
+                  title="Select from contacts"
                 >
                   <FaPhone />
                 </span>
@@ -501,6 +541,8 @@ const NewReferenceDt = () => {
                     transform: "translateY(-50%)",
                     color: "#00000061",
                   }}
+                  onClick={() => handleContactPicker('ref2Mobile')}
+                  title="Select from contacts"
                 >
                   <FaPhone />
                 </span>
@@ -537,25 +579,23 @@ const NewReferenceDt = () => {
                   <span className="error-msg">{formErrors.ref2Address}</span>
                 )}
               </div>
-          </div>
-          {/* Submit Button */}
-             {/* <div className="btnContainer">
-           <button type="button"
-                    className="nextBtn-refer" >
-              Next
-            </button>
-            </div> */}
-             <div className="Long-button">
+
+            
+             {/* Submit Button */}
+              
+                {/* Submit Button */}
+              
+                <div className="next-button">
                 <button
                   type="submit"
-                  className="form-submit"
+                  className="field-submit"
                 >
                   Next
                 </button>
               </div>
+            </form>
           </div>
-          
-          
+          </div>
           </div>
         </div>
       )}

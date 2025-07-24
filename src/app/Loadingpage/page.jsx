@@ -1,7 +1,8 @@
 "use client"; // ✅ This is needed for Client Component
 
 import React from "react";
-import Selfiepage from "../../../components/Yubi/SelfiePageNew";
+// import LoanApprovalPage from "../../../components/Yubi/LoanApprovalPageNew";
+import LoadingPage from "../../component/Yubi/LoadingPage";
 import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
@@ -14,7 +15,7 @@ export default function Page({ params }) {
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
-      <Selfiepage params={params} step={step} clientLoanId={clientLoanId} />
+      <LoadingPage params={params} step={step} clientLoanId={clientLoanId} />
     </div>
   );
 }

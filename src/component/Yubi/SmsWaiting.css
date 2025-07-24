@@ -104,12 +104,13 @@
     position: relative;
   }
   
-  .sms-waiting-text {
-    font-size: 36px;
+  .sms-waiting-txt {
+    font-size: 18px;
     color: #1a1a1a;
     margin: 0 0 30px 0;
     font-weight: normal;
     letter-spacing: 2px;
+    color: #777777;
   }
   
   .sms-divider {

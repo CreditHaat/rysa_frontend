@@ -15,11 +15,10 @@ import { Roboto } from "@next/font/google";
 import Image from "next/image";
 import HeaderPart from "./HeaderPart";
 // import CallbackListener from "../CallbackListener";
-import SelfieWaiting from "./WaitingPageforBankdetails";
+import SelfieWaiting from "./WaitingPage";
 import { useRouter } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
-import hdb from "../../../public/HDB.png";
-
+import hdb from "../Yubi/newplimages/HDB.png";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -326,7 +325,7 @@ const bankdetails = () => {
       </div>
       <div className="cardForm-block">
         <div className="content-block">
-            {/* <form onSubmit={handleSubmit}> */}
+            <form onSubmit={handleSubmit}>
               <p className="para">Please provide your bank details</p>
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
@@ -489,27 +488,6 @@ const bankdetails = () => {
               </div>
               {/* Salary Slip Upload */}
               <div className="fill-form">
-  <label
-    htmlFor="salarySlipUpload"
-    style={{
-      display: "block",
-      marginBottom: "8px",
-      fontWeight: "500",
-      color: "#777777",
-    }}
-  >
-    Upload Salary Slip
-  </label>
-  <input
-    id="salarySlipUpload"
-    type="file"
-    accept=".pdf, .jpg, .jpeg, .png"
-    onChange={handleSalarySlipUpload}
-    className="enter-field"
-  />
-</div>
-
-              {/* <div className="fill-form">
                 <label
                   htmlFor="salarySlipUpload"
                   style={{
@@ -528,24 +506,20 @@ const bankdetails = () => {
                   onChange={handleSalarySlipUpload}
                   className="enter-field"
                 />
-              </div> */}
+              </div>
 
               {/* Submit Button */}
-              {/* <div className="btnContainer">
-                <button type="button"
-                    className="nextBtn" >
-              Next
-            </button>
-              </div> */}
-               <div className="Long-button">
+              
+                <div className="short-button">
                 <button
                   type="submit"
-                  className="form-submit"
+                  className="short-submit"
                 >
                   Next
                 </button>
               </div>
-            {/* </form> */}
+              
+            </form>
             </div>
           </div>
           </div>

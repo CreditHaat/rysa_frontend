@@ -2,7 +2,7 @@
 
 import React from "react";
 // import LoanApprovalPage from "../../../components/Yubi/LoanApprovalPageNew";
-import LoanAmount from "../../../components/Yubi/LoanAmount";
+import VerifiedSelfie from "../../component/Yubi/VerifiedSelfie";
 import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
@@ -15,7 +15,7 @@ export default function Page({ params }) {
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
-      <LoanAmount params={params} step={step} clientLoanId={clientLoanId} />
+      <VerifiedSelfie params={params} step={step} clientLoanId={clientLoanId} />
     </div>
   );
 }

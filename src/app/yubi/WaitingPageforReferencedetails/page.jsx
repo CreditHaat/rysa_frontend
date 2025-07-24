@@ -1,7 +1,8 @@
 "use client"; // ✅ This is needed for Client Component
 
 import React from "react";
-import YubiSteps from "../../../components/Yubi/WaitingpageAfterAA";
+// import LoanApprovalPage from "../../../components/Yubi/LoanApprovalPageNew";
+import WaitingPageforReferencedetails from "../../../component/Yubi/WaitingPageforReferencedetails";
 import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
@@ -14,7 +15,7 @@ export default function Page({ params }) {
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
-      <YubiSteps params={params} step={step} clientLoanId={clientLoanId} />
+      <WaitingPageforReferencedetails params={params} step={step} clientLoanId={clientLoanId} />
     </div>
   );
 }

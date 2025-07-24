@@ -53,7 +53,7 @@ const SMSWaiting = () => {
           </svg>
         </div>
 
-        <h1 className="sms-waiting-text">Waiting.....</h1>
+        <h1 className="sms-waiting-txt"><b>Waiting...</b></h1>
 
         {/* <div className="sms-divider"></div> */}
         <br></br>

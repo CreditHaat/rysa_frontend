@@ -229,8 +229,8 @@
 
 .divValue {
   width: 120px; /* fixed width for value */
-  text-align: right;
   white-space: nowrap;
+  padding-left: 25px;
 }
 
 .value {

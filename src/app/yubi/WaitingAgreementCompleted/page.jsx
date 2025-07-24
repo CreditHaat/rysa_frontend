@@ -1,8 +1,8 @@
 "use client"; // ✅ This is needed for Client Component
 
 import React from "react";
-// import BankDetails from "../../../components/Yubi/BankDetailsNew";
-import SubmitePage from "../../../component/Yubi/SubmitPage"
+// import LoanApprovalPage from "../../../components/Yubi/LoanApprovalPageNew";
+import WaitingAgreementCompleted from "../../../component/Yubi/WaitingPage2";
 import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
@@ -15,8 +15,7 @@ export default function Page({ params }) {
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
-      {/* <BankDetails params={params} step={step} clientLoanId={clientLoanId} /> */}
-      <SubmitePage/>
+      <WaitingAgreementCompleted params={params} step={step} clientLoanId={clientLoanId} />
     </div>
   );
 }

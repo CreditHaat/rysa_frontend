@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import "./WaitingPage.css";
+import "./KfsCompleted.css";
 import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
@@ -8,9 +8,9 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-const WaitingPage = () => {
+const MandatePage = () => {
   return (
-    <div className={`${roboto.className} waiting-container`}>
+    <div className={`${roboto.className} waiting-table`}>
       <div className="loading-circle">
         <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
           <path
@@ -21,11 +21,40 @@ const WaitingPage = () => {
           />
         </svg>
       </div>
-      <div className="waiting-text">
-        <b>Waiting.....</b>
+
+      <div className="status-box">
+        <div className="status-row">
+          <div className="status-icon">✅</div>
+          <div className="status-text">KFS Completed</div>
+        </div>
+        <div className="status-row">
+          <div className="status-icon">✅</div>
+          <div className="status-text">Agreement Completed</div>
+        </div>
+        <div className="status-row">
+          <div className="status-icon">✅</div>
+          <div className="status-text">Mandate Completed</div>
+        </div>
       </div>
+
+      {/* Submit Button */}
+      <div className="Long-button">
+        <button type="submit" className="form-submit">
+          Next
+        </button>
+      </div>
+
+      {/* Submit Button */}
+      {/* <div className="btnContainer">
+                <button
+                  type="submit"
+                  className="nextBtn"
+                >
+                  Next
+                </button>
+              </div> */}
     </div>
   );
 };
 
-export default WaitingPage;
+export default MandatePage;

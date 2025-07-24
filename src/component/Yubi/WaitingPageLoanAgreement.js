@@ -56,7 +56,7 @@ const WaitingPageLoanAgreement = () => {
         </svg>
       </div>
       <div className="waiting-text">
-        <b>Waiting.....</b>
+        <b>Waiting...</b>
       </div>
       {/* ✅ Plug in the CallbackListener to listen for loan_agreement_doc */}
       {/* <CallbackListener
