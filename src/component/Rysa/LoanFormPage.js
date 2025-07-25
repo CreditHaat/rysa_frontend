@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaPhoneAlt, FaUser, FaHome, FaUsers, FaEnvelope } from 'react-icons/fa';
+import { FaPhoneAlt, FaUser, FaHome, FaUsers, FaEnvelope, FaIdCard } from 'react-icons/fa';
 import Image from 'next/image';
 import styles from './LoanForm.module.css';
 
@@ -23,7 +23,7 @@ export default function LoanFormPage() {
   };
   // slider 
   const slides = [
-    { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s12.png' },
+    { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s141.png' },
     { title: 'Festive Loan,<br> Bonanza!', subtitle: 'Exclusive benefits for limited period.', img: '/s171.png' },
     { title: 'Easy Loans, Happy<br> Moments!', subtitle: 'Quick money,zero worries.', img: '/s11.png' },
   ];
@@ -278,6 +278,17 @@ export default function LoanFormPage() {
                       </ul>
                     )}
                   </div>
+                  <div className={styles.field}>
+                    <input name="PanNO"
+                      onChange={handleChange}
+                      value={stepTwoData.address || ''}
+                      className={styles.input}
+                      placeholder="Enter PAN" 
+                      autoCapitalize="characters"/>
+                    <span className={styles.icon}><FaIdCard /></span>
+                    {/* <span className={styles.icon}>🏠</span> */}
+                    {renderError('PAN_number')}
+                  </div>
 
                   {/* last contenct */}
                   <small className={styles.note}>
@@ -346,23 +357,34 @@ export default function LoanFormPage() {
               ) : (
                 <>
                   <div className={styles.field}>
-                    <input name="father"
-                      onChange={handleChange}
-                      value={stepTwoData.father || ''}
-                      className={styles.input}
-                      placeholder="Father / Spouse Name" />
-                    <span className={styles.icon}><FaUsers /></span>
-                    {/* <span className={styles.icon}>👥</span> */}
-                    {renderError('father')}
-                  </div>
-
-                  <div className={styles.field}>
-                    <input name="email"
-                      type="email"
+                    <input name="Email"
                       onChange={handleChange}
                       value={stepTwoData.email || ''}
                       className={styles.input}
-                      placeholder="Email address" />
+                      placeholder="Enter Email" />
+                    <span className={styles.icon}><FaEnvelope /></span>
+                    {/* <span className={styles.icon}>👥</span> */}
+                    {renderError('Email')}
+                  </div>
+
+                  <div className={styles.field}>
+                    <input name="address"
+                      onChange={handleChange}
+                      value={stepTwoData.email || ''}
+                      className={styles.input}
+                      placeholder="Enter Email" />
+                    <span className={styles.icon}><FaEnvelope /></span>
+                    {/* <span className={styles.icon}>👥</span> */}
+                    {renderError('Email')}
+                  </div>
+
+                  <div className={styles.field}>
+                    <input name="CompanyName"
+                      type="text"
+                      onChange={handleChange}
+                      value={stepTwoData.email || ''}
+                      className={styles.input}
+                      placeholder="Enter Company Name" />
                     <span className={styles.icon}><FaEnvelope /></span>
                     {/* <span className={styles.icon}>✉️</span> */}
                     {renderError('email')}
@@ -489,3 +511,14 @@ export default function LoanFormPage() {
 //                       //   alert("Form Submitted Successfully");
 //                       // }
 //                     }}
+// {isOtpBottomSheetVisible && (
+//       <OTPBottomSheet 
+//         isVisible={isOtpBottomSheetVisible} 
+//         verifyOTP={handleVerifyOTP} 
+//         upotp={upotp} 
+//         otpStatus={otpStatus} 
+//         setUpOtp={setUpOtp}
+//       />
+//       add to the top
+//       const [isOtpBottomSheetVisible, setIsOtpBottomSheetVisible] = useState(false); 
+//     )}

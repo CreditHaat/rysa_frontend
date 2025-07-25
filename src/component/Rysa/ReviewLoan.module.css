@@ -46,10 +46,7 @@
   max-width: 432px;
   background: #F7F6FD;
   padding: 30px 20px 46px 20px;
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  border-radius: 24px;
   margin-top: -15px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   font-size: 14px;

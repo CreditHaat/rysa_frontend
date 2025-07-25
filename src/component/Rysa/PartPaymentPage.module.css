@@ -3,21 +3,24 @@
   margin: 0px auto;
   background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
   /* background: #f3f4f6; */
-  min-height: 620px;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Align items vertically */
+  margin-bottom: 30px;
   /* border-radius: 15px; */
 }
  @media screen {
   .container {
   width: auto;
-  height: 750px;
+  height: 100vh;
+  /* height: 750px; */
 }
  }
 
 .headingDiv { 
+  width: 100%;
   height: auto;
   margin-left: 4rem;
   display: flex;
@@ -157,4 +160,84 @@
   color: #00cc66;
   font-size: 13px;
   margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100% !important;  /* Set container width to 100% */
+    min-height: 650px;  /* Keep height consistent */
+    padding: 15px;  /* Add padding for small devices */
+  }
+
+  .headingDiv {
+    margin-left: 0;  /* Remove left margin for smaller screens */
+    justify-content: center;  /* Center the heading */
+    text-align: center;  /* Center heading text */
+  }
+
+  .heading {
+    font-size: 18px;  /* Adjust heading size */
+    margin-bottom: 12px;  /* Reduce margin */
+  }
+
+  .card {
+    width: 100%;  /* Set card width to 100% for smaller screens */
+    max-width: none;  /* Remove max-width restriction */
+    height: auto;  /* Set height to auto */
+    padding: 15px;  /* Reduce padding */
+    margin-top: 15px;  /* Add margin for spacing */
+  }
+
+  .row {
+    flex-direction: column;  /* Stack items vertically */
+    margin-top: 10px;
+  }
+
+  .item {
+    width: 100%;  /* Ensure item takes full width */
+    margin-bottom: 10px;  /* Add space between items */
+  }
+
+  .label {
+    font-size: 14px;  /* Reduce font-size for smaller devices */
+  }
+
+  .value {
+    font-size: 15px;  /* Adjust value font size */
+  }
+
+  .input {
+    font-size: 14px;  /* Adjust input field font size */
+    padding: 8px;  /* Reduce padding */
+  }
+
+  .radioGroup {
+    margin-top: 10px;  /* Reduce space between radio options */
+  }
+
+  .radioLabel {
+    font-size: 16px;  /* Adjust radio label font size */
+  }
+
+  .radioText {
+    font-size: 12px;  /* Reduce radio option font size */
+  }
+
+  .btnContainer {
+    padding: 15px 25px;  /* Reduce button container padding */
+  }
+
+  .nextBtn {
+    font-size: 14px;  /* Reduce font-size for button */
+    padding: 12px;  /* Reduce button padding */
+  }
+
+  .footer {
+    font-size: 10px;  /* Reduce footer font size */
+    margin-top: 15px;  /* Add top margin for spacing */
+  }
+
+  .error, .success {
+    font-size: 12px;  /* Reduce error and success font size */
+  }
 }
