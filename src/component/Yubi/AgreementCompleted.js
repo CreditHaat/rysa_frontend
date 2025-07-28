@@ -7,7 +7,7 @@ import Image from "next/image";
 import hdb from "../../../public/Jays/HDB.png";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Roboto } from "@next/font/google";
-import Mandate from "../../component/Yubi/newplimages/Mandate.png";
+import Agreement from "../../component/Yubi/newplimages/Agreement.png";
 
 
 const roboto = Roboto({
@@ -15,7 +15,7 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-const Mandatecompleted = ({ clientLoanId }) => {
+const Agreementcompleted = ({ clientLoanId }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const salarySlipLink = searchParams.get("salarySlipLink");
@@ -43,7 +43,7 @@ const Mandatecompleted = ({ clientLoanId }) => {
       <form onSubmit={handleSubmit} className="formloanpage">
            <div className="sign-txt">
                            <Image
-                            src={Mandate}
+                            src={Agreement}
                             alt="Selfie taking instruction"
                             height={100}
                             // style={{ alignContent:"center",marginTop:"50px" }}
@@ -62,12 +62,20 @@ const Mandatecompleted = ({ clientLoanId }) => {
           <div className="status-text">Agreement Completed</div>
         </div>
         <div className="status-row">
-          <div className="status-icon">✅</div>
-          <div className="status-text">Mandate Completed</div>
+          <div className="status-icon"></div>
+          <div className="status-text">Complete Mandate...</div>
         </div>
      
 
+          
+      
           {/* Submit Button */}
+              {/* <div className="btnContainer">
+                <button type="button"
+                    className="nextBtn" >
+              Next
+            </button>
+            </div> */}
              <div className="Long-button">
                 <button
                   type="submit"
@@ -85,4 +93,4 @@ const Mandatecompleted = ({ clientLoanId }) => {
     </div>
   );
 };
-export default Mandatecompleted;
+export default Agreementcompleted;

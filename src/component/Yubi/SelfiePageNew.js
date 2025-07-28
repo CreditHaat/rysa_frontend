@@ -35,9 +35,10 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 const videoRef = useRef(null);
 const canvasRef = useRef(null);
 const [showUploadPopup, setShowUploadPopup] = useState(false);
-
-// Add this new state to track the source of the image
 const [imageSource, setImageSource] = useState(null); // 'camera' or 'file'
+const [isCameraActive, setIsCameraActive] = useState(false);
+const cameraContainerRef = useRef(null);
+const capturedImageRef = useRef(null); // New ref for captured image container
 
 // Start camera
 const startCamera = async () => {
@@ -46,8 +47,19 @@ const startCamera = async () => {
     setSuccess("");
     setIsVideoReady(false);
     setShowCamera(true);
-    setCapturedImage(null); // Clear previous capture
-    setImageSource(null); // Reset image source
+    setIsCameraActive(true);
+    setCapturedImage(null);
+    setImageSource(null);
+    
+    // Immediate scroll to where camera will appear
+    setTimeout(() => {
+      if (cameraContainerRef.current) {
+        cameraContainerRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100);
     
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
@@ -77,7 +89,18 @@ const startCamera = async () => {
       const video = videoRef.current;
       video.srcObject = mediaStream;
       
-      const handleVideoReady = () => setIsVideoReady(true);
+      const handleVideoReady = () => {
+        setIsVideoReady(true);
+        // Auto-scroll to camera when video is ready
+        setTimeout(() => {
+          if (cameraContainerRef.current) {
+            cameraContainerRef.current.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 100);
+      };
       
       video.addEventListener('loadedmetadata', handleVideoReady);
       video.addEventListener('canplay', handleVideoReady);
@@ -94,6 +117,7 @@ const startCamera = async () => {
     let errorMessage = "Camera access denied. Please allow camera permission.";
     setError(errorMessage);
     setShowCamera(false);
+    setIsCameraActive(false);
   }
 };
 
@@ -107,6 +131,7 @@ const stopCamera = () => {
     videoRef.current.srcObject = null;
   }
   setShowCamera(false);
+  setIsCameraActive(false);
   setIsVideoReady(false);
 };
 
@@ -120,7 +145,6 @@ const capturePhoto = () => {
     canvas.width = video.videoWidth || video.offsetWidth;
     canvas.height = video.videoHeight || video.offsetHeight;
     
-    // Flip the canvas context if using front camera
     if (facingMode === 'user') {
       context.scale(-1, 1);
       context.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
@@ -132,13 +156,24 @@ const capturePhoto = () => {
       if (blob) {
         const imageUrl = URL.createObjectURL(blob);
         setCapturedImage(imageUrl);
-        setImageSource('camera'); // Set source as camera
+        setImageSource('camera');
         setSuccess("Selfie captured successfully!");
         stopCamera();
+        
+        // Scroll to captured image after a short delay
+        setTimeout(() => {
+          if (capturedImageRef.current) {
+            capturedImageRef.current.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 300);
       }
     }, 'image/jpeg', 0.9);
   }
 };
+
 
 // Handle file upload from gallery
 const handleFileFromGallery = (event) => {
@@ -158,6 +193,16 @@ const handleFileFromGallery = (event) => {
     setImageSource('file'); // Set source as file
     setSuccess("Image selected successfully!");
     event.target.value = ""; // Reset input
+    
+    // Scroll to captured image after a short delay
+    setTimeout(() => {
+      if (capturedImageRef.current) {
+        capturedImageRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 300);
   }
 };
 
@@ -266,27 +311,28 @@ useEffect(() => {
   return (
     <>
       {/* <CallbackListener /> */}
-      {activeContainer === "SelfiePageNew" && (
-        <div className={`${roboto.className} Four`}>
-          <div className="selfie-card">
-            <div className="header-selfie">
-         <div className="LogoPart-selfie">
-                  <Image
-                    src={hdb}
-                    alt="Hdb tag"
-                    style={{alignContent:"center",width:"auto",height:"auto"}}
-                  />
-                </div>
-      </div>
-       <div className="selfieForm-card">
-         <div className="selfiecontent-card">
-            <form className="selfie-box" onSubmit={handleSubmit}>
+     {activeContainer === "SelfiePageNew" && (
+  <div className={`${roboto.className} Four`}>
+         <div className={`selfie-block ${isCameraActive ? 'camera-active' : ''}`}>
+        <div className={`selfie-card ${isCameraActive ? 'camera-active' : ''}`}>
+          <div className="header-selfie">
+       <div className="LogoPart-selfie">
+                <Image
+                  src={hdb}
+                  alt="Hdb tag"
+                  style={{alignContent:"center",width:"auto",height:"auto"}}
+                />
+              </div>
+        </div>
+     <div className={`selfieForm-card ${isCameraActive ? 'camera-active' : ''}`}>
+       <div className="selfiecontent-card">
+          <form className="selfie-box" onSubmit={handleSubmit}>
               <div>
                 <Image
                   src={Selfie}
                   alt="Selfie taking instruction"
                   height={200}
-                  style={{ alignContent:"center",marginTop:"50px",marginLeft:"25px" }}
+                  style={{ alignContent:"center",marginTop:"50px"}}
                 />
               </div>
 
@@ -301,14 +347,16 @@ useEffect(() => {
               <div>
               {/* Show captured image preview */}
               {capturedImage && (
-                <div style={{
-                  marginBottom: '20px',
-                  textAlign: 'center',
-                  border: '2px solid #4CAF50',
-                  borderRadius: '15px',
-                  padding: '10px',
-                  background: '#f9f9f9'
-                }}>
+                <div 
+                  ref={capturedImageRef}
+                  style={{
+                    marginBottom: '20px',
+                    textAlign: 'center',
+                    // border: '2px solid #4CAF50',
+                    borderRadius: '15px',
+                    padding: '10px',
+                    background: '#f9f9f9'
+                  }}>
                   <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>
                     {imageSource === 'camera' ? '📸 Captured Selfie' : '📁 Selected Image'}
                   </h4>
@@ -324,6 +372,28 @@ useEffect(() => {
                       border: '2px solid #ddd'
                     }}
                   />
+                  
+                  {/* Success Message - Moved inside captured image container */}
+                  {success && (
+                    <div
+                      className="success"
+                      style={{ 
+                        color: "#4CAF50", 
+                        marginTop: "15px", 
+                        marginBottom: "10px",
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        gap: '8px',
+                        fontSize: '16px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      <CheckCircle size={20} />
+                      <span>{success}</span>
+                    </div>
+                  )}
+                  
                   <button 
                     type="button" 
                     onClick={handleImageAction}
@@ -343,87 +413,91 @@ useEffect(() => {
               )}
 
              {/* Camera Preview */}
-{showCamera && (
-  <div style={{
-    position: 'relative',
-    marginBottom: '20px',
-    background: '#000',
-    borderRadius: '15px',
-    overflow: 'hidden',
-    minHeight: '300px'
-  }}>
-    {!isVideoReady && (
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        color: 'white',
-        textAlign: 'center',
-        zIndex: 10
-      }}>
-        {/* <p>Starting camera...</p> */}
-      </div>
-    )}
+ {showCamera && (
+              <div 
+                ref={cameraContainerRef}
+                className="camera-container"
+                style={{
+                  position: 'relative',
+                  marginBottom: '20px',
+                  background: '#000',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  minHeight: '300px'
+                }}
+              >
+                {!isVideoReady && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    color: 'white',
+                    textAlign: 'center',
+                    zIndex: 10
+                  }}>
+                    <p>Starting camera...</p>
+                  </div>
+                )}
     
-   <video
-  ref={videoRef}
-  autoPlay
-  playsInline
-  muted
-  style={{
-    width: '100%',
-    height: '300px',
-    objectFit: 'cover',
-    opacity: isVideoReady ? 1 : 0,
-    transform: facingMode === 'user' ? 'scaleX(-1)' : 'scaleX(1)' // Add this line to fix mirror
-  }}
-/>
-    <canvas ref={canvasRef} style={{ display: "none" }} />
-    
-    {/* Camera Controls */}
-    <div style={{
-      position: 'absolute',
-      bottom: '15px',
-      left: '0',
-      right: '0',
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '15px'
-    }}>
-      <button 
-        type="button" 
-        onClick={capturePhoto} 
-        disabled={!isVideoReady}
-        style={{
-          background: 'white',
-          border: 'none',
-          borderRadius: '50%',
-          width: '55px',
-          height: '55px',
-          cursor: 'pointer'
-        }}
-      >
-        📷
-      </button>
-      
-      <button 
-        type="button" 
-        onClick={stopCamera}
-        style={{
-          background: 'rgba(255, 255, 255, 0.9)',
-          border: 'none',
-          borderRadius: '50%',
-          width: '45px',
-          height: '45px',
-          cursor: 'pointer'
-        }}
-      >
-        ✕
-      </button>
-    </div>
-  </div>
-)}
+     <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted
+              style={{
+                width: '100%',
+                height: '300px',
+                objectFit: 'cover',
+                opacity: isVideoReady ? 1 : 0,
+                transform: facingMode === 'user' ? 'scaleX(-1)' : 'scaleX(1)'
+              }}
+            />
+       <canvas ref={canvasRef} style={{ display: "none" }} />
+                
+                {/* Camera Controls */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '15px',
+                  left: '0',
+                  right: '0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '15px'
+                }}>
+                  <button 
+                    type="button" 
+                    onClick={capturePhoto} 
+                    disabled={!isVideoReady}
+                    style={{
+                      background: 'white',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '55px',
+                      height: '55px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    📷
+                  </button>
+                  
+                  <button 
+                    type="button" 
+                    onClick={stopCamera}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.9)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '45px',
+                      height: '45px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            )}
 
 {/* Hidden file input for gallery selection */}
 <input
@@ -577,17 +651,6 @@ useEffect(() => {
                 )}
               </div>
 
-              {/* Success Message */}
-              {success && (
-                <div
-                  className="success"
-                  style={{ color: "#4CAF50", marginTop: "10px", display: 'flex', alignItems: 'center', gap: '8px' }}
-                >
-                  <CheckCircle size={20} />
-                  <span>{success}</span>
-                </div>
-              )}
-
               {/* Error Message */}
               {error && (
                 <div
@@ -601,6 +664,7 @@ useEffect(() => {
             </form>
           </div>
           </div>
+        </div>
         </div>
         </div>
       )}

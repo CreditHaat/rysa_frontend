@@ -12,7 +12,15 @@
   border-bottom-right-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  min-height: 550px;
+  height: 100vh;
+}
+.Message{
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 2%;
+  margin-top: -20px;
+
 }
 .LogoPart-block {
     display: flex;
@@ -39,7 +47,6 @@
 }
 .nextBtn-block {
   width: 300px;
-  /* margin-top: 60px; */
   padding: 14px 0;
   font-size: 15px;
   font-weight: 600;

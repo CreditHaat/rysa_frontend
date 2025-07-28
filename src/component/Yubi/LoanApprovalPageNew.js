@@ -96,13 +96,13 @@ const LoanApprovalPage = ({ clientLoanId }) => {
           className="cardContainerloanpage"
         >
           <h3 style={{textAlign:"center",color:"#777777"}}>Congratulations ! You have been Approved a loan of</h3>
-          <h1 style={{color:"#777777"}}>
-            ₹{approvedLoanAmount ? approvedLoanAmount.toLocaleString() : "0"}
-          </h1>
+        <h1 style={{color:"#777777"}}>
+            ₹{approvedLoanAmount ? approvedLoanAmount.toLocaleString('en-IN') : "0"}
+        </h1>
 
           {/* Loan Amount Field */}
           {/* Loan Amount Field */}
-          <label className="label">Choose loan amount</label>
+          <label className="label">Select loan amount</label>
           <input
             type="number"
             className="inputBox"
@@ -123,7 +123,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
           <p className="helperText">
             {approvedLoanAmount === 100000
               ? "Loan amount is fixed at ₹1,00,000"
-              : `You can enter up to ₹${approvedLoanAmount.toLocaleString()}`}
+             : `You can enter up to ₹${approvedLoanAmount.toLocaleString('en-IN')}`}
           </p>
 
           {/* Loan Amount Slider */}
@@ -144,11 +144,11 @@ const LoanApprovalPage = ({ clientLoanId }) => {
                   : ""
               }
             />
-            <span>₹{approvedLoanAmount.toLocaleString()}</span>
+            <span>₹{approvedLoanAmount.toLocaleString('en-IN')}</span>
           </div>
 
           {/* Tenure Input Field */}
-          <label className="label">Choose loan tenure</label>
+          <label className="label">Select loan tenure</label>
           <input
             type="number"
             className="inputBox"
@@ -180,12 +180,6 @@ const LoanApprovalPage = ({ clientLoanId }) => {
         
       
           {/* Submit Button */}
-              {/* <div className="btnContainer">
-                <button type="button"
-                    className="nextBtn" >
-              Next
-            </button>
-            </div> */}
              <div className="Long-button">
                 <button
                   type="submit"

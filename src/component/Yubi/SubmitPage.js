@@ -47,18 +47,21 @@ export default function SubmitPage() {
         <path className={styles.checkmark} fill="none" d="M14 27l7 7 16-16" />
       </svg>
 
-      <h1 className={styles.title}>Loan Application<br />Submitted!</h1>
+      <h1 className={styles.title}>Congratulations!<br />Your loan of <strong>{amount}</strong> has been successfully approved</h1>
 
-      <p className={styles.ref}>
+      {/* <p className={styles.ref}>
         Reference number is<br />
         <strong>{refNo}</strong>.
-      </p>
+      </p> */}
 
       <p className={styles.message}>
-        Your loan amount of<br />
-        <strong>{amount}</strong><br />
-        has been approved and shall be<br />
-        credited to your account <strong>{account}</strong>
+        The amount will be credited to your bank account <strong>{account}</strong> within 24 hours.
+      </p>
+
+      <br></br>
+      
+      <p className={styles.message}>
+         ✅ Sit back and relax — we’ll notify you once the funds are transferred.
       </p>
     </div>
   );

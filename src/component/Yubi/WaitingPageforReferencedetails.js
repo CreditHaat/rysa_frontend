@@ -22,7 +22,7 @@ const WaitingPageforReferencedetails = () => {
         </svg>
       </div>
       <div className="waiting-text">
-        <b>Generating final offer..."</b>
+        <b>Generating final offer...</b>
       </div>
     </div>
   );

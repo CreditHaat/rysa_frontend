@@ -1,103 +1,93 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./KfsCompleted.css";
-import { Roboto } from "next/font/google";
+// import KFSDocs from "./KfsDocs";
 // import axios from "axios";
-// import CallbackListener from "../CallbackListener";
+import Image from "next/image";
+import hdb from "../../../public/Jays/HDB.png";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Roboto } from "@next/font/google";
+import Kfs from "../../component/Yubi/newplimages/KFS.png";
+
 
 const roboto = Roboto({
   weight: ["400", "700"],
   subsets: ["latin"],
 });
 
-const LoadingPage = () => {
-  const clientLoanId = localStorage.getItem("clientLoanId");
-  const hasCalledApi = useRef(false);
+const Kfscompleted = ({ clientLoanId }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const salarySlipLink = searchParams.get("salarySlipLink");
+  const paramId = searchParams.get("client_loan_id");
 
-  useEffect(() => {
-    if (!clientLoanId) {
-      console.error("❌ Client Loan ID not found in localStorage");
-      return;
-    }
 
-    if (hasCalledApi.current) {
-      console.log("⚠️ Skipping duplicate API call");
-      return;
-    }
-    hasCalledApi.current = true;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
-    const docType = localStorage.getItem("documentTypeStatus");
-    if (docType === "kfs_doc") {
-      const callLoanAgreementAPI = async () => {
-        try {
-          const res = await axios.post(
-            `http://localhost:8080/generateLoanAgreementDocument`,
-            { clientLoanId }
-          );
-          console.log("✅ Loan Agreement API called:", res.data);
-        } catch (err) {
-          console.error("❌ Loan Agreement API error:", err);
-        }
-      };
-      callLoanAgreementAPI();
-    }
-  }, [clientLoanId]);
   return (
-    <div className={`${roboto.className} waiting-table`}>
-      <div className="loading-circle">
-        <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6z"
-            fill="#6039D2"
-            stroke="#6039D2"
-            strokeWidth="2.5"
-          />
-        </svg>
+    <div className={`${roboto.className} pageContainerloanpage`}>
+        <div className="loan-block">
+      <div className="loan-head">
+         <div className="hdb-logo">
+                  <Image
+                    src={hdb}
+                    alt="Hdb tag"
+                    style={{alignContent:"center",width:"auto",height:"auto"}}
+                  />
+                </div>
       </div>
+      <div className="cardForm-loan">
+        <div className="content-loan">
+      <form onSubmit={handleSubmit} className="formloanpage">
+           <div className="sign-txt">
+                           <Image
+                            src={Kfs}
+                            alt="Selfie taking instruction"
+                            height={100}
+                            // style={{ alignContent:"center",marginTop:"50px" }}
+                          />
+                        </div>
+                        <br></br>
+                        <br></br>
 
-      <div className="status-box">
+                         
         <div className="status-row">
           <div className="status-icon">✅</div>
           <div className="status-text">KFS Completed</div>
         </div>
         <div className="status-row">
           <div className="status-icon"></div>
-          <div className="status-text">Agreement...</div>
+          <div className="status-text">Complete Agreement...</div>
         </div>
+       
+     
+
+          
+      
+          {/* Submit Button */}
+              {/* <div className="btnContainer">
+                <button type="button"
+                    className="nextBtn" >
+              Next
+            </button>
+            </div> */}
+             <div className="Long-button">
+                <button
+                  type="submit"
+                  className="form-submit"
+                >
+                  Next
+                </button>
+              </div>
+            
+      
+      </form>
       </div>
-
-      {/* Submit Button */}
-      <div className="Long-button">
-        <button type="submit" className="form-submit">
-          Next
-        </button>
       </div>
-
-      {/* <CallbackListener
-        onEsignReady={async () => {
-          console.log("✅ Loan Agreement doc generated webhook received!");
-
-          try {
-            const res = await axios.post(`http://localhost:8080/requestEsign`, {
-              clientLoanId,
-              // email: "user@example.com",
-              // phone: "9999999999",
-              // firstName: "John",
-              // lastName: "Doe",
-            });
-            console.log("✅ eSign API Response:", res.data);
-
-            const redirectUrl = res.data?.obj;
-            if (redirectUrl) {
-              window.location.href = redirectUrl;
-            }
-          } catch (err) {
-            console.error("❌ eSign API error:", err);
-          }
-        }}
-      /> */}
+      </div>
     </div>
   );
 };
-
-export default LoadingPage;
+export default Kfscompleted;

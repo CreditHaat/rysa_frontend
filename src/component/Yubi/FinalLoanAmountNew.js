@@ -1,145 +1,71 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import "./FinalLoanAmountNew.css";
-// import axios from "axios";
-import { Roboto } from "@next/font/google";
-import Image from "next/image";
-import HeaderPart from "./HeaderPart";
-import KFSDocs from "./KfsDocs";
-import { useSearchParams, useRouter } from "next/navigation";
-import hdb from "../Yubi/newplimages/HDB.png";
+'use client';
+import React, { useEffect, useState } from 'react';
+import styles from './SubmitPage.module.css';
+// import confetti from 'canvas-confetti';
 
-const roboto = Roboto({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
-
-const FinalLoanAmountNew = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const [loanAmount, setLoanAmount] = useState("");
-  const [tenure, setTenure] = useState("");
-  const [interestRate, setInterestRate] = useState("");
-  const clientLoanId = searchParams.get("clientLoanId") || "";
+export default function SubmitPage() {
+  const [refNo, setRefNo] = useState('');
+  const [amount, setAmount] = useState('');
+  const [account, setAccount] = useState('');
+  const [tenure, setTenure] = useState('');
+  const [interestRate, setInterestRate] = useState('');
 
   useEffect(() => {
-    // ✅ Fetch from localStorage after component mounts
-    const storedLoanAmount = localStorage.getItem("sanctionLoanAmount");
-    const storedTenure = localStorage.getItem("sanctionTenure");
-    const storedInterestRate = localStorage.getItem("sanctionInterestRate");
-    // const storedClientLoanId = localStorage.getItem("clientLoanId");
 
-    if (storedLoanAmount) setLoanAmount(storedLoanAmount);
-    if (storedTenure) setTenure(storedTenure);
-    if (storedInterestRate) setInterestRate(storedInterestRate);
-    // if (storedClientLoanId) setClientLoanId(storedClientLoanId);
+    // 🟩 Simulate backend fetch (you can replace with fetch/axios)
+    const fetchData = async () => {
+      const data = {
+        ref: 'D1102345',
+        amount: '₹2,50,000',
+        accountNumber: '1298656789',
+        tenure: '24 months',
+        interestRate: '12.5%'
+      };
+
+      setRefNo(data.ref);
+      setAmount(data.amount);
+      setAccount(maskAccount(data.accountNumber));
+      setTenure(data.tenure);
+      setInterestRate(data.interestRate);
+    };
+
+    fetchData();
   }, []);
 
-  const handleAgree = () => {
-    console.log("✅ User agreed to final sanction details");
-    // ✅ Navigate immediately
-    router.push(
-      `/yubi/Smswaitingpage?clientLoanId=${clientLoanId}&loanAmount=${loanAmount}&tenure=${tenure}&interestRate=${interestRate}`
-    );
+  // ✅ Mask account number: show first 2 and last 4 digits only
+  const maskAccount = (accNum) => {
+    if (!accNum || accNum.length < 6) return accNum;
+    const first2 = accNum.slice(0, 2);
+    const last4 = accNum.slice(-4);
+    return `${first2}XX${last4}`;
   };
 
-    // Format currency function
- const formatCurrency = (amount) => {
-  return amount != null
-    ? new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(amount)
-    : "";
-};
-
   return (
-    <>
-      <div className={`${roboto.className} final-offer`}>
-         <div className="final-card">
-         <div className="loan-head">
-         <div className="hdb-logo">
-                  <Image
-                    src={hdb}
-                    alt="Hdb tag"
-                    style={{alignContent:"center",width:"auto",height:"auto"}}
-                  />
-                </div>
-      </div>
-       <div className="cardForm-card">
-        <div className="content-card">
-          <div>
-             <h5 style={{ paddingBottom: "20px",textAlign:"center" }}>
-            Congratulations! Your final approved loan details are below
-          </h5>
-          </div>
-        
-            <div className="section">
+    <div className={styles.container}>
+      <svg className={styles.animatedCheck} viewBox="0 0 52 52">
+        <circle className={styles.checkCircle} cx="26" cy="26" r="25" fill="none" />
+        <path className={styles.checkmark} fill="none" d="M14 27l7 7 16-16" />
+      </svg>
 
-            
-            <div className="fieldGroup">
-              <div className="field">
-                <div className="labelBlock">
-                  <span className="label">Loan Amount</span>
-                </div>
-                <div className="divDout">
-                    <span className="centerDout">:</span>
-                </div>
-                <div className="divValue">
-                <span className="value">{formatCurrency(loanAmount)}</span>
-                </div>
-              </div>
-              
-              <div className="field">
-                <div className="labelBlock">
-                  <span className="label">Interest Rate</span>
-                 
-                </div>
-                <div className="divDout">
-                    <span className="centerDout">:</span>
-                </div>
-                <div className="divValue">
-                <span className="value">{interestRate}%</span>
-                </div>
-              </div>
-              
-              
-              
-              <div className="field">
-                <div className="labelBlock">
-                  <span className="label">EMI Tenure</span>
-                </div>
-                <div className="divDout">
-                    <span className="centerDout">:</span>
-                </div>
-                <div className="divValue">
-                <span className="value">{tenure ? `24 months` : ''}</span>
-                </div>
-              </div >
-                {/* Submit Button */}
-              {/* <div className="btnContainer">
-                <button type="button"
-                    className="nextBtn" >
-              Next
-            </button>
-            </div> */}
-             <div className="Long-button">
-                <button
-                  type="submit"
-                  className="form-submit"
-                >
-                  Next
-                </button>
-              </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
+      <h1 className={styles.title}>Congratulations!<br />Your final approved loan details are below</h1>
+
+      <div className={styles.loanDetails}>
+        <p className={styles.loanAmount}>
+          Loan Amount<br />
+          <strong>{amount}</strong>
+        </p>
+           <br></br>
+        <p className={styles.tenure}>
+          Tenure<br />
+          <strong>{tenure}</strong>
+        </p>
+           <br></br>
+
+        <p className={styles.interestRate}>
+          Interest Rate<br />
+          <strong>{interestRate}</strong>
+        </p>
       </div>
-    </>
+    </div>
   );
-};
-
-export default FinalLoanAmountNew;
+}

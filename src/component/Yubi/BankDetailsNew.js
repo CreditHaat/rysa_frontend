@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import Select from "react-select";
+import dynamic from 'next/dynamic'; 
+const Select = dynamic(() => import('react-select'), { ssr: false }); 
 import { useSearchParams } from "next/navigation";
 import {
   FaUser,
@@ -10,7 +11,7 @@ import {
   FaLandmark,
 } from "react-icons/fa";
 import "./BankDetailsNew.css";
-// import axios from "axios";
+import axios from "axios";
 import { Roboto } from "@next/font/google";
 import Image from "next/image";
 import HeaderPart from "./HeaderPart";
@@ -44,7 +45,7 @@ const bankdetails = () => {
     salarySlip: null,
     bankName: "",
     branchName: "",
-    salarySlipLink: "", // 👈 ADD THIS!
+    salarySlipLink: "",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -144,7 +145,7 @@ const bankdetails = () => {
 
     try {
       const presignRes = await axios.get(
-        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}generatePresignedUrl`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}/generatePresignedUrl`,
         { params: { fileName: file.name } }
       );
 
@@ -267,7 +268,7 @@ const bankdetails = () => {
         const response = await axios.post(
           `http://localhost:8080/submitBankDetails`,
           {
-            clientLoanId: clientLoanId, // 👈 Safe and dynamic
+            clientLoanId: clientLoanId, 
             bankName: formData.bankName,
             branchName: formData.branchName,
             accountName: formData.accountname,
@@ -279,7 +280,7 @@ const bankdetails = () => {
         if (response.data.code === 0) {
           console.log("Disbursement API Response:", response.data.obj);
           // ✅ Redirect or show success
-          // setActiveContainer("LoanApprovalPage");
+          setActiveContainer("LoanApprovalPage");
           setActiveContainer("SelfieWaiting");
         } else {
           console.error("Error:", response.data.msg);
@@ -353,7 +354,7 @@ const bankdetails = () => {
                   </span>
                 </div>
                 {formErrors.accountname && (
-                  <span className="error">{formErrors.accountname}</span>
+                  <div className="Message">{formErrors.accountname}</div>
                 )}
               </div>
               {/*Bank Name Field */}
@@ -383,7 +384,7 @@ const bankdetails = () => {
                   </span>
                 </div>
                 {formErrors.bankName && (
-                  <span className="error">{formErrors.bankName}</span>
+                  <div className="Message">{formErrors.bankName}</div>
                 )}
               </div>
               {/*Branch Name Field */}
@@ -413,14 +414,13 @@ const bankdetails = () => {
                   </span>
                 </div>
                 {formErrors.branchName && (
-                  <span className="error">{formErrors.branchName}</span>
+                  <div className="Message">{formErrors.branchName}</div>
                 )}
               </div>
 
               {/* IFSC Field */}
               <div className="fill-form">
                 <div
-                  //   className={styles.inputWrapper}
                   style={{ position: "relative" }}
                 >
                   <input
@@ -456,7 +456,6 @@ const bankdetails = () => {
               {/* Account number Field */}
               <div className="fill-form">
                 <div
-                  //   className={styles.inputWrapper}
                   style={{ position: "relative" }}
                 >
                   <input
@@ -508,8 +507,7 @@ const bankdetails = () => {
                 />
               </div>
 
-              {/* Submit Button */}
-              
+              {/* Submit Button */}      
                 <div className="short-button">
                 <button
                   type="submit"

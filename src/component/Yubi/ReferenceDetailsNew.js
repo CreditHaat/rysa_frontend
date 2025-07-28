@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import Select from "react-select";
+// import Select from "react-select";
+import dynamic from 'next/dynamic';
+const Select = dynamic(() => import('react-select'), { ssr: false });
 import { FaUser, FaBuilding, FaCreditCard, FaPhone } from "react-icons/fa";
 import "./ReferenceDetailsNew.css";
 // import axios from "axios";
@@ -120,12 +122,6 @@ const NewReferenceDt = () => {
       }}
     ></div>
   );
-  // const relationOptions = [
-  //   { value: "father", label: "Father" },
-  //   { value: "mother", label: "Mother" },
-  //   { value: "friend", label: "Friend" },
-  //   { value: "relative", label: "Relative" },
-  // ];
 
   const handlemothersNameChange = (e) => {
     const value = e.target.value;
@@ -369,7 +365,7 @@ const NewReferenceDt = () => {
                   </span>
                 </div>
                 {formErrors.mothersName && (
-                  <span className="error-msg">{formErrors.mothersName}</span>
+                  <div className="Message">{formErrors.mothersName}</div>
                 )}
               </div>
 
@@ -400,9 +396,9 @@ const NewReferenceDt = () => {
                   </span>
                 </div>
                 {formErrors.yearOfExperience && (
-                  <span className="error-msg">
+                  <div className="Message">
                     {formErrors.yearOfExperience}
-                  </span>
+                  </div>
                 )}
               </div>
 

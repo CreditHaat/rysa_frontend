@@ -56,7 +56,6 @@ const SMSWaiting = () => {
         <h1 className="sms-waiting-txt"><b>Waiting...</b></h1>
 
         {/* <div className="sms-divider"></div> */}
-        <br></br>
 
         <div className="sms-message-container">
           <p className="sms-message">

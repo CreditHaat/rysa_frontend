@@ -2,7 +2,7 @@
 
 import React from "react";
 // import FinalSanctionPage from "../../../components/Yubi/FinalLoanOffer";
-import FinalLoanAmountNew from "../../../component/Yubi/PageRejection";
+import AgreementCompleted from "../../../component/Yubi/AgreementCompleted";
 import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
@@ -15,7 +15,7 @@ export default function Page({ params }) {
 
   return (
     <div style={{ fontFamily: "sans-serif" }}>
-      <FinalLoanAmountNew params={params} />
+      <AgreementCompleted params={params} />
     </div>
   );
 }

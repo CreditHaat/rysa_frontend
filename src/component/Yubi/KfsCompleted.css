@@ -1,94 +1,60 @@
-/* WaitingPage.css */
-.waiting-table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f7f6fd;
-    width: 100%;
-    font-family: Roboto;
+.pageContainerloanpage {
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  min-height: 100vh;
   }
-   .Five {
-    max-width: 330px;
-    width: 77%;
-    height: 550px;
-    border-radius: 20px;
-    border: 2px solid #ddd;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    padding: 40px;
-    background-color: #F7F6FD;
-    margin-top: 160px;
-  }
-
-  @media (max-width: 400px){
- .Five {
-    max-width: 330px;
-    width: 86%;
-    margin-left: 30px;
-    height: 550px;
-    border-radius: 20px;
-    border: 2px solid #ddd;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    padding: 40px;
-    background-color: #F7F6FD;
-    margin-top: 160px;
-  }
+  .loan-block{
+  width: 432px;
+  /* background-color: red; */
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-height: auto;
+  height: 100vh;
 }
-  
-  .loading-circle {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border: 8px solid #e8e4f3;
-    border-top: 8px solid #6039D2;
-    border-right: 8px solid #6039D2;
-    border-radius: 50%;
+.sign-txt{
+  align-content: center;
+  margin-left: 80px;
+  margin-top: 40px;
+}
+.hdb-logo {
     display: flex;
-    align-items: center;
     justify-content: center;
-    animation: spin 3s linear infinite;
-    margin-bottom: 40px;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .hourglass-icon {
-    width: 40px;
-    height: 40px;
-    fill: #6039D2;
-  }
-  
-  .waiting-text {
-    font-size: 24px;
-    font-weight: 400;
-    color: #6b7280;
-    text-align: center;
-    letter-spacing: 0.5px;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .loading-circle {
-      width: 100px;
-      height: 100px;
-      border-width: 6px;
-      margin-bottom: 30px;
-    }
-    
-    .hourglass-icon {
-      width: 32px;
-      height: 32px;
-    }
-    
-    .loading-text {
-      font-size: 20px;
-    }
+    align-items: center;
+    height: 100%;
+    border-radius: 10px 10px 0px 0px;
+ }
+
+ .loan-head {
+  margin-top: -20px;
+  margin-bottom: -13px; 
+}
+.cardForm-loan {
+  padding-left: 5rem;
+  padding-top: 30px;
+  padding: 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background: #F7F6FD;
+  min-height: 472px;
+  justify-items: center;
+  height: 90vh;
+}
+.content-loan {
+  padding: 20px;
+}
+
+/* button end css */
+.cardContainerloanpage{
+  align-items: center;
+}
+  .formloanpage{
+    align-content: center;
+    align-items: center;
   }
   .form-submit {
       width: 100%;
@@ -112,39 +78,7 @@
     background-color: white;
     border-top: 1px solid #e5e7eb;
   }
-
-  .para{
-    color: #777777;
-    text-align: center;
-  }
-  
-
-.btnContainer{
-    position: fixed;
-    padding: 3px;
-    width: 410px;
-    background-color: rgb(255, 255, 255);
-    bottom: 0;
-	 justify-items: center;
-   transform: translate(-40px);
-      z-index: 999;
-  display: flex;
-  }
-  .nextBtn {
-    width: 395px;
-  margin: 3px;
-  padding: 14px 0;
-  font-size: 15px;
-  font-weight: 600;
-  background: #6039D2;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-
-.status-box {
+  .status-box {
   display: table;
   border-radius: 8px;
   padding: 20px 30px;
@@ -152,7 +86,7 @@
 }
 
 .status-row {
-  display: table-row;
+  /* display: table-row; */
   margin-bottom: 10px;
 }
 
@@ -161,7 +95,7 @@
   display: table-cell;
   vertical-align: middle;
   padding: 8px 12px;
-  font-size: 18px;
+  font-size: 21px;
 }
 
 .status-icon {
@@ -175,3 +109,7 @@
   color: #777777;
 }
 
+  
+  
+  
+  

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./VerifiedSelfie.css";
 import { Roboto } from "next/font/google";
-import NewBankD from "./BankDetails";
+import NewBankD from "./BankDetailsNew";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const roboto = Roboto({
@@ -62,16 +62,6 @@ const VerifiedSelfie = () => {
           Next
         </button>
       </div> */}
-
-          {/* Submit Button */}
-          {/* <div className="btnContainer">
-                <button
-                  type="submit"
-                  className="nextBtn"
-                >
-                  Next
-                </button>
-              </div> */}
         </div>
       )}
     </>
