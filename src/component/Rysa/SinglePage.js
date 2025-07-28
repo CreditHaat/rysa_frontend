@@ -131,10 +131,10 @@ const handleApplyClick = () => {
           {/* Right Image */}
           <div className={styles.heroImageContainer}>
             <Image
-              src="/happy_woman.png"
+              src="/girls2.png"
               alt="Happy woman with hands up"
-              width={400}
-              height={500}
+              width={500}
+              height={600}
               className={styles.heroImage}
             />
           </div>

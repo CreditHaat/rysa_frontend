@@ -1,103 +1,91 @@
 .numberStart {
-  width: 432px;
-  height: 100vh;
-  margin: 0 auto;
-  background-color: #fff;
-  position: relative;
-}
-
-.numberOneDiv {
-  width: 432px;
-  height: 200px;
-  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
-  /* border-top-left-radius: 15px; */
-  /* border-top-right-radius: 15px; */
-}
-
-.numberTwoDiv {
-  width: 432px;
-  height: 230px;
-  height: calc(100vh - 200px); /* 30px overlap included  calc(100vh - 200px)*/
-  background-color: #4a24ff;
-  margin-top: -30px; /* to overlap 30px on numberOneDiv */
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  position: relative;
-  z-index: 1;
-}
-.hero1 {
-  /* position: relative;
+  background: white;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px; */
-  position: relative;
-  /* background: linear-gradient(135deg, #f26bff 0%, #7b5dff 100%);  */
-  padding: 24px 20px 10px 20px;
-  /* min-height: 190px; */
+  /*  */
+  /* width: 432px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+  position: relative; */
+}
+
+.numberOneDiv {
+    width: 100%;
+  max-width: 432px;
+  /* height: 200px; */
+  padding: 0px 0 0 4px;
   color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  font-size: 17px;
+  z-index: 1;
+   margin-top: -20px;
+  margin-bottom: -10px; 
+}
+@media screen and (max-width: 480px) {
+  .numberOneDiv {
+      width: 100%;
+  max-width: 432px;
+  /* height: 200px; */
+  padding: 0px 0 0 4px;
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  font-size: 17px;
+  z-index: 1;
+   margin-top: -20px;
+  margin-bottom: -10px; 
+    width: 100%; /* Full width for mobile */
+    /* max-width: 460px;  */
+    font-size: 14px; /* Adjust font size for readability */
+    /* padding: 10px 4px; */
+    margin-top: -20px; /* Removes negative margin for better spacing */
+    margin-bottom: -10px; /* Space between divs */
+  }
 }
 
-.heroText1 {
-  padding-top: 20px;
-  z-index: 2;
-  text-align: left;
-  /* position: relative;
-  z-index: 2; */
-}
-
-.title1 {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.2;
-  /* font-size: 22px;
-  font-weight: 700;
-  line-height: 1.2; */
-}
-
-.subtitle1 {
+.numberTwoDiv {
+  height: calc(100vh - 200px); /* 30px overlap included  calc(100vh - 200px)*/
+  margin-top: -15px; /* to overlap 30px on numberOneDiv */
+  position: relative;
+  z-index: 1;
+   width: 100%;
+  max-width: 432px;
+  background: #F7F6FD;
+  border-radius: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   font-size: 14px;
-  margin-top: 4px;
-  /* font-size: 14px;
-  margin-top: 4px; */
+  color: #111;
+  z-index: 3;
+  margin-bottom: 25px;
 }
-
-.progressBar1 {
-  display: flex;
-  justify-content: center;
-  /* margin-top: 10px; */
-  gap: 6px;
-  /* justify-content: center;
-  margin-top: 10px;
-  display: flex;
-  gap: 6px; */
+.header {
+  width: 100%;
+  max-width: 432px;
+  /* height: 200px; */
+  padding: 0px 0 0 4px;
+  color: #ffffff;
+  font-weight: 600;
+  /* background: linear-gradient(to right, #f3b2f5 50%, #a78afa); */
+  background: red;
+  font-size: 17px;
+  z-index: 1;
+   /* margin-top: -20px; */
+  margin-bottom: 0px; 
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
-
-.dot1,
-.dotActive1 {
-  margin-top: 2rem;
-  width: 28px;
-  height: 6px;
-  border-radius: 2px;
-  background: #ffffff66;
-  cursor: pointer;
-}
-
-.dotActive1 {
-  background: #ffffff;
-   /* background: #ffffff; */
-}
-
-.imgWrap1 {
-  position: absolute;
-  margin-top: 60px;
-  right: 2;
-  bottom: 0px;
-  width: 180px;
-  height: 170px;
-  overflow: none;
-  border-radius: 8px;
-}
+.headerLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 10px 10px 0px 0px;
+    padding-bottom: 12px;
+ }
 
 .listpageContainer {
   display: flex;
@@ -106,11 +94,12 @@
   padding-top: 20px;
 }
 .allnewcardContainer {
+  height: 100vh;
   width: 100%;
-  max-width: 432px;
+  /* max-width: 432px; */
   padding: 20px;
   background-color: #f6f6f6;
-  border-radius: 16px;
+  border-radius: 24px;
   /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
   margin-top: -20px;
   display: flex;
@@ -123,7 +112,8 @@
 .newcardContainer {
   margin-top: 2rem;
   margin-bottom: 1rem;
-  background: linear-gradient(to right, #8ca8e6, #ECDDFE, #FEE1A2);
+  background-color: white;
+  /* background: linear-gradient(to right, #8ca8e6, #ECDDFE, #FEE1A2); */
   padding: 20px;
   border-radius: 16px;
   text-align: center;

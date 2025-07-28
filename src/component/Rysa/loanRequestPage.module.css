@@ -46,8 +46,8 @@
   justify-content: flex-start;
   align-items: center;
   margin-top: -15px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
 }
 
 .dropdown {

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./NewBlFirstPage.module.css";
 import Image from 'next/image';
+import hdb from '../../../public/Jays/HDB.png';
 import clock from '../../../public/clock.png';
 import per from '../../../public/Group_10.png'
 import { Roboto } from '@next/font/google';
@@ -13,48 +14,40 @@ const roboto = Roboto({
 });
 
 const NewBlListPage = ({ companies, getLoanBackendMethod, redirectLinkMethod, mobileNumber }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
-  const handleDataLayerStage = (stage) => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ 'stage': stage });
-  };
+  // const handleDataLayerStage = (stage) => {
+  //   window.dataLayer = window.dataLayer || [];
+  //   window.dataLayer.push({ 'stage': stage });
+  // };
 
-  const slides = [
-    { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s12.png' },
-    { title: 'Festive Loan,<br> Bonanza!', subtitle: 'Exclusive benefits for limited period.', img: '/s171.png' },
-    { title: 'Easy Loans, Happy<br> Moments!', subtitle: 'Quick money,zero worries.', img: '/s11.png' },
-  ];
+  // const slides = [
+  //   { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s141.png' },
+  //   { title: 'Festive Loan,<br> Bonanza!', subtitle: 'Exclusive benefits for limited period.', img: '/s171.png' },
+  //   { title: 'Easy Loans, Happy<br> Moments!', subtitle: 'Quick money,zero worries.', img: '/s11.png' },
+  // ];
 
-  const [currentSlide, setSlide] = useState(0);
-  const [currentStep, setStep] = useState(1);
+  // const [currentSlide, setSlide] = useState(0);
+  // const [currentStep, setStep] = useState(1);
 
-  useEffect(() => {
-    const id = setInterval(() => setSlide(i => (i + 1) % slides.length), 3500);
-    return () => clearInterval(id);
-  }, []);
+  // useEffect(() => {
+  //   const id = setInterval(() => setSlide(i => (i + 1) % slides.length), 3500);
+  //   return () => clearInterval(id);
+  // }, []);
 
   return (
     <>
    <div className={styles.numberStart}>
             <div className={styles.numberOneDiv}> {/*header*/}
-              <header className={styles.hero1}>
-            {/* <button className={styles.backBtn1} onClick={() => history.back()}>&lt; Back</button> */}
-            <div className={styles.heroText1}>
-              <h1 className={styles.title1} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }} />
-              <p className={styles.subtitle1} dangerouslySetInnerHTML={{ __html: slides[currentSlide].subtitle }} />
-            </div>
-            <div className={styles.progressBar1}>
-              {slides.map((_, i) => (
-                <span key={i} className={i === currentSlide ? styles.dotActive1 : styles.dot1} onClick={() => setSlide(i)} />
-              ))}
-            </div>
-            <div className={styles.imgWrap1}>
-              <Image src={slides[currentSlide].img} alt="Hero visual" fill priority style={{ objectFit: 'cover' }} />
-            </div>
-          </header>
+         <div className={styles.headerLogo}>
+                  <Image
+                    src={hdb}
+                    alt="Hdb tag"
+                    style={{alignContent:"center",width:"auto",height:"auto", top:"-4"}}
+                  />
+                </div>
             </div>{/*header end*/}
             <div className={styles.numberTwoDiv}>
                 <div className={`${roboto.className} ${styles.listpageContainer}`}>

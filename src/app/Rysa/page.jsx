@@ -2,21 +2,22 @@
 import React from 'react'
 import { Roboto } from 'next/font/google';
 import SinglePage from '../../component/Rysa/SinglePage';
-import SecondPage from '../../component/Rysa/SecondePage.js';
+import LoanFrom from '../../component/Rysa/LoanFormPage.js';
 import ThridPage from '../../component/Rysa/ThridPage.js';
-import FourthPage from '../../component/Rysa/FourthPage.js';
-import FivePage from '../../component/Rysa/FivePage.js';
-import SixPage from '../../component/Rysa/SixPage.js';
+import LoanRangePage from '../../component/Rysa/LoanRangePage.js';
+import ReviewLoan from '../../component/Rysa/ReviewLoanPage.js';
+import BankDetailsPage from '../../component/Rysa/BankDetailsPage';
 import NewBlListPage from '../../component/Rysa/NewBlListPage.js';
 import LoginPage from '../../component/Rysa/LoginPage.js';
 import RepaymentHistoryPage from '../../component/Rysa/RepaymentHistoryPage.js';
-import LoanRepaymentPage from '../../component/Rysa/loanRequestPage.js';
+import LoanRequestPage from '../../component/Rysa/loanRequestPage.js';
 import RepaymentPage from '../../component/Rysa/RepaymentPage.js';
 import PreCloserPage from '../../component/Rysa/PreCloserPage.js';
 import PartPaymentPage from '../../component/Rysa/PartPaymentPage.js';
 import WaitingPage from '../../component/Rysa/WaitingPage.js';
 import SubmitPage from '../../component/Rysa/SubmitPage.js';
 import SubmitButtonPage from '../../component/Rysa/SubmitButton/submitButtonPage.js';
+import IframePage from '../../component/Rysa/IframeScreen';
 // import NewBankD from '../../component/Rysa/Bank_Details.js';
 
 const roboto = Roboto({
@@ -67,25 +68,26 @@ function page() {
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
           />
       {/* <SinglePage/>    */}
-      {/* <SecondPage />   */}
+      {/* <LoanFrom />   */}
        {/* <NewBlListPage
       companies={companies}
       getLoanBackendMethod={getLoanBackendMethod}
       redirectLinkMethod={redirectLinkMethod}
       mobileNumber={"9876543210"}
     /> */}
-      {/* <FourthPage/> */}
-      {/* <FivePage/> */}
-      {/* <SixPage/> */}
+      {/* <LoanRangePage/> */}
+      {/* <ReviewLoan/> */}
+      {/* <BankDetailsPage/> */}
       {/* <LoginPage/> */}
       {/* <RepaymentHistoryPage/> */}
-      {/* <LoanRepaymentPage/> */}
+      {/* <LoanRequestPage/> */}
       {/* <RepaymentPage/> */}
        {/* <PreCloserPage/> */}
        {/* <PartPaymentPage/> */}
        {/* <WaitingPage/> */}
        {/* <SubmitPage/> */}
        {/* <SubmitButtonPage/> */}
+       <IframePage/>
     </div>
   )
 }
