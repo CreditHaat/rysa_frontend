@@ -14,50 +14,12 @@
   /* border-radius: 12px; */
 }
 
-
 /* ✅ Animated SVG check wrapper */
 .animatedCheck {
   width: 100px;
   height: 100px;
   margin-bottom: 20px;
   animation: popIn 0.3s ease-out;
-}
-
-/* ✅ Circle behind tick */
-.checkCircle {
-  stroke: #ffffff;
-  stroke-width: 0;
-  fill: #4CA800;
-  opacity: 0.9;
-}
-
-/* ✅ Animated tick stroke */
-.checkmark {
-  stroke: white;
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  animation: drawCheck 0.9s ease forwards;
-}
-
-/* ✅ Tick draw animation */
-@keyframes drawCheck {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* ✅ Pop-in animation for check icon */
-@keyframes popIn {
-  0% {
-    transform: scale(0.2);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 .title {
@@ -77,6 +39,163 @@
   line-height: 1.5;
 }
 
+/* Professional Success Checkmark Styles */
+.professionalCheckmarkContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+/* Updated styling from KFS Completed page */
+.statusIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.statusCompleted {
+  background: linear-gradient(45deg, #10B981, #059669);
+  color: white;
+  animation: completedPulse 2s ease-in-out infinite;
+}
+
+@keyframes completedPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); 
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); 
+  }
+}
+
+/* Keep original styles for backward compatibility */
+.successCircle {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 20px rgba(16, 185, 129, 0.25),
+    0 2px 8px rgba(16, 185, 129, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  animation: professionalBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  transform: scale(0);
+  z-index: 2;
+}
+
+.checkmarkProfessional {
+  width: 24px;
+  height: 40px;
+  border: solid #ffffff;
+  border-width: 0 3.5px 3.5px 0;
+  transform: rotate(45deg);
+  animation: professionalDraw 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.successRipple {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #10b981;
+  border-radius: 50%;
+  animation: professionalRipple 1.5s ease-out 0.8s forwards;
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Professional Keyframe Animations */
+@keyframes professionalBounce {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.8) rotate(5deg);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.1) rotate(-2deg);
+    opacity: 0.9;
+  }
+  85% {
+    transform: scale(0.95) rotate(1deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes professionalDraw {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+  25% {
+    width: 8px;
+    height: 0;
+    opacity: 0.4;
+    transform: rotate(45deg) scale(0.7);
+  }
+  50% {
+    width: 16px;
+    height: 20px;
+    opacity: 0.7;
+    transform: rotate(45deg) scale(0.9);
+  }
+  75% {
+    width: 22px;
+    height: 35px;
+    opacity: 0.9;
+    transform: rotate(45deg) scale(1.05);
+  }
+  100% {
+    width: 24px;
+    height: 40px;
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+@keyframes professionalRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+    border-width: 2px;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.4;
+    border-width: 1.5px;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
 /* ✅ Responsive design for small screens (phones) */
 @media (max-width: 480px) {
   .container {
@@ -93,14 +212,6 @@
     margin-bottom: 16px;
   }
 
-  .checkCircle {
-    stroke-width: 2;
-  }
-
-  .checkmark {
-    stroke-width: 4;
-  }
-
   .title {
     font-size: 18px;
     margin-bottom: 16px;
@@ -115,28 +226,62 @@
     font-size: 13px;
     line-height: 1.4;
   }
+
+  .professionalCheckmarkContainer {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 25px;
+  }
+
+  .statusIcon {
+    width: 70px;
+    height: 70px;
+    font-size: 24px;
+  }
+
+  .successCircle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .checkmarkProfessional {
+    width: 20px;
+    height: 35px;
+    border-width: 0 3px 3px 0;
+  }
+
+  .successRipple {
+    width: 70px;
+    height: 70px;
+  }
 }
-  .form-submit {
-      width: 100%;
-      padding: 10px;
-      background-color: #6039D2;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 16px;
-  }
- 
-  .Long-button {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: white;
-    border-top: 1px solid #e5e7eb;
+
+/* Additional responsive breakpoint for tablets */
+@media (max-width: 768px) and (min-width: 481px) {
+  .professionalCheckmarkContainer {
+    width: 95px;
+    height: 95px;
   }
 
+  .statusIcon {
+    width: 75px;
+    height: 75px;
+    font-size: 26px;
+  }
 
+  .successCircle {
+    width: 75px;
+    height: 75px;
+  }
+
+  .checkmarkProfessional {
+    width: 22px;
+    height: 38px;
+    border-width: 0 3.2px 3.2px 0;
+  }
+
+  .successRipple {
+    width: 75px;
+    height: 75px;
+  }
+}

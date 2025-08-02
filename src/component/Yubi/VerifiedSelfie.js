@@ -4,6 +4,7 @@ import "./VerifiedSelfie.css";
 import { Roboto } from "next/font/google";
 import NewBankD from "./BankDetailsNew";
 import { useRouter, useSearchParams } from "next/navigation";
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -29,41 +30,31 @@ const VerifiedSelfie = () => {
         console.error("No clientLoanId found in URL!");
       }
     }, 2000);
-
     return () => clearTimeout(timer);
   }, [clientLoanId, router]);
+
   return (
     <>
       {activeContainer === "BankDetails" && <NewBankD />}
       {activeContainer === "SelfieSuccess" && (
         <div className={`${roboto.className} waiting-table`}>
-          <div class="checkmark-circle">
-            <div class="background"></div>
-            <div class="checkmark"></div>
+          {/* Updated Success Checkmark with KFS styling */}
+          <div className="professional-checkmark-container">
+            <div className="status-icon status-completed">
+              ✓
+            </div>
           </div>
-
-          <br></br>
-
+                    
+          <br />
+                    
           <div className="loading-text" style={{ textAlign: "center" }}>
-            {/* <h3> <b>Please Wait...</b> </h3> */}
-            <h3>
-              {" "}
-              <b>Successfully Verified Selfie</b>{" "}
-            </h3>
-            <br></br>
-            <p className="para">
-              Do not press the back button or refresh the page
-            </p>
+            <h1 style={{fontSize:'22px', color:'#777777', textAlign:'center'}}>
+              <b>Successfully Verified Selfie</b>
+            </h1>
           </div>
-
-          {/* Submit Button */}
-          {/* <div className="Long-button">
-        <button type="submit" className="form-submit">
-          Next
-        </button>
-      </div> */}
         </div>
       )}
+      <StickyWarning />
     </>
   );
 };

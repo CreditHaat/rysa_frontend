@@ -3,8 +3,9 @@ import React, { useEffect, useRef } from "react";
 import "./SmsWaiting.css";
 import { Roboto } from "next/font/google";
 import { useSearchParams, useRouter } from "next/navigation";
-// import CallbackListener from "../CallbackListener";
-// import axios from "axios";
+import CallbackListener from "../CallbackListener";
+import axios from "axios";
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -40,6 +41,7 @@ const SMSWaiting = () => {
   }, [clientLoanId]);
 
   return (
+    <>
     <div className={`${roboto.className} sms-container`}>
       <div className="sms-content">
         <div className="loading-circle">
@@ -53,27 +55,25 @@ const SMSWaiting = () => {
           </svg>
         </div>
 
-        <h1 className="sms-waiting-txt"><b>Waiting...</b></h1>
-
-        {/* <div className="sms-divider"></div> */}
-
-        <div className="sms-message-container">
-          <p className="sms-message">
-            We've sent you a link via SMS.
-            <br />
-            Please open the link and give your consent to proceed.
-          </p>
-        </div>
+        <h1 style={{fontSize:'22px',color:'#777777',textAlign:'center'}}>
+          <b>Please Approve Offer Details</b>
+        </h1>
+        <br></br>
+        <p style={{fontSize:'15px',color:'#777777',textAlign:'center',padding:'10px'}}>We have sent you a link via SMS.
+          <br />
+          Please open the link and give your consent to proceed.</p>
       </div>
-      {/* <CallbackListener
+      <CallbackListener
         onLoanAgreementReady={() => {
           console.log("✅ Moving to Loan Agreement Waiting Page");
           router.push(
             `/yubi/Waitingpageloanagreement?clientLoanId=${clientLoanId}`
           );
         }}
-      /> */}
+      />
     </div>
+    <StickyWarning />
+    </>
   );
 };
 

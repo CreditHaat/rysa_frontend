@@ -1,6 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import styles from './SubmitPage.module.css';
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ["400", "700"], 
+  subsets: ["latin"],
+});
 
 export default function RejectPage() {
   const [refNo, setRefNo] = useState('');
@@ -63,17 +69,18 @@ export default function RejectPage() {
           />
         </svg>
       </div>
+       <div className={`${roboto.className}`}>
 
-      <h1 className="text-2xl font-bold text-white text-center mb-2">
-        We're Sorry!
-      </h1>
+     <h1 className="text-2xl font-bold text-white text-center mb-2">
+       We&apos;re Sorry!
+     </h1>
       
       <p className="text-white text-center mb-8 opacity-90 leading-relaxed">
         Your loan application could not be approved.
       </p>
       
       <p className="text-white text-center opacity-80 text-sm leading-relaxed max-w-xs">
-        But don't worry — you can still explore offers from other trusted lenders!
+        But don&apos;t worry — you can still explore offers from other trusted lenders!
       </p>
 
        {/* Next Button */}
@@ -101,6 +108,7 @@ export default function RejectPage() {
       >
         Next
       </button>
+      </div>
       </div>
     </div>
   );

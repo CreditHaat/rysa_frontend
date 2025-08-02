@@ -5,12 +5,11 @@ import EmblaCarousel from "./Emblacarousel/js/EmblaCarousel";
 import listimage1 from "./newplimages/finalimage2.png";
 import listimage2 from "./newplimages/finalimage3.png";
 import listimage3 from "./newplimages/plimage33.png";
-import KFSDocs from "./KfsDocs";
-// import axios from "axios";
+import axios from "axios";
 import Image from "next/image";
 import hdb from "../../../public/Jays/HDB.png";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -22,9 +21,9 @@ const LoanApprovalPage = ({ clientLoanId }) => {
   const searchParams = useSearchParams();
   const salarySlipLink = searchParams.get("salarySlipLink");
   const paramId = searchParams.get("client_loan_id");
-  const [loanAmount, setLoanAmount] = useState("");
-  const [tenure, setTenure] = useState("");
-  const [interestRate, setInterestRate] = useState("");
+  const [loanAmount, setLoanAmount] = useState(100000);
+  const [tenure, setTenure] = useState(18);
+  const [interestRate, setInterestRate] = useState(20);
   const [approvedLoanAmount, setApprovedLoanAmount] = useState(0);
 
   useEffect(() => {
@@ -95,7 +94,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
         <div
           className="cardContainerloanpage"
         >
-          <h3 style={{textAlign:"center",color:"#777777"}}>Congratulations ! You have been Approved a loan of</h3>
+          <h3 style={{textAlign:"center",color:"#777777"}}>Congratulations ! You have been approved a loan of</h3>
         <h1 style={{color:"#777777"}}>
             ₹{approvedLoanAmount ? approvedLoanAmount.toLocaleString('en-IN') : "0"}
         </h1>

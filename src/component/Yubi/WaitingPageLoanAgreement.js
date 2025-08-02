@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { Roboto } from "next/font/google";
 import "./WaitingPageLoanAgreement.css";
-// import CallbackListener from "../CallbackListener";
+import CallbackListener from "../CallbackListener";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -56,10 +56,10 @@ const WaitingPageLoanAgreement = () => {
         </svg>
       </div>
       <div className="waiting-text">
-        <b>Waiting...</b>
+        <b>Generating final offer...</b>
       </div>
       {/* ✅ Plug in the CallbackListener to listen for loan_agreement_doc */}
-      {/* <CallbackListener
+      <CallbackListener
         onEsignReady={async () => {
           console.log("✅ Loan Agreement doc generated webhook received!");
 
@@ -81,7 +81,7 @@ const WaitingPageLoanAgreement = () => {
             console.error("❌ eSign API error:", err);
           }
         }}
-      /> */}
+      />
     </div>
   );
 };

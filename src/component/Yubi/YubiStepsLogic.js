@@ -2,7 +2,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-// import axios from "axios";
+import axios from "axios";
 
 export default function useYubiStepsLogic(setStepText) {
   const searchParams = useSearchParams();
@@ -56,5 +56,5 @@ export default function useYubiStepsLogic(setStepText) {
     } else {
       setStepText("Missing client loan ID.");
     }
-  }, [clientLoanId]);
+  }, [clientLoanId, setStepText]);
 }

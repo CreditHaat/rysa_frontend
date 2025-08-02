@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import "./KfsCompleted.css";
-// import KFSDocs from "./KfsDocs";
-// import axios from "axios";
+import axios from "axios";
 import Image from "next/image";
 import hdb from "../../../public/Jays/HDB.png";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import Kfs from "../../component/Yubi/newplimages/KFS.png";
+import StickyWarning from "../../component/Yubi/StickyWarning";
+// import { useSearchParams } from "next/navigation";
 
 
 const roboto = Roboto({
@@ -15,9 +16,16 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-const Kfscompleted = ({ clientLoanId }) => {
+const Kfscompleted = () => {
+ const searchParams = useSearchParams(); // ✅ Correct way!
+    const step = searchParams.get("step");
+    const clientLoanId = searchParams.get("client_loan_id");
+
+    // console.log("step:", step);
+    // console.log("clientLoanId:", clientLoanId);
+
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const salarySlipLink = searchParams.get("salarySlipLink");
   const paramId = searchParams.get("client_loan_id");
 
@@ -27,6 +35,7 @@ const Kfscompleted = ({ clientLoanId }) => {
   };
 
   return (
+    <>
     <div className={`${roboto.className} pageContainerloanpage`}>
         <div className="loan-block">
       <div className="loan-head">
@@ -38,56 +47,69 @@ const Kfscompleted = ({ clientLoanId }) => {
                   />
                 </div>
       </div>
-      <div className="cardForm-loan">
-        <div className="content-loan">
-      <form onSubmit={handleSubmit} className="formloanpage">
-           <div className="sign-txt">
-                           <Image
-                            src={Kfs}
-                            alt="Selfie taking instruction"
-                            height={100}
-                            // style={{ alignContent:"center",marginTop:"50px" }}
-                          />
-                        </div>
-                        <br></br>
-                        <br></br>
-
-                         
-        <div className="status-row">
-          <div className="status-icon">✅</div>
-          <div className="status-text">KFS Completed</div>
-        </div>
-        <div className="status-row">
-          <div className="status-icon"></div>
-          <div className="status-text">Complete Agreement...</div>
-        </div>
-       
-     
-
-          
-      
-          {/* Submit Button */}
-              {/* <div className="btnContainer">
-                <button type="button"
-                    className="nextBtn" >
-              Next
-            </button>
-            </div> */}
-             <div className="Long-button">
-                <button
-                  type="submit"
-                  className="form-submit"
-                >
-                  Next
-                </button>
+       <div className="cardForm-loan">
+            <div className="content-loan">
+              <div className="formloanpage">
+                <div className="sign-txt">
+                  <div className="kfs-icon-container">
+                    <div className="kfs-circle-bg"></div>
+                    <div style={{
+                      width: '100px',
+                      height: '100px',
+                      background: 'linear-gradient(45deg, #6039D2, #8B5FD6)',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontSize: '36px',
+                      fontWeight: 'bold',
+                      position: 'relative',
+                      zIndex: 1
+                    }}>
+                      📄
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="status-container">
+                  <div className="status-row">
+                    <div className="status-icon status-completed">
+                      ✓
+                    </div>
+                    <div className="status-text status-completed-text">
+                      KFS Completed
+                    </div>
+                  </div>
+                  
+                  <div className="status-row">
+                    <div className="status-icon status-pending">
+                      📋
+                    </div>
+                    <div className="status-text status-pending-text">
+                      Agreement
+                      <div className="blinking-dots">
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="Long-button">
+                  <button onClick={handleSubmit} className="form-submit">
+                    Next
+                  </button>
+                </div>
               </div>
-            
-      
-      </form>
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
-    </div>
+       <StickyWarning />
+      </>
+
   );
 };
 export default Kfscompleted;

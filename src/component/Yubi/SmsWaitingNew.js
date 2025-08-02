@@ -29,7 +29,7 @@ const LoadingPage = () => {
         </h3>
         <br></br>
         <p className="para">
-          We've sent you a link via SMS.
+         We&apos;ve sent you a link via SMS.
           <br />
           Please open the link and give your consent to proceed.
         </p>

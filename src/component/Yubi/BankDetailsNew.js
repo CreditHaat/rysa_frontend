@@ -12,11 +12,10 @@ import {
 } from "react-icons/fa";
 import "./BankDetailsNew.css";
 import axios from "axios";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
-import HeaderPart from "./HeaderPart";
-// import CallbackListener from "../CallbackListener";
-import SelfieWaiting from "./WaitingPage";
+import CallbackListener from "../CallbackListener";
+import SelfieWaiting from "./WaitingPageforBankdetails";
 import { useRouter } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
 import hdb from "../Yubi/newplimages/HDB.png";
@@ -26,7 +25,7 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-const bankdetails = () => {
+const BankDetails = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const clientLoanId = searchParams.get("clientLoanId");
@@ -145,7 +144,7 @@ const bankdetails = () => {
 
     try {
       const presignRes = await axios.get(
-        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}/generatePresignedUrl`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}generatePresignedUrl`,
         { params: { fileName: file.name } }
       );
 
@@ -216,23 +215,25 @@ const bankdetails = () => {
       isValid = false;
     }
     if (!formData.bankName) {
-      errors.bankName = "Bank Name is required";
+      errors.bankName = "Bank name is required";
       isValid = false;
     } else if (formData.bankName.trim().length < 2) {
-      errors.bankName = "Bank Name must be at least 2 characters";
+      errors.bankName = "Bank name must be at least 2 characters";
       isValid = false;
     }
+    
     if (!formData.branchName) {
-      errors.branchName = "Branch Name is required";
+      errors.branchName = "Branch name is required";
+      isValid = false;
+    }else if (formData.branchName.trim().length < 2) {
+      errors.branchName = "Branch name must be at least 2 characters";
       isValid = false;
     }
+
     if (!formData.salarySlipLink) {
       errors.salarySlipLink = "Salary slip must be uploaded";
       isValid = false;
-    } else if (formData.branchName.trim().length < 2) {
-      errors.branchName = "Branch Name must be at least 2 characters";
-      isValid = false;
-    }
+    } 
 
     if (!formData.IFSC) {
       errors.IFSC = "IFSC code is required";
@@ -280,7 +281,7 @@ const bankdetails = () => {
         if (response.data.code === 0) {
           console.log("Disbursement API Response:", response.data.obj);
           // ✅ Redirect or show success
-          setActiveContainer("LoanApprovalPage");
+         // setActiveContainer("LoanApprovalPage");
           setActiveContainer("SelfieWaiting");
         } else {
           console.error("Error:", response.data.msg);
@@ -293,7 +294,7 @@ const bankdetails = () => {
 
   return (
     <>
-      {/* <CallbackListener
+       <CallbackListener
         onDisbursementSuccess={() => {
           console.log("✅ Disbursement success webhook received");
           if (clientLoanId) {
@@ -309,7 +310,7 @@ const bankdetails = () => {
             console.error("No clientLoanId found for LoanApproval redirect!");
           }
         }}
-      /> */}
+       /> 
       {activeContainer === "SelfieWaiting" && <SelfieWaiting />}
 
       {activeContainer === "BankDetails" && (
@@ -334,7 +335,7 @@ const bankdetails = () => {
                     type="text"
                     id="accountname"
                     name="accountname"
-                    placeholder="Account holder name"
+                    placeholder="Account Holder Name"
                     value={formData.accountname}
                     className="enter-field"
                     onChange={handleaccountnameChange}
@@ -463,7 +464,7 @@ const bankdetails = () => {
                     type="number"
                     id="accountNumber"
                     name="accountNumber"
-                    placeholder="Enter account number"
+                    placeholder="Enter Account Number"
                     value={formData.accountNumber}
                     onChange={handleaccountNumberChange}
                     className="enter-field"
@@ -527,4 +528,4 @@ const bankdetails = () => {
   );
 };
 
-export default bankdetails;
+export default BankDetails;

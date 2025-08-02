@@ -22,6 +22,7 @@
   min-height: auto;
   height: 100vh;
   box-sizing: border-box;
+  position: relative;
 }
 
 .selfie-card {
@@ -46,12 +47,14 @@
   justify-items: center;
   height: 118vh;
   box-sizing: border-box;
+  
 }
 
 .selfiecontent-card {
   padding: 20px;
   align-content: center;
   box-sizing: border-box;
+  padding-top: 120px; /* Space for fixed icon */
 }
 
 .LogoPart-selfie {
@@ -71,6 +74,43 @@
   align-content: center;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* Icon ko center mein fixed position - same as KFS page */
+.selfie-icon-section {
+  position: absolute;
+  top: 180px; /* Fixed position from top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 10;
+}
+
+.selfie-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.selfie-circle-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, #6039D2, #8B5FD6);
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: pulseCircle 2s ease-in-out infinite;
+}
+
+@keyframes floatAnimation {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseCircle {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
 }
 
 .texthead h3, p {
@@ -195,6 +235,7 @@
   .selfiecontent-card {
     padding: 20px; /* Keep same padding */
     align-content: center;
+    padding-top: 120px; /* Keep space for fixed icon */
   }
 
   .header-selfie {
@@ -281,13 +322,10 @@
   .selfie-card {
     width: 100vw;
   }
-
-  .selfieForm-card {
-    /* padding-left: 3rem;  */
-  }
   
   .selfiecontent-card {
     padding: 15px; /* Slightly reduce padding */
+    padding-top: 120px; /* Keep space for icon */
   }
 }
 

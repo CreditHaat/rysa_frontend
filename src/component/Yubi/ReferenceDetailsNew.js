@@ -1,17 +1,15 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-// import Select from "react-select";
 import dynamic from 'next/dynamic';
 const Select = dynamic(() => import('react-select'), { ssr: false });
 import { FaUser, FaBuilding, FaCreditCard, FaPhone } from "react-icons/fa";
 import "./ReferenceDetailsNew.css";
-// import axios from "axios";
-import { Roboto } from "@next/font/google";
+import axios from "axios";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
-import HeaderPart from "./HeaderPart";
 import SmsWaiting from "./SmsWaiting";
-// import CallbackListener from "../CallbackListener";
-import SelfieWaiting from "./WaitingPage";
+import CallbackListener from "../CallbackListener";
+import SelfieWaiting from "./WaitingPageforReferencedetails";
 import WaitingPageLoanAgreement from "./WaitingPageLoanAgreement";
 import { useSearchParams, useRouter } from "next/navigation";
 import hdb from "../Yubi/newplimages/HDB.png";
@@ -51,35 +49,37 @@ const NewReferenceDt = () => {
     try {
       // Check if Contact Picker API is supported
 
-      if ('contacts' in navigator && 'select' in navigator.contacts) {
-        const contacts = await navigator.contacts.select(['name', 'tel'], { multiple: false });
+        if ("contacts" in navigator && "select" in navigator.contacts) {
+        const contacts = await navigator.contacts.select(["name", "tel"], {
+          multiple: false,
+        });
         if (contacts.length > 0) {
           const contact = contacts[0];
-          const phoneNumber = contact.tel && contact.tel.length > 0 ? contact.tel[0] : '';
-          const contactName = contact.name && contact.name.length > 0 ? contact.name[0] : '';
+          const phoneNumber = contact.tel && contact.tel.length > 0 ? contact.tel[0] : "";
+          const contactName = contact.name && contact.name.length > 0 ? contact.name[0] : "";
           // Update the mobile field
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
-            [fieldName]: phoneNumber
+            [fieldName]: phoneNumber,
           }));
 
           // Also update the name field if it's empty
-          const nameField = fieldName === 'ref1Mobile' ? 'ref1Name' : 'ref2Name';
+          const nameField =  fieldName === "ref1Mobile" ? "ref1Name" : "ref2Name";
           if (contactName && !formData[nameField]) {
-            setFormData(prev => ({
+            setFormData((prev) => ({
               ...prev,
-              [nameField]: contactName
+              [nameField]: contactName,
             }));
           }
         }
       } else {
         // Fallback for devices that don't support Contact Picker API
-        alert('Contact picker is not supported on this device. Please enter the number manually.');
+            alert("Contact picker is not supported on this device. Please enter the number manually.");
       }
     } catch (error) {
-      console.error('Error accessing contacts:', error);
+      console.error("Error accessing contacts:", error);
       // Fallback - you could show a message or handle the error differently
-      alert('Unable to access contacts. Please enter the number manually.');
+       alert("Unable to access contacts. Please enter the number manually.");
     }
   };
 
@@ -184,21 +184,21 @@ const NewReferenceDt = () => {
       isValid = false;
     }
     if (!formData.yearOfExperience) {
-      errors.yearOfExperience = "Year Of Experience is required";
+      errors.yearOfExperience = "Year of experience is required";
       isValid = false;
     } else if (formData.yearOfExperience.trim().length < 1) {
       errors.yearOfExperience =
-        "year Of Experience must be at least 1 characters";
+        "Year of experience must be at least 1 characters";
       isValid = false;
     }
 
     if (!formData.ref1Name.trim()) {
-      errors.ref1Name = "Full Name is required";
+      errors.ref1Name = "Full name is required";
       isValid = false;
     }
 
     if (!formData.ref1Mobile.trim()) {
-      errors.ref1Mobile = "Mobile Number is required";
+      errors.ref1Mobile = "Mobile number is required";
       isValid = false;
     }
 
@@ -213,12 +213,12 @@ const NewReferenceDt = () => {
     }
 
     if (!formData.ref2Name.trim()) {
-      errors.ref2Name = "Full Name is required";
+      errors.ref2Name = "Full name is required";
       isValid = false;
     }
 
     if (!formData.ref2Mobile.trim()) {
-      errors.ref2Mobile = "Mobile Number is required";
+      errors.ref2Mobile = "Mobile number is required";
       isValid = false;
     }
 
@@ -312,12 +312,12 @@ const NewReferenceDt = () => {
   return (
     <>
       {/* ✅✅✅ PLUG IN THE CALLBACK LISTENER! */}
-      {/* <CallbackListener
+      <CallbackListener
         onFinalSanctionReady={handleFinalSanctionReady}
         onLoanAgreementReady={() =>
           setActiveContainer("WaitingPageLoanAgreement")
         }
-      /> */}
+      />
       {activeContainer === "ReferenceDetails" && (
         <div className={`${roboto.className} page-bankds`}>
            <div className="card-refer">
@@ -409,7 +409,7 @@ const NewReferenceDt = () => {
                 <input
                   type="text"
                   name="ref1Name"
-                  placeholder="Full name"
+                  placeholder="Full Name"
                   className="enter-field"
                   value={formData.ref1Name}
                   onChange={handleChange}
@@ -496,7 +496,7 @@ const NewReferenceDt = () => {
                 <input
                   type="text"
                   name="ref2Name"
-                  placeholder="Full name"
+                  placeholder="Full Name"
                   className="enter-field"
                   value={formData.ref2Name}
                   onChange={handleChange}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./WaitingPage.css";
 import { Roboto } from "next/font/google";
-// import CallbackListener from "../CallbackListener";
+import CallbackListener from "../CallbackListener";
 import useYubiStepsLogic from "../Yubi/YubiStepsLogic";
 
 const roboto = Roboto({
@@ -17,7 +17,7 @@ const WaitingPageAfterAA = () => {
 
   return (
     <div className={`${roboto.className} waiting-container`}>
-      {/* <CallbackListener /> */}
+      <CallbackListener />
       <div className="loading-circle">
         <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
           <path

@@ -2,6 +2,7 @@
 import React from "react";
 import "./LoadingPage.css";
 import { Roboto } from "next/font/google";
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -9,7 +10,11 @@ const roboto = Roboto({
 });
 
 const LoadingPage = () => {
+
+
+
   return (
+    <>
     <div className={`${roboto.className} waiting-table`}>
       <div className="loading-circle">
         <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
@@ -23,12 +28,11 @@ const LoadingPage = () => {
       </div>
 
       <div className="loading-text" style={{ textAlign: "center" }}>
-        <h3>
-          {" "}
-          <b>Verifying Selfie...</b>{" "}
-        </h3>
+        <h1 style={{fontSize:'22px',color:'#777777',textAlign:'center'}}>
+          <b>Verifying Selfie...</b>
+        </h1>
         <br></br>
-        <p className="para">Do not press the back button or refresh the page</p>
+        {/* <p style={{fontSize:'20px',color:'#777777',textAlign:'center',padding:'10px'}}>Do not press the back button or refresh the page</p> */}
       </div>
 
       {/* Submit Button */}
@@ -38,16 +42,10 @@ const LoadingPage = () => {
         </button>
       </div> */}
 
-      {/* Submit Button */}
-      {/* <div className="btnContainer">
-                <button
-                  type="submit"
-                  className="nextBtn"
-                >
-                  Next
-                </button>
-              </div> */}
     </div>
+     {/* Sticky Warning Component */}
+      <StickyWarning />
+      </>
   );
 };
 

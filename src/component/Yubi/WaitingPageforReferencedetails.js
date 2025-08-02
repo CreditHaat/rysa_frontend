@@ -2,6 +2,7 @@
 import React from "react";
 import "./WaitingPage.css";
 import { Roboto } from "next/font/google";
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -10,6 +11,7 @@ const roboto = Roboto({
 
 const WaitingPageforReferencedetails = () => {
   return (
+    <>
     <div className={`${roboto.className} waiting-container`}>
       <div className="loading-circle">
         <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
@@ -21,10 +23,12 @@ const WaitingPageforReferencedetails = () => {
           />
         </svg>
       </div>
-      <div className="waiting-text">
-        <b>Generating final offer...</b>
-      </div>
+      <h1 style={{fontSize:'22px',color:'#777777',textAlign:'center'}}>
+          <b>Generating Final Offer...</b>
+        </h1>
     </div>
+    <StickyWarning />
+    </>
   );
 };
 

@@ -2,6 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './SubmitPage.module.css';
 import confetti from 'canvas-confetti';
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 export default function SubmitPage() {
   const [refNo, setRefNo] = useState('');
@@ -23,7 +29,6 @@ export default function SubmitPage() {
         amount: '50000',
         accountNumber: '1298656789'
       };
-
       setRefNo(data.ref);
       setAmount(data.amount);
       setAccount(maskAccount(data.accountNumber));
@@ -40,29 +45,39 @@ export default function SubmitPage() {
     return `${first2}XX${last4}`;
   };
 
+  // ✅ Format amount in Indian currency style (with commas)
+  const formatIndianCurrency = (amount) => {
+    if (!amount) return '';
+    
+    // Convert to number and back to string to handle any formatting
+    const numAmount = parseInt(amount);
+    
+    // Use Indian number formatting with commas
+    return numAmount.toLocaleString('en-IN');
+  };
+
   return (
     <div className={styles.container}>
-      <svg className={styles.animatedCheck} viewBox="0 0 52 52">
-        <circle className={styles.checkCircle} cx="26" cy="26" r="25" fill="none" />
-        <path className={styles.checkmark} fill="none" d="M14 27l7 7 16-16" />
-      </svg>
+      {/* Updated Success Checkmark with KFS styling */}
+      <div className={styles.professionalCheckmarkContainer}>
+        <div className={`${styles.statusIcon} ${styles.statusCompleted}`}>
+          ✓
+        </div>
+      </div>
 
-      <h1 className={styles.title}>Congratulations!<br />Your loan of <strong>{amount}</strong> has been successfully approved</h1>
-
-      {/* <p className={styles.ref}>
-        Reference number is<br />
-        <strong>{refNo}</strong>.
-      </p> */}
-
-      <p className={styles.message}>
-        The amount will be credited to your bank account <strong>{account}</strong> within 24 hours.
-      </p>
-
-      <br></br>
-      
-      <p className={styles.message}>
-         ✅ Sit back and relax — we’ll notify you once the funds are transferred.
-      </p>
+      <div className={`${roboto.className}`}>
+        <h1 className={styles.title}>
+          Congratulations!<br />
+          Your loan of <strong>₹{formatIndianCurrency(amount)}</strong> has been successfully approved
+        </h1>
+        <p className={styles.message}>
+          The amount will be credited to your bank account <strong>{account}</strong> within 24 hours.
+        </p>
+        <br></br>
+        {/* <p className={styles.message}>
+          ✅ Sit back and relax — we'll notify you once the funds are transferred.
+        </p> */}
+      </div>
     </div>
   );
 }

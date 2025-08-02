@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f5;
+    background-color: #f7f6fd;
     font-family: 'Arial', sans-serif;
     padding: 20px;
     font-family: Roboto;
@@ -98,7 +98,7 @@
   .sms-text {
     color: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 20px;
     letter-spacing: 1px;
     z-index: 3;
     position: relative;
@@ -106,7 +106,6 @@
   
   .sms-waiting-txt {
     font-size: 20px;
-    color: #1a1a1a;
     margin: 0 0 30px 0;
     font-weight: normal;
     letter-spacing: 2px;
@@ -125,7 +124,7 @@
   }
   
   .sms-message {
-    font-size: 16px;
+    font-size: 20px;
     color: #4a5568;
     line-height: 1.5;
     margin: 0;
@@ -172,12 +171,12 @@
     }
     
     .sms-waiting-text {
-      font-size: 28px;
+      font-size: 22px;
       color:#777777;
     }
     
     .sms-message {
-      font-size: 14px;
+      font-size: 20px;
     }
   }
   .loading-circle {

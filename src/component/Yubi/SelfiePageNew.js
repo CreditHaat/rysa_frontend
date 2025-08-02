@@ -1,17 +1,17 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import "./SelfiePageNew.css";
-// import axios from "axios";
-import { Roboto } from "@next/font/google";
+import axios from "axios";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
-import HeaderPart from "./HeaderPart";
-import Selfie from "./newplimages/selfieimg.png";
 import SelfieWaiting from "./LoadingPage";
 import SelfieSuccess from "./VerifiedSelfie";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-// import CallbackListener from "../CallbackListener";
+import CallbackListener from "../CallbackListener";
 import hdb from "../../../public/Jays/HDB.png";
+import icon from "../../../public/Jays/Icon.png";
+import { Typography } from "@mui/material";
 
 const roboto = Roboto({
   weight: ["400", "700"], 
@@ -29,7 +29,7 @@ const SelfiePageNew = () => {
   const [showCamera, setShowCamera] = useState(false);
 const [capturedImage, setCapturedImage] = useState(null);
 const [stream, setStream] = useState(null);
-const [facingMode, setFacingMode] = useState('user');
+const [facingMode, setFacingMode] = useState("user");
 const [isVideoReady, setIsVideoReady] = useState(false);
 const [isSubmitting, setIsSubmitting] = useState(false);
 const videoRef = useRef(null);
@@ -269,7 +269,7 @@ const handleImageAction = () => {
   setError("");
   setImageSource(null);
   
-  if (imageSource === 'camera') {
+  if (imageSource === "camera") {
     startCamera(); // Start camera again for retake
   } else {
     // For file upload, just clear the image - user will need to click upload button again
@@ -299,7 +299,7 @@ const handleImageAction = () => {
 useEffect(() => {
   return () => {
     if (stream) {
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
     }
     // Clean up captured image URL
     if (capturedImage) {
@@ -327,18 +327,37 @@ useEffect(() => {
      <div className={`selfieForm-card ${isCameraActive ? 'camera-active' : ''}`}>
        <div className="selfiecontent-card">
           <form className="selfie-box" onSubmit={handleSubmit}>
-              <div>
+              
+              {/* Replaced Image with Icon */}
+              <div className="selfie-icon-section">
+                <div className="selfie-icon-container">
+                  <div className="selfie-circle-bg"></div>
+                  <div style={{
+                    width: '100px',
+                    height: '100px',
+                    background: 'linear-gradient(45deg, #6039D2, #8B5FD6)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontSize: '36px',
+                    fontWeight: 'bold',
+                    position: 'relative',
+                    zIndex: 1
+                  }}>
                 <Image
-                  src={Selfie}
-                  alt="Selfie taking instruction"
-                  height={200}
-                  style={{ alignContent:"center",marginTop:"50px"}}
+                  src={icon}
+                  alt="Icon"
+                  style={{width:"auto",height:"auto",color:"white"}}
                 />
+                  </div>
+                </div>
               </div>
 
-              <div className="texthead" style={{ marginTop: "50px",alignItems:"center" }}>
-                <h3><b>Take a selfie</b></h3>
-                <p>
+              <div className="texthead" style={{ marginTop: "150px",alignItems:"center" }}>
+                <h3 style={{fontSize:'22px',color:'#777777'}}><b>Take a Selfie</b></h3>
+                <p style={{fontSize:'15px',color:'#777777'}}>
                   Capture a clear selfie or choose an existing one for identity
                   verification. Avoid glasses and background lights.
                 </p>
@@ -357,21 +376,21 @@ useEffect(() => {
                     padding: '10px',
                     background: '#f9f9f9'
                   }}>
-                  <h4 style={{ color: '#4CAF50', marginBottom: '10px' }}>
-                    {imageSource === 'camera' ? '📸 Captured Selfie' : '📁 Selected Image'}
-                  </h4>
-                  <img
-                    src={capturedImage}
-                    alt="Captured selfie"
-                    style={{
-                      width: '100%',
-                      maxWidth: 'auto',
-                      height: '200px',
-                      objectFit: 'cover',
-                      borderRadius: '10px',
-                      border: '2px solid #ddd'
-                    }}
-                  />
+                 
+                <Image
+  src={capturedImage}
+  alt="Captured selfie"
+  width={300}
+  height={200}
+  unoptimized
+  style={{
+    width: '100%',
+    height: '200px',
+    objectFit: 'cover',
+    borderRadius: '10px',
+    border: '2px solid #ddd'
+  }}
+/>
                   
                   {/* Success Message - Moved inside captured image container */}
                   {success && (
@@ -399,15 +418,15 @@ useEffect(() => {
                     onClick={handleImageAction}
                     style={{
                       marginTop: '10px',
-                      background: '#ff9800',
-                      color: 'white',
+                      color: '#6039d2',
                       border: 'none',
                       padding: '8px 16px',
                       borderRadius: '5px',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      textDecoration: 'underline'
                     }}
                   >
-                    {imageSource === 'camera' ? '🔄 Retake Selfie' : '🔄 Reupload Selfie'}
+                    {imageSource === 'camera' ? ' Retake Selfie' : ' Reupload Selfie'}
                   </button>
                 </div>
               )}
