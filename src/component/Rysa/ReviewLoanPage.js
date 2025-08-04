@@ -13,14 +13,14 @@ export default function ReviewLoanPage() {
     emiTenure: 36,
     numInstallments: 9,
   };
-  const contCharges={
-  closureCharge: "3%",
-  latePaymentCharge: "4%",
-};
-// const contCharges={
-//   closureCharge: 3%,
-//   latePaymentCharge: 4%,
-// };
+  const contCharges = {
+    closureCharge: "3%",
+    latePaymentCharge: "4%",
+  };
+  // const contCharges={
+  //   closureCharge: 3%,
+  //   latePaymentCharge: 4%,
+  // };
   const gro = {
     name: 'Kiran Deshmukh',
     designation: 'Software engineer',
@@ -33,22 +33,22 @@ export default function ReviewLoanPage() {
 
   return (
     <main className={styles.page}>
-    {/* <div className={styles.mainCard}></div> */}
+      {/* <div className={styles.mainCard}></div> */}
       {/*—‑ हेडर ‑—*/}
       {/* <header className={styles.header}>Review Loan Application</header> */}
       <div className={styles.header}>
-         <div className={styles.headerLogo}>
-                  <Image
-                    src={hdb}
-                    alt="Hdb tag"
-                    style={{alignContent:"center",width:"auto",height:"auto", top:"-4"}}
-                  />
-                </div>
+        <div className={styles.headerLogo}>
+          <Image
+            src={hdb}
+            alt="Hdb tag"
+            style={{ alignContent: "center", width: "auto", height: "auto", top: "-4" }}
+          />
+        </div>
       </div>
       {/*—‑ कार्ड ‑—*/}
       <section className={styles.card}>
         {/* ========== Amount you get ========== */}
-        <h3 className={styles.sectionTitle}>Amount you get</h3>
+        {/* <h3 className={styles.sectionTitle}>Amount you get</h3>
         <div className={styles.row}>
           <span>Loan Amount</span> <span className={styles.valueAm}>{cur(summary.loanAmount)}</span>
         </div>
@@ -60,14 +60,14 @@ export default function ReviewLoanPage() {
         <hr className={styles.divider} />
 
         <div className={styles.row}>
-          <span className={styles.netLabel}>Net disbursed amount</span>{' '}
+          <span className={styles.netLabel}>Net disbursed amount</span>
           <span className={styles.netValue}>
             {cur(summary.loanAmount - summary.processingFees)}
           </span>
         </div>
 
         {/* ========== Amount you pay ========== */}
-        <h3 className={styles.sectionTitle}>Amount you pay</h3>
+        {/* <h3 className={styles.sectionTitle}>Amount you pay</h3>
         <div className={styles.row}>
           <span>Loan Amount</span> <span className={styles.valueAm}>{cur(summary.loanAmount)}</span>
         </div>
@@ -97,18 +97,123 @@ export default function ReviewLoanPage() {
           <span className={styles.valueAm}>{summary.numInstallments}</span>
         </div>
 
-        <hr className={styles.divider} />
+        <hr className={styles.divider} /> */}
 
         {/* ========== Contigent charges ========== */}
-        <h3 className={styles.sectionTitle}>Contigent charges</h3>
+        {/* <h3 className={styles.sectionTitle}>Contigent charges</h3>
         <div className={styles.row}>
           <span>For closure charge</span> <span className={styles.valueAm}>{contCharges.closureCharge}</span>
         </div>
         <div className={styles.row}>
           <span>Late payment charge</span> <span className={styles.valueAm}>{contCharges.latePaymentCharge}</span>
-        </div>
+        </div> */}
 
-        <hr className={styles.divider} />
+        {/*  */}
+        <table className={styles.summaryTable}>
+          <tbody>
+            {/* ========== "Amount you get" Section ========== */}
+            <tr>
+              <th colSpan="2" className={styles.sectionTitle}>Amount you get</th>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>Loan Amount</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.loanAmount)}</td>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>Processing Fees</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.processingFees)}</td>
+            </tr>
+            <tr>
+              <td><hr className={styles.divider} /></td>
+              <td><hr className={styles.divider} /></td>
+              <td><hr className={styles.divider} /></td>
+            </tr>
+            <tr>
+              <td className={styles.netLabel}>Net disbursed amount</td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm} >
+                {cur(summary.loanAmount - summary.processingFees)}
+              </td>
+            </tr>
+            <tr>
+              <td style={{ paddingTop: '10px' }}></td>
+              <td style={{ paddingTop: '10px' }}></td>
+              <td style={{ paddingTop: '10px' }}></td>
+            </tr>
+            {/* ========== "Amount you pay" Section ========== */}
+            <tr>
+              <th colSpan="2" className={styles.sectionTitle}>Amount you pay</th>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>Loan Amount</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.loanAmount)}</td>
+            </tr>
+            <tr>
+              <td> <span className={styles.netValue}>
+                Interest payable<br />
+                (interest rate {summary.interestRate}%)</span>
+              </td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.interestPayable)}</td>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>Total amount payable</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.totalPayable)}</td>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>EMI Amount</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.emi)}</td>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>EMI Payable</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{cur(summary.emi)}</td>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>EMI Tenure</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{summary.emiTenure}</td>
+            </tr>
+            <tr>
+              <td> <span className={styles.netValue}>Number of installments</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{summary.numInstallments}</td>
+            </tr>
+            <tr>
+              <td><hr className={styles.divider} /></td>
+              <td><hr className={styles.divider} /></td>
+              <td><hr className={styles.divider} /></td>
+            </tr>
+            {/* ========== "Contingent charges" Section ========== */}
+            <tr>
+              <th colSpan="2" className={styles.sectionTitle}>Contingent charges</th>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>For closure charge</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{contCharges.closureCharge}</td>
+            </tr>
+            <tr>
+              <td><span className={styles.netValue}>Late payment charge</span></td>
+              <td className={styles.colDout}>:</td>
+              <td className={styles.valueAm}>{contCharges.latePaymentCharge}</td>
+            </tr>
+            <tr>
+              <td><hr className={styles.divider} /></td>
+              <td><hr className={styles.divider} /></td>
+              <td><hr className={styles.divider} /></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        {/*  */}
+        {/* <hr className={styles.divider} /> */}
 
         {/* ========== GRO Details ========== */}
         <h3 className={styles.sectionTitle}>GRO Details</h3>
@@ -159,9 +264,9 @@ export default function ReviewLoanPage() {
         </div>
         <div className={styles.btnContainer}>
           <button type="button"
-                    className={styles.nextBtn} >
-              Next
-            </button>
+            className={styles.nextBtn} >
+            Next
+          </button>
         </div>
       </section>
     </main>

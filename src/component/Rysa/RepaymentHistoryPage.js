@@ -37,21 +37,23 @@ const RepaymentHistoryPage = ({
   };
 
   return (
-    <div className={styles.container}>
-    <div className={styles.card}>
+    <main className={styles.page}>
+      {/* <div className={styles.mainCard}></div> */}
+      {/*—‑ हेडर ‑—*/}
+      {/* <header className={styles.header}>Review Loan Application</header> */}
       <div className={styles.header}>
-        {/* <h1 className={styles.title}>Repayment History Loan</h1> */}
         <div className={styles.headerLogo}>
-                  <Image
-                    src={hdb}
-                    alt="Hdb tag"
-                    style={{alignContent:"center",width:"auto",height:"auto", top:"-10px", }} //{/*top:"-10px",position: "relative",*/}
-                  />
-                </div>
+          <Image
+            src={hdb}
+            alt="Hdb tag"
+            style={{ alignContent: "center", width: "auto", height: "auto", top: "-4" }}
+          />
+        </div>
       </div>
-      <div className={styles.cardForm}>
-        <div className={styles.content}>
-          <div className={styles.section}>
+      {/*—‑ कार्ड ‑—*/}
+      <section className={styles.card}>
+        {/* <div className={styles.content}> */}
+          {/* <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Amount you pay</h2>
             
             <div className={styles.fieldGroup}>
@@ -177,18 +179,77 @@ const RepaymentHistoryPage = ({
               <div className={styles.divValue}>
               <span className={styles.summaryValue}>{formatCurrency(totalAmountPaid)}</span>
               </div>
-            </div>
+            </div> */}
+            {/*  */}
+            <table className={styles.summaryTable}>
+  <tbody>
+  
+    {/* Section: Amount you pay */}
+    <tr>
+      <th colSpan="3" className={styles.sectionTitle}>
+        Amount you pay
+      </th>
+    </tr>
+    {[
+      { label: 'Loan Amount', value: formatCurrency(loanAmount) },
+      {
+      label: (
+        <>
+          Interest payable<br />
+          (interest rate {interestRate}%)
+        </>
+      ),
+      value: formatCurrency(interestPayable),
+    },
+      // { label: `Interest payable <br/> (interest rate ${interestRate}%)`, value: formatCurrency(interestPayable) },
+      { label: 'EMI Amount', value: formatCurrency(emiAmount) },
+      { label: 'EMI Payable', value: formatCurrency(emiPayable) },
+      { label: 'EMI Tenure', value: emiTenure ? `${emiTenure} months` : '' },
+      { label: 'Number of installment', value: numberOfInstallments || '' },
+      { label: 'Repayment Frequency', value: repaymentFrequency }
+    ].map((row, idx) => (
+      <tr key={idx} className={styles.fieldRow}>
+        <td className={styles.leftCell}>{row.label}</td>
+        <td className={styles.separatorCell}>:</td>
+        <td className={styles.rightCell}><span className={styles.valueAm}>{row.value}</span></td>
+      </tr>
+    ))}
+
+    {/* Section: Summary */}
+    <tr>
+      <th colSpan="3">
+        <hr className={styles.divider} />
+      </th>
+    </tr>
+    <tr>
+      <th colSpan="3" className={styles.sectionTitle}>
+        Summary
+      </th>
+    </tr>
+    {[
+      { label: 'Total amount payable', value: formatCurrency(totalAmountPayable) },
+      { label: 'Remaining Amount', value: formatCurrency(remainingAmount) },
+      { label: 'Total amount paid', value: formatCurrency(totalAmountPaid) },
+    ].map((row, idx) => (
+      <tr key={`summary-${idx}`} className={styles.summaryRow}>
+        <td className={styles.leftCell}>{row.label}</td>
+        <td className={styles.separatorCell}>:</td>
+        <td className={styles.rightCell}><span className={styles.valueAm}>{row.value}</span></td>
+      </tr>
+    ))}
+
+  </tbody>
+</table>
+
+            {/*  */}
             <div className={styles.btnContainer}>
-            <button type="button"
-                    className={styles.nextBtn} >
-              Next
-            </button>
-            </div>
-          </div>
+          <button type="button"
+            className={styles.nextBtn} >
+            Next
+          </button>
         </div>
-      </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

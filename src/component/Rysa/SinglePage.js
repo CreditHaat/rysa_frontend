@@ -6,7 +6,7 @@ import { FaMoneyBillWave, FaChartLine, FaHandHoldingUsd } from "react-icons/fa";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import styles from './singlePage.module.css';
-import logo from "../../../public/logo.png";
+import logo from "../../../public/Rysa_logo.png";
 import { useRouter } from 'next/navigation';
 export default function SinglePage() {
    const [isOpen, setIsOpen] = useState(false); 
@@ -48,7 +48,7 @@ export default function SinglePage() {
 const router = useRouter();
 
 const handleApplyClick = () => {
-  router.push('/LoanForm');
+  router.push('/LoanForm1');
 };
   
     useEffect(() => {
@@ -329,7 +329,7 @@ const handleApplyClick = () => {
         <div className={styles.footerlogoAndText}>
           <div className={styles.footerLogo}>
             <Image
-              src="/logo.png" 
+              src="/Rysa_logo.png" 
               alt="Logo"
               width={60}
               height={60}

@@ -39,18 +39,18 @@ export default function BankDetailsPage() {
     }
 
     if (!stepOneData.Bank.trim()) {
-      newErrors.Bank = "Bank Name is required";
+      newErrors.Bank = "Bank name is required";
       isValid = false;
     } else if (stepOneData.Bank.trim().length < 2) {
-      newErrors.Bank = "Bank Name must be at least 2 characters";
+      newErrors.Bank = "Bank name must be at least 2 characters";
       isValid = false;
     }
 
     if (!stepOneData.branchName.trim()) {
-      newErrors.branchName = "Branch Name is required";
+      newErrors.branchName = "Branch name is required";
       isValid = false;
     } else if (stepOneData.branchName.trim().length < 2) {
-      newErrors.branchName = "Branch Name must be at least 2 characters";
+      newErrors.branchName = "Branch name must be at least 2 characters";
       isValid = false;
     }
 
@@ -99,7 +99,7 @@ export default function BankDetailsPage() {
     <main className={styles.container}>
       <section className={styles.card}>
         <div className={styles.numberOneDiv}>{/*onediv start*/}
-          <header className={styles.hero1}>
+          <header className={styles.hero1} >
             {/* <button className={styles.backBtn1} onClick={() => history.back()}>&lt; Back</button> */}
             <div className={styles.heroText1}>
               <h1 className={styles.title1} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }} />
@@ -124,7 +124,7 @@ export default function BankDetailsPage() {
                        onChange={handleChange}
                        value={stepOneData.name}
                        className={styles.input}
-                       placeholder="Account holder name" />
+                       placeholder="Account Holder Name" />
                        <span className={styles.icon}><FaUser /></span>
                 {/* <span className={styles.icon}>👤</span> */}
                 {renderError('name')}
@@ -136,7 +136,7 @@ export default function BankDetailsPage() {
                        onChange={handleChange}
                        value={stepOneData.Bank}
                        className={styles.input}
-                       placeholder="Bank name" />
+                       placeholder="Bank Name" />
                        <span className={styles.icon}><FaUniversity /></span>
                 {/* <span className={styles.icon}>🏦</span> */}
                 {renderError('Bank')}
@@ -147,7 +147,7 @@ export default function BankDetailsPage() {
                        onChange={handleChange}
                        type="text"
                        className={styles.input}
-                       placeholder="IFSC code" />
+                       placeholder="IFSC Code" />
                        <span className={styles.icon}><FaKey /></span>
                 {/* <span className={styles.icon}>🔑</span> */}
                 {renderError('IFSC')}
@@ -158,7 +158,7 @@ export default function BankDetailsPage() {
                        onChange={handleChange}
                        type="text"
                        className={styles.input}
-                       placeholder="Account no." />
+                       placeholder="Account No." />
                        <span className={styles.icon}><FaCreditCard /></span>
                 {/* <span className={styles.icon}>💳</span> */}
                 {renderError('accountNumber')}
@@ -169,7 +169,7 @@ export default function BankDetailsPage() {
                        onChange={handleChange}
                        type="text"
                        className={styles.input}
-                       placeholder="Bank branch name" />
+                       placeholder="Bank Branch Name" />
                        {/* <span className={styles.icon}><FaUniversity /></span> */}
                 <span className={styles.icon}>🏦</span>
                 {renderError('branchName')}

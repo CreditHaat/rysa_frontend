@@ -82,15 +82,38 @@
 /* नेट डिस्बर्सड हायलाइट */
 .netLabel {
   font-weight: 600;
+  text-align: left;
+  /* background-color: #6039D2; */
+}
+.sectionTitle{
+  text-align: left;
+  margin-bottom: 15px;
 }
 
 .netValue {
-  font-weight: 700;
+      color: rgba(0, 0, 0, .48);
+    font-size: 14px;
+    font-weight: 600;
+  /* font-weight: 70; */
+  /* text-align: right; */
+  /* background-color: red; */
+  /* width: 30px; */
 }
 
 .valueAm {
+  /* background-color: red; */
   color: #111;
   font-weight: bold;
+  text-align: left;
+  padding-left: 5rem;
+  margin-bottom: 12px;
+}
+.summaryTable{
+  padding-left: 5rem;
+  margin-left: 5px;
+}
+.colDout{
+  padding-left: 4.5rem;
 }
 
 /* हलका डिव्हायडर */

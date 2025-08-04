@@ -8,7 +8,7 @@
 
 /* Navigation Styles */
 .navbar {
-  background-color: #797777;
+  background-color: #ffffff;
   backdrop-filter: blur(10px);
   padding: 0.5rem 0;
   position: sticky;
@@ -44,7 +44,8 @@
   align-items: center;
   width: 5rem;
   height: 2.9rem;
-  color: white;
+  color: black;
+  /* color: white; */
   text-decoration: none;
   text-align: center;
   font-size: 1rem;
@@ -84,7 +85,7 @@
 .loginBtn:active {
   background-color: #120999;
   transform: scale(1.1);
-  border: 3px solid #ffffff;
+  border: 3px solid #f1c1f9;
   /* text-decoration: none; */
 }
 /* ---------Hero Section---------- */
@@ -269,7 +270,7 @@
   font-size: 2rem;
   background: none;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   display: none; /* default: hidden */
 }
@@ -322,10 +323,12 @@
 
   .navRightHumberger {
     display: block; 
+    color: #000000;
   }
 
   .hamburgerBtn {
     display: block; 
+    color: #000000;
   }
 
   .loginBtn {
@@ -356,7 +359,7 @@
     font-size: 2rem;
     background: none;
     border: none;
-    color: white;
+    color: black;
     cursor: pointer;
   }
 
@@ -399,6 +402,7 @@
   }
 
   .heroImageContainer {
+    bottom: 0px;
     width: 100%;
     height: auto;
     position: static;
@@ -608,12 +612,14 @@
 }
 .firstPart .textBox .htag {
   padding-top: 3rem;
+  color: #000000;
   padding-bottom: 1.5rem;
   font-size: 2rem;
   font-weight: 700;
 }
 
 .firstPart .textBox .ptag {
+  color: #6B7280;
   font-size: 1.1rem;  /* fixed spacing */
 }
 
@@ -715,12 +721,14 @@
 }
 .secondPart .textBox .htag {
   padding-top: 1rem;
+  color: #000000;
   padding-bottom: 1.5rem;
   font-size: 2rem;
   font-weight: 700;
 }
 
 .secondPart .textBox .ptag {
+  color: #6B7280;
   font-size: 1.1rem;  /* fixed spacing */
 }
 
@@ -829,12 +837,14 @@
 }
 .thirdPart .textBox .htag {
   padding-top: 3rem;
+   color: #000000;
   padding-bottom: 1.5rem;
   font-size: 2rem;
   font-weight: 700;
 }
 
 .thirdPart .textBox .ptag {
+  color: #6B7280;
   font-size: 1.1rem;  /* fixed spacing */
 }
 
@@ -934,6 +944,7 @@
 }
 
 .fourthPart .textBox .htag {
+  color: #000000;
   padding-top: 2rem;
   padding-bottom: 1.5rem;
   font-size: 2rem;
@@ -941,6 +952,7 @@
 }
 
 .fourthPart .textBox .ptag {
+  color: #6B7280;
   font-size: 1.1rem;  /* fixed spacing */
 }
 
@@ -1140,6 +1152,7 @@
   .secondPart .textBox .htag,
   .thirdPart .textBox .htag,
   .fourthPart .textBox .htag {
+     color: black;
     font-size: 1.5rem; /* Reduce font size */
   }
 
@@ -1147,6 +1160,7 @@
   .secondPart .textBox .ptag,
   .thirdPart .textBox .ptag,
   .fourthPart .textBox .ptag {
+     color: black;
     font-size: 1rem; /* Reduce font size */
   }
 
