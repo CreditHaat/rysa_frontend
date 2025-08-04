@@ -1,5 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { UIDProvider } from "@/component/Rysa/context/UIDProvider";
+import { OnSearchProvider } from "@/component/Rysa/ONDC/context/OnSearchProvider";
+import { SelectedLenderProvider } from "@/component/Rysa/ONDC/context/SelectedLenderProvider";
+import { OnStatusProvider } from "@/component/Rysa/ONDC/context/OnStatusProvider";
+import { FinalLoanOfferProvider } from "@/component/Rysa/ONDC/context/FinalLoanOfferProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +27,17 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <UIDProvider>
+          <OnSearchProvider>
+            <SelectedLenderProvider>
+              <OnStatusProvider>
+                <FinalLoanOfferProvider>
+                  {children}
+                </FinalLoanOfferProvider>
+              </OnStatusProvider>
+            </SelectedLenderProvider>
+          </OnSearchProvider>
+        </UIDProvider>
       </body>
     </html>
   );
