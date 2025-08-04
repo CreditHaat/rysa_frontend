@@ -1,5 +1,6 @@
 import React from "react";
 import {Roboto} from '@next/font/google';
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -8,6 +9,7 @@ const roboto = Roboto({
 
 function RedirectionLoader() {
   return (
+    <>
     <div
       style={{
         position: "fixed",
@@ -76,6 +78,8 @@ function RedirectionLoader() {
         `}
       </style>
     </div>
+     <StickyWarning />
+    </>
   );
 }
 

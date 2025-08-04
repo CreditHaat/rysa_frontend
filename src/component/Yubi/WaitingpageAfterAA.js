@@ -4,6 +4,7 @@ import "./WaitingPage.css";
 import { Roboto } from "next/font/google";
 import CallbackListener from "../CallbackListener";
 import useYubiStepsLogic from "../Yubi/YubiStepsLogic";
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -16,6 +17,7 @@ const WaitingPageAfterAA = () => {
   useYubiStepsLogic(setStepText); // 🟢 Run logic ONCE using custom hook
 
   return (
+    <>
     <div className={`${roboto.className} waiting-container`}>
       <CallbackListener />
       <div className="loading-circle">
@@ -32,6 +34,8 @@ const WaitingPageAfterAA = () => {
         <b>{stepText}</b>
       </div>
     </div>
+     <StickyWarning />
+    </>
   );
 };
 
