@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import styles from "./NewPlFirstPage.module.css";
 import "./KfsDocs.css";
 import OTPBottomSheet from "./NewPlOtpBottomSheet/PlOTPBottomSheet";
@@ -98,7 +98,7 @@ export default KfsDocs;
 
 // "use client";
 // import React, { useState } from "react";
-// import { Roboto } from "@next/font/google";
+// import { Roboto } from "next/font/google";
 // import styles from "./NewPlFirstPage.module.css";
 // import "./KfsDocs.css";
 // import OTPBottomSheet from "../NewPlOtpBottomSheet/PlOTPBottomSheet";

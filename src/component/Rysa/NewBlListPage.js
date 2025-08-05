@@ -6,7 +6,7 @@ import Image from 'next/image';
 import hdb from '../../../public/Jays/HDB.png';
 import clock from '../../../public/clock.png';
 import per from '../../../public/Group_10.png'
-import { Roboto } from '@next/font/google';
+import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
   weight: ['400', '700'],

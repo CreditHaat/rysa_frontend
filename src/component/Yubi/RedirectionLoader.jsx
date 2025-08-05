@@ -1,5 +1,5 @@
 import React from "react";
-import {Roboto} from '@next/font/google';
+import {Roboto} from 'next/font/google';
 import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const roboto = Roboto({

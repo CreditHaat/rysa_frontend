@@ -12,7 +12,7 @@ import {
 // import "./BankDetails.css";
 import "./BankDetailsNew.css"
 import axios from "axios";
-// import { Roboto } from "@next/font/google";
+// import { Roboto } from "next/font/google";
 import Image from "next/image";
 import HeaderPart from "./HeaderPart";
 import { init } from "./apis/ondcapi";
@@ -711,7 +711,7 @@ export default Bankdetails;
 // } from "react-icons/fa";
 // import "./BankDetails.css";
 // import axios from "axios";
-// import { Roboto } from "@next/font/google";
+// import { Roboto } from "next/font/google";
 // import HeaderPart from "./HeaderPart";
 // import { init } from "./apis/ondcapi";
 // import useWebSocketONDCInit from "./Websocket/useWebSocketONDCInit";

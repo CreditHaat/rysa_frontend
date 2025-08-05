@@ -2,11 +2,11 @@
 import React from 'react'
 import { Roboto } from 'next/font/google';
 import SinglePage from '../../component/Rysa/SinglePage';
-import LoanFrom from '../../component/Rysa/LoanFormPage.js';
+// import LoanFrom from '../../component/Rysa/LoanFormPage.js';
 import ThridPage from '../../component/Rysa/ThridPage.js';
 import LoanRangePage from '../../component/Rysa/LoanRangePage.js';
 import ReviewLoan from '../../component/Rysa/ReviewLoanPage.js';
-import BankDetailsPage from '../../component/Rysa/BankDetailsPage';
+// import BankDetailsPage from '../../component/Rysa/BankDetailsPage';
 import NewBlListPage from '../../component/Rysa/NewBlListPage.js';
 import LoginPage from '../../component/Rysa/LoginPage.js';
 import RepaymentHistoryPage from '../../component/Rysa/RepaymentHistoryPage.js';

@@ -5,7 +5,7 @@ import "./SelfieVerifying.css";
 import Verifyingimage from "./newplimages/Verifyingimage.png";
 import logo from "./newplimages/logo.png";
 import Image from "next/image";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import "./Mandate.css";
 
 const roboto = Roboto({

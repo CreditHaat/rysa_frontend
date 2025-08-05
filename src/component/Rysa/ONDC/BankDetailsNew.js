@@ -11,7 +11,7 @@
 // } from "react-icons/fa";
 // import "./BankDetailsNew.css";
 // // import axios from "axios";
-// import { Roboto } from "@next/font/google";
+// import { Roboto } from "next/font/google";
 // import Image from "next/image";
 // import HeaderPart from "./HeaderPart";
 // // import CallbackListener from "../CallbackListener";

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./SelfiePageNew.css";
 import axios from "axios";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
 import HeaderPart from "./HeaderPart";
 import Selfie from "./newplimages/selfieimg.png";

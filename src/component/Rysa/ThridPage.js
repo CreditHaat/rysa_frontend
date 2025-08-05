@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './LoanOffers.module.css';
-import { Roboto } from '@next/font/google';
+import { Roboto } from 'next/font/google';
 import clock from '../../../public/clock.png'; // Make sure this exists in public
 
 const roboto = Roboto({

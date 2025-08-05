@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 // import LoadingPage from "./LoadingPage";
 import LendersLoader from "./LoadingPages/LendersLoader";
 import styles from "./styleondclist.module.css";
-// import { Roboto } from '@next/font/google';
+// import { Roboto } from 'next/font/google';
 // import "../NewBlFirstPage.module.css";
 import "./NewBlFirstPage.module.css"
 import per from '../../../../public/Group_10.png'

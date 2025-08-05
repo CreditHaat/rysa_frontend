@@ -92,7 +92,7 @@ export default Mandate;
 
 // "use client";
 // import React, { useState } from "react";
-// import { Roboto } from "@next/font/google";
+// import { Roboto } from "next/font/google";
 // import styles from "./NewPlFirstPage.module.css";
 // import "./Mandate.css";
 

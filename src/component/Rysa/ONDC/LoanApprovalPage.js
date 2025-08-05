@@ -7,7 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 // import hdb from "../../components/Yubi/newplimages/HDB.png";
 import ondclogo from "./images/ondc_registered_logo.png";
-// import { Roboto } from "@next/font/google";
+// import { Roboto } from "next/font/google";
 import SelectedLenderContext from "./context/SelectedLenderContext";
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';

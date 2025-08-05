@@ -18,7 +18,7 @@ export default function BankDetailsPage() {
   useEffect(() => {
     const id = setInterval(() => setSlide(i => (i + 1) % slides.length), 3500);
     return () => clearInterval(id);
-  }, []);
+  }, [slides.length]);
 
   // step data
   const [stepOneData, setStepOne] = useState({ name: '', Bank: '', branchName: '', IFSC: '', accountNumber: '' });

@@ -5,7 +5,7 @@ import "./CardBorder.css";
 import Successimage from "./newplimages/Successimage.png";
 import Image from "next/image";
 import styles from "./NewPlFirstPage.module.css";
-import { Roboto } from "@next/font/google";
+import { Roboto } from "next/font/google";
 import HDBNavBar from "./HdbNavBar/HDBNavBar";
 import NewBankD from "./BankDetails";
 import { useRouter, useSearchParams } from "next/navigation";
