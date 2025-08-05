@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 const WaitingPageAfterAA = () => {
-  const [stepText, setStepText] = useState("Starting process...");
+  const [stepText, setStepText] = useState("Starting Process...");
 
   useYubiStepsLogic(setStepText); // 🟢 Run logic ONCE using custom hook
 

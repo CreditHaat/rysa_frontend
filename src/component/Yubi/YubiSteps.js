@@ -73,6 +73,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import CallbackListener from "../CallbackListener";
+import StickyWarning from "../../component/Yubi/StickyWarning";
 
 const YubiSteps = () => {
   const [stepText, setStepText] = useState("Starting process...");
@@ -97,7 +98,7 @@ const YubiSteps = () => {
         // Save for WS listener to use
         localStorage.setItem("hdbClientLoanId", clientLoanId);
 
-        setStepText("Getting request ID...");
+        setStepText("Verifying Details...");
         const reqIdResp = await axios.get(
           `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getRequestIdByClientLoanId`,
           { params: { clientLoanId } }
@@ -111,7 +112,7 @@ const YubiSteps = () => {
           return;
         }
 
-        setStepText("Retrieving report...");
+        setStepText("Analyzing Bank Statements...");
         const retrieveResp = await axios.post(
           `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}retrieveReport`,
           { clientLoanId, requestId }
@@ -119,7 +120,7 @@ const YubiSteps = () => {
         console.log("✅ retrieveReport response:", retrieveResp.data);
 
         // 🟢 Do NOT manually wait for localStorage value — let CallbackListener handle it.
-        setStepText("Waiting for report callback...");
+        setStepText("Analyzing Bank Statements...");
       } catch (err) {
         console.error("❌ Error in runSteps:", err);
         setStepText("Something went wrong.");
@@ -134,11 +135,14 @@ const YubiSteps = () => {
   }, [clientLoanId]);
 
   return (
+    <>
     <div style={{ padding: "2rem", textAlign: "center" }}>
       <CallbackListener />
       <h2>Processing Your Application</h2>
       <p>{stepText}</p>
     </div>
+     <StickyWarning />
+    </>
   );
 };
 

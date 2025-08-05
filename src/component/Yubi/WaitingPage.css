@@ -5,7 +5,8 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f3f1f9;
+    /* background-color: #f3f1f9; */
+    background-color:#f7f6fd;
     font-family: Roboto;
   }
   
@@ -36,9 +37,10 @@
   }
   
   .waiting-text {
-    font-size: 24px;
+    /* font-size: 24px; */
+    font-size: 22px;
     font-weight: 400;
-    color: #6b7280;
+    color: #777777;
     text-align: center;
     letter-spacing: 0.5px;
   }
@@ -58,6 +60,7 @@
     }
     
     .waiting-text {
-      font-size: 20px;
+      font-size: 22px;
+      color: #777777;
     }
   }

@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #f7f6fd;
-    font-family: 'Arial', sans-serif;
     padding: 20px;
     font-family: Roboto;
   }
@@ -20,14 +19,14 @@
   
   .sms-icon-container {
     margin-bottom: 30px;  
-     animation: spin 3s linear infinite; 
+    animation: spin 3s linear infinite; 
   }
   
   .sms-outer-circle {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6039D2 0%, #6039D2 100%);
+    background: #6039D2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,7 +61,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: white;
+    background: #f7f6fd;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,19 +94,19 @@
     filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.2));
   }
   
-  .sms-text {
+  /* .sms-text {
     color: white;
     font-weight: bold;
     font-size: 20px;
     letter-spacing: 1px;
     z-index: 3;
     position: relative;
-  }
+  } */
   
   .sms-waiting-txt {
-    font-size: 20px;
+    font-size: 22px;
     margin: 0 0 30px 0;
-    font-weight: normal;
+    font-weight: 400;
     letter-spacing: 2px;
     color: #777777;
   }
@@ -115,7 +114,7 @@
   .sms-divider {
     width: 100%;
     height: 1px;
-    background-color: #d1d5db;
+    background-color: #f7f6fd;
     margin: 30px 0;
   }
   
@@ -125,7 +124,7 @@
   
   .sms-message {
     font-size: 20px;
-    color: #4a5568;
+    color: #777777;
     line-height: 1.5;
     margin: 0;
     font-weight: 400;
@@ -166,9 +165,9 @@
       height: 32px;
     }
     
-    .sms-text {
+    /* .sms-text {
       font-size: 11px;
-    }
+    } */
     
     .sms-waiting-text {
       font-size: 22px;
@@ -206,9 +205,9 @@
   }
   
   .waiting-text {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 400;
-    color: #6b7280;
+    color: #777777;
     text-align: center;
     letter-spacing: 0.5px;
   }
@@ -227,7 +226,7 @@
       height: 32px;
     }
     
-    .loading-text {
+    /* .loading-text {
       font-size: 20px;
-    }
+    } */
   }

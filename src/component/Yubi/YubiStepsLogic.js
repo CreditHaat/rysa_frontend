@@ -23,7 +23,7 @@ export default function useYubiStepsLogic(setStepText) {
 
         localStorage.setItem("hdbClientLoanId", clientLoanId);
 
-        setStepText("Verifying Details....");
+        setStepText("Verifying Details...");
         const reqIdResp = await axios.get(
           `http://localhost:8080/getRequestIdByClientLoanId`,
           { params: { clientLoanId } }
@@ -37,24 +37,24 @@ export default function useYubiStepsLogic(setStepText) {
           return;
         }
 
-        setStepText("Analyzing Bank Statements");
+        setStepText("Analyzing Bank Statements...");
         const retrieveResp = await axios.post(
           `http://localhost:8080/retrieveReport`,
           { clientLoanId, requestId }
         );
         console.log("✅ retrieveReport response:", retrieveResp.data);
 
-        setStepText("Analyzing Bank Statements");
+        setStepText("Analyzing Bank Statements...");
       } catch (err) {
         console.error("❌ Error in runSteps:", err);
-        setStepText("Something went wrong.");
+        setStepText("Something Went Wrong.");
       }
     };
 
     if (clientLoanId) {
       runSteps();
     } else {
-      setStepText("Missing client loan ID.");
+      setStepText("Missing Client Loan Id...");
     }
   }, [clientLoanId, setStepText]);
 }

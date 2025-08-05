@@ -14,7 +14,7 @@ const StickyWarning = () => {
      <div className={`${roboto.className}`}>
     <div className="sticky-warning">
       <p className="warning-text">
-        Do not press the back button or refresh the page
+        Please do not press the back button or refresh the page
       </p>
     </div>
     </div>

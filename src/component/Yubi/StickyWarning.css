@@ -8,19 +8,21 @@
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 12px 20px;
-  max-width: 90%;
+  /* max-width: 90%; */
+  max-width: 100%;
   width: fit-content;
   margin-bottom: 65px;
 }
 
 .warning-text {
   color: #777777;
- background-color: #6039d22b;
+ /* background-color: #6039d22b; */
  padding: 10px;
  white-space: normal;
  width: 100%;
- font-size: 13px;
+ font-size: 20px;
  line-height: 1.3;
+ text-align: center;
 }
 
 /* Mobile responsive */
@@ -28,17 +30,20 @@
   .sticky-warning {
     bottom: 15px;
     padding: 10px 16px;
-    max-width: 95%;
+    /* max-width: 95%; */
+    max-width: 100%;
     margin-bottom: 65px;
   }
   
   .warning-text {
-    background-color: #6039d22b;
+    /* background-color: #6039d22b; */
     padding: 10px;
     white-space: normal;
     width: 100%;
-    font-size: 13px;
+    /* font-size: 13px; */
+    font-size: 20px;
     line-height: 1.3;
+    text-align: center;
   }
 }
 
@@ -52,11 +57,13 @@
   }
   
   .warning-text {
-   background-color: #6039d22b;
+   /* background-color: #6039d22b; */
    padding: 10px;
    white-space: normal;
    width: 100%;
-   font-size: 13px;
+   /* font-size: 13px; */
+   font-size: 20px;
    line-height: 1.3;
+   text-align: center;
   }
 }

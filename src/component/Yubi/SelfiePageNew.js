@@ -39,6 +39,7 @@ const [imageSource, setImageSource] = useState(null); // 'camera' or 'file'
 const [isCameraActive, setIsCameraActive] = useState(false);
 const cameraContainerRef = useRef(null);
 const capturedImageRef = useRef(null); // New ref for captured image container
+const popupRef = useRef(null); // Ref for popup content
 
 // Start camera
 const startCamera = async () => {
@@ -278,6 +279,14 @@ const handleImageAction = () => {
   }
 };
 
+// Handle click outside popup to close it
+const handlePopupOverlayClick = (e) => {
+  // Check if the click is on the overlay (not on the popup content)
+  if (popupRef.current && !popupRef.current.contains(e.target)) {
+    setShowUploadPopup(false);
+  }
+};
+
   // ✅ Poll for KYC callback status
   useEffect(() => {
     if (activeContainer !== "SelfieWaiting") return;
@@ -357,7 +366,7 @@ useEffect(() => {
 
               <div className="texthead" style={{ marginTop: "150px",alignItems:"center" }}>
                 <h3 style={{fontSize:'22px',color:'#777777'}}><b>Take a Selfie</b></h3>
-                <p style={{fontSize:'15px',color:'#777777'}}>
+                <p style={{fontSize:'20px',color:'#777777'}}>
                   Capture a clear selfie or choose an existing one for identity
                   verification. Avoid glasses and background lights.
                 </p>
@@ -527,30 +536,36 @@ useEffect(() => {
   style={{ display: 'none' }}
 />
 
-{/* Upload Popup */}
+{/* Upload Popup with Click Outside to Close */}
 {showUploadPopup && (
-  <div style={{
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000
-  }}>
-    <div style={{
-      backgroundColor: 'white',
-      borderRadius: '15px',
-      padding: '30px',
-      width: '300px',
-      maxWidth: '90%',
-      textAlign: 'center',
-      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
-    }}>
-      <h3 style={{marginBottom: '30px', color: '#333'}}>Choose Option</h3>
+  <div 
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000
+    }}
+    onClick={handlePopupOverlayClick}
+  >
+    <div 
+      ref={popupRef}
+      style={{
+        backgroundColor: 'white',
+        borderRadius: '15px',
+        padding: '30px',
+        width: '300px',
+        maxWidth: '90%',
+        textAlign: 'center',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+      }}
+    >
+      <h3 style={{marginBottom: '30px', color: '#777777',fontSize:'15px'}}>Choose Option</h3>
       
       <div style={{
         display: 'flex',
@@ -570,8 +585,8 @@ useEffect(() => {
             borderRadius: '10px',
             transition: 'background-color 0.3s'
           }}
-          onMouseEnter={e => e.target.style.backgroundColor = '#f0f0f0'}
-          onMouseLeave={e => e.target.style.backgroundColor = 'transparent'}
+          onMouseEnter={e => e.target.style.backgroundColor = '#f7f6fd'}
+          onMouseLeave={e => e.target.style.backgroundColor = '#f7f6fd'}
         >
           <div style={{
             width: '60px',
@@ -586,7 +601,7 @@ useEffect(() => {
           }}>
             📷
           </div>
-          <p style={{margin: 0, fontSize: '14px', color: '#333'}}>Camera</p>
+          <p style={{margin: 0, fontSize: '15px', color: '#777777'}}>Camera</p>
         </div>
         
         {/* Files Option */}
@@ -602,8 +617,8 @@ useEffect(() => {
             borderRadius: '10px',
             transition: 'background-color 0.3s'
           }}
-          onMouseEnter={e => e.target.style.backgroundColor = '#f0f0f0'}
-          onMouseLeave={e => e.target.style.backgroundColor = 'transparent'}
+          onMouseEnter={e => e.target.style.backgroundColor = '#f7f6fd'}
+          onMouseLeave={e => e.target.style.backgroundColor = '#f7f6fd'}
         >
           <div style={{
             width: '60px',
@@ -618,25 +633,9 @@ useEffect(() => {
           }}>
             📁
           </div>
-          <p style={{margin: 0, fontSize: '14px', color: '#333'}}>Files</p>
+          <p style={{margin: 0, fontSize: '15px', color: '#777777'}}>Files</p>
         </div>
       </div>
-      
-      {/* Cancel Button */}
-      <button
-        onClick={() => setShowUploadPopup(false)}
-        style={{
-          background: '#f5f5f5',
-          border: 'none',
-          padding: '10px 30px',
-          borderRadius: '25px',
-          cursor: 'pointer',
-          color: '#666',
-          fontSize: '14px'
-        }}
-      >
-        Cancel
-      </button>
     </div>
   </div>
 )}
