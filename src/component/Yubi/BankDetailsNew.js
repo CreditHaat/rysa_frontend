@@ -55,6 +55,71 @@ const BankDetails = () => {
   const IFSCRef = useRef(null);
   const accountNumberRef = useRef(null);
 
+  // Function to scroll to first error field
+  const scrollToFirstError = (errors) => {
+    const errorFields = Object.keys(errors);
+    if (errorFields.length === 0) return;
+
+    const firstErrorField = errorFields[0];
+    let targetRef = null;
+
+    // Map error field names to their corresponding refs
+    switch (firstErrorField) {
+      case 'accountname':
+        targetRef = accountnameRef;
+        break;
+      case 'bankName':
+        targetRef = bankNameRef;
+        break;
+      case 'branchName':
+        targetRef = branchNameRef;
+        break;
+      case 'IFSC':
+        targetRef = IFSCRef;
+        break;
+      case 'accountNumber':
+        targetRef = accountNumberRef;
+        break;
+      case 'salarySlipLink':
+        // For file upload, scroll to the file input
+        const fileInput = document.getElementById('salarySlipUpload');
+        if (fileInput) {
+          // Find the scrollable container
+          const cardForm = document.querySelector('.cardForm-block');
+          if (cardForm) {
+            const fieldPosition = fileInput.offsetTop;
+            cardForm.scrollTo({
+              top: fieldPosition - 100,
+              behavior: 'smooth'
+            });
+          }
+        }
+        return;
+      default:
+        break;
+    }
+
+    // Scroll to the target field within the card container
+    if (targetRef && targetRef.current) {
+      // Find the scrollable container (.cardForm-block)
+      const cardForm = document.querySelector('.cardForm-block');
+      if (cardForm) {
+        const fieldPosition = targetRef.current.offsetTop;
+        cardForm.scrollTo({
+          top: fieldPosition - 100, // 100px offset from top
+          behavior: 'smooth'
+        });
+      }
+      
+      // Optional: Focus on the field after scrolling
+      setTimeout(() => {
+        if (targetRef.current) {
+          targetRef.current.focus();
+        }
+      }, 500);
+    }
+  };
+
   const CustomOption = ({
     data,
     innerRef,
@@ -106,6 +171,7 @@ const BankDetails = () => {
       border: "none",
       cursor: "pointer",
       borderRadius: "50px",
+      fontSize: "16px",
     }),
     menu: (provided) => ({
       ...provided,
@@ -118,6 +184,7 @@ const BankDetails = () => {
       zIndex: 9999,
       boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)",
       borderRadius: "10px",
+       fontSize: "16px",
     }),
     control: (provided) => ({
       ...provided,
@@ -128,10 +195,12 @@ const BankDetails = () => {
     placeholder: (provided) => ({
       ...provided,
       padding: "12px",
+       fontSize: "16px",
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
       padding: "0",
+      fontSize: "16px",
     }),
     indicatorSeparator: () => ({
       display: "none",
@@ -256,6 +325,14 @@ const BankDetails = () => {
     }
 
     setFormErrors(errors);
+    
+    // Scroll to first error field if validation fails
+    if (!isValid) {
+      setTimeout(() => {
+        scrollToFirstError(errors);
+      }, 100); // Small delay to ensure error messages are rendered
+    }
+    
     return isValid;
   };
 
@@ -332,6 +409,7 @@ const BankDetails = () => {
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
                   <input
+                    ref={accountnameRef}
                     type="text"
                     id="accountname"
                     name="accountname"
@@ -362,6 +440,7 @@ const BankDetails = () => {
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
                   <input
+                    ref={bankNameRef}
                     type="text"
                     id="bankName"
                     name="bankName"
@@ -392,6 +471,7 @@ const BankDetails = () => {
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
                   <input
+                    ref={branchNameRef}
                     type="text"
                     id="branchName"
                     name="branchName"
@@ -486,7 +566,7 @@ const BankDetails = () => {
                   <span className="error">{formErrors.accountNumber}</span>
                 )}
               </div>
-              {/* Salary Slip Upload */}
+          {/* Salary Slip Upload */}
               <div className="fill-form">
                 <label
                   htmlFor="salarySlipUpload"
@@ -506,6 +586,9 @@ const BankDetails = () => {
                   onChange={handleSalarySlipUpload}
                   className="enter-field"
                 />
+                {formErrors.salarySlipLink && (
+                  <div className="File-Error">{formErrors.salarySlipLink}</div>
+                )}
               </div>
 
               {/* Submit Button */}      

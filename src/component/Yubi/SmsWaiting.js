@@ -59,7 +59,7 @@ const SMSWaiting = () => {
           <b>Please Approve Offer Details</b>
         </h1>
         <br></br>
-        <p style={{fontSize:'15px',color:'#777777',textAlign:'center',padding:'10px'}}>We have sent you a link via SMS.
+        <p style={{fontSize:'16px',color:'#777777',textAlign:'center',padding:'10px'}}>We have sent you a link via SMS.
           <br />
           Please open the link and give your consent to proceed.</p>
       </div>

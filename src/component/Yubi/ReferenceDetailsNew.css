@@ -4,7 +4,10 @@
   align-items: center;
   background: white;
   min-height: 100vh;
+  align-items: start;
+  overflow-y: auto;
 }
+
 .card-refer{
   width: 432px;
   background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
@@ -15,20 +18,22 @@
   min-height: 850px;
   /* min-height: 550px; */
 }
+
 .Message{
   color: red;
   font-size: 12px;
   font-weight: bold;
   margin-left: 2%;
-  margin-top: -20px;
+  margin-top: -22px;
 }
 
- .para-para{
+.para-para{
   color: #777777;
   text-align: center;
   margin-top: -13px;
   margin-bottom: 10px;
 }
+
 .LogoPart-refer {
     display: flex;
     justify-content: center;
@@ -41,6 +46,7 @@
   margin-top: -20px;
   margin-bottom: -13px; 
 }
+
 .cardForm-refer {
   padding-left: 5rem;
   padding-top: 30px;
@@ -48,15 +54,22 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background: #F7F6FD;
-  min-height: 472px;
+  min-height: 470px;
   justify-items: center;
-  height: 122vh;
+  /* ✅ REMOVED: Fixed height that was preventing scrolling */
+  /* height: 128vh; */
+  /* ✅ UPDATED: Added proper bottom padding for button space */
+  padding-bottom: 100px;
 }
+
 .content-refer {
   padding: 20px;
   width: 360px;
   align-content: center;
+  /* ✅ UPDATED: Reduced bottom padding since we have space in parent */
+  padding-bottom: 20px;
 }
+
 .nextBtn-refer {
   width: 300px;
   /* margin-top: 60px; */
@@ -74,6 +87,7 @@
 .nextBtn-refer:hover {
   opacity: 0.9;
 }
+
 .ap{
 margin-left: 90px;
 margin-right: 90px;
@@ -114,27 +128,56 @@ margin-top: -10px;
   font-size: 12px;
   font-weight: bold;
   margin-left: 2%;
+  margin-top: 4px;
+  display: block;
 }
 
 .fill-form {
     margin-bottom: 25px;
 }
 
-
-.enter-field, .select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius:10px;
-    box-shadow: 5px 5px 5px #eee;
-    background-color: white;
+/* ✅ NEW: Input container to properly position icons */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.error-msg {
-    color: red;
-    font-size: 12px;
-    margin-top: 4px;
-    display: block;
+.enter-field, .select {
+   color: #000000;
+    width: 100%;
+    padding: 12px;
+    padding-right: 45px; /* ✅ Add right padding for icon space */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #eee;
+    background-color: white;
+    box-sizing: border-box; /* ✅ Ensure consistent sizing */
+}
+
+.enter-field::placeholder {
+    color: #777777; 
+}
+
+/* ✅ NEW: Fixed icon positioning */
+.enter-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #00000061;
+  pointer-events: none; /* ✅ Prevent icon from interfering with input */
+  z-index: 1;
+}
+
+/* ✅ NEW: Clickable icon variant for contact picker */
+.clickable-icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.clickable-icon:hover {
+  color: #6039D2;
 }
 
 .field-submit {
@@ -153,13 +196,23 @@ margin-top: -10px;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 40px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
   background-color: white;
   border-top: 1px solid #e5e7eb;
+  /* ✅ ADDED: Ensure button stays on top but allows content to scroll */
+  z-index: 1000;
+  /* ✅ ADDED: Ensure button container is centered for mobile */
+  display: flex;
+  justify-content: center;
 }
-  @media (max-width: 768px){
+
+/* ✅ UPDATED: Make button responsive */
+.next-button .field-submit {
+  max-width: 400px;
+  width: 100%;
+}
+
+@media (max-width: 768px){
     .form-submit {
     width: 100%;
     padding: 10px;
@@ -176,11 +229,19 @@ margin-top: -10px;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 40px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
   background-color: white;
   border-top: 1px solid #e5e7eb;
+}
+
+/* ✅ ADDED: Ensure proper padding for mobile content */
+.content-refer {
+  padding-bottom: 20px;
+}
+
+/* ✅ ADDED: Ensure card has proper bottom spacing on mobile */
+.cardForm-refer {
+  padding-bottom: 100px;
 }
 
 }
@@ -196,6 +257,7 @@ margin-top: -10px;
     z-index: 999;
 display: flex;
 }
+
 .nextBtn {
   width: 395px;
 margin: 3px;
@@ -203,14 +265,4 @@ padding: 14px 0;
 font-size: 15px;
 font-weight: 600;
 background: #6039D2;
-color: #ffffff;
-border: none;
-border-radius: 8px;
-cursor: pointer;
 }
-
-
-
-
-
-

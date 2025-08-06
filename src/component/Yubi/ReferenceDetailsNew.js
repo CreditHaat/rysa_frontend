@@ -39,16 +39,61 @@ const NewReferenceDt = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  // Create refs for form elements to enable scrolling
+  const formRef = useRef(null);
+  const mothersNameRef = useRef(null);
+  const yearOfExperienceRef = useRef(null);
+  const ref1NameRef = useRef(null);
+  const ref1MobileRef = useRef(null);
+  const ref1RelationRef = useRef(null);
+  const ref1AddressRef = useRef(null);
+  const ref2NameRef = useRef(null);
+  const ref2MobileRef = useRef(null);
+  const ref2RelationRef = useRef(null);
+  const ref2AddressRef = useRef(null);
+
   const loanAmount = searchParams.get("loanAmount") || "";
   const tenure = searchParams.get("tenure") || "";
   const interestRate = searchParams.get("interestRate") || "";
   const clientLoanId = searchParams.get("client_loan_id") || "";
   const salarySlipLink = searchParams.get("salarySlipLink") || "";
 
+  // Function to scroll to first error field
+  const scrollToFirstError = (errors) => {
+    const errorFields = Object.keys(errors);
+    if (errorFields.length === 0) return;
+
+    const firstErrorField = errorFields[0];
+    const fieldRefs = {
+      mothersName: mothersNameRef,
+      yearOfExperience: yearOfExperienceRef,
+      ref1Name: ref1NameRef,
+      ref1Mobile: ref1MobileRef,
+      ref1Relation: ref1RelationRef,
+      ref1Address: ref1AddressRef,
+      ref2Name: ref2NameRef,
+      ref2Mobile: ref2MobileRef,
+      ref2Relation: ref2RelationRef,
+      ref2Address: ref2AddressRef,
+    };
+
+    const targetRef = fieldRefs[firstErrorField];
+    if (targetRef && targetRef.current) {
+      targetRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+      // Optional: Focus the field
+      if (targetRef.current.focus) {
+        setTimeout(() => targetRef.current.focus(), 300);
+      }
+    }
+  };
+
  const handleContactPicker = async (fieldName) => {
     try {
       // Check if Contact Picker API is supported
-
         if ("contacts" in navigator && "select" in navigator.contacts) {
         const contacts = await navigator.contacts.select(["name", "tel"], {
           multiple: false,
@@ -96,14 +141,22 @@ const NewReferenceDt = () => {
     { value: "friend", label: "Friend" },
     { value: "relative", label: "Relative" },
   ];
-  const mothersNameRef = useRef(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (formErrors[name]) {
+      setFormErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSelectChange = (selectedOption, { name }) => {
     setFormData((prev) => ({ ...prev, [name]: selectedOption }));
+    // Clear error when user makes selection
+    if (formErrors[name]) {
+      setFormErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const CustomOption = ({
@@ -128,53 +181,92 @@ const NewReferenceDt = () => {
     setFormData({ ...formData, mothersName: value });
     setFormErrors((prevErrors) => ({ ...prevErrors, mothersName: "" }));
   };
+
   const handleyearOfExperienceChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, yearOfExperience: value });
     setFormErrors((prevErrors) => ({ ...prevErrors, yearOfExperience: "" }));
   };
 
+  
   const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: "50px",
-      height: "50px",
-      borderRadius: "10px",
-      borderColor: state.isFocused ? "#aaa" : "#ccc",
-      boxShadow: state.isFocused ? "0 0 0 1px #aaa" : "none",
-      fontSize: "14px",
-    }),
-    valueContainer: (provided) => ({
-      ...provided,
-      height: "50px",
-      padding: "0 12px",
-    }),
-    input: (provided) => ({
-      ...provided,
-      margin: "0px",
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      color: "#aaa",
-      fontSize: "14px",
-    }),
-    dropdownIndicator: (provided) => ({
-      ...provided,
-      padding: "6px",
-    }),
-    indicatorSeparator: () => ({
-      display: "none",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      zIndex: 9999,
-    }),
-  };
+  control: (provided, state) => ({
+    ...provided,
+    minHeight: "50px",
+    height: "50px",
+    borderRadius: "10px",
+    borderColor: state.isFocused ? "#aaa" : "#ccc",
+    boxShadow: state.isFocused ? "0 0 0 1px #aaa" : "none",
+    fontSize: "16px",
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    height: "50px",
+    padding: "0 12px",
+  }),
+  input: (provided) => ({
+    ...provided,
+    margin: "0px",
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: "#aaa",
+    fontSize: "16px",
+  }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    padding: "6px",
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 9999,
+    backgroundColor: "white",
+  }),
+  // ✅ ADD THESE STYLES FOR OPTIONS
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected 
+      ? "#6039D2" 
+      : state.isFocused 
+        ? "#f0f0f0" 
+        : "white",
+    color: state.isSelected 
+      ? "white" 
+      : "#000000", // ✅ Force black color for all options
+    padding: "12px 16px",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "400",
+    // ✅ Important for mobile override
+    WebkitTextFillColor: state.isSelected ? "white" : "#000000",
+    // ✅ Additional mobile-specific overrides
+    "&:active": {
+      backgroundColor: state.isSelected ? "#6039D2" : "#e0e0e0",
+      color: "#000000",
+    },
+  }),
+  // ✅ Style for selected value display
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#000000",
+    fontSize: "16px",
+    fontWeight: "400",
+    WebkitTextFillColor: "#000000", // ✅ Mobile override
+  }),
+  // ✅ Additional menu list styling
+  menuList: (provided) => ({
+    ...provided,
+    padding: "0",
+    maxHeight: "200px",
+  }),
+};
 
   const validateForm = () => {
     const errors = {};
     let isValid = true;
-    const data = new FormData();
 
     if (!formData.mothersName) {
       errors.mothersName = "Mother's name is required";
@@ -233,6 +325,12 @@ const NewReferenceDt = () => {
     }
 
     setFormErrors(errors);
+    
+    // Scroll to first error field if validation fails
+    if (!isValid) {
+      setTimeout(() => scrollToFirstError(errors), 100);
+    }
+    
     return isValid;
   };
 
@@ -253,6 +351,7 @@ const NewReferenceDt = () => {
     tenure: tenure || "",
     interestRate: interestRate || "",
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -336,12 +435,14 @@ const NewReferenceDt = () => {
         
           {/* <div className="Formal-Card" style={{ boxSizing: "content-box" }}> */}
            
-            <form onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit}>
               <p className="para-para">Please provide your reference details</p>
+              
               {/* Mother's name Field */}
               <div className="fill-form">
-                <div className="fill-form" style={{ position: "relative" }}>
+                <div className="input-container">
                   <input
+                    ref={mothersNameRef}
                     type="text"
                     id="mothersName"
                     name="mothersName"
@@ -350,29 +451,20 @@ const NewReferenceDt = () => {
                     className="enter-field"
                     onChange={handlemothersNameChange}
                   />
-                  <span
-                    className="enter-icon"
-                    style={{
-                      position: "absolute",
-                      right: "15px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      cursor: "pointer",
-                      color: "#00000061",
-                    }}
-                  >
+                  <span className="enter-icon">
                     <FaUser />
                   </span>
                 </div>
                 {formErrors.mothersName && (
-                  <div className="Message">{formErrors.mothersName}</div>
+                  <div className="error-msg">{formErrors.mothersName}</div>
                 )}
               </div>
 
               {/* Year Of Experience Field */}
               <div className="fill-form">
-                <div className="fill-form" style={{ position: "relative" }}>
+                <div className="input-container">
                   <input
+                    ref={yearOfExperienceRef}
                     type="text"
                     id="yearOfExperience"
                     name="yearOfExperience"
@@ -381,86 +473,66 @@ const NewReferenceDt = () => {
                     className="enter-field"
                     onChange={handleyearOfExperienceChange}
                   />
-                  <span
-                    className="enter-icon"
-                    style={{
-                      position: "absolute",
-                      right: "15px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      cursor: "pointer",
-                      color: "#00000061",
-                    }}
-                  >
+                  <span className="enter-icon">
                     <FaBuilding />
                   </span>
                 </div>
                 {formErrors.yearOfExperience && (
-                  <div className="Message">
+                  <div className="error-msg">
                     {formErrors.yearOfExperience}
                   </div>
                 )}
               </div>
 
-              <h6 className="ref-heading">🔷 Reference 1</h6>
+              <h6 style={{color:'#000000'}}>🔷 Reference 1</h6>
 
               {/* Full Name Field */}
-              <div className="fill-form" style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  name="ref1Name"
-                  placeholder="Full Name"
-                  className="enter-field"
-                  value={formData.ref1Name}
-                  onChange={handleChange}
-                />
-                <span
-                  className="enter-icon"
-                  style={{
-                    position: "absolute",
-                    right: "15px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    color: "#00000061",
-                  }}
-                >
-                  <FaUser />
-                </span>
+              <div className="fill-form">
+                <div className="input-container">
+                  <input
+                    ref={ref1NameRef}
+                    type="text"
+                    name="ref1Name"
+                    placeholder="Full Name"
+                    className="enter-field"
+                    value={formData.ref1Name}
+                    onChange={handleChange}
+                  />
+                  <span className="enter-icon">
+                    <FaUser />
+                  </span>
+                </div>
                 {formErrors.ref1Name && (
                   <span className="error-msg">{formErrors.ref1Name}</span>
                 )}
               </div>
 
               {/* Mobile Number Field */}
-              <div className="fill-form" style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  name="ref1Mobile"
-                  placeholder="Mobile Number"
-                  className="enter-field"
-                  value={formData.ref1Mobile}
-                  onChange={handleChange}
-                />
-                <span
-                  className="enter-icon"
-                  style={{
-                    position: "absolute",
-                    right: "15px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    color: "#00000061",
-                  }}
-                  onClick={() => handleContactPicker('ref1Mobile')}
-                  title="Select from contacts"
-                >
-                  <FaPhone />
-                </span>
+              <div className="fill-form">
+                <div className="input-container">
+                  <input
+                    ref={ref1MobileRef}
+                    type="text"
+                    name="ref1Mobile"
+                    placeholder="Mobile Number"
+                    className="enter-field"
+                    value={formData.ref1Mobile}
+                    onChange={handleChange}
+                  />
+                  <span
+                    className="enter-icon clickable-icon"
+                    onClick={() => handleContactPicker('ref1Mobile')}
+                    title="Select from contacts"
+                  >
+                    <FaPhone />
+                  </span>
+                </div>
                 {formErrors.ref1Mobile && (
                   <span className="error-msg">{formErrors.ref1Mobile}</span>
                 )}
               </div>
 
-              <div className="fill-form">
+              <div className="fill-form" ref={ref1RelationRef}>
                 <Select
                   name="ref1Relation"
                   placeholder="Relation"
@@ -476,6 +548,7 @@ const NewReferenceDt = () => {
 
               <div className="fill-form">
                 <input
+                  ref={ref1AddressRef}
                   type="text"
                   name="ref1Address"
                   placeholder="Address"
@@ -489,66 +562,56 @@ const NewReferenceDt = () => {
               </div>
 
               {/* Reference 2 */}
-              <h6 className="ref-heading">🔷 Reference 2</h6>
+              <h6 style={{color:'#000000'}}>🔷 Reference 2</h6>
 
               {/* Full Name */}
-              <div className="fill-form" style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  name="ref2Name"
-                  placeholder="Full Name"
-                  className="enter-field"
-                  value={formData.ref2Name}
-                  onChange={handleChange}
-                />
-                <span
-                  className="enter-icon"
-                  style={{
-                    position: "absolute",
-                    right: "15px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    color: "#00000061",
-                  }}
-                >
-                  <FaUser />
-                </span>
+              <div className="fill-form">
+                <div className="input-container">
+                  <input
+                    ref={ref2NameRef}
+                    type="text"
+                    name="ref2Name"
+                    placeholder="Full Name"
+                    className="enter-field"
+                    value={formData.ref2Name}
+                    onChange={handleChange}
+                  />
+                  <span className="enter-icon">
+                    <FaUser />
+                  </span>
+                </div>
                 {formErrors.ref2Name && (
                   <span className="error-msg">{formErrors.ref2Name}</span>
                 )}
               </div>
 
               {/* Mobile Number */}
-              <div className="fill-form" style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  name="ref2Mobile"
-                  placeholder="Mobile Number"
-                  className="enter-field"
-                  value={formData.ref2Mobile}
-                  onChange={handleChange}
-                />
-                <span
-                  className="enter-icon"
-                  style={{
-                    position: "absolute",
-                    right: "15px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    color: "#00000061",
-                  }}
-                  onClick={() => handleContactPicker('ref2Mobile')}
-                  title="Select from contacts"
-                >
-                  <FaPhone />
-                </span>
+              <div className="fill-form">
+                <div className="input-container">
+                  <input
+                    ref={ref2MobileRef}
+                    type="text"
+                    name="ref2Mobile"
+                    placeholder="Mobile Number"
+                    className="enter-field"
+                    value={formData.ref2Mobile}
+                    onChange={handleChange}
+                  />
+                  <span
+                    className="enter-icon clickable-icon"
+                    onClick={() => handleContactPicker('ref2Mobile')}
+                    title="Select from contacts"
+                  >
+                    <FaPhone />
+                  </span>
+                </div>
                 {formErrors.ref2Mobile && (
                   <span className="error-msg">{formErrors.ref2Mobile}</span>
                 )}
               </div>
 
               {/* Relation Dropdown */}
-              <div className="fill-form">
+              <div className="fill-form" ref={ref2RelationRef}>
                 <Select
                   name="ref2Relation"
                   placeholder="Relation"
@@ -564,6 +627,7 @@ const NewReferenceDt = () => {
 
               <div className="fill-form">
                 <input
+                  ref={ref2AddressRef}
                   type="text"
                   name="ref2Address"
                   placeholder="Address"
