@@ -47,7 +47,6 @@
   border-top-right-radius: 20px;
   background: #F7F6FD;
   min-height: 472px;
-  justify-items: center;
   height: 90vh;
   /* Add these properties for scrolling */
   overflow-y: auto;
@@ -83,7 +82,7 @@
 .fill-form {
     margin-bottom: 25px;
 }
-.enter-field, .select {
+.input-field, .select {
     color: #000000;
     width: 100%;
     padding: 12px;
@@ -92,7 +91,7 @@
     box-shadow: 5px 5px 5px #eee;
     background-color: #fff;
 }
-.enter-field::placeholder {
+.input-field::placeholder {
     color: #777777; 
 }
 .error {
@@ -125,3 +124,4 @@
     /* Ensure button stays on top */
     z-index: 1000;
   }
+  
