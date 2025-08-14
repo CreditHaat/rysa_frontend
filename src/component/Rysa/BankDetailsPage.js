@@ -89,7 +89,7 @@ export default function BankDetailsPage() {
 
   const renderError = (field) => {
     return errors[field] ? (
-      <div style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
+      <div style={{ color: 'red', fontSize: '12px', marginTop: '0px', fontWeight:'600', position:'absolute'}}>
         {errors[field]}
       </div>
     ) : null;
@@ -117,6 +117,9 @@ export default function BankDetailsPage() {
         </div>{/*onediv end*/}
         <div className={styles.numberTwoDiv}>
         <div className={styles.formBlock}>
+          <div style={{ textAlign:'center', top:'0px',color: '#777777', fontSize:'16px', paddingBottom:'14px'}}>
+              Please provide your bank details
+            </div>
           <form className={styles.form}>
             <>
               <div className={styles.field}>
@@ -170,8 +173,8 @@ export default function BankDetailsPage() {
                        type="text"
                        className={styles.input}
                        placeholder="Bank Branch Name" />
-                       {/* <span className={styles.icon}><FaUniversity /></span> */}
-                <span className={styles.icon}>🏦</span>
+                       <span className={styles.icon}><FaUniversity /></span>
+                {/* <span className={styles.icon}>🏦</span> */}
                 {renderError('branchName')}
               </div>
             </>

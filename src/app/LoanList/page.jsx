@@ -16,7 +16,7 @@ function page() {
         logo: "/HDBLogo.png",
         product: "Personal Loan",
         maxloanamount: "1,00,000",
-        description: "Loan within 15 minutes",
+        description: "Loan within 15 minutes more more lines add here because to see the how it look like good or bad",
         interest: "Interest 3%",
         cpi: 1,
         applicationlink: "https://example.com/hdb",

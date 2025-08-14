@@ -481,22 +481,22 @@
 
 /* CSS for full-page scroll */
 .mainDiv {
-  display: flexbox;
-  height: 100vh;
-  overflow: hidden; /* scroll block */
+  display: block;
+  height: auto;
+  overflow: visible; /* scroll block */
 }
 
 .stickyContainer {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: static;
+  top: auto;
+  height: auto;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   background: #f9f9f9;
 }
 
 .Card {
-  display: none;
+  display: block;
   height: 100vh;
   width: 100%;
   padding: 20px;
@@ -504,9 +504,9 @@
   text-align: center;
 }
 
-.Card.show {
+/* .Card.show {
   display: block;
-}
+} */
 
 /* Common styles for all parts */
 .firstPart, .secondPart, .thirdPart, .fourthPart {
@@ -567,19 +567,19 @@
   border-right: 5px solid transparent; /* Initially transparent border */
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-.firstPart .textBox:hover {
-  background-color: rgba(237, 218, 248, 0.7);  /* Light blur effect (transparency) */
-  backdrop-filter: blur(5px);  /* Apply blur on background */
-  border-left: 5px solid pink;  /* Apply pink border on left */
-  border-bottom: 5px solid pink; /* Apply pink border on right */
-  transform: scale(1.2); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* इमेजला छाया देणे */
+/* .firstPart .textBox:hover {
+  background-color: rgba(237, 218, 248, 0.7);  
+  backdrop-filter: blur(5px);  
+  border-left: 5px solid pink; 
+  border-bottom: 5px solid pink; 
+  transform: scale(1.2); 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
   z-index: 3;
-}
+} */
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-.firstPart .textBox::before,
+/* .firstPart .textBox::before,
 .firstPart .textBox::after {
   content: '';
   position: absolute;
@@ -592,7 +592,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  transform: scaleY(0); /* Initially scale it down */
+  transform: scaleY(0); 
 }
 
 .firstPart .textBox::after {
@@ -600,16 +600,16 @@
   height: 5px;
   bottom: 0;
   left: 0;
-  transform: scaleX(0); /* Initially scale it down */
+  transform: scaleX(0); 
 }
 
 .firstPart .textBox:hover::before {
-  transform: scaleY(1); /* Expand vertically on hover (left to bottom) */
+  transform: scaleY(1);
 }
 
 .firstPart .textBox:hover::after {
-  transform: scaleX(1); /* Expand horizontally on hover (bottom left to right) */
-}
+  transform: scaleX(1); 
+} */
 .firstPart .textBox .htag {
   padding-top: 3rem;
   color: #000000;
@@ -638,11 +638,11 @@
   border-top-right-radius: 60px;  /* गोलाकार कोपरे */
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease; /* होव्ह इफेक्टसाठी ट्रांझिशन */
 }
-.firstPart .imageContainer:hover img {
-  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+/* .firstPart .imageContainer:hover img {
+  transform: scale(1.1); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
   z-index: 3;
-}
+} */
 
 /* ==========================
   SECOND PART STYLES
@@ -675,20 +675,20 @@
   border-bottom-right-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-.secondPart .textBox:hover {
-  background-color: #ccc6ec;  /* Light blur effect (transparency) */
-  backdrop-filter: blur(5px);  /* Apply blur on background */
-  border-right: 5px solid pink;  /* Apply pink border on right */
-  border-bottom: 5px solid pink; /* Apply pink border on bottom */
-  transform: scale(1.2); /* Enlarges box by 20% */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); /* Apply shadow effect */
-  z-index: 1; /* Make sure it's above other elements */
-}
+/* .secondPart .textBox:hover {
+  background-color: #ccc6ec;  
+  backdrop-filter: blur(5px);  
+  border-right: 5px solid pink;  
+  border-bottom: 5px solid pink; 
+  transform: scale(1.2); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); 
+  z-index: 1; 
+} */
 
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-.secondPart .textBox::before,
+/* .secondPart .textBox::before,
 .secondPart .textBox::after {
   content: '';
   position: absolute;
@@ -700,8 +700,8 @@
   width: 5px;
   height: 100%;
   top: 0;
-  right: 0; /* Correct position: to make it appear on the right side */
-  transform: scaleY(0); /* Initially scale it down */
+  right: 0; 
+  transform: scaleY(0); 
 }
 
 .secondPart .textBox::after {
@@ -709,16 +709,16 @@
   height: 5px;
   bottom: 0;
   left: 0;
-  transform: scaleX(0); /* Initially scale it down */
+  transform: scaleX(0); 
 }
 
 .secondPart .textBox:hover::before {
-  transform: scaleY(1); /* Expand vertically on hover (right side) */
+  transform: scaleY(1); 
 }
 
 .secondPart .textBox:hover::after {
-  transform: scaleX(1); /* Expand horizontally on hover (bottom) */
-}
+  transform: scaleX(1); 
+} */
 .secondPart .textBox .htag {
   padding-top: 1rem;
   color: #000000;
@@ -753,11 +753,11 @@
   border-top-right-radius: 60px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-.secondPart .imageContainer:hover img {
-  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+/* .secondPart .imageContainer:hover img {
+  transform: scale(1.1); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
   z-index: 3;
-}
+} */
 
 /* ==========================
   THIRD PART STYLES
@@ -792,19 +792,19 @@
   border-top-left-radius: 10px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
   border-bottom-left-radius: 10px;
 }
-.thirdPart .textBox:hover {
-  background-color: rgba(237, 218, 248, 0.7);  /* Light blur effect (transparency) */
-  backdrop-filter: blur(5px);  /* Apply blur on background */
-  border-left: 5px solid pink;  /* Apply pink border on left */
-  border-bottom: 5px solid pink; /* Apply pink border on right */
-  transform: scale(1.2); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); /* इमेजला छाया देणे */
+/* .thirdPart .textBox:hover {
+  background-color: rgba(237, 218, 248, 0.7);  
+  backdrop-filter: blur(5px);  
+  border-left: 5px solid pink;  
+  border-bottom: 5px solid pink; 
+  transform: scale(1.2); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); 
   z-index: 3;
-}
+} */
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-.thirdPart .textBox::before,
+/* .thirdPart .textBox::before,
 .thirdPart .textBox::after {
   content: '';
   position: absolute;
@@ -817,7 +817,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  transform: scaleY(0); /* Initially scale it down */
+  transform: scaleY(0); 
 }
 
 .thirdPart .textBox::after {
@@ -825,16 +825,16 @@
   height: 5px;
   bottom: 0;
   left: 0;
-  transform: scaleX(0); /* Initially scale it down */
+  transform: scaleX(0); 
 }
 
 .thirdPart .textBox:hover::before {
-  transform: scaleY(1); /* Expand vertically on hover (left to bottom) */
+  transform: scaleY(1); 
 }
 
 .thirdPart .textBox:hover::after {
-  transform: scaleX(1); /* Expand horizontally on hover (bottom left to right) */
-}
+  transform: scaleX(1); 
+} */
 .thirdPart .textBox .htag {
   padding-top: 3rem;
    color: #000000;
@@ -858,17 +858,17 @@
 
 .thirdPart .imageContainer img {
   object-fit: cover;
-  border-top-left-radius: 60px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
+  border-top-left-radius: 60px;   
   border-top-right-radius: 60px;
   width: 100%;  /* Ensures the image takes full container size */
   height: 100%; /* Ensures the image takes full container size */
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-.thirdPart .imageContainer:hover img {
-  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+/* .thirdPart .imageContainer:hover img {
+  transform: scale(1.1); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
   z-index: 3;
-}
+} */
 
 /* ==========================
   FOURTH PART STYLES
@@ -898,20 +898,20 @@
   transition: all 0.3s ease; /* Transition for smooth hover effect */
 }
 
-.fourthPart .textBox:hover {
-  background-color: #ccc6ec;  /* Light blur effect (transparency) */
-  backdrop-filter: blur(5px);  /* Apply blur on background */
-  border-right: 5px solid pink;  /* Apply pink border on right */
-  border-bottom: 5px solid pink; /* Apply pink border on bottom */
-  transform: scale(1.2); /* Enlarges box by 20% */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); /* Apply shadow effect */
-  z-index: 1; /* Make sure it's above other elements */
-}
+/* .fourthPart .textBox:hover {
+  background-color: #ccc6ec;  
+  backdrop-filter: blur(5px);  
+  border-right: 5px solid pink;  
+  border-bottom: 5px solid pink; 
+  transform: scale(1.2); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); 
+  z-index: 1; 
+} */
 
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-.fourthPart .textBox::before,
+/* .fourthPart .textBox::before,
 .fourthPart .textBox::after {
   content: '';
   position: absolute;
@@ -923,8 +923,8 @@
   width: 5px;
   height: 100%;
   top: 0;
-  right: 0; /* Correct position: to make it appear on the right side */
-  transform: scaleY(0); /* Initially scale it down */
+  right: 0; 
+  transform: scaleY(0); 
 }
 
 .fourthPart .textBox::after {
@@ -932,16 +932,16 @@
   height: 5px;
   bottom: 0;
   left: 0;
-  transform: scaleX(0); /* Initially scale it down */
+  transform: scaleX(0); 
 }
 
 .fourthPart .textBox:hover::before {
-  transform: scaleY(1); /* Expand vertically on hover (right side) */
+  transform: scaleY(1); 
 }
 
 .fourthPart .textBox:hover::after {
-  transform: scaleX(1); /* Expand horizontally on hover (bottom) */
-}
+  transform: scaleX(1); 
+} */
 
 .fourthPart .textBox .htag {
   color: #000000;
@@ -970,9 +970,9 @@
 }
 
 /* When text box is hovered, reduce circle size */
-.fourthPart .textBox:hover ~ .circleLine {
-  transform: scale(0.6); /* Reduce the circle size by 40% */
-}
+/* .fourthPart .textBox:hover ~ .circleLine {
+  transform: scale(0.6); 
+} */
 
 .fourthPart .imageContainer img {
   object-fit: cover;
@@ -982,11 +982,11 @@
   border-top-right-radius: 60px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-.fourthPart .imageContainer:hover img {
-  transform: scale(1.1); /* इमेजला 10% वाढवून पॉपअप प्रभाव */
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); /* इमेजला छाया देणे */
+/* .fourthPart .imageContainer:hover img {
+  transform: scale(1.1); 
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
   z-index: 3;
-}
+} */
 /* ==========================
   MOBILE RESPONSIVE STYLES
   ========================== */
@@ -1020,6 +1020,7 @@
     flex-direction: column; /* Stack vertically */
     align-items: center; /* Center content */
     margin-bottom: 3rem;
+    position: relative;
   }
 
   .firstPart .circle {
@@ -1027,32 +1028,32 @@
     height: 150px;
     top: 0; /* Position circle above text box */
     left: 0; /* Center circle with text box */
+    order: 1;
   }
 
   .firstPart .textBox {
-    width: 90%;  /* Adjust width */
+   width: 90%;  /* Adjust width */
     height: auto; /* Adjust height to content */
     margin-left: 0;
-    padding-top: 3rem;
+    padding-top: 0px;
+    padding-bottom: 2rempx;
     padding-left: 2rem;
     padding-right: 2rem;
-    border-radius: 10px; /* Round corners */
-  }
-
-  .firstPart .textBox:hover {
-    transform: scale(1.1); /* Reduce scaling */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;/* Round corners */
+    order: 3;
   }
 
   .firstPart .imageContainer {
     width: 100%; /* Full-width on mobile */
     height: auto; /* Auto adjust height */
-    margin-top: 2rem; /* Space between image and text box */
+    order: 2;
+    margin-top: 4rem; /* Space between image and text box */
   }
 
   .firstPart .imageContainer img {
     width: 100%; /* Full width of the container */
     height: auto; /* Maintain aspect ratio */
+    margin-bottom: 2rem;
   }
 
   /* Second Part */
@@ -1063,18 +1064,27 @@
   }
 
   .secondPart .textBox {
-    width: 90%; /* Full width of container */
+    width: 90%;  /* Adjust width */
+    height: auto; /* Adjust height to content */
+    margin-left: 0;
+    padding-top: 2px;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 10px;
+    /* width: 90%; 
     margin-left: 0;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 2rem;
-    height: auto; /* Adjust height for content */
+    height: auto;  */
   }
 
   .secondPart .imageContainer {
     width: 100%; /* Full width of container */
     height: auto; /* Adjust based on content */
     margin-top: 2rem; /* Space between image and text box */
+    margin-bottom: 2rem;
   }
 
   .secondPart .imageContainer img {
@@ -1086,6 +1096,7 @@
   .thirdPart {
     padding-left: 1rem; /* Adjust padding */
     flex-direction: column; /* Stack vertically */
+    position: relative;
   }
 
   .thirdPart .circle {
@@ -1093,21 +1104,34 @@
     height: 120px;
     top: 0;
     left: 0;
+    order: 1;
   }
 
   .thirdPart .textBox {
-    width: 90%; /* Full width */
+    width: 90%;  /* Adjust width */
+    height: auto; /* Adjust height to content */
+    margin-left: 0;
+    padding-top: 2px;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 10px;
+    z-index: 3;
+    order: 3;
+    /* width: 90%; 
     margin-left: 0;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 2rem;
-    height: auto;
+    height: auto; */
   }
 
   .thirdPart .imageContainer {
     width: 100%; /* Full width */
     height: auto; /* Adjust height */
     margin-top: 2rem;
+    margin-bottom: 1rem;
+    order: 2;
   }
 
   .thirdPart .imageContainer img {
@@ -1122,29 +1146,33 @@
   }
 
   .fourthPart .textBox {
-    width: 90%; /* Full width */
+    width: 90%;  /* Adjust width */
+    height: auto; /* Adjust height to content */
+    margin-left: 0;
+    padding-top: 2px;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 10px;
+    /* width: 90%; 
     margin-left: 0;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 2rem;
-    height: auto;
+    height: auto; */
   }
 
   .fourthPart .imageContainer {
     width: 100%; /* Full width */
     height: auto; /* Adjust based on content */
     margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .fourthPart .imageContainer img {
     width: 100%; /* Full width */
     height: auto; /* Maintain aspect ratio */
-  }
-
-  /* Reduce Circle Size on Hover */
-  .fourthPart .textBox:hover ~ .circleLine,
-  .thirdPart .textBox:hover ~ .circle {
-    transform: scale(0.5); /* Reduce the circle size */
+    margin-top: 2rem;
   }
 
   /* Text Adjustments */
@@ -1412,7 +1440,9 @@
 
 /* Move Column 4 to second row under Column 2 */
 .footerNavLink {
-  justify-items: center;
+  justify-items: left ;
+  left: 20px;
+  /* justify-items: center; */
   padding-top: 30px;
   order: 4;                        
   flex: 1 1 200px;
@@ -1568,16 +1598,17 @@
     order: 0;
   }
   .footerLoanLinks{
-    margin-top: -200px;
+    /* margin-top: -200px; */
     /* margin-left: -0px; */
-    margin-right: -10px;
-    padding-left: -10px;
+    /* margin-right: -10px; */
+    /* padding-left: -10px; */
     flex: none;
     width: 100%;
     order: 0;
   }
   .footerNavLink {
     flex: none;
+    left: 10px;
     width: 100%;
     order: 0;
   }

@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from 'next/image';
 import "./NewPlPage2.css";
-import styles from "./NewPlFirstPage.module.css";
+import styles from "./NewPIFirstPage2.module.css";
 // import EmblaCarousel from "./Emblacarousel/js/EmblaCarousel";
 // import NewBlListPage from "./NewBlJourneyD/NewBlListPage";
 import axios from "axios";
@@ -478,10 +478,17 @@ const RysaNewPage2 = ({
       // setIsLoadingforLoader(true);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}PlApplyNew_Salaried`,
+        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}PlApplyNew_SalariedRysa`,
         formData1
       );
 
+     const formDataObject = {};
+    formData1.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+
+    // Store the plain object in localStorage
+    localStorage.setItem("userFormData", JSON.stringify(formDataObject));
       // if(cpi===1){
       // apiExecutionBackend(lenderProduct);
       // }
@@ -489,7 +496,7 @@ const RysaNewPage2 = ({
       if (response.data.code === 0) {
         //Here when the code is 0 we are calling lendersList backend which will give us lendersList accrding to user
         getLendersList(e);
-        // getLoanBackend(e);
+        //  router.push('/LoanList');
       }
 
       if (response.status === 200) {
@@ -740,7 +747,7 @@ const handleBackButton = () => {
               </div>
             </div>
 
-            <div className={styles.formGroup}>
+            <div style={{ marginBottom: '25px' }}>
               <div
                 className={styles.inputWrapper}
                 style={{ position: "relative" }}
@@ -780,7 +787,7 @@ const handleBackButton = () => {
 
             {addressFlag && (
               <>
-                <div className={styles.formGroup}>
+                <div className={styles.formGroup} style={{ marginBottom: '10px' }}>
                   <div
                     className={styles.inputWrapper}
                     style={{ position: "relative" }}
@@ -1182,7 +1189,7 @@ const handleBackButton = () => {
                   onBlur={handleMaritalStatusBlur}
                   onClick={handleMaritalStatusClick}
                   isSearchable={false}
-                  menuPosition="absolute"
+                  menuPosition="auto"
                   components={{ Option: CustomOption }}
                 />
                 {formErrors.maritalStatus && (
@@ -1237,7 +1244,7 @@ const handleBackButton = () => {
             <div className={styles.stickyButton}>
               <button
                 type="submit"
-                onClick={handleApplyClick}
+                // onClick={handleApplyClick}
                 className={`${styles.button} ${styles.submitButton}`}
               >
                 Next
