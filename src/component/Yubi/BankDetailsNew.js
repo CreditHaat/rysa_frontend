@@ -9,6 +9,7 @@ import {
   FaCreditCard,
   FaUniversity,
   FaLandmark,
+  FaUpload,
 } from "react-icons/fa";
 import "./BankDetailsNew.css";
 import axios from "axios";
@@ -46,7 +47,7 @@ const BankDetails = () => {
     branchName: "",
     salarySlipLink: "",
   });
-
+  
   const [formErrors, setFormErrors] = useState({});
   const [activeContainer, setActiveContainer] = useState("BankDetails");
   const accountnameRef = useRef(null);
@@ -54,6 +55,72 @@ const BankDetails = () => {
   const branchNameRef = useRef(null);
   const IFSCRef = useRef(null);
   const accountNumberRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  // Function to scroll to first error field
+  const scrollToFirstError = (errors) => {
+    const errorFields = Object.keys(errors);
+    if (errorFields.length === 0) return;
+
+    const firstErrorField = errorFields[0];
+    let targetRef = null;
+
+    // Map error field names to their corresponding refs
+    switch (firstErrorField) {
+      case 'accountname':
+        targetRef = accountnameRef;
+        break;
+      case 'bankName':
+        targetRef = bankNameRef;
+        break;
+      case 'branchName':
+        targetRef = branchNameRef;
+        break;
+      case 'IFSC':
+        targetRef = IFSCRef;
+        break;
+      case 'accountNumber':
+        targetRef = accountNumberRef;
+        break;
+      case 'salarySlipLink':
+        // For file upload, scroll to the file input
+        const fileInput = document.getElementById('salarySlipUpload');
+        if (fileInput) {
+          // Find the scrollable container
+          const cardForm = document.querySelector('.cardForm-block');
+          if (cardForm) {
+            const fieldPosition = fileInput.offsetTop;
+            cardForm.scrollTo({
+              top: fieldPosition - 100,
+              behavior: 'smooth'
+            });
+          }
+        }
+        return;
+      default:
+        break;
+    }
+
+    // Scroll to the target field within the card container
+    if (targetRef && targetRef.current) {
+      // Find the scrollable container (.cardForm-block)
+      const cardForm = document.querySelector('.cardForm-block');
+      if (cardForm) {
+        const fieldPosition = targetRef.current.offsetTop;
+        cardForm.scrollTo({
+          top: fieldPosition - 100, // 100px offset from top
+          behavior: 'smooth'
+        });
+      }
+      
+      // Optional: Focus on the field after scrolling
+      setTimeout(() => {
+        if (targetRef.current) {
+          targetRef.current.focus();
+        }
+      }, 500);
+    }
+  };
 
   const CustomOption = ({
     data,
@@ -91,7 +158,7 @@ const BankDetails = () => {
           margin: "5px 0",
           border: "0",
           borderTop: "1px solid #ddd",
-          width: "100%",
+          
         }}
       />
     </div>
@@ -101,11 +168,12 @@ const BankDetails = () => {
     input: (provided) => ({
       ...provided,
       padding: "8px",
-      width: "100%",
+     /* width: "100%",*/
       minHeight: "70px",
       border: "none",
       cursor: "pointer",
       borderRadius: "50px",
+      fontSize: "16px",
     }),
     menu: (provided) => ({
       ...provided,
@@ -113,25 +181,26 @@ const BankDetails = () => {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "80%",
-      maxWidth: "400px",
       zIndex: 9999,
       boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)",
       borderRadius: "10px",
+       fontSize: "16px",
     }),
     control: (provided) => ({
       ...provided,
-      width: "100%",
+    /*  width: "100%",*/
       borderRadius: "10px",
       minHeight: "50px",
     }),
     placeholder: (provided) => ({
       ...provided,
       padding: "12px",
+       fontSize: "16px",
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
       padding: "0",
+      fontSize: "16px",
     }),
     indicatorSeparator: () => ({
       display: "none",
@@ -141,6 +210,16 @@ const BankDetails = () => {
   const handleSalarySlipUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    console.log("File selected:", file.name);
+
+    // Clear any previous error and update the form data immediately
+    setFormErrors((prevErrors) => ({ ...prevErrors, salarySlipLink: "" }));
+    
+    setFormData((prev) => ({
+      ...prev,
+      salarySlip: file,
+    }));
 
     try {
       const presignRes = await axios.get(
@@ -156,6 +235,7 @@ const BankDetails = () => {
         headers: { "Content-Type": file.type },
       });
 
+      // Update with the public URL after successful upload
       setFormData((prev) => ({
         ...prev,
         salarySlip: file,
@@ -165,7 +245,13 @@ const BankDetails = () => {
       console.log("Payslip uploaded to:", publicUrl);
     } catch (err) {
       console.error("Payslip upload failed:", err);
+      // Keep the file in state even if upload fails, so user can see what they selected
+      // Only remove if they want to select a different file
     }
+  };
+
+  const handleFileClick = () => {
+    fileInputRef.current?.click();
   };
 
   const handleaccountnameChange = (e) => {
@@ -256,6 +342,14 @@ const BankDetails = () => {
     }
 
     setFormErrors(errors);
+    
+    // Scroll to first error field if validation fails
+    if (!isValid) {
+      setTimeout(() => {
+        scrollToFirstError(errors);
+      }, 100); // Small delay to ensure error messages are rendered
+    }
+    
     return isValid;
   };
 
@@ -332,12 +426,13 @@ const BankDetails = () => {
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
                   <input
+                    ref={accountnameRef}
                     type="text"
                     id="accountname"
                     name="accountname"
                     placeholder="Account Holder Name"
                     value={formData.accountname}
-                    className="enter-field"
+                    className="input-field"
                     onChange={handleaccountnameChange}
                   />
                   <span
@@ -362,12 +457,13 @@ const BankDetails = () => {
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
                   <input
+                    ref={bankNameRef}
                     type="text"
                     id="bankName"
                     name="bankName"
                     placeholder="Bank Name"
                     value={formData.bankName}
-                    className="enter-field"
+                    className="input-field"
                     onChange={handlebankNameChange}
                   />
                   <span
@@ -392,12 +488,13 @@ const BankDetails = () => {
               <div className="fill-form">
                 <div className="fill-form" style={{ position: "relative" }}>
                   <input
+                    ref={branchNameRef}
                     type="text"
                     id="branchName"
                     name="branchName"
                     placeholder="Branch Name"
                     value={formData.branchName}
-                    className="enter-field"
+                    className="input-field"
                     onChange={handlebranchNameChange}
                   />
                   <span
@@ -432,7 +529,7 @@ const BankDetails = () => {
                     placeholder="Enter IFSC"
                     value={formData.IFSC}
                     onChange={handleIFSCChange}
-                    className="enter-field"
+                    className="input-field"
                     autoCapitalize="words"
                   />
 
@@ -467,7 +564,7 @@ const BankDetails = () => {
                     placeholder="Enter Account Number"
                     value={formData.accountNumber}
                     onChange={handleaccountNumberChange}
-                    className="enter-field"
+                    className="input-field"
                   />
                   <span
                     className="enter-icon"
@@ -486,26 +583,67 @@ const BankDetails = () => {
                   <span className="error">{formErrors.accountNumber}</span>
                 )}
               </div>
-              {/* Salary Slip Upload */}
+
+              {/* Custom Salary Slip Upload */}
               <div className="fill-form">
-                <label
-                  htmlFor="salarySlipUpload"
+                <div 
+                  className="input-field"
+                  onClick={handleFileClick}
                   style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontWeight: "500",
-                    color: "#777777",
+                    position: "relative",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: formData.salarySlip ? "#fff" : "#fff",
                   }}
                 >
-                  Upload Salary Slip
-                </label>
-                <input
-                  id="salarySlipUpload"
-                  type="file"
-                  accept=".pdf, .jpg, .jpeg, .png"
-                  onChange={handleSalarySlipUpload}
-                  className="enter-field"
-                />
+                  <div style={{ 
+                    flex: 1,
+                    color: formData.salarySlip ? "#000000" : "#777777",
+                    fontWeight: formData.salarySlip ? "500" : "normal",
+                    overflow: "hidden", 
+                    textOverflow: "ellipsis", 
+                    whiteSpace: "nowrap",
+                    paddingRight: "40px",
+                  }}>
+                    {formData.salarySlip ? 
+                      ` ${formData.salarySlip.name}` : 
+                      "Upload Salary Slip"
+                    }
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: "15px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: formData.salarySlip ? "#00000061" : "#00000061",
+                    }}
+                  >
+                    <FaUpload />
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf, .jpg, .jpeg, .png"
+                    onChange={handleSalarySlipUpload}
+                    style={{ display: "none" }}
+                    id="salarySlipUpload"
+                  />
+                </div>
+                {/* {formData.salarySlip && (
+                  <div style={{ 
+                    color: "#4CAF50", 
+                    fontSize: "12px", 
+                    marginLeft: "2%", 
+                    marginTop: "5px" 
+                  }}>
+                    File selected successfully
+                  </div>
+                )} */}
+                {formErrors.salarySlipLink && (
+                  <div className="File-Error">{formErrors.salarySlipLink}</div>
+                )}
               </div>
 
               {/* Submit Button */}      

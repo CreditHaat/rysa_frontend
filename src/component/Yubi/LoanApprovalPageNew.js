@@ -34,7 +34,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
     if (storedLoanAmount) {
       const amount = Number(storedLoanAmount);
       setApprovedLoanAmount(amount); // ✅ fixed display
-      setLoanAmount(amount); // ✅ user-editable
+      setLoanAmount(200000); // ✅ user-editable
     }
 
     if (storedTenure) setTenure(Number(storedTenure));
@@ -101,7 +101,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
 
           {/* Loan Amount Field */}
           {/* Loan Amount Field */}
-          <label className="label">Select loan amount</label>
+          <label className="label" style={{fontSize:'16px'}}>Select loan amount</label>
           <input
             type="number"
             className="inputBox"
@@ -127,7 +127,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
 
           {/* Loan Amount Slider */}
           <div className="sliderContainer">
-            <span>₹1,00,000</span>
+            <span style={{color: approvedLoanAmount === 100000 ? '#999' : '#000000'}}>₹1,00,000</span>
             <input
               type="range"
               min={100000}
@@ -143,11 +143,11 @@ const LoanApprovalPage = ({ clientLoanId }) => {
                   : ""
               }
             />
-            <span>₹{approvedLoanAmount.toLocaleString('en-IN')}</span>
+           <span style={{color: approvedLoanAmount === 100000 ? '#999' : '#000000'}}>₹{approvedLoanAmount.toLocaleString('en-IN')}</span>
           </div>
 
           {/* Tenure Input Field */}
-          <label className="label">Select loan tenure</label>
+          <label className="label" style={{fontSize:'16px'}}>Select loan tenure</label>
           <input
             type="number"
             className="inputBox"
@@ -160,11 +160,11 @@ const LoanApprovalPage = ({ clientLoanId }) => {
             required
           />
 
-          <p className="helperText">You can enter up to 36 months</p>
+          <p className="helperText" style={{fontSize:'16px'}}>You can enter up to 36 months</p>
 
           {/* Tenure Slider */}
           <div className="sliderContainer">
-            <span>6</span>
+            <span style={{color:'#000000',fontSize:'16px'}}>6</span>
             <input
               type="range"
               min={6}
@@ -174,7 +174,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
               onChange={(e) => setTenure(Number(e.target.value))}
               className="slider"
             />
-            <span>36</span>
+            <span style={{color:'#000000',fontSize:'16px'}}>36</span>
           </div>
         
       

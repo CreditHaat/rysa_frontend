@@ -144,7 +144,7 @@ export default function SubmitPage() {
                 background: 'rgb(96, 57, 210)'
               }}></div>
               <div style={{
-                fontSize: '14px',
+                fontSize: '16px',
                 color: 'rgb(96, 57, 210)',
                 marginBottom: '8px',
                 fontWeight: '600'
@@ -152,7 +152,7 @@ export default function SubmitPage() {
                 💰 Loan Amount
               </div>
               <div style={{
-                fontSize: '20px',
+                fontSize: '16px',
                 fontWeight: 'bold',
                 color: '#777777'
               }}>
@@ -185,7 +185,7 @@ export default function SubmitPage() {
                   background: 'rgb(96, 57, 210)'
                 }}></div>
                 <div style={{
-                  fontSize: '13px',
+                  fontSize: '16px',
                   color: 'rgb(96, 57, 210)',
                   marginBottom: '8px',
                   fontWeight: '600'
@@ -193,7 +193,7 @@ export default function SubmitPage() {
                   📅 Tenure
                 </div>
                 <div style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
                   color: '#777777'
                 }}>
@@ -220,7 +220,7 @@ export default function SubmitPage() {
                   background: 'rgb(96, 57, 210)'
                 }}></div>
                 <div style={{
-                  fontSize: '13px',
+                  fontSize: '16px',
                   color: 'rgb(96, 57, 210)',
                   marginBottom: '8px',
                   fontWeight: '600'
@@ -228,7 +228,7 @@ export default function SubmitPage() {
                   📈 Interest Rate
                 </div>
                 <div style={{
-                  fontSize: '20px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
                   color: '#777777'
                 }}>

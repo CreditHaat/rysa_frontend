@@ -4,7 +4,7 @@
   align-items: center;
   background: white;
   min-height: 100vh;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto';
 }
 
 .loan-block {
@@ -131,7 +131,7 @@
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 20px;
-  padding: 15px 20px; /* Left padding reduced */
+  /* padding: 15px 20px;  */
   text-align: left;
 }
 
@@ -143,7 +143,7 @@
   align-items: center;
   justify-content: center;
   margin-right: 15px;
-  font-size: 18px;
+  font-size: 16px;
   position: relative;
   flex-shrink: 0;
 }
@@ -157,7 +157,7 @@
 .status-pending {
   background: #f3f4f6;
   border: 2px solid #d1d5db;
-  color: #9ca3af;
+  color: #777777;
 }
 
 @keyframes completedPulse {
@@ -166,18 +166,19 @@
 }
 
 .status-text {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  /* font-weight: 600; */
   color: #374151;
   text-align: left;
 }
 
 .status-completed-text {
-  color: #4e4e4e;
+  color: #777777;
+  font-weight: 600;
 }
 
 .status-pending-text {
-  color: #9096a1;
+  color: #777777;
   position: relative;
 }
 

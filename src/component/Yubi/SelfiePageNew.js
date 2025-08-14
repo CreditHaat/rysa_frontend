@@ -366,7 +366,7 @@ useEffect(() => {
 
               <div className="texthead" style={{ marginTop: "150px",alignItems:"center" }}>
                 <h3 style={{fontSize:'22px',color:'#777777'}}><b>Take a Selfie</b></h3>
-                <p style={{fontSize:'20px',color:'#777777'}}>
+                <p style={{fontSize:'16px',color:'#777777'}}>
                   Capture a clear selfie or choose an existing one for identity
                   verification. Avoid glasses and background lights.
                 </p>
