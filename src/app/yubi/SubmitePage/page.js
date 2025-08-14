@@ -1,11 +1,15 @@
-import React from 'react'
-import SubmitPage from '../../../component/Yubi/SubmitPage';
+import React, { Suspense } from "react";
+import SubmitPage from "../../../component/Yubi/SubmitPage";
 function page() {
   return (
     <div>
-        <SubmitPage/>
+      <Suspense fallback={<></>}>
+        <div>
+          <SubmitPage />
+        </div>
+      </Suspense>
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
