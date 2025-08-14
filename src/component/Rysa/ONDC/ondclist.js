@@ -7,17 +7,13 @@ import { useContext } from 'react';
 import UIDContext from "../context/UIDContext";
 import clock from "./images/clock.png";
 import Image from "next/image";
-// import "./ondclist.css";
 import { onSearchForm } from "./formSubmitApis/FormSubmitApi";
 import OnSearchContext from "./context/OnSearchContext";
 import useWebSocketONDCSelect from "./Websocket/useWebSocketONDCSelect";
 import SelectedLenderContext from "./context/SelectedLenderContext";
 import { useRouter } from 'next/navigation';
-// import LoadingPage from "./LoadingPage";
 import LendersLoader from "./LoadingPages/LendersLoader";
 import styles from "./styleondclist.module.css";
-// import { Roboto } from 'next/font/google';
-// import "../NewBlFirstPage.module.css";
 import "./NewBlFirstPage.module.css"
 import per from '../../../../public/Group_10.png'
 import { Roboto } from 'next/font/google';
@@ -82,6 +78,10 @@ const Ondclist = () => {
     var onSelectResponsesTemp;
 
 
+    //making this just to set the confirmlendersref so that we can use the loan offer form it
+    // const confirmLendersRef = useRef(null);
+
+
     useEffect(() => {
         console.log("confirm lenders updated and they are :: ", confirmLenders);
     }, [confirmLenders])
@@ -137,7 +137,8 @@ const Ondclist = () => {
                         if (response !== undefined && response !== null && response.status === 200) {
                             if (response.data.gateway_response.message.ack.status === "ACK") {
                                 console.log("Still correct transactionId:", transactionId);
-                                setConfirmLenders(prev => [...prev, lender]);
+                                // setConfirmLenders(prev => [...prev, lender]);
+                                //tejas deshmukh
                                 //here we store the lenders whose ack will be ACK into a confirmLendesr ref variable and then we will display that variable to the user screen then when user will click on any of the lender then we will show him a loan amount adjustment screen annd when he will adjust and submit loan amount then we'll be taking that particular lenders form from the response and hit that loan adjustment amount to select loan amount form
                                 // showConfirmLenders(true);
                             }
@@ -167,6 +168,8 @@ const Ondclist = () => {
             //     onSearchForm(parsedData.message.catalog.providers[0].items[0].xinput.form.url);
             // }else{console.log("We got error in our parsedData");}
             // Use functional update to ensure we have the latest state
+
+            console.log("receiived from websocket and setting the lender");
             setLenders((prevLenders) => {
                 const newLenders = [parsedData, ...prevLenders];
                 console.log(`Total lenders after callback: ${newLenders.length}`);
@@ -186,12 +189,6 @@ const Ondclist = () => {
             }, ...prevLenders]);
         }
     }, []);
-
-    // useEffect(()=>{
-    //     console.log("In useEffect of onsearchform");
-    //     onSearchForm("https://pramaan.ondc.org/beta/staging/mock/seller/form/post/7f960a02-9856-43c6-a59b-99f55f627815");
-    //     console.log("After useEffect of onsearchform");
-    // },[])
 
     // Use the WebSocket hook with the improved handler
     useWebSocketONDC(handleWebSocketMessage);
@@ -260,30 +257,6 @@ const Ondclist = () => {
                 if (response.data.gateway_response?.message?.ack?.status === "ACK") {
                     console.log("Search acknowledged, waiting for callbacks...");
 
-                    //here we will set the formSubmissionData which we git from restSearch api
-                    // setFormSubmissionData({
-                    //     firstName: "Tejas",
-                    //     lastName: "Deshmukh",
-                    //     dob: "1995-07-01", // format: yyyy-mm-dd
-                    //     gender: "male", // must match option value
-                    //     pan: "ABCDE1234F",
-                    //     contactNumber: "8010489800",
-                    //     email: "deshmukht100@gmail.com",
-                    //     officialemail: "deshmukht@company.com",
-                    //     employmentType: "salaried",
-                    //     endUse: "consumerDurablePurchase",
-                    //     income: "100000",
-                    //     companyName: "Credithaat",
-                    //     udyamNumber: "UDYAM-ABC123",
-                    //     addressL1: "123 Main Street",
-                    //     addressL2: "Floor 2, Apt 5B",
-                    //     city: "Pune",
-                    //     state: "Maharashtra",
-                    //     pincode: "411001",
-                    //     aa_id: "8010489800@finvu",
-                    //     bureauConsent: "on"
-                    // })
-
                     // Set data dynamically from response
                     const formData = response.data.ONDCFormData;
 
@@ -296,13 +269,6 @@ const Ondclist = () => {
                     } else {
                         console.warn("No form data returned from backend.");
                     }
-
-                    // setPayloadForSelect(prev=>({
-                    //     ...prev,
-                    //     transactionId: response.data.transaction_id,
-                    // }))
-
-                    // setPayloadForSelect(response.data)
 
                     // Set a timeout to check if we received all callbacks
                     if (searchTimeoutRef.current) {
@@ -372,54 +338,93 @@ const Ondclist = () => {
         //here we will set all the data of the particular lender into one object which we will be using for our whole journey
         console.log("get loan button clicked and onSelectResponses are : ", onSelectResponses);
         console.log("get loan button clicked and the lender is : ", lender);
-        for (const onSelectResponse of onSelectResponses) {
 
+        try {
 
-            console.log("Entered for loop and onSelectResponse is : ", onSelectResponse);
-            // 
-            try {
+            // console.log("The lender.context.bpp_id : ", lender.context.bpp_id, " and onSelectResponse : ", onSelectResponse.context.bpp_id);
 
-                console.log("The lender.context.bpp_id : ", lender.context.bpp_id, " and onSelectResponse : ", onSelectResponse.context.bpp_id);
-
-
-                if (lender.context.bpp_id=== "pramaan.ondc.org/beta/preprod/mock/seller") { //for lenders with aa
-                    if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
-                        if (onSelectResponse.message?.order?.items?.[0]?.xinput?.form_response?.status === "PENDING") {
-                            console.log("tejas inside if");
-                            // exit;
-                        } else if (onSelectResponse.message?.order?.items[0]?.xinput?.form?.url) {
-                            console.log("Inside the else if");
-                            setSelectedLenderData(onSelectResponse);
-                            // ✅ Navigate to the next page
-                            router.push("/ondc/loanapproval");
-                            // console.log("after router.push");
+                // if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
+                    var minValue = 0;
+                    if (lender.message?.order?.items[0]?.xinput?.form?.url) {
+                        console.log("Inside the else if");
+                        setSelectedLenderData(lender);
+                        for(const tempLender of lenders){
+                            if(tempLender.context.bpp_id === lender.context.bpp_id){
+                                minValue = tempLender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[4]?.value;
+                            }
+                            
                         }
-                    } else {
-                        console.log("lender is : ", lender);
-                        console.log("on select response is : ", onSelectResponse);
-                    }
-                } else {//for lenders without aa
-                    if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
-                        if (onSelectResponse.message?.order?.items[0]?.xinput?.form?.url) {
-                            console.log("Inside the else if");
-                            setSelectedLenderData(onSelectResponse);
+                        if(lender.context.bpp_id === "go-app-gateway.qa1.paywithr.io"){
+                            //here we will not show the loan offer page, we will directly hit the second select api
+                            
+                        }else{
                             // ✅ Navigate to the next page
-                            router.push("/ondc/loanapproval");
-                            // console.log("after router.push");
-                        } else {
-                            console.log("url not present in the form : ", onSelectResponse);
+                        router.push(`/ondc/loanapproval?minAmt=${minValue}`);
                         }
+                        
+                        // console.log("after router.push");
                     } else {
-                        console.log("lender is : ", lender);
-                        console.log("on select response is : ", onSelectResponse);
+                        console.log("url not present in the form : ", lender);
                     }
-                }
+                // } else {
+                //     console.log("lender is : ", lender);
+                //     console.log("on select response is : ", onSelectResponse);
+                // }
+            
 
-            } catch (error) {
-                console.log("error : ", error);
-            }
-
+        } catch (error) {
+            console.log("error : ", error);
         }
+
+        // for (const onSelectResponse of onSelectResponses) {
+
+
+        //     console.log("Entered for loop and onSelectResponse is : ", onSelectResponse);
+        //     // 
+        //     try {
+
+        //         console.log("The lender.context.bpp_id : ", lender.context.bpp_id, " and onSelectResponse : ", onSelectResponse.context.bpp_id);
+
+
+        //         // if (lender.context.bpp_id === "pramaan.ondc.org/beta/preprod/mock/seller") { //for lenders with aa
+        //         //     if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
+        //         //         if (onSelectResponse.message?.order?.items?.[0]?.xinput?.form_response?.status === "PENDING") {
+        //         //             console.log("tejas inside if");
+        //         //             // exit;
+        //         //         } else if (onSelectResponse.message?.order?.items[0]?.xinput?.form?.url) {
+        //         //             console.log("Inside the else if");
+        //         //             setSelectedLenderData(onSelectResponse);
+        //         //             // ✅ Navigate to the next page
+        //         //             router.push("/ondc/loanapproval");
+        //         //             // console.log("after router.push");
+        //         //         }
+        //         //     } else {
+        //         //         console.log("lender is : ", lender);
+        //         //         console.log("on select response is : ", onSelectResponse);
+        //         //     }
+        //         // } 
+        //         //for lenders without aa
+        //             if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
+        //                 if (onSelectResponse.message?.order?.items[0]?.xinput?.form?.url) {
+        //                     console.log("Inside the else if");
+        //                     setSelectedLenderData(onSelectResponse);
+        //                     // ✅ Navigate to the next page
+        //                     router.push("/ondc/loanapproval");
+        //                     // console.log("after router.push");
+        //                 } else {
+        //                     console.log("url not present in the form : ", onSelectResponse);
+        //                 }
+        //             } else {
+        //                 console.log("lender is : ", lender);
+        //                 console.log("on select response is : ", onSelectResponse);
+        //             }
+                
+
+        //     } catch (error) {
+        //         console.log("error : ", error);
+        //     }
+
+        // }
 
     }
 
@@ -433,6 +438,14 @@ const Ondclist = () => {
 
             // const secondOn_select=((prev)=>[...prev, parsedData]);
             setOnSelectResponses((prev) => [...prev, parsedData]);
+
+            //here we will be setting the final lenders of which we got the first onselect if the user is without account aggregator and second onselect if user is with account aggregator
+            //now temporarily we will create this only for users which are without account aggregator
+            if(parsedData?.message?.order?.items?.[0]?.price?.value){
+                // tejas deshmukh
+                setConfirmLenders(prev => [...prev, parsedData]);
+            }
+            
 
             // setLenders((prevLenders) => {
             //     const newLenders = [parsedData, ...prevLenders];
@@ -532,9 +545,10 @@ const Ondclist = () => {
                                                     style={{ width: "auto" }}
                                                     /> */}
                                                                 <img
-                                                                    src={lender?.message?.catalog?.providers?.[0]?.descriptor?.images?.[0]?.url}
+                                                                    // src={lender?.message?.catalog?.providers?.[0]?.descriptor?.images?.[0]?.url}
+                                                                    src={lender?.message?.order?.provider?.descriptor?.images?.[0]?.url}
                                                                     //   alt="Lender Logo"
-                                                                    alt={lender.message.catalog.descriptor.name || "Lender Logo"}
+                                                                    alt={lender?.message?.order?.provider?.descriptor?.name || "Lender Logo"}
                                                                     width={100}
                                                                     height={40}
                                                                     //   onError={(e) => { e.currentTarget.src = clock }}
@@ -547,7 +561,9 @@ const Ondclist = () => {
                                                     <p className="card-subtitle">{lender.product}</p>
                                                     </div> */}
                                                             <div className={styles.cardBody}>
-                                                                <h1 className={styles.amount}>INR {lender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[5]?.value || "N/A"}
+                                                                {/* <h1 className={styles.amount}>INR {lender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[5]?.value || "N/A"} */}
+                                                                
+                                                                <h1 className={styles.amount}>INR {lender?.message?.order?.items?.[0]?.price?.value || "N/A"}
                                                                 </h1>
                                                                 <p className={styles.maxAmount}>Max. Amount</p>
                                                             </div>
@@ -557,7 +573,7 @@ const Ondclist = () => {
                                                                     <span role="img" aria-label="clock">
                                                                         <Image src={clock} width={15} height={15} alt="clock" />
                                                                     </span>
-                                                                    {/* {lender.description} */<p>lender.description</p>}
+                                                                    {lender?.message?.order?.items?.[0]?.tags?.[0]?.list?.[1]?.value || "NA"}
 
                                                                 </div>
                                                                 <div className={styles.infoItem}>
@@ -566,51 +582,18 @@ const Ondclist = () => {
                                                                     <span role="img" aria-label="percentage">
                                                                         <Image src={per} alt='percentage image' width={15} height={15} />
                                                                     </span>
-                                                                    {/* {lender.interest} */ <p>Interest 10%</p>}
+                                                                    {/* {lender.interest} */ <p>Interest {lender?.message?.order?.items[0]?.tags[0]?.list[0]?.value}</p>}
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                {/* {console.log(
-                                                        "In NewBLListPage lender cpi is :: ",
-                                                        lender.cpi
-                                                    )} */}
-                                                                {/* {lender.cpi === 1 ? (
-                                                        <>
-                                                            <button
-                                                                className="card-button"
-                                                                onClick={() =>
-                                                                    redirectLinkMethod(
-                                                                        lender.product,
-                                                                        lender.applicationlink,
-                                                                        lender.product_id
-                                                                    )
-                                                                }
-                                                            >
-                                                                Get Loan
-                                                            </button>
-                                                        </>
-                                                    ) : (
-                                                        <button
-                                                            className="card-button"
-                                                            onClick={(e) => getLoanBackendMethod(e, lender.product)}
-                                                        >
-                                                            Get Loan non CPI
-                                                        </button>
-                                                    )} */<button
+                                                                {<button
                                                                         className={styles.cardButton}
                                                                         onClick={() => handleGetLoanClick(lender)}
-                                                                    // onClick={() =>
-                                                                    //     // redirectLinkMethod(
-                                                                    //     //     lender.product,
-                                                                    //     //     lender.applicationlink,
-                                                                    //     //     lender.product_id
-                                                                    //     // )
-                                                                    // }
+                                                                    
                                                                     >
                                                                         Get Loan
                                                                     </button>}
                                                             </div>
-                                                            {/* </>):null} */}
                                                         </div>
                                                     </>) : null}
                                             </div>

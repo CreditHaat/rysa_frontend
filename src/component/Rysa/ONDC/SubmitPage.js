@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './SubmitPage.module.css';
 import confetti from 'canvas-confetti';
+import SelectedLenderContext from "./context/SelectedLenderContext";
 
 export default function SubmitPage() {
   const [refNo, setRefNo] = useState('');
@@ -40,6 +41,12 @@ export default function SubmitPage() {
     return `${first2}XX${last4}`;
   };
 
+  const { SelectedLenderData, setSelectedLenderData } = useContext(SelectedLenderContext);//added this to send the product name from this data to init api for saving logger
+
+  useEffect(()=>{
+    console.log("The selected lender data in submitpage is : ",SelectedLenderData);
+  },[])
+
   return (
     <div className={styles.container}>
       <svg className={styles.animatedCheck} viewBox="0 0 52 52">
@@ -48,17 +55,18 @@ export default function SubmitPage() {
       </svg>
 
       <h1 className={styles.title}>Loan Application<br />Submitted!</h1>
-
+{/* 
       <p className={styles.ref}>
         Reference number is<br />
         <strong>{refNo}</strong>.
-      </p>
-
+      </p> */}
+{/* SelectedLenderData.message.order.quote.breakup[0].price.value */}
       <p className={styles.message}>
         Your loan amount of<br />
-        <strong>{amount}</strong><br />
+        <strong>{SelectedLenderData?.message?.order?.quote?.breakup?.[0]?.price?.value || 'NA'}</strong><br />
         has been approved and shall be<br />
-        credited to your account <strong>{account}</strong>
+        credited to your account 
+        {/* <strong>{account}</strong> */}
       </p>
     </div>
   );

@@ -12,6 +12,7 @@ import ConfirmingLoader from "../LoadingPages/ConfirmingLoader";
 import { useRouter } from "next/navigation";
 // import OnSearchContext from "./context/OnSearchContext";
 import OnSearchContext from "../context/OnSearchContext";
+// import SelectedLenderContext from "../context/SelectedLenderContext";
 import SelectedLenderContext from "../context/SelectedLenderContext";
 
 const roboto = Roboto({
@@ -57,7 +58,10 @@ const ClickToRedirectLoader = () => {
                     bppUri: parsedData.context.bpp_uri,
                     providerId: parsedData.message.order.provider.id,
                     itemId: parsedData.message.order.items[0].id,
-                    formId: parsedData.message.order.items[0].xinput.form.id,
+                    // formId: parsedData.message.order.items[0].xinput.form.id,
+                    formId: parsedData?.message?.order?.items?.[0]?.xinput?.form?.id
+                        || onOnitData?.message?.order?.items?.[0]?.xinput?.form?.id
+                        || "NA",
                     submissionId: parsedData.message.order.items[0].xinput.form_response.submission_id,
                     bankCode: "HDFC",
                     accountNumber: "1234567890",
@@ -90,16 +94,17 @@ const ClickToRedirectLoader = () => {
             const response = await confirm(confirmPayload);
             if (response.status === 200) {
                 console.log("The confirm response is : ", response);
-                router.push("/ondc/submitpage");
+                // router.push("/ondc/submitpage");
             }
         } catch (error) {
-            console.log("error in handleConfirm : ",);
+            console.log("error in handleConfirm : ", error);
         }
     }
 
     const handleButtonClick = () => {
         // console.log("The onstatus data after clicking the button is : ",onStatusData);
         const formUrl = onOnitData?.message?.order?.items?.[0]?.xinput?.form?.url;
+
 
         if (formUrl) {
             if (!externalFormWindowRef.current || externalFormWindowRef.current.closed) {
@@ -117,23 +122,68 @@ const ClickToRedirectLoader = () => {
 
     const handleWebSocketMessageForConfirm = useCallback((data) => {
 
+        const parsedData = JSON.parse(data.content);
+
+        // ✅ CLOSE FORM TAB IF OPEN
+        if (externalFormWindowRef.current && !externalFormWindowRef.current.closed) {
+
+            console.log("Inside the if of externalFormWindowRef");
+
+            externalFormWindowRef.current.close(); // Close form tab
+            window.focus(); // Focus back to loanapproval tab
+
+            console.log("After window.focus");
+        }
+
         // console.log("received response id of form in ClickToRedirectLoader & i.e : ", data);
         console.log("received onconfirm");
         setConfirming(false);
         setLoanApproved(true);
+
+        setSelectedLenderData(parsedData);
+
+        //here we will call the status api for now since we now dont have any lender with aa if we have any lender with aa then we will need to call the update api first and then the status api
+        // Extract fields from on_confirm data
+        const statusPayload = {
+            transactionId: parsedData?.context?.transaction_id,
+            bppId: parsedData?.context?.bpp_id,
+            bppUri: parsedData?.context?.bpp_uri,
+            refId: parsedData?.message?.order?.id,
+            version: parsedData?.context?.version,
+        };
+
+        //here we will make status call
+
+        // handleStatusCall(statusPayload);
+
         // router.push("/ondc/loanapproved");
+
+        // setConfirmLender();
+
         router.push("/ondc/submitpage");
 
     }, []);
 
     useWebSocketONDCConfirm(handleWebSocketMessageForConfirm);
 
+    const handleStatusCall= async (statusPayload)=>{
+        try{
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}status`,statusPayload);
+            console.log("The status api call response is : ",response);
+            if(response.status === 200){
+                router.push("/ondc/submitpage");
+            }
+        }catch(error){
+            console.log("error in making status call",error);
+        }
+    }
+
     return (
         <>
 
-        {!confirming?(<>
-            <div className={`${roboto.className} waiting-table`}>
-            {/* <div className="loading-circle">
+            {!confirming ? (<>
+                <div className={`${roboto.className} waiting-table`}>
+                    {/* <div className="loading-circle">
                 <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
                     <path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6z"
                         fill="#6039D2" stroke="#6039D2" strokeWidth="2.5" />
@@ -145,36 +195,36 @@ const ClickToRedirectLoader = () => {
                 <br></br>
                 <p className='para'>Click Next to Fill your last form and get a loan</p>
                 {/* <button onClick={()=>handleButtonClick()}>Loan Aggrement</button> */}
-            {/* <p className='para'>Do not press the back button or refresh the page</p>
+                    {/* <p className='para'>Do not press the back button or refresh the page</p>
             </div>  */}
-            <div className="loading-circle">
-                <svg className="redirect-icon" viewBox="0 0 24 24" fill="none" width="64" height="64">
-                    <path d="M10 17l5-5-5-5v10zM19 3H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        fill="#6039D2" stroke="#6039D2" strokeWidth="1.5" />
-                </svg>
-            </div>
+                    <div className="loading-circle">
+                        <svg className="redirect-icon" viewBox="0 0 24 24" fill="none" width="64" height="64">
+                            <path d="M10 17l5-5-5-5v10zM19 3H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                fill="#6039D2" stroke="#6039D2" strokeWidth="1.5" />
+                        </svg>
+                    </div>
 
-            <div className="loading-text">
-                <h3 style={{ textAlign: "center" }}> <b>Preparing Your Final Step...</b> </h3>
-                <br />
-                <p className='para'>We are redirecting you to the final form. Please follow the instructions carefully.</p>
-                <p className='para'>Avoid going back or refreshing the page to prevent any data loss.</p>
-            </div>
+                    <div className="loading-text">
+                        <h3 style={{ textAlign: "center" }}> <b>Preparing Your Final Step...</b> </h3>
+                        <br />
+                        <p className='para'>We are redirecting you to the final form. Please follow the instructions carefully.</p>
+                        <p className='para'>Avoid going back or refreshing the page to prevent any data loss.</p>
+                    </div>
 
 
-            {/* Submit Button */}
-            <div className="Long-button">
-                <button
-                    type="submit"
-                    className="form-submit"
-                    onClick={() => handleButtonClick()}
-                >
-                    Next
-                </button>
-            </div>
+                    {/* Submit Button */}
+                    <div className="Long-button">
+                        <button
+                            type="submit"
+                            className="form-submit"
+                            onClick={() => handleButtonClick()}
+                        >
+                            Next
+                        </button>
+                    </div>
 
-            {/* Submit Button */}
-            {/* <div className="btnContainer">
+                    {/* Submit Button */}
+                    {/* <div className="btnContainer">
                 <button
                   type="submit"
                   className="nextBtn"
@@ -184,8 +234,8 @@ const ClickToRedirectLoader = () => {
               </div> */}
 
 
-        </div>
-        </>):(<><ConfirmingLoader/></>)}
+                </div>
+            </>) : (<><ConfirmingLoader /></>)}
         </>
     );
 };

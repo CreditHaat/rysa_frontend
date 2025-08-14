@@ -9,7 +9,7 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
         // Basic null or empty check
         if (!formSubmissionData || Object.keys(formSubmissionData).length === 0) {
             console.warn("❌ formSubmissionData is empty or undefined.");
-            return "return because of empty formSubmissionData" ;
+            return "return because of empty formSubmissionData";
         }
 
         // Optional: required field validation
@@ -23,107 +23,109 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
             (field) => !formSubmissionData[field]
         );
 
-        if (missingFields.length > 0) {
+        if (missingFields.length > 1) {
             console.warn("❌ Missing required fields:", missingFields);
             return "return because of missing fields";
         }
 
         if (version === "2.0.1") {
+
             const formData = new URLSearchParams();
+
+            // const formData = new FormData();
+            // for (const [key, value] of Object.entries(formSubmissionData)) {
+            //     formData.append(key, value);
+            // }
+
             for (const [key, value] of Object.entries(formSubmissionData)) {
-                formData.append(key, value);
+                if (key === "dob" && value) {
+                    const dateObj = new Date(value); // value is in yyyy-MM-dd
+                    const day = String(dateObj.getDate()).padStart(2, "0");
+                    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+                    const year = dateObj.getFullYear();
+                    formData.append(key, `${day}/${month}/${year}`);
+                }else if(key === "aa_id"){
+                    
+                } else {
+                    formData.append(key, value);
+                }
             }
+
+            // formData.append("panName","Tejas Bharat Deshmukh");
+            // formData.append("dob","18/03/2002");
+            // // formData.append("dob","");
+            // formData.append("gender", "male");
+            // formData.append("pan","HKLPD8102E");
+            // // formData.append("pan","HKLPD8102F");
+            // formData.append("contactNumber", "8010489800");
+            // // formData.append("contactNumber", "9136565845");
+            // formData.append("email", "deshmukht100@gmail.com");
+            // formData.append("officialemail", "deshmukht100@gmail.com");
+            // formData.append("employmentType", "salaried");
+            // formData.append("endUse", "consumerDurablePurchase");
+            // formData.append("income", "100000");
+            // formData.append("companyName", "Credithaat");
+            // formData.append("udyamNumber", "UDYAM-ABC123");
+            // formData.append("addressL1", "pune");
+            // formData.append("addressL2", "pune");
+            // formData.append("city", "pune");
+            // formData.append("state", "MAHARASHTRA");
+            // formData.append("pincode", "411014");
+            // // formData.append("aa_id", "8010489800@finvu");
+            // formData.append("bureauConsent", "on");
+
+
+            //     dob: "1995-07-01", // format: yyyy-mm-dd
+            //     gender: "male", // must match option value
+            //     pan: "ABCDE1234F",
+            //     contactNumber: "8010489800",
+            //     email: "deshmukht100@gmail.com",
+            //     officialemail: "deshmukht@company.com",
+            //     employmentType: "salaried",
+            //     endUse: "consumerDurablePurchase",
+            //     income: "100000",
+            //     companyName: "Credithaat",
+            //     udyamNumber: "UDYAM-ABC123",
+            //     addressL1: "123 Main Street",
+            //     addressL2: "Floor 2, Apt 5B",
+            //     city: "Pune",
+            //     state: "Maharashtra",
+            //     pincode: "411001",
+            //     aa_id: "8010489800@finvu",
+            //     bureauConsent: "on"
+
+            // formData.append("panName", "Tejas Bharat Deshmukh");
 
             const response = await axios.post(formUrl, formData.toString(), {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             });
+
+            // const response = await axios.post(formUrl, formData, {
+            //     headers: {
+
+            //     },
+            // });
             console.log("The response after submitting the 2.0.1 ", formUrl, " form is : ", response);
 
             //here we called select api with updated submission_id
             if (response.status === 200) {
                 console.log("Before handleWithoutAccount Aggregator in 2.0.1");
 
-                if(payloadForSelect.bppId === "pramaan.ondc.org/beta/preprod/mock/seller"){
+                // if (payloadForSelect.bppId === "pramaan.ondc.org/beta/preprod/mock/seller") {
 
+                //     //for lenders without account aggregator
+                //     const withAccountAggregatorResponse = await handleWithAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
+                //     console.log("The response from handle with Account Aggregator for 2.0.1 is : ", withAccountAggregatorResponse);
+                //     return withAccountAggregatorResponse;
+
+                // } else {
                     //for lenders without account aggregator
-                const withAccountAggregatorResponse = await handleWithAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect,version);
-                console.log("The response from handle with Account Aggregator for 2.0.1 is : ",withAccountAggregatorResponse);
-                return withAccountAggregatorResponse;
-
-                }else{
-                    //for lenders without account aggregator
-                const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect,version);
-                console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ",response);
-                return withoutAccountAggregatorResponse;
-                }
-
-                //here we will be adding the condition that if and only if we get the status as successfull and got the trnsactionid then only we will hit the select api for it
-                // if (response?.data?.status === "Successful" && response.data?.submission_id) { //commenting this because every lender doesn't return response
-                // if (response.data?.submission_id) {
-
-                //     const updatedPayload = {
-                //         ...payloadForSelect,
-                //         submissionId: response.data.submission_id,
-                //         //added afterwards
-                //         mobileNumber: formSubmissionData.contactNumber,
-                //         stage: 1,
-                //         version: version
-
-                //     };
-                //     setPayloadForSelect(updatedPayload); // This is fine to keep, if needed globally
-                //     const selectResponse = await select(updatedPayload);
-                //     //here we will be calling that select api again with same details but with different status i.e. APPROVED
-                //     //we have to call this select api after getting the first select callback not after 
-                //     if (selectResponse.status === 200) {
-                //         if (selectResponse.data.gateway_response.message.ack.status === "ACK") {
-                //             // const updatedPayload2 = {
-                //             //     ...payloadForSelect,
-                //             //     submissionId: response.data.submission_id,
-                //             //     status: "APPROVED"
-                //             // };
-                //             const updatedPayload2 = {
-                //                 ...updatedPayload,
-                //                 status: "APPROVED",
-                //                 version: version
-                //             };
-
-
-                //             setPayloadForSelect(updatedPayload2);
-
-                //             console.log("Before await ");
-
-                //             //we have to change this timer here we have to wait till we dont get the callback of our first select then we have to hit this second select
-
-                //             await new Promise(res => setTimeout(res, 5000)); // 1 second delay
-
-                //             console.log("Going ahead after 10 seconds");
-
-                //             const select2Response = await select(updatedPayload2);
-                //             // console.log("The select2Response is :: ", select2Response);
-
-                //             //from here we are returning the response of the second select api
-                //             console.log("Returning the select2Response and i.e. : ", select2Response);
-
-                //             //here we will call the function to get the callback through websoket
-                //             // const useWebSocketONDCSelect = useCallback(() => {
-
-                //             //   },
-                //             //   [],)
-
-
-                //             return select2Response;
-
-                //         }
-                //     }
-
+                    const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
+                    console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ", response);
+                    return withoutAccountAggregatorResponse;
                 // }
-
-                //for lenders without account aggregator
-                // const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect,version);
-                // console.log("The response from handleWithout Account Aggregator for 2.0.0 is : ",response);
-                // return withoutAccountAggregatorResponse;
 
             }
 
@@ -134,7 +136,9 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
         if (version === "2.0.0") {
             const formData = new FormData();
             Object.entries(formSubmissionData).forEach(([key, value]) => {
-                formData.append(key, value);
+                if(key!== "panName"){
+                    formData.append(key, value);
+                }
             });
 
             const response = await axios.post(formUrl, formData, {
@@ -142,11 +146,6 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
                     "Content-Type": "multipart/form-data", // Let Axios set boundary
                 },
             });
-            // const response = await axios.get(formUrl, formData, {
-            //     headers: {
-            //         "Content-Type": "multipart/form-data", // Let Axios set boundary
-            //     },
-            // });
             console.log("The response after submitting the 2.0.0 ", formUrl, " form is : ", response);
 
             //here we called select api with updated submission_id
@@ -154,103 +153,51 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
 
                 console.log("Before handleWithoutAccount Aggregator in 2.0.0");
 
-                //here we will be adding the condition that if and only if we get the status as successfull and got the trnsactionid then only we will hit the select api for it
-                // if (response?.data?.status === "Successful" && response.data?.submission_id) { //commenting this because every lender doesn't return status
-                // if (response.data?.submission_id) {
-
-                //     const updatedPayload = {
-                //         ...payloadForSelect,
-                //         submissionId: response.data.submission_id,
-                //         //added afterwards
-                //         mobileNumber: formSubmissionData.contactNumber,
-                //         stage: 1,
-                //         version: version
-
-                //     };
-                //     setPayloadForSelect(updatedPayload); // This is fine to keep, if needed globally
-                //     const selectResponse = await select(updatedPayload);
-                //     console.log("The first select response is : ",selectResponse);
-                //     //here we will be calling that select api again with same details but with different status i.e. APPROVED
-                //     //we have to call this select api after getting the first select callback not after 
-                //     if (selectResponse.status === 200) {
-                //         if (selectResponse.data.gateway_response.message.ack.status === "ACK") {
-                //             // const updatedPayload2 = {
-                //             //     ...payloadForSelect,
-                //             //     submissionId: response.data.submission_id,
-                //             //     status: "APPROVED"
-                //             // };
-                //             const updatedPayload2 = {
-                //                 ...updatedPayload,
-                //                 status: "APPROVED",
-                //                 version: version
-                //             };
-
-
-                //             setPayloadForSelect(updatedPayload2);
-
-                //             console.log("Before await ");
-
-                //             //we have to change this timer here we have to wait till we dont get the callback of our first select then we have to hit this second select
-
-                //             await new Promise(res => setTimeout(res, 5000)); // 1 second delay
-
-                //             console.log("Going ahead after 10 seconds");
-
-                //             const select2Response = await select(updatedPayload2);
-                //             // console.log("The select2Response is :: ", select2Response);
-
-                //             //from here we are returning the response of the second select api
-                //             console.log("Returning the select2Response and i.e. : ", select2Response);
-
-                //             //here we will call the function to get the callback through websoket
-                //             // const useWebSocketONDCSelect = useCallback(() => {
-
-                //             //   },
-                //             //   [],)
-
-
-                //             return select2Response;
-
-                //         }
-                //     }
-
-                // }
-
-                //only for lenders with account aggregator
-
-                // handleWithAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
-
                 //for lenders without account aggregator
                 const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
-                console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ",response);
+                console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ", response);
 
                 return withoutAccountAggregatorResponse;
             }
 
         }
 
-        //----------------------------------------------------------------
-
-
-
-
-        // console.log("Form submitted successfully:", response, "and formUrl is : ", formUrl);
-        // return response.data;
         return null;
     } catch (error) {
-        console.log("error in onsearch : ",error);
-        // console.log("Form url is :: ", formUrl, "and Error while submitting onsearch form :: ", error);
+        console.log("error in onsearch : ", error);
     }
 };
 
-export const selectLoanAmountForm = async (formUrl, amount) => {
+export const selectLoanAmountForm = async (formUrl, amount, formId) => {
+
+    try{
+        const response = await axios.get(formUrl, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
+
+        console.log("the response that we got from the loanAmount is : ",response);
+    }catch(error){
+        console.log("Error in getting the loanAmount form");
+    }
+
     try {
-        const formData = new URLSearchParams();
+        // const formData = new URLSearchParams();
+        const formData = new FormData();
         formData.append("requestAmount", amount);
+        formData.append("requestTerm", 5);
+        formData.append("formId", formId);
+        // formData.append("")
 
         console.log("The formUrl in selectLoanAmountForm is : ", formUrl);
 
-        const response = await axios.post(formUrl, formData.toString(), {
+        // const response = await axios.post(formUrl, formData.toString(), {
+        //     headers: {
+        //         "Content-Type": "application/x-www-form-urlencoded",
+        //     },
+        // });
+        const response = await axios.post(formUrl, formData, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
@@ -271,22 +218,25 @@ export const selectLoanAmountForm = async (formUrl, amount) => {
     }
 }
 
-export const bankDetailsForm = async (formUrl, formData) => {
+export const bankDetailsForm = async (formUrl, formData, formIdForParam) => {
     try {
 
         console.log("The form url before hitting is : ", formUrl);
         console.log("The formData before hitting is : ", formData);
 
         console.log("The formData.IFSC is : ", formData.current.IFSC);
+        // const formData2 = new URLSearchParams();
         const formData2 = new FormData();
+        formData2.append("formId", formIdForParam);
         formData2.append("accHolderName", formData.current.accountname);
         formData2.append("acctype", formData.current.accountType);
         formData2.append("accNo", formData.current.accountNumber);
         formData2.append("ifscCode", formData.current.IFSC);
 
-        const response = await axios.post(formUrl, formData2.toString(), {
+        const response = await axios.post(formUrl, formData2, {
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                // "Content-Type": "application/x-www-form-urlencoded",
+                // "Content-Type": "multipart/form-data"
             },
         });
 

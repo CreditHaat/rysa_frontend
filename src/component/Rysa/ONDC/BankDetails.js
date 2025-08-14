@@ -36,6 +36,8 @@ const roboto = Roboto({
 
 const Bankdetails = () => {
 
+  const initPayloadRef = useRef(null); //we are declaring this to store the form id because React's useCallback closures capture the value of variables at the time they are declared, not the updated value.
+
   const { SelectedLenderData, setSelectedLenderData } = useContext(SelectedLenderContext);//added this to send the product name from this data to init api for saving logger
   const { formSubmissionData, setFormSubmissionData, payloadForSelect, setPayloadForSelect } = useContext(OnSearchContext);
 
@@ -320,6 +322,7 @@ const Bankdetails = () => {
 
       const parsedData = JSON.parse(data.content);
       setOnInitData(parsedData);
+      
       //here we should be creating one global variable or context which will hold this onstatus callback
       if (parsedData?.message?.order?.items?.[0]?.xinput?.form?.url) {
         setInitPayload(prev => ({
@@ -329,6 +332,7 @@ const Bankdetails = () => {
           paymentId: parsedData?.message?.order?.payments?.[0]?.id
         }));
 
+        initPayloadRef.current = parsedData;
         //we will be passing this id in the param of handleBankDetailsForm so that from their we can call another init api with the form id of first form submission
         const formIdForParam = parsedData?.message?.order?.items?.[0]?.xinput?.form?.id;
         console.log("Before if else ,", parsedData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur);
@@ -338,6 +342,7 @@ const Bankdetails = () => {
           console.log("Inside if for Account Information Form");
           console.log("parsedData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur for Account Information is : ", parsedData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur);
           const formUrl = parsedData?.message?.order?.items?.[0]?.xinput?.form?.url.replace("/get/", "/post/");
+          
           const paymentId = parsedData?.message?.order?.payments?.[0]?.id;
           // here we will call the bankDetailsform function
           handleBankDetailsForm(formUrl, formDataRef, formIdForParam, paymentId);//inside this we will call the init2 api
@@ -384,13 +389,14 @@ const Bankdetails = () => {
 
       console.log("here the form url and the id should be the same : ", formUrl, " id is : ", formIdForParam);
 
-      const response = await bankDetailsForm(formUrl, formDataRef);
+      const response = await bankDetailsForm(formUrl, formDataRef, formIdForParam);
       if (response.status === 200) {
         // externalFormWindowRef.current = window.open("/ondc/waiting", "_blank");
         // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
         console.log("Got the response from bankDetails form : ", response);
 
-        if (response.data.status === "Successful" && response.data.submission_id) {
+        // if (response.data.status === "Successful" && response.data.submission_id) {
+          if(response.data.submission_id){
 
           const updatedInitPayload = {
             ...initPayload,
@@ -430,6 +436,17 @@ const Bankdetails = () => {
 
   const handleWebSocketMessageForStatus = useCallback((data) => {
 
+    // ✅ CLOSE FORM TAB IF OPEN
+    if (externalFormWindowRef.current && !externalFormWindowRef.current.closed) {
+
+      console.log("Inside the if of externalFormWindowRef");
+
+      externalFormWindowRef.current.close(); // Close form tab
+      window.focus(); // Focus back to loanapproval tab
+
+      console.log("After window.focus");
+    }
+
     console.log("received response id of form & i.e : ", data);
     try {
 
@@ -444,13 +461,18 @@ const Bankdetails = () => {
 
         //   //here we will call the init api with the values(taken from onStatus ) which it will need
         //here we are calling the 3rd init api that is the last init3 api
+
+        console.log("The onOnitData before calling the last init is : ",onOnitData);
+
         const initPayload = {
+
           transactionId: parsedData.context.transaction_id,
           bppId: parsedData.context.bpp_id,
           bppUri: parsedData.context.bpp_uri,
           providerId: parsedData.message.order.provider.id,
           itemId: parsedData.message.order.items[0].id,
-          formId: parsedData.message.order.items[0].xinput.form.id,
+          // formId: parsedData.message.order.items[0].xinput.form.id,
+          formId: initPayloadRef.current?.message?.order?.items?.[0]?.xinput?.form?.id || "NA",
           submissionId: parsedData.message.order.items[0].xinput.form_response.submission_id,
           bankCode: "HDFC",
           accountNumber: "1234567890",
@@ -467,7 +489,16 @@ const Bankdetails = () => {
           paymentId: parsedData?.message?.order?.payments?.[0]?.id
         }
 
-        setInitPayload(initPayload);
+        // setInitPayload(initPayload);
+        // setInitPayload(prev => ({
+        //   ...prev,
+        //   ...initPayload
+        //   // formId: parsedData?.message?.order?.items?.[0]?.xinput?.form?.id,
+        //   // // initAttempt: 2,
+        //   // paymentId: parsedData?.message?.order?.payments?.[0]?.id
+        // }));
+
+        
 
         if (!lastInitRef.current) {
           console.log("caling handle init from onStatus and lastInitRef is : ", lastInitRef.current);
@@ -575,8 +606,8 @@ const Bankdetails = () => {
                           name="accountType"
                           placeholder="Choose account type"
                           options={[
-                            { value: "Saving", label: "Saving" },
-                            { value: "Current", label: "Current" },
+                            { value: "saving", label: "Saving" },
+                            { value: "current", label: "Current" },
                           ]}
                           value={
                             formData.accountType

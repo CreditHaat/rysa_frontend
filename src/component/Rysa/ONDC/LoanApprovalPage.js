@@ -22,6 +22,7 @@ import useWebSocketONDCInit from "./Websocket/useWebSocketONDCInit";
 import CallbackLoader from "./LoadingPages/CallbackLoader";
 import FinalLoanOfferContext from "./context/FinalLoanOfferContext";
 import { Roboto } from 'next/font/google';
+import { useSearchParams } from 'next/navigation';
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -29,6 +30,10 @@ const roboto = Roboto({
 });
 
 const LoanApprovalPage = () => {
+
+  const searchParams = useSearchParams();
+
+  // const minAmt = searchParams.get("mobilenumber");
 
   // 1. Define ref at the top of your component
   const externalFormWindowRef = useRef(null);
@@ -42,7 +47,10 @@ const LoanApprovalPage = () => {
   const [loanAmount, setLoanAmount] = useState("");
   const [tenure, setTenure] = useState("0 months");
 
-  const [minAmt, setMinAmt] = useState(0);
+  const [minAmt, setMinAmt] = useState(searchParams.get("minAmt"));
+
+  // setMinAmt(searchParams.get("minAmt"));
+
   const [maxAmt, setMaxAmt] = useState(0);
 
   const [enteredTenure, setEnteredTenure] = useState();
@@ -93,9 +101,10 @@ const LoanApprovalPage = () => {
     try {
 
       const formUrl = SelectedLenderData.message.order.items[0].xinput.form.url.replace("/get/", "/post/");
-      const response = await selectLoanAmountForm(formUrl, loanAmount);
+      const formId = SelectedLenderData.message.order.items[0].xinput.form.id;
+      const response = await selectLoanAmountForm(formUrl, loanAmount, formId);
       console.log("The response of loanAmount form is : ", response);
-      if (response.data.status === "Successful" && response.data.submission_id) {
+      if (response.data.submission_id) {
 
         // await handleApplyRecord();
 
@@ -133,6 +142,7 @@ const LoanApprovalPage = () => {
       }
       //else to write a logger of form problem
       else {
+        console.log("Error in loanAmount Form");
         //here we will write the user in apply fail as we haven't created the apply record for the user
         // await handleApplyFail();
       }
@@ -152,6 +162,10 @@ const LoanApprovalPage = () => {
       setOnSelectResponses(parsedData);
 
       if ((parsedData.message.order.items[0].xinput.form.url)) {
+
+        setInitPayload({...initPayload,formId: parsedData.message.order.items[0].xinput.form.id});
+
+        setSelectedLenderData(parsedData);
 
         console.log("When we got the url of the form");
 
@@ -190,8 +204,23 @@ const LoanApprovalPage = () => {
 
   const handleWebSocketMessageForStatus = useCallback((data) => {
 
-    console.log("received response id of the third onselct form & i.e : ", data);
+    console.log("When we got the status callback");
+
+    // alert("The onstatus is called");
+
+
     try {
+
+      // ✅ CLOSE FORM TAB IF OPEN
+      if (externalFormWindowRef.current && !externalFormWindowRef.current.closed) {
+
+        console.log("Inside the if of externalFormWindowRef");
+
+        externalFormWindowRef.current.close(); // Close form tab
+        window.focus(); // Focus back to loanapproval tab
+
+        console.log("After window.focus");
+      }
 
       const parsedData = JSON.parse(data.content);
       //here we should be creating one global variable or context which will hold this onstatus callback
@@ -204,13 +233,13 @@ const LoanApprovalPage = () => {
 
         //   //here we will call the init api with the values(taken from onStatus ) which it will need
         //here we are only setting the value which we get from onStatus needed for calling init1 api which we call in bankDetails page
-        const initPayload = {
+        const initPayload2 = {
           transactionId: parsedData.context.transaction_id,
           bppId: parsedData.context.bpp_id,
           bppUri: parsedData.context.bpp_uri,
           providerId: parsedData.message.order.provider.id,
           itemId: parsedData.message.order.items[0].id,
-          formId: parsedData.message.order.items[0].xinput.form.id,
+          // formId: parsedData.message.order.items[0].xinput.form.id,
           submissionId: parsedData.message.order.items[0].xinput.form_response.submission_id,
           bankCode: "HDFC",
           accountNumber: "1234567890",
@@ -219,7 +248,12 @@ const LoanApprovalPage = () => {
           initAttempt: 1
         }
 
-        setInitPayload(initPayload);
+        // setInitPayload(...initPayload,initPayload2);
+        setInitPayload(prev => ({
+          ...prev,
+          ...initPayload2
+        }));
+        
         // setFinalLoanOffer(parsedData);
         setFinalLoanOffer({
           loanAmount: parsedData.message.order.quote.breakup[0].price.value,//This is the principal loan amount
@@ -238,7 +272,7 @@ const LoanApprovalPage = () => {
           repaymentInstallments: parsedData.message.order.items[0].tags[0].list[10].value, //no of installments
           installmentAmount: parsedData.message.order.items[0].tags[0].list[13].value, //emiAmount
           tncLink: parsedData.message.order.items[0].tags[0].list[11].value,
-          kfsLink: parsedData.message.order.items[0].tags[0].list[14].value,
+          // kfsLink: parsedData.message.order.items[0].tags[0].list[14].value,
           TotalAmountPayable: parsedData.message.order.items[0].price.value,
 
           //GRO Information
@@ -262,6 +296,8 @@ const LoanApprovalPage = () => {
         //for temporarily we are calling our init api from here but after we will be calling init api on another page after taking the bank details
         const submissionId = parsedData.message.order.items[0].xinput.form_response.submission_id;
         console.log("The submission id that we got is : ", submissionId);
+      }else {
+        console.log("Your application not accepted");
       }
 
     } catch (error) {
@@ -312,7 +348,7 @@ const LoanApprovalPage = () => {
                         value={loanAmount}
                         onChange={(e) => setLoanAmount(e.target.value)}
                         placeholder="Enter Loan Amount"
-                        min={100000}
+                        min={10000}
                         max={maxAmt}
                         // onInput="validateAmount(this)"
                         required
@@ -322,10 +358,10 @@ const LoanApprovalPage = () => {
 
                       {/* Loan Amount Slider */}
                       <div className="sliderContainer">
-                        <span>₹1,00,000</span>
+                        <span>₹{minAmt}</span>
                         <input
                           type="range"
-                          min={100000}
+                          min={minAmt}
                           max={maxAmt}
                           step={5000}
                           value={loanAmount}
