@@ -138,6 +138,7 @@
     color: red;
     font-size: 12px;
     font-weight: bold;
+    /* display: block; */
   }
   .pploan-invalid-feedback {
     color: red;
@@ -148,6 +149,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    margin-top: 60px;
   }
   
   .progress-bar {
@@ -156,10 +158,10 @@
     background-color: #e6e6e6;
   }
 
-  .step-number {
+  .step-number1 {
     color: black;
     position: absolute;
-    top: 20px;
+    top: 70px;
     font-size: 14px;
     font-weight: bold;
   }

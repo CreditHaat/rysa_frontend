@@ -418,9 +418,10 @@ const RaysaNewPage = ({ params, searchParams }) => {
       formData1.append("sub_source", subSource);
       formData1.append("campaign", urllink);
       formData1.append("sub_dsa", subDsa);
+      // localStorage.setItem("userFormData", JSON.stringify(formData1));
 //axios1
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}chfronetendotpgenerator_PlApplyNew`,
+        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}chfronetendotpgenerator_PlApplyNewRysa`,
         formData1
       );
 
@@ -796,6 +797,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
   }
 
   const getLoanBackendMethod = (e, lenderProduct) => {
+    console.log("cpi is set as 0");
     setCpi(0);
     setLenderProduct(lenderProduct);
     handleDataLayerStage(4); // Track step 2 when the form is submitted
@@ -817,6 +819,75 @@ const RaysaNewPage = ({ params, searchParams }) => {
     console.log(cpi);
 
     if (lenderCpi === 1) {
+
+      // if (productname === "HDB") {
+          try {
+        const savedData = localStorage.getItem("userFormData");
+        if (!savedData) {
+          console.error("❌ No user data found in localStorage");
+          return;
+        }
+        const userFormData = JSON.parse(savedData);
+
+        // ✅ Map formData to match LeadController expected field names
+        const leadPayload = {
+          mobilenumber: userFormData.mobileNumber,
+          firstname: userFormData.firstName,
+          lastname: userFormData.lastName,
+          father_name: userFormData.fatherName,
+          dob: userFormData.dob,
+          occupation: userFormData.profession, // "salaried", "self_employed", etc.
+          paymentType: userFormData.paymentType,
+          monthlyIncome: userFormData.monthlyIncome,
+          pan: userFormData.pan,
+          gender: userFormData.gender,
+          residentialPincode: userFormData.pincode,
+          email: userFormData.email,
+          loanAmount: userFormData.loanAmount,
+          spouseName: userFormData.spouseName,
+          maritalStatus: userFormData.maritalStatus,
+          address: userFormData.address,
+          company_name: userFormData.companyName,
+          workEmail: userFormData.officeemail,
+          workPincode: userFormData.officePincode,
+        };
+
+        console.log("📤 Sending Lead Create Payload:", leadPayload);
+
+        // ✅ STEP 0: Create lead on RYSA
+        const createLeadResponse = await axios.post(
+          `https://uat.getrysa.com/api/leadcreate`,
+          leadPayload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=", // valid token
+            },
+          }
+        );
+
+        console.log("✅ RYSA Lead Created:", createLeadResponse.data);
+
+        if (createLeadResponse.data.code !== 200) {
+          console.log(
+            "❌ Failed to create RYSA lead:",
+            createLeadResponse.data.msg
+          );
+          setRedirectionLinkLoader(false);
+          return;
+        }
+
+        console.log("👉 Starting HDB flow");
+        const mobile = formData.mobileNumber;
+        window.location.href = `https://uat.getrysa.com/yubi/Start?mobileNumber=${mobile}`;
+      } catch (err) {
+        console.error("❌ HDB API Error:", err);
+      }
+
+          // setRedirectionLinkLoader(false);
+          return;
+        // }
+      
       setRedirectionLinkLoader(true);
       const lenderApplicationLink = localStorage.getItem("applicationLink");
 
@@ -864,6 +935,69 @@ const RaysaNewPage = ({ params, searchParams }) => {
       // setRedirectionLinkLoader(false);
       // return; // Exit the function to avoid further execution
     } else {
+      // if (productname === "HDB") {
+          try {
+        const savedData = localStorage.getItem("userFormData");
+        if (!savedData) {
+          console.error("❌ No user data found in localStorage");
+          return;
+        }
+        const userFormData = JSON.parse(savedData);
+
+        // ✅ Map formData to match LeadController expected field names
+        const leadPayload = {
+          mobilenumber: userFormData.mobileNumber,
+          firstname: userFormData.firstName,
+          lastname: userFormData.lastName,
+          father_name: userFormData.fatherName,
+          dob: userFormData.dob,
+          occupation: userFormData.profession, // "salaried", "self_employed", etc.
+          paymentType: userFormData.paymentType,
+          monthlyIncome: userFormData.monthlyIncome,
+          pan: userFormData.pan,
+          gender: userFormData.gender,
+          residentialPincode: userFormData.pincode,
+          email: userFormData.email,
+          loanAmount: userFormData.loanAmount,
+          spouseName: userFormData.spouseName,
+          maritalStatus: userFormData.maritalStatus,
+          address: userFormData.address,
+          company_name: userFormData.companyName,
+          workEmail: userFormData.officeemail,
+          workPincode: userFormData.officePincode,
+        };
+
+        console.log("📤 Sending Lead Create Payload:", leadPayload);
+
+        // ✅ STEP 0: Create lead on RYSA
+        const createLeadResponse = await axios.post(
+          `http://localhost:8080/api/leadcreate`,
+          leadPayload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=", // valid token
+            },
+          }
+        );
+
+        console.log("✅ RYSA Lead Created:", createLeadResponse.data);
+
+        if (createLeadResponse.data.code !== 200) {
+          console.log(
+            "❌ Failed to create RYSA lead:",
+            createLeadResponse.data.msg
+          );
+          setRedirectionLinkLoader(false);
+          return;
+        }
+
+        console.log("👉 Starting HDB flow");
+        const mobile = formData.mobileNumber;
+        window.location.href = `http://localhost:3001/yubi/Start?mobileNumber=${mobile}`;
+      } catch (err) {
+        console.error("❌ HDB API Error:", err);
+      }
       console.log("Inside get Loan Backend");
       // e.preventDefault();
 
@@ -929,6 +1063,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
   const sendSmsApi = async (phone, productId) => {
     try {
       // asios6SMSplJ
+
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}h5/sms_pl_journey`,
         {
@@ -1007,7 +1142,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
       {isLoading && <Loader />}
       {otpLoader && <OtpVerifyLoader />}
-      {activeContainer === "LendersList" && !rejectionPage && (
+      {activeContainer === "LendersList" && (
         // <LendersList companies={lenderDetails} formData={formData} redirectLinkMethod={redirectLinkMethod} getLoanBackendMethod={getLoanBackendMethod}/>
         <NewBlListPage
           companies={lenderDetails}
@@ -1035,6 +1170,9 @@ const RaysaNewPage = ({ params, searchParams }) => {
           cpi={cpi}
           lenderProduct={lenderProduct}
           mainFormData={formData}
+          firstName={firstName}
+          lastName= {lastname}
+          fatherName= {fatherName}
           dobFlag={dobFlag}
           residentialPincodeFlag={residentialPincodeFlag}
           genderFlag={genderFlag}
@@ -1133,16 +1271,19 @@ const RaysaNewPage = ({ params, searchParams }) => {
             className="newfirstcard-container"
             // style={{ top:'0px',boxSizing: "content-box" }}
           >
+            <div style={{ textAlign:'center', top:'0px',color: '#777777', position:'absolute', fontSize:'16px', paddingTop:'30px'}}>
+              Please provide your personal information
+            </div>
             <div className="progress-bar-container">
               <div className="progress-bar">
-                <div className="step-number">1</div>
+                <div className="step-number1">1</div>
                 <div
                   className="progress-bar-fill"
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
               <div className="progress-bar">
-                <div className="step-number">2</div>
+                <div className="step-number1">2</div>
                 <div
                   className="progress-bar-fill"
                   style={{ width: "0%" }}

@@ -21,7 +21,7 @@
   .plsecfnewfirstcard-container {
     position: relative;
     max-width: 330px;
-    width: 77%;
+    width: 78%;
     margin: -90px auto;
     padding: 40px;
     border: 2px solid #ddd;
@@ -132,9 +132,11 @@
     width: 100%;
 }
 .error {
+  position: absolute;
     color: red;
     font-size: 12px;
     font-weight: bold;
+    /* display: block; */
   }
   .pploan-invalid-feedback {
     color: red;

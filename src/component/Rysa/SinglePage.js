@@ -15,35 +15,35 @@ export default function SinglePage() {
     setIsOpen(!isOpen);
   };
   // middlepage
-  const [activeCard, setActiveCard] = useState(1);
-  const isThrottled = useRef(false);
-  const containerRef = useRef(null);
+//   const [activeCard, setActiveCard] = useState(1);
+//   const isThrottled = useRef(false);
+//   const containerRef = useRef(null);
 
-  const handleWheel = (e) => {
-    if (isThrottled.current) return;
+//   const handleWheel = (e) => {
+//     if (isThrottled.current) return;
 
-    const container = containerRef.current;
-    const rect = container.getBoundingClientRect();
+//     const container = containerRef.current;
+//     const rect = container.getBoundingClientRect();
 
-    // Get vertical position of the mouse
-    const mouseY = e.clientY;
-    const middleStart = rect.top + rect.height * 0.5;
-    const middleEnd = rect.top + rect.height * 0.7;
+//     // Get vertical position of the mouse
+//     const mouseY = e.clientY;
+//     const middleStart = rect.top + rect.height * 0.5;
+//     const middleEnd = rect.top + rect.height * 0.7;
 
-    // Only trigger if scrolling in the middle of the card
-    if (mouseY < middleStart || mouseY > middleEnd) return;
+//     // Only trigger if scrolling in the middle of the card
+//     if (mouseY < middleStart || mouseY > middleEnd) return;
 
-    if (e.deltaY > 0 && activeCard < 4) {
-      setActiveCard((prev) => prev + 1);
-      isThrottled.current = true;
-      setTimeout(() => (isThrottled.current = false), 600);
-    } else if (e.deltaY < 0 && activeCard > 1) {
-      setActiveCard((prev) => prev - 1);
-      isThrottled.current = true;
-      setTimeout(() => (isThrottled.current = false), 600);
-    }
-  };
-
+//     if (e.deltaY > 0 && activeCard < 4) {
+//       setActiveCard((prev) => prev + 1);
+//       isThrottled.current = true;
+//       setTimeout(() => (isThrottled.current = false), 200);
+//     } else if (e.deltaY < 0 && activeCard > 1) {
+//       setActiveCard((prev) => prev - 1);
+//       isThrottled.current = true;
+//       setTimeout(() => (isThrottled.current = false), 200);
+//     }
+//   };
+// // middle end
   // Inside your component
   const router = useRouter();
 
@@ -51,13 +51,13 @@ export default function SinglePage() {
     router.push('/LoanForm1');
   };
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  // useEffect(() => {
+  //   const container = containerRef.current;
+  //   if (!container) return;
 
-    container.addEventListener("wheel", handleWheel);
-    return () => container.removeEventListener("wheel", handleWheel);
-  }, [activeCard, handleWheel]);
+  //   container.addEventListener("wheel", handleWheel);
+  //   return () => container.removeEventListener("wheel", handleWheel);
+  // }, [activeCard, handleWheel]);
   return (
     <>
       <div className={styles.container}>
@@ -206,10 +206,9 @@ export default function SinglePage() {
       </div>
       {/* middle page */}
       <div className={styles.mainDiv}>
-        <div className={styles.stickyContainer} ref={containerRef}>
-          {/* First Card */}
-          <div className={`${styles.Card} ${activeCard === 1 ? styles.show : ""}`}>
-            <div className={styles.firstPart}>
+        <div className={styles.stickyContainer}>
+          {/* first Card */}
+          <div className={styles.firstPart}>
               <div className={styles.circle}></div>
               <div className={styles.textBox}>
                 <h2 className={styles.htag}>No Tension Loans</h2>
@@ -227,10 +226,7 @@ export default function SinglePage() {
                 />
               </div>
             </div>
-          </div>
-
-          {/* Second Card */}
-          <div className={`${styles.Card} ${activeCard === 2 ? styles.show : ""}`}>
+            {/* second card */}
             <div className={styles.secondPart}>
               <div className={styles.imageContainer}>
                 <Image
@@ -249,10 +245,97 @@ export default function SinglePage() {
               </div>
               <div className={styles.circleLine}></div>
             </div>
-          </div>
+            {/* thired card */}
+             <div className={styles.thirdPart}>
+              <div className={styles.circle}></div>
+              <div className={styles.textBox}>
+                <h3 className={styles.htag}>Your Financial Companion</h3>
+                <p className={styles.ptag}>
+                  Grow your credit profile, get higher limits, and unlock better offers over time.
+                </p>
+              </div>
+              <div className={styles.imageContainer}>
+                <Image
+                  src="/successful-businessman.jpg"
+                  alt="Easy Use"
+                  width={900}
+                  height={1000}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+            {/* fourth part */}
+             <div className={styles.fourthPart}>
+              <div className={styles.imageContainer}>
+                <Image
+                  src="/happy-businesswoman-talking-phone-writing.jpg"
+                  alt="Future with LSP"
+                  width={900}
+                  height={1000}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className={styles.textBox}>
+                <h3 className={styles.htag}>Built for Everyday People.</h3>
+                <p className={styles.ptag}>
+                  You don&rsquo;t need a perfect score. Rysa helps real people build real credit
+                </p>
+              </div>
+              <div className={styles.circleLine}></div>
+            </div>
+        </div>
+      </div>
+      {/* <div className={styles.mainDiv}>
+        <div className={styles.stickyContainer}> */}
+          {/* First Card */}
+          {/* <div className={`${styles.Card} ${activeCard === 1 ? styles.show : ""}`}> */}
+          {/* <div className={styles.Card}>
+            <div className={styles.firstPart}>
+              <div className={styles.circle}></div>
+              <div className={styles.textBox}>
+                <h2 className={styles.htag}>No Tension Loans</h2>
+                <p className={styles.ptag}>
+                  Rysa works with India&rsquo;s top lenders &mdash; NBFCs and Banks &mdash; to remove the stress from your loan.
+                </p>
+              </div>
+              <div className={styles.imageContainer}>
+                <Image
+                  src="/medium-shot-smiley-man-posing.jpg"
+                  alt="No Tension Loans"
+                  width={600}
+                  height={700}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+          </div> */}
+
+          {/* Second Card */}
+          {/* <div className={`${styles.Card} ${activeCard === 2 ? styles.show : ""}`}> */}
+          {/* <div className={styles.Card}>
+            <div className={styles.secondPart}>
+              <div className={styles.imageContainer}>
+                <Image
+                  src="/woman-teaching-classroom.jpg"
+                  alt="Low Interest"
+                  width={900}
+                  height={1000}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className={styles.textBox}>
+                <h3 className={styles.htag}>Low Interest, <br /> Flexible Repayment</h3>
+                <p className={styles.ptag}>
+                  Rates from just 13% pa. Repay in 3&ndash;60 months. Simple, fair, and fast.
+                </p>
+              </div>
+              <div className={styles.circleLine}></div>
+            </div>
+          </div> */}
 
           {/* Third Card */}
-          <div className={`${styles.Card} ${activeCard === 3 ? styles.show : ""}`}>
+          {/* <div className={`${styles.Card} ${activeCard === 3 ? styles.show : ""}`}> */}
+          {/* <div className={styles.Card}>
             <div className={styles.thirdPart}>
               <div className={styles.circle}></div>
               <div className={styles.textBox}>
@@ -271,10 +354,11 @@ export default function SinglePage() {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Fourth Card */}
-          <div className={`${styles.Card} ${activeCard === 4 ? styles.show : ""}`}>
+          {/* <div className={`${styles.Card} ${activeCard === 4 ? styles.show : ""}`}> */}
+          {/* <div className={styles.Card}>
             <div className={styles.fourthPart}>
               <div className={styles.imageContainer}>
                 <Image
@@ -295,7 +379,7 @@ export default function SinglePage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* footer page*/}
       <main className={styles.footerMain}>
         <div className={styles.footerHeroSection}>
@@ -349,17 +433,17 @@ export default function SinglePage() {
             </div>
 
             {/* 🟣 Column 2: Cities */}
-            <div className={styles.footerCityLinks}>
+            {/* <div className={styles.footerCityLinks}>
               <p className={styles.footercityText}>Personal Loan in Jaipur</p>
               <p className={styles.footercityText}>Personal Loan in Lucknow</p>
               <p className={styles.footercityText}>Personal Loan in Kanpur</p>
               <p className={styles.footercityText}>Personal Loan in Nagpur</p>
-            </div>
+            </div> */}
             {/* 🟢 Column 3: Loan Types */}
-            <div className={styles.footerLoanLinks}>
+            {/* <div className={styles.footerLoanLinks}>
               <p className={styles.footerloanText}>Instant Cash Loan</p>
               <p className={styles.footerloanText}>Personal Loan</p>
-            </div>
+            </div> */}
           </div>
           {/* 🟡 Column 4: Quick Links */}
           <div className={styles.footerNavLink}>

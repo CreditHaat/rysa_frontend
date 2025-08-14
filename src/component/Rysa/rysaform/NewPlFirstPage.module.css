@@ -148,6 +148,7 @@
     }
     .form {
       max-width: 330px;
+      margin-top: -15px;
       /* margin: auto; */
       /* padding: 20px; */
       /* background-color: #fff; */
