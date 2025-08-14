@@ -21,7 +21,10 @@ const VerifiedSelfie = () => {
     console.log("Next button clicked");
     setActiveContainer("BankDetails");
   };
-
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     router.push(`/yubi/Loanapprovalpage?client_loan_id=${clientLoanId}`);
+  //   }, 2000);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (clientLoanId) {
@@ -40,15 +43,19 @@ const VerifiedSelfie = () => {
         <div className={`${roboto.className} waiting-table`}>
           {/* Updated Success Checkmark with KFS styling */}
           <div className="professional-checkmark-container">
-            <div className="status-icon status-completed">
-              ✓
-            </div>
+            <div className="status-icon status-completed">✓</div>
           </div>
-                    
+
           <br />
-                    
+
           <div className="loading-text" style={{ textAlign: "center" }}>
-            <h1 style={{fontSize:'22px', color:'#777777', textAlign:'center'}}>
+            <h1
+              style={{
+                fontSize: "22px",
+                color: "#777777",
+                textAlign: "center",
+              }}
+            >
               <b>Successfully Verified Selfie</b>
             </h1>
           </div>

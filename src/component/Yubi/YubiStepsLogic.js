@@ -32,6 +32,11 @@ export default function useYubiStepsLogic(setStepText) {
         const requestId = reqIdResp.data?.obj;
         console.log("✅ requestId response:", requestId);
 
+        if (reqIdResp.data.code === -1) {
+          window.location.href = `/yubi/RejectionPage`;
+          return;
+        }
+
         if (!requestId) {
           setStepText("Invalid request ID.");
           return;
@@ -44,6 +49,11 @@ export default function useYubiStepsLogic(setStepText) {
         );
         console.log("✅ retrieveReport response:", retrieveResp.data);
 
+        if (retrieveResp.data.code === -1) {
+          window.location.href = `/yubi/RejectionPage`;
+          return;
+        }
+
         setStepText("Analyzing Bank Statements...");
       } catch (err) {
         console.error("❌ Error in runSteps:", err);
@@ -54,7 +64,7 @@ export default function useYubiStepsLogic(setStepText) {
     if (clientLoanId) {
       runSteps();
     } else {
-      setStepText("Missing Client Loan Id...");
+      setStepText("Missing Client Loan Id.");
     }
   }, [clientLoanId, setStepText]);
 }

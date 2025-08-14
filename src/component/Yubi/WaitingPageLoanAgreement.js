@@ -34,7 +34,12 @@ const WaitingPageLoanAgreement = () => {
             `http://localhost:8080/generateLoanAgreementDocument`,
             { clientLoanId }
           );
+
           console.log("✅ Loan Agreement API called:", res.data);
+          if (res.data.code === -1) {
+            window.location.href = `/yubi/RejectionPage`;
+            return;
+          }
         } catch (err) {
           console.error("❌ Loan Agreement API error:", err);
         }
@@ -72,6 +77,11 @@ const WaitingPageLoanAgreement = () => {
               // lastName: "Doe",
             });
             console.log("✅ eSign API Response:", res.data);
+
+            if (res.data.code === -1) {
+              window.location.href = `/yubi/RejectionPage`;
+              return;
+            }
 
             const redirectUrl = res.data?.obj;
             if (redirectUrl) {

@@ -21,38 +21,61 @@ const LoanApprovalPage = ({ clientLoanId }) => {
   const searchParams = useSearchParams();
   const salarySlipLink = searchParams.get("salarySlipLink");
   const paramId = searchParams.get("client_loan_id");
-  const [loanAmount, setLoanAmount] = useState(100000);
-  const [tenure, setTenure] = useState(18);
-  const [interestRate, setInterestRate] = useState(20);
+  const [loanAmount, setLoanAmount] = useState("");
+  const [tenure, setTenure] = useState("");
+  const [interestRate, setInterestRate] = useState("");
   const [approvedLoanAmount, setApprovedLoanAmount] = useState(0);
 
   useEffect(() => {
-    const storedLoanAmount = localStorage.getItem("sanctionLoanAmount");
-    const storedTenure = localStorage.getItem("sanctionTenure");
-    const storedInterestRate = localStorage.getItem("sanctionInterestRate");
+    const fetchSanctionDetails = async () => {
+      const id = paramId || clientLoanId;
+      if (!id) return;
 
-    if (storedLoanAmount) {
-      const amount = Number(storedLoanAmount);
-      setApprovedLoanAmount(amount); // ✅ fixed display
-      setLoanAmount(200000); // ✅ user-editable
-    }
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/sanction/${id}`
+        );
+        const data = response.data;
 
-    if (storedTenure) setTenure(Number(storedTenure));
-    if (storedInterestRate) setInterestRate(Number(storedInterestRate));
-  }, []);
+        setLoanAmount(Number(data.loanAmount));
+        setApprovedLoanAmount(Number(data.loanAmount));
+        setTenure(Number(data.tenure));
+        setInterestRate(Number(data.interestRate));
+      } catch (error) {
+        console.error("❌ Failed to fetch sanction details:", error);
+      }
+    };
 
-  useEffect(() => {
-    if (loanAmount) localStorage.setItem("sanctionLoanAmount", loanAmount);
-  }, [loanAmount]);
+    fetchSanctionDetails();
+  }, [paramId, clientLoanId]);
 
-  useEffect(() => {
-    if (tenure) localStorage.setItem("sanctionTenure", tenure);
-  }, [tenure]);
+  // useEffect(() => {
+  //   const storedLoanAmount = localStorage.getItem("sanctionLoanAmount");
+  //   const storedTenure = localStorage.getItem("sanctionTenure");
+  //   const storedInterestRate = localStorage.getItem("sanctionInterestRate");
 
-  useEffect(() => {
-    if (interestRate)
-      localStorage.setItem("sanctionInterestRate", interestRate);
-  }, [interestRate]);
+  //   if (storedLoanAmount) {
+  //     const amount = Number(storedLoanAmount);
+  //     setApprovedLoanAmount(amount); // ✅ fixed display
+  //     setLoanAmount(amount); // ✅ user-editable
+  //   }
+
+  //   if (storedTenure) setTenure(Number(storedTenure));
+  //   if (storedInterestRate) setInterestRate(Number(storedInterestRate));
+  // }, []);
+
+  // useEffect(() => {
+  //   if (loanAmount) localStorage.setItem("sanctionLoanAmount", loanAmount);
+  // }, [loanAmount]);
+
+  // useEffect(() => {
+  //   if (tenure) localStorage.setItem("sanctionTenure", tenure);
+  // }, [tenure]);
+
+  // useEffect(() => {
+  //   if (interestRate)
+  //     localStorage.setItem("sanctionInterestRate", interestRate);
+  // }, [interestRate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,120 +101,138 @@ const LoanApprovalPage = ({ clientLoanId }) => {
 
   return (
     <div className={`${roboto.className} pageContainerloanpage`}>
-        <div className="loan-block">
-      <div className="loan-head">
-         <div className="hdb-logo">
-                  <Image
-                    src={hdb}
-                    alt="Hdb tag"
-                    style={{alignContent:"center",width:"auto",height:"auto"}}
+      <div className="loan-block">
+        <div className="loan-head">
+          <div className="hdb-logo">
+            <Image
+              src={hdb}
+              alt="Hdb tag"
+              style={{ alignContent: "center", width: "auto", height: "auto" }}
+            />
+          </div>
+        </div>
+        <div className="cardForm-loan">
+          <div className="content-loan">
+            <form onSubmit={handleSubmit} className="formloanpage">
+              <div className="cardContainerloanpage">
+                <h3 style={{ textAlign: "center", color: "#777777" }}>
+                  Congratulations ! You have been approved a loan of
+                </h3>
+                <h1 style={{ color: "#777777" }}>
+                  ₹
+                  {approvedLoanAmount
+                    ? approvedLoanAmount.toLocaleString("en-IN")
+                    : "0"}
+                </h1>
+
+                {/* Loan Amount Field */}
+                {/* Loan Amount Field */}
+                <label className="label" style={{ fontSize: "16px" }}>
+                  Select loan amount
+                </label>
+                <input
+                  type="number"
+                  className="inputBox"
+                  value={loanAmount}
+                  onChange={(e) => setLoanAmount(Number(e.target.value))}
+                  placeholder="Enter Loan Amount"
+                  min={100000}
+                  max={approvedLoanAmount}
+                  disabled={approvedLoanAmount === 100000}
+                  title={
+                    approvedLoanAmount === 100000
+                      ? "Loan amount is fixed and cannot be changed"
+                      : ""
+                  }
+                  required
+                />
+
+                <p className="helperText">
+                  {approvedLoanAmount === 100000
+                    ? "Loan amount is fixed at ₹1,00,000"
+                    : `You can enter up to ₹${approvedLoanAmount.toLocaleString(
+                        "en-IN"
+                      )}`}
+                </p>
+
+                {/* Loan Amount Slider */}
+                <div className="sliderContainer">
+                  <span
+                    style={{
+                      color: approvedLoanAmount === 100000 ? "#999" : "#000000",
+                    }}
+                  >
+                    ₹1,00,000
+                  </span>
+                  <input
+                    type="range"
+                    min={100000}
+                    max={approvedLoanAmount}
+                    step={5000}
+                    value={loanAmount}
+                    onChange={(e) => setLoanAmount(Number(e.target.value))}
+                    className="slider"
+                    disabled={approvedLoanAmount === 100000}
+                    title={
+                      approvedLoanAmount === 100000
+                        ? "Loan amount is fixed and cannot be changed"
+                        : ""
+                    }
                   />
+                  <span
+                    style={{
+                      color: approvedLoanAmount === 100000 ? "#999" : "#000000",
+                    }}
+                  >
+                    ₹{approvedLoanAmount.toLocaleString("en-IN")}
+                  </span>
                 </div>
-      </div>
-      <div className="cardForm-loan">
-        <div className="content-loan">
-      <form onSubmit={handleSubmit} className="formloanpage">
-        <div
-          className="cardContainerloanpage"
-        >
-          <h3 style={{textAlign:"center",color:"#777777"}}>Congratulations ! You have been approved a loan of</h3>
-        <h1 style={{color:"#777777"}}>
-            ₹{approvedLoanAmount ? approvedLoanAmount.toLocaleString('en-IN') : "0"}
-        </h1>
 
-          {/* Loan Amount Field */}
-          {/* Loan Amount Field */}
-          <label className="label" style={{fontSize:'16px'}}>Select loan amount</label>
-          <input
-            type="number"
-            className="inputBox"
-            value={loanAmount}
-            onChange={(e) => setLoanAmount(Number(e.target.value))}
-            placeholder="Enter Loan Amount"
-            min={100000}
-            max={approvedLoanAmount}
-            disabled={approvedLoanAmount === 100000}
-            title={
-              approvedLoanAmount === 100000
-                ? "Loan amount is fixed and cannot be changed"
-                : ""
-            }
-            required
-          />
+                {/* Tenure Input Field */}
+                <label className="label" style={{ fontSize: "16px" }}>
+                  Select loan tenure
+                </label>
+                <input
+                  type="number"
+                  className="inputBox"
+                  value={tenure}
+                  onChange={(e) => setTenure(e.target.value)}
+                  placeholder="Enter Tenure in Months"
+                  min={6}
+                  max={36}
+                  step={1}
+                  required
+                />
 
-          <p className="helperText">
-            {approvedLoanAmount === 100000
-              ? "Loan amount is fixed at ₹1,00,000"
-             : `You can enter up to ₹${approvedLoanAmount.toLocaleString('en-IN')}`}
-          </p>
+                <p className="helperText" style={{ fontSize: "16px" }}>
+                  You can enter up to 36 months
+                </p>
 
-          {/* Loan Amount Slider */}
-          <div className="sliderContainer">
-            <span style={{color: approvedLoanAmount === 100000 ? '#999' : '#000000'}}>₹1,00,000</span>
-            <input
-              type="range"
-              min={100000}
-              max={approvedLoanAmount}
-              step={5000}
-              value={loanAmount}
-              onChange={(e) => setLoanAmount(Number(e.target.value))}
-              className="slider"
-              disabled={approvedLoanAmount === 100000}
-              title={
-                approvedLoanAmount === 100000
-                  ? "Loan amount is fixed and cannot be changed"
-                  : ""
-              }
-            />
-           <span style={{color: approvedLoanAmount === 100000 ? '#999' : '#000000'}}>₹{approvedLoanAmount.toLocaleString('en-IN')}</span>
-          </div>
+                {/* Tenure Slider */}
+                <div className="sliderContainer">
+                  <span style={{ color: "#000000", fontSize: "16px" }}>6</span>
+                  <input
+                    type="range"
+                    min={6}
+                    max={36}
+                    step={1}
+                    value={tenure || 6}
+                    onChange={(e) => setTenure(Number(e.target.value))}
+                    className="slider"
+                  />
+                  <span style={{ color: "#000000", fontSize: "16px" }}>36</span>
+                </div>
 
-          {/* Tenure Input Field */}
-          <label className="label" style={{fontSize:'16px'}}>Select loan tenure</label>
-          <input
-            type="number"
-            className="inputBox"
-            value={tenure}
-            onChange={(e) => setTenure(e.target.value)}
-            placeholder="Enter Tenure in Months"
-            min={6}
-            max={36}
-            step={1}
-            required
-          />
-
-          <p className="helperText" style={{fontSize:'16px'}}>You can enter up to 36 months</p>
-
-          {/* Tenure Slider */}
-          <div className="sliderContainer">
-            <span style={{color:'#000000',fontSize:'16px'}}>6</span>
-            <input
-              type="range"
-              min={6}
-              max={36}
-              step={1}
-              value={tenure || 6}
-              onChange={(e) => setTenure(Number(e.target.value))}
-              className="slider"
-            />
-            <span style={{color:'#000000',fontSize:'16px'}}>36</span>
-          </div>
-        
-      
-          {/* Submit Button */}
-             <div className="Long-button">
-                <button
-                  type="submit"
-                  className="form-submit"
-                >
-                  Next
-                </button>
+                {/* Submit Button */}
+                <div className="Long-button">
+                  <button type="submit" className="form-submit">
+                    Next
+                  </button>
+                </div>
               </div>
-            </div>
-      
-      </form>
-      </div>
-      </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
