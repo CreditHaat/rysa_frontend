@@ -25,7 +25,7 @@ export default function useYubiStepsLogic(setStepText) {
 
         setStepText("Verifying Details...");
         const reqIdResp = await axios.get(
-          `http://localhost:8080/getRequestIdByClientLoanId`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getRequestIdByClientLoanId`,
           { params: { clientLoanId } }
         );
 
@@ -44,7 +44,7 @@ export default function useYubiStepsLogic(setStepText) {
 
         setStepText("Analyzing Bank Statements...");
         const retrieveResp = await axios.post(
-          `http://localhost:8080/retrieveReport`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}retrieveReport`,
           { clientLoanId, requestId }
         );
         console.log("✅ retrieveReport response:", retrieveResp.data);

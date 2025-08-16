@@ -144,7 +144,7 @@ export default function SubmitPage() {
     if (!clientLoanId) return;
     try {
       const response = await axios.get(
-        `http://localhost:8080/sanctionWithAccount/${clientLoanId}`
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}sanctionWithAccount/${clientLoanId}`
       );
       const data = response.data;
 

@@ -27,7 +27,7 @@ export default function SubmitPage() {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/sanction/${clientLoanId}`
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}sanction/${clientLoanId}`
         );
         if (!response.ok) throw new Error("Failed to fetch sanction details");
 

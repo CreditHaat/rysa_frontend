@@ -63,7 +63,7 @@ const NewReferenceDt = () => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/master/cities");
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/master/cities`);
         const cityOptions = res.data.map((city) => ({
           value: city,
           label: city,
@@ -367,7 +367,7 @@ const NewReferenceDt = () => {
     if (validateForm()) {
       try {
         const res = await axios.post(
-          `http://localhost:8080/submitReferenceDetails`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}submitReferenceDetails`,
           {
             clientLoanId,
             mothersName: formData.mothersName,

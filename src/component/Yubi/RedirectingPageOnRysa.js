@@ -36,7 +36,7 @@ const RedirectingPageOnRysa = () => {
 
         // 🟢 STEP 1: Create Loan
         const createResponse = await axios.get(
-          `http://localhost:8080/createHDBLoan`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}createHDBLoan`,
           {
             params: {
               mobileNumber: mobileNumber,

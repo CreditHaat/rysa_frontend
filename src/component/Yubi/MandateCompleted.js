@@ -39,7 +39,7 @@ const Mandatecompleted = () => {
       // const clientLoanId = localStorage.getItem("clientLoanId"); // ensure it's already stored
 
       const response = await axios.post(
-        `http://localhost:8080/getMandateStatus`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getMandateStatus`,
         { clientLoanId } // backend expects JSON payload
       );
 
@@ -52,7 +52,7 @@ const Mandatecompleted = () => {
       const redirectUrl = response?.data?.code;
       if (redirectUrl == 0) {
         const response2 = await axios.post(
-          `http://localhost:8080/agreementSigned`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}agreementSigned`,
           { clientLoanId } // backend expects JSON payload
         );
 

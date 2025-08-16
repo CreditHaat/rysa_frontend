@@ -259,7 +259,7 @@ const SelfiePageNew = () => {
       //   selfieImageUrl: publicUrl,
       // });
       const updateKycResp = await axios.post(
-        `http://localhost:8080/updateKYC`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}updateKYC`,
         {
           clientLoanId,
           selfieImageUrl: publicUrl,

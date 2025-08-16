@@ -28,7 +28,7 @@ const Agreementcompleted = () => {
       setIsRedirecting(true);
 
       const response = await axios.post(
-        `http://localhost:8080/registerMandate`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}registerMandate`,
         { clientLoanId } // backend expects JSON payload
       );
 

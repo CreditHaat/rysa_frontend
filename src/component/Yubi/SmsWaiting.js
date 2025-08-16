@@ -31,7 +31,7 @@ const SMSWaiting = () => {
     const fetchMobile = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/getMobileByClientLoanId`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getMobileByClientLoanId`,
           { params: { clientLoanId } }
         );
         if (res.data) {
@@ -46,7 +46,7 @@ const SMSWaiting = () => {
     const generateKfs = async () => {
       try {
         const res = await axios.post(
-          `http://localhost:8080/generateKfsDocument`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}generateKfsDocument`,
           { clientLoanId }
         );
         console.log("✅ generateKfsDocument:", res.data);
@@ -71,7 +71,7 @@ const SMSWaiting = () => {
       if (!callbackReceivedRef.current) {
         console.log("⏱️ 5 minutes passed. Sending fallback SMS...");
         axios
-          .get(`http://localhost:8080/h5/sms_pl_journey`, {
+          .get(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}h5/sms_pl_journey`, {
             params: {
               phone: mobile,
               dsa: "214394238",

@@ -91,7 +91,7 @@ export default function CallbackListener({
           localStorage.setItem("journeyStage", "AA");
           const clientLoanIdLocal = localStorage.getItem("hdbClientLoanId");
           const aaResponse = await axios.get(
-            `http://localhost:8080/initiateHDBAA`,
+            `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}initiateHDBAA`,
             {
               params: {
                 clientLoanId: clientLoanIdLocal,
@@ -142,7 +142,7 @@ export default function CallbackListener({
       try {
         localStorage.setItem("journeyStage", "Report");
         const kycResponse = await axios.post(
-          `http://localhost:8080/initiateKYC`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}initiateKYC`,
           { clientLoanId, callbackStatus: status }
         );
 

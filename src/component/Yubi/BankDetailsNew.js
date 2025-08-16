@@ -126,7 +126,7 @@ const BankDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/banks`)
+      .get(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/banks`)
       .then((res) => {
         setBankOptions(res.data.map((name) => ({ label: name, value: name })));
       })
@@ -424,7 +424,7 @@ const BankDetails = () => {
 
       try {
         const response = await axios.post(
-          `http://localhost:8080/submitBankDetails`,
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}submitBankDetails`,
           {
             clientLoanId: clientLoanId,
             bankName: formData.bankName,
