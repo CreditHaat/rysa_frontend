@@ -31,7 +31,7 @@ const WaitingPageLoanAgreement = () => {
       const callLoanAgreementAPI = async () => {
         try {
           const res = await axios.post(
-            `http://localhost:8080/generateLoanAgreementDocument`,
+            `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}generateLoanAgreementDocument`,
             { clientLoanId }
           );
 
@@ -69,7 +69,7 @@ const WaitingPageLoanAgreement = () => {
           console.log("✅ Loan Agreement doc generated webhook received!");
 
           try {
-            const res = await axios.post(`http://localhost:8080/requestEsign`, {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}requestEsign`, {
               clientLoanId,
               // email: "user@example.com",
               // phone: "9999999999",

@@ -293,6 +293,7 @@ const LoanRequestPage = () => {
           (12 * 100), // simple interest calc
       remainingAmount: loan.outstandingAmount,
       status: loan.status,
+      mno: mobileNumber
     })
   }
 >

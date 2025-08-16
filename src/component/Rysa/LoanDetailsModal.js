@@ -3,8 +3,16 @@
 
 import React from "react";
 import styles from "./LoanDetailsModal.module.css";
+import { useRouter } from "next/navigation";
 
 export default function LoanDetailsModal({ loan, onClose }) {
+
+  const router = useRouter();
+
+  const handlePartPaymentClick = () =>{
+    router.push(`/myContener/PartPaymentPage?mobilenumber=${loan.mno}`);
+  }
+
   if (!loan) return null;
 
   return (
@@ -71,7 +79,7 @@ export default function LoanDetailsModal({ loan, onClose }) {
         <div className={styles.buttonRow}>
           <button className={styles.actionButton}>Repayment</button>
           <button className={styles.actionButtonOutline}>Pre-Closure</button>
-          <button className={styles.actionButtonOutline}>Part Payment</button>
+          <button className={styles.actionButtonOutline} onClick={handlePartPaymentClick}>Part Payment</button>
         </div>
       </div>
     </div>

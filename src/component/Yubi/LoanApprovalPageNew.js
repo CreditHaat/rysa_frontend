@@ -33,7 +33,7 @@ const LoanApprovalPage = ({ clientLoanId }) => {
 
       try {
         const response = await axios.get(
-          `http://localhost:8080/sanction/${id}`
+          `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}sanction/${id}`
         );
         const data = response.data;
 
