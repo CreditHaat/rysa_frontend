@@ -14,50 +14,14 @@ export default function SinglePage() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  // middlepage
-//   const [activeCard, setActiveCard] = useState(1);
-//   const isThrottled = useRef(false);
-//   const containerRef = useRef(null);
 
-//   const handleWheel = (e) => {
-//     if (isThrottled.current) return;
-
-//     const container = containerRef.current;
-//     const rect = container.getBoundingClientRect();
-
-//     // Get vertical position of the mouse
-//     const mouseY = e.clientY;
-//     const middleStart = rect.top + rect.height * 0.5;
-//     const middleEnd = rect.top + rect.height * 0.7;
-
-//     // Only trigger if scrolling in the middle of the card
-//     if (mouseY < middleStart || mouseY > middleEnd) return;
-
-//     if (e.deltaY > 0 && activeCard < 4) {
-//       setActiveCard((prev) => prev + 1);
-//       isThrottled.current = true;
-//       setTimeout(() => (isThrottled.current = false), 200);
-//     } else if (e.deltaY < 0 && activeCard > 1) {
-//       setActiveCard((prev) => prev - 1);
-//       isThrottled.current = true;
-//       setTimeout(() => (isThrottled.current = false), 200);
-//     }
-//   };
-// // middle end
-  // Inside your component
   const router = useRouter();
 
   const handleApplyClick = () => {
     router.push('/LoanForm1');
   };
 
-  // useEffect(() => {
-  //   const container = containerRef.current;
-  //   if (!container) return;
 
-  //   container.addEventListener("wheel", handleWheel);
-  //   return () => container.removeEventListener("wheel", handleWheel);
-  // }, [activeCard, handleWheel]);
   return (
     <>
       <div className={styles.container}>

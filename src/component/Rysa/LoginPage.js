@@ -1,11 +1,24 @@
 // loginPage.js
 "use client";
 
-import React from "react";
+import React,{useState} from "react";
 import styles from "./loginPage.module.css";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
+
+  const router = useRouter();
+  const [mobilenumber, setMobileNumber] = useState("8010489800");
+  
+  const handleGetOtp=()=>{
+    try{
+      router.push(`/myContener/LoanRequestPage?mobilenumber=${mobilenumber}`);
+    }catch(error){
+      console.log(error);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -48,7 +61,7 @@ export default function LoginPage() {
             <input type="text" className={styles.input} />
           </div>
 
-          <button className={styles.otpButton}>Get OTP</button>
+          <button className={styles.otpButton} onClick={handleGetOtp} >Get OTP</button>
 
           <p className={styles.resendText}>
             Resend OTP in <span className={styles.timer}>00.54</span>
