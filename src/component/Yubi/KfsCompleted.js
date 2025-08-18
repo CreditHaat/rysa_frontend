@@ -55,7 +55,7 @@ const Kfscompleted = () => {
 
     try {
       const res = await axios.post(
-        `h${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}generateLoanAgreementDocument`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}generateLoanAgreementDocument`,
         {
           clientLoanId,
         }
