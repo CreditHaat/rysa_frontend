@@ -1,0 +1,788 @@
+.container {
+    min-height: 100vh;
+    background: linear-gradient(to right, #f197b6, #8563ec);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navigation Styles */
+.navbar {
+    background-color: #ffffff;
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    /* justify-content: space-between;  */
+    align-items: center;
+    /* padding: 0 2rem; */
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navLinks {
+    display: flex;
+    gap: 0rem;
+    margin-right: 1rem;
+    margin-left: 50rem;
+}
+
+.navLink {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 2.9rem;
+    color: black;
+    /* color: white; */
+    text-decoration: none;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 0.5rem;
+}
+
+.navLink:hover {
+    background-color: #f0ecf4;
+    font-size: 1.1rem;
+    color: #260bf3;
+    border-radius: 1rem;
+    /* transform: scale(1.1); */
+}
+
+/*  Login Button  */
+.loginBtn {
+    padding: 0.6rem 1.5rem;
+    background-color: #5f57f6;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.loginBtn:hover {
+    background-color: #2511f8;
+    color: #d7bdf0;
+    font-size: 1rem;
+    /* border: 3px solid #ffffff; */
+    /* text-decoration: none; */
+}
+
+.loginBtn:active {
+    background-color: #120999;
+    transform: scale(1.1);
+    border: 3px solid #f1c1f9;
+    /* text-decoration: none; */
+}
+
+/* ---------Hero Section---------- */
+.heroSection {
+    padding: 5px 0;
+    /* min-height: 100px; */
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+}
+
+.heroContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    /* margin: 0 auto; */
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+}
+
+.heroContent {
+    /* padding-top: 3rem; */
+    flex: 1;
+    max-width: 800px;
+    opacity: 0.3;
+}
+
+.heroTitle {
+    font-size: 5rem;
+    font-weight: 750;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.0rem;
+}
+
+.heroSubtitle {
+    font-size: 1.30rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.applyBtn {
+    background: rgb(72, 126, 244);
+    backdrop-filter: blur(10px);
+    color: white;
+    /* border: 2px solid rgba(255, 255, 255, 0.3); */
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    /* cursor: pointer; */
+    /* transition: all 1.0s ease; */
+}
+
+.applyBtn:hover {
+    background: #0953f3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.comingDiv {
+     position: absolute;        /* Make it float over content */
+    top: 50%;                  /* Adjust as needed */
+    left: 50%;
+    transform: translate(-50%, -50%);  /* Center it */
+    z-index: 999; 
+    text-align: center;
+    background: #5f57f6;
+    font-size: 30px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 10px;
+    /* margin-bottom: ; */
+}
+
+.h3comming {
+    font-size: 70px;
+    color: red
+}
+
+.heroImageContainer {
+    margin-bottom: -6px;
+    flex: 0 0 400px;
+    height: 500px;
+    position: relative;
+    opacity: 0.3;
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -2fpx;
+    left: 95px;
+    /* width: 100px; Adjust as needed
+  height: auto; */
+}
+
+/* Hamburger Button - फक्त mobile view साठी */
+.hamburgerBtn {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    display: none;
+    /* default: hidden */
+}
+
+/* Humberger wrapper right ला */
+.navRightHumberger {
+    display: none;
+}
+
+/* Dropdown view for mobile nav */
+.humberView {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    /* nav खाली */
+    right: 1rem;
+    background-color: #676363;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(28, 28, 28, 0.3);
+    z-index: 999;
+}
+
+/* Individual nav links in hamburger dropdown */
+.navLinkHumberger {
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-bottom: 1px solid #666;
+    font-size: 1rem;
+}
+
+.navLinkHumberger:last-child {
+    border-bottom: none;
+}
+
+.navLinkHumberger:hover {
+    background-color: #f7f0f0;
+    color: rgb(0, 0, 0);
+    border-radius: 0.3rem;
+}
+
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+    }
+
+    .navRight {
+        display: none;
+    }
+
+    .navRightHumberger {
+        display: block;
+        color: #000000;
+    }
+
+    .hamburgerBtn {
+        display: block;
+        color: #000000;
+    }
+
+    .loginBtn {
+        display: none;
+    }
+
+    .navContainer {
+        justify-content: space-between;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+    }
+
+    .navRight {
+        display: none;
+    }
+
+    .navRightHumberger {
+        display: block;
+        margin-left: auto;
+    }
+
+    .hamburgerBtn {
+        display: block;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        color: black;
+        cursor: pointer;
+    }
+
+    .loginBtn {
+        display: none;
+    }
+
+    .navContainer {
+        justify-content: space-between;
+        padding: 0 1rem;
+    }
+
+    .humberView {
+        top: 60px;
+        right: 1rem;
+        width: 200px;
+        background-color: #444;
+    }
+
+    .navLinkHumberger {
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroContainer {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1rem;
+    }
+
+    .heroImageContainer {
+        margin-bottom: -5px;
+        bottom: 0px;
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .heroImage {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+    .comingDiv{
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: 2rem;
+        left: 8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .heroContainer {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1rem;
+    }
+
+    .heroImageContainer {
+        margin-bottom: -5px;
+        padding-bottom: 0px;
+        width: 100%;
+        height: auto;
+        /* position: static; */
+    }
+
+    .heroImage {
+        bottom: -200rem;
+        /* position: ; */
+        width: 100%;
+        height: auto;
+    }
+    .comingDiv{
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: 2rem;
+        left: 8rem;
+    }
+}
+
+/* ---------------footer css ----------------------*/
+/* footerPage.module.css */
+
+/* Main Background */
+.footerMain {
+    background-color: #ecf4ff;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+/* Image Section */
+.footerHeroSection {
+    position: relative;
+    margin-bottom: -50px;
+    width: 100%;
+    height: 800px;
+    background-image: url('/sharing-moment-friendship.jpg');
+    background-size: 1400px 700px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.footerHeroText {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700;
+    color: white;
+    padding: 0 40px;
+    margin: 20px;
+    margin-bottom: 3rem;
+    max-width: 80%;
+    line-height: 1.2;
+    white-space: normal;
+}
+
+
+/* ===============
+   Footer Section 
+   ==============*/
+.footer {
+    background-color: #5f4dee;
+    color: white;
+    padding: 12px 6px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Footer Grid Layout /------*/
+.footerMainContainer {
+    width: 100%;
+    padding-left: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    /* allows wrapping to next row */
+    gap: 60px;
+    /* space between columns */
+}
+
+.footerlogoAndText {
+    flex: 1 1 200px;
+    min-width: 180px;
+}
+
+.footerCityLinks {
+    margin-left: 50px;
+    padding-top: 50px;
+    padding-left: 120px;
+    flex: 1 1 200px;
+    min-width: 180px;
+    position: relative;
+    z-index: 1;
+}
+
+.footerLoanLinks {
+    margin-left: 70px;
+    padding-left: 120px;
+    padding-top: 50px;
+    flex: 1 1 200px;
+    min-width: 180px;
+    z-index: 3;
+}
+
+.footerNavLink {
+    display: grid;
+    /* flex: 1 1 200px;                   */
+    min-width: 180px;
+}
+
+/* Move Column 4 to second row under Column 2 */
+.footerNavLink {
+    display: grid;
+    justify-items: left;
+    left: 20px;
+    /* justify-items: center; */
+    padding-top: 30px;
+    order: 4;
+    flex: 1 1 200px;
+}
+
+/* Ensure columns 1-3 keep their order */
+.footerlogoAndText {
+    order: 1;
+}
+
+.footerCityLinks {
+    order: 2;
+}
+
+.footerLoanLinks {
+    order: 3;
+}
+
+/* hover part */
+.footeraboutText {
+    font-size: 1rem;
+    color: #ffffff;
+    margin: 6px 0;
+}
+
+.footeraboutText:hover {
+    color: #f0a500;
+}
+
+.footerloanText {
+    font-size: 1rem;
+    color: #ffffff;
+    margin: 6px 0;
+}
+
+.footerloanText:hover {
+    color: #f0a500;
+}
+
+.footercityText {
+    font-size: 1rem;
+    color: #ffffff;
+    margin: 4px 0;
+}
+
+.footercityText:hover {
+    color: #f0a500;
+}
+
+.footernavPtag {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.footersocialIcons {
+
+    padding-left: 67rem;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    padding-right: 3rem;
+    font-size: 1.5rem;
+    color: white;
+
+}
+
+.iconInstagram,
+.iconFacebook,
+.iconLinkedin {
+    font-size: 1.5rem;
+    /* Set the size of the icons to 1.5rem */
+    color: white;
+    /* Default color of the icons is white */
+    transition: color 0.3s ease;
+    /* Smooth transition for color change */
+}
+
+/* Hover effect to change icon color to #f0a500 */
+.iconInstagram:hover,
+.iconFacebook:hover,
+.iconLinkedin:hover {
+    color: #f0a500;
+    /* Change color on hover */
+}
+
+.footersocialIcons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconInstagram {
+    color: #E4405F;
+    /* Instagram color */
+    transition: color 0.3s ease;
+}
+
+.iconInstagram:hover {
+    color: #F56040;
+    /* Pink hover color */
+}
+
+.iconFacebook {
+    color: #3b5998;
+    /* Facebook color */
+    transition: color 0.3s ease;
+}
+
+.iconFacebook:hover {
+    color: #1877F2;
+    /* Blue hover color */
+}
+
+.iconLinkedin {
+    color: #0077B5;
+    /* LinkedIn color */
+    transition: color 0.3s ease;
+}
+
+.iconLinkedin:hover {
+    color: #0e76a8;
+    /* LinkedIn hover color */
+}
+
+/* ===========================
+   mobile responsive code here 
+   =========================== */
+@media (max-width: 768px) {
+    .footerMainContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .footerlogoAndText,
+    .footerCityLinks,
+    .footerLoanLinks,
+    .footerNavLink {
+        flex: 1 1 45%;
+        min-width: 200px;
+    }
+
+}
+
+/* Mobile: 480px and below */
+@media (max-width: 480px) {
+    .footerMainContainer {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    /* Reset all ordering */
+    .footerlogoAndText {
+        margin-left: -60px;
+        flex: none;
+        width: 100%;
+        order: 0;
+    }
+
+    .footerNavLink {
+        display: grid;
+        /* flex: ; */
+        left: 10px;
+        width: 100%;
+        order: 0;
+    }
+
+    .footerlogoAndText {
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .footersocialIcons {
+        justify-content: center;
+        /* center-align on smaller screens */
+        gap: 12px;
+        padding: 0 1rem;
+    }
+
+    .iconInstagram,
+    .iconFacebook,
+    .iconLinkedin {
+        font-size: 1.3rem;
+        /* slightly smaller icons */
+    }
+}
+
+/* Mobile: 480px and below */
+@media (max-width: 480px) {
+    .footersocialIcons {
+        margin-right: 15px;
+        justify-content: right;
+        gap: 10px;
+        padding: 0.5rem 0;
+    }
+
+    .iconInstagram,
+    .iconFacebook,
+    .iconLinkedin {
+        font-size: 1rem;
+        /* mobile-optimized size */
+    }
+
+    .iconInstagram:hover,
+    .iconFacebook:hover,
+    .iconLinkedin :hover {
+        color: #f0a500;
+    }
+}
+
+
+/* Container for footer links */
+.footerNavLink1 {
+    padding: 20px;
+    background-color: #5f4dee;
+}
+
+/* Unordered list styles */
+.footerNavList1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    /* Center on desktop too */
+}
+
+/* Button styles */
+.footerNavButton1 {
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.footerNavButton1:hover {
+    background-color: #eaeaea;
+    border-color: #999;
+}
+button:active{
+    color: #e373e7;
+}
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .footerNavList1 {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .footerNavButton1 {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+}
+
+.footerTermText{
+    margin-left: 35px;
+    padding-left: 20px;
+}
+.footerText1 {
+    margin-left: 35px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin: 20px 0;
+  left:-9px;
+}
+.footerSpan1{
+    color:#f3b2f5;
+    margin-left: 35px;
+}
+.footerSpan{
+    color:#f3b2f5;
+    
+}
+@media (max-width: 480px) {
+    .footerSpan1{
+    color:#f3b2f5;
+    margin-left: 6px;
+}
+.footerSpan{
+    color:#f3b2f5;
+    
+
+}
+}

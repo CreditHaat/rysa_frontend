@@ -18,6 +18,7 @@ import WaitingPage from '../../component/Rysa/WaitingPage.js';
 import SubmitPage from '../../component/Rysa/SubmitPage.js';
 import SubmitButtonPage from '../../component/Rysa/SubmitButton/submitButtonPage.js';
 import IframePage from '../../component/Rysa/IframeScreen';
+import RysaComingSoonPage from "../../component/Rysa/RysaComingSoPage";
 // import NewBankD from '../../component/Rysa/Bank_Details.js';
 
 const roboto = Roboto({
@@ -67,7 +68,7 @@ function page() {
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
           />
-      <SinglePage/>   
+      {/* <SinglePage/>    */}
       {/* <LoanFrom />   */}
        {/* <NewBlListPage
       companies={companies}
@@ -88,6 +89,7 @@ function page() {
        {/* <SubmitPage/> */}
        {/* <SubmitButtonPage/> */}
        {/* <IframePage/> */}
+       <RysaComingSoonPage/>
     </div>
   )
 }
