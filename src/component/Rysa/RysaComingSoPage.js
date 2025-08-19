@@ -122,7 +122,7 @@ function RysaComingSoPage() {
                 </div>
                 {/* 🟡 Column 4: Quick Links */}
                 <div className={styles.footerTermText1}>
-                    <h3 className="footerText1"> <button className={styles.footerSpan1}>Terms & Conditions </button> And <button className={styles.footerSpan}>Privacy Policy</button></h3>
+                    <h3 className="footerText1"> <button className={styles.footerSpan1}>Terms &amp; Conditions </button> And <button className={styles.footerSpan}>Privacy Policy</button></h3>
                 </div>
                 {/* <div className={styles.footerNavLink1}>
                     <ul className={styles.footerNavList1}>

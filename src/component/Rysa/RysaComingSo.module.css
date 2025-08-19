@@ -737,7 +737,10 @@
     background-color: #eaeaea;
     border-color: #999;
 }
-button:active{
+.footerSpan1:active{
+    color: #e373e7;
+}
+.footerSpan:active{
     color: #e373e7;
 }
 /* Mobile responsiveness */
