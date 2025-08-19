@@ -61,7 +61,7 @@ const Ondclist = () => {
 
     const { uid, setUId, isWebsocketConnectionEstablished, setIsWebsocketConnectionEstablished } = useContext(UIDContext);
     const { formSubmissionData, setFormSubmissionData, payloadForSelect, setPayloadForSelect } = useContext(OnSearchContext);
-    const { SelectedLenderData, setSelectedLenderData } = useContext(SelectedLenderContext);
+    const { SelectedLenderData, setSelectedLenderData, bff, setBff } = useContext(SelectedLenderContext);
 
     const [lenders, setLenders] = useState([]);
     // Track if search has been called to prevent multiple calls
@@ -351,16 +351,18 @@ const Ondclist = () => {
                         for(const tempLender of lenders){
                             if(tempLender.context.bpp_id === lender.context.bpp_id){
                                 minValue = tempLender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[4]?.value;
+                                console.log("The min value that we got is : ",minValue);
                             }
                             
                         }
-                        if(lender.context.bpp_id === "go-app-gateway.qa1.paywithr.io"){
-                            //here we will not show the loan offer page, we will directly hit the second select api
+                        // if(lender.context.bpp_id === "go-app-gateway.qa1.paywithr.io"){
+                        //     //here we will not show the loan offer page, we will directly hit the second select api
+
                             
-                        }else{
+                        // }else{
                             // ✅ Navigate to the next page
                         router.push(`/ondc/loanapproval?minAmt=${minValue}`);
-                        }
+                        // }
                         
                         // console.log("after router.push");
                     } else {
@@ -563,7 +565,8 @@ const Ondclist = () => {
                                                             <div className={styles.cardBody}>
                                                                 {/* <h1 className={styles.amount}>INR {lender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[5]?.value || "N/A"} */}
                                                                 
-                                                                <h1 className={styles.amount}>INR {lender?.message?.order?.items?.[0]?.price?.value || "N/A"}
+                                                                {/* <h1 className={styles.amount}>INR {lender?.message?.order?.items?.[0]?.price?.value || "N/A"} */}
+                                                                <h1 className={styles.amount}>INR {lender?.message?.order?.quote?.breakup?.[0]?.price?.value || "N/A"}
                                                                 </h1>
                                                                 <p className={styles.maxAmount}>Max. Amount</p>
                                                             </div>

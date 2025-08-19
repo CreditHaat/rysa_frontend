@@ -1,4 +1,5 @@
 'use client';
+import React,{ useRef, useCallback, useState } from 'react';
 import Image from 'next/image';
 import styles from './ReviewLoan.module.css';
 // import hdb from '../../../public/Jays/HDB.png';
@@ -6,8 +7,19 @@ import ondclogo from "./images/ondc_registered_logo.png";
 import { useRouter } from 'next/navigation';
 import FinalLoanOfferContext from "./context/FinalLoanOfferContext";
 import { useContext } from 'react';
+import OnStatusContext from "./context/OnStatusContext";
+import SelectedLenderContext from "./context/SelectedLenderContext";
+import useWebSocketONDCstatus from "./Websocket/useWebSocketONDCstatus";
+import CallbackLoader from "./LoadingPages/CallbackLoader";
+
 export default function ReviewLoanPage() {
+
+  const externalFormWindowRef = useRef(null);
+
   const {finalLoanOffer, setFinalLoanOffer} = useContext(FinalLoanOfferContext);
+  const { onStatusData, setOnStatusData, initPayload, setInitPayload } = useContext(OnStatusContext);
+  const { SelectedLenderData, setSelectedLenderData, globalSettlementAmount, setGlobalSettlementAmount, kycForm, setKycForm } = useContext(SelectedLenderContext);
+  const [waitingForCallback, setWaitingForCallback] = useState(false);
 
   const router = useRouter();
 //   const summary = {
@@ -47,7 +59,7 @@ export default function ReviewLoanPage() {
   //   numInstallments: 9,
   // };
   const summary = {
-    loanAmount: finalLoanOffer?.loanAmount || "NA",
+    loanAmount: finalLoanOffer?.loanAmount || "NA", //this is net_disbursed_amount
     processingFees: finalLoanOffer?.processingFees || "NA",
     interestRate: finalLoanOffer?.interestRate || "NA",
     interestPayable: finalLoanOffer?.interest || "NA",
@@ -55,6 +67,7 @@ export default function ReviewLoanPage() {
     emi: finalLoanOffer?.installmentAmount || "NA",
     emiTenure: finalLoanOffer?.tenure || "NA",
     numInstallments: finalLoanOffer?.repaymentInstallments || "NA",
+    netDisbursedAmount: finalLoanOffer?.netDisbursedAmount || "NA"
   };
 //   const contCharges={
 //   closureCharge: "3%",
@@ -87,11 +100,90 @@ const contCharges={
   const cur = n => `₹ ${n.toLocaleString()}`;
 
   const handleNextClick=()=>{
-    router.push("/ondc/bankdetails");
+    // router.push("/ondc/bankdetails");
+    externalFormWindowRef.current = window.open(kycForm, "_blank");
+    setWaitingForCallback(true);
   }
 
+  const handleWebSocketMessageForStatus = useCallback((data) => {
+
+    console.log("When we got the status callback");
+
+    // alert("The onstatus is called");
+
+
+    try {
+
+      // ✅ CLOSE FORM TAB IF OPEN
+      if (externalFormWindowRef.current && !externalFormWindowRef.current.closed) {
+        externalFormWindowRef.current.close(); // Close form tab
+        window.focus(); // Focus back to loanapproval tab
+      }
+
+      const parsedData = JSON.parse(data.content);
+
+      if (parsedData.message.order.items[0].xinput.form_response.status === "APPROVED" && parsedData.message.order.items[0].xinput.form_response.submission_id) {
+        //so here we will take that submission id and then will hit that init api
+
+        //here we will store the onSelect callback
+        setOnStatusData(parsedData);
+
+        //   //here we will call the init api with the values(taken from onStatus ) which it will need
+        //here we are only setting the value which we get from onStatus needed for calling init1 api which we call in bankDetails page
+        const initPayload2 = {
+          transactionId: parsedData.context.transaction_id,
+          bppId: parsedData.context.bpp_id,
+          bppUri: parsedData.context.bpp_uri,
+          providerId: parsedData.message.order.provider.id,
+          itemId: parsedData.message.order.items[0].id,
+          // formId: parsedData.message.order.items[0].xinput.form.id,
+          submissionId: parsedData.message.order.items[0].xinput.form_response.submission_id,
+          bankCode: "HDFC",
+          accountNumber: "1234567890",
+          vpa: "user@upi",
+          // settlementAmount: "1666.67",
+          settlementAmount: globalSettlementAmount,
+          initAttempt: 1
+        }
+
+        // setInitPayload(...initPayload,initPayload2);
+        setInitPayload(prev => ({
+          ...prev,
+          ...initPayload2
+        }));
+
+        // setFinalLoanOffer(parsedData);
+        
+        // router.push("/ondc/bankdetails");
+        // router.push("/ondc/loanoffer");
+        // here instead of redirecting the user to the bank details page firstly we will show him the loan offer and then from that loanoffer page user will be redirected to bankDetails page
+
+        // const initResponse = await init(initPayload);
+        // handleInit(initPayload);
+
+        //for temporarily we are calling our init api from here but after we will be calling init api on another page after taking the bank details
+        const submissionId = parsedData.message.order.items[0].xinput.form_response.submission_id;
+        console.log("The submission id that we got is : ", submissionId);
+        router.push("/ondc/bankdetails");
+      } else {
+        console.log("Your application not accepted");
+      }
+
+    } catch (error) {
+      console.log("Error while getting onstatus : ", error);
+    }
+
+  }, []);
+
+
+  useWebSocketONDCstatus(handleWebSocketMessageForStatus);
+
   return (
-    <main className={styles.page}>
+    <>
+    {
+      !waitingForCallback?
+      (<>
+        <main className={styles.page}>
     {/* <div className={styles.mainCard}></div> */}
       {/*—‑ हेडर ‑—*/}
       {/* <header className={styles.header}>Review Loan Application</header> */}
@@ -123,7 +215,7 @@ const contCharges={
         <div className={styles.row}>
           <span className={styles.netLabel}>Net disbursed amount</span>{' '}
           <span className={styles.netValue}>
-            {cur(summary.loanAmount - summary.processingFees)}
+            {cur(summary.netDisbursedAmount)}
           </span>
         </div>
 
@@ -147,9 +239,9 @@ const contCharges={
         <div className={styles.row}>
           <span>EMI Amount</span> <span className={styles.valueAm}>{cur(summary.emi)}</span>
         </div>
-        <div className={styles.row}>
+        {/* <div className={styles.row}>
           <span>EMI Payable</span> <span className={styles.valueAm}>{cur(summary.emi)}</span>
-        </div>
+        </div> */}
         <div className={styles.row}>
           <span>EMI Tenure</span> <span className={styles.valueAm}>{summary.emiTenure}</span>
         </div>
@@ -227,5 +319,10 @@ const contCharges={
         </div>
       </section>
     </main>
+      </>):
+      (<> <CallbackLoader /> </>)
+    }
+    </>
+    
   );
 }

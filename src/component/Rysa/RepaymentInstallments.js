@@ -169,31 +169,53 @@ import axios from "axios";
 import SelectedLoanContext from "./RysaContexts/SelectedLoanContext";
 import { useContext } from "react";
 
-const LoanRequestPage = () => {
+
+const RepaymentInstallment = () => {
 
   const {selectedLoanData, setSelectedLoanData} = useContext(SelectedLoanContext);
 
   const searchParams = useSearchParams();
-  const mobileNumber = searchParams.get("mobilenumber");
+  const loanId = searchParams.get("loanId");
 
   const [loans, setLoans] = useState([]); // ✅ dynamic data
   const [selectedLoan, setSelectedLoan] = useState(null);
 
   useEffect(() => {
-    if (mobileNumber) {
-      fetchLoanDetailsByMobile(mobileNumber);
+    if (loanId) {
+      fetchInstallmentsByLoan();
     }
-  }, [mobileNumber]);
+  }, []);
 
-  const fetchLoanDetailsByMobile = async (mobileNumber) => {
+  // const fetchLoanDetailsByMobile = async (mobileNumber) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchloans`,
+  //       { mobileNumber }
+  //     );
+
+  //     if (response.status === 200) {
+  //       console.log("The response is : ", response.data);
+  //       setLoans(response.data); // ✅ save response into state
+  //     }
+  //   } catch (error) {
+  //     console.log("error while fetching the loan details", error);
+  //   }
+  // };
+
+  const fetchInstallmentsByLoan = async () => {
     try {
+      // const response = await axios.post(
+      //   `http://localhost:8080/fetchInstallmentsByLoan`,
+      //   { loanId }
+      // );
+
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchloans`,
-        { mobileNumber }
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchInstallmentsByLoan`,
+        { loanId }
       );
 
       if (response.status === 200) {
-        console.log("The response is : ", response.data);
+        console.log("The response of installmentslist page is : ", response.data);
         setLoans(response.data); // ✅ save response into state
       }
     } catch (error) {
@@ -229,14 +251,12 @@ const LoanRequestPage = () => {
             <div className={styles.cardHeader}>
               <div className={styles.headerItem}>
                 <div className={styles.label}>Loan Number</div>
-                <div className={styles.value}>{loan.loanNumber}</div>
+                <div className={styles.value}>{loan.installmentId}</div>
               </div>
               <div className={styles.headerItem}>
                 <div className={styles.label}>Start Date</div>
                 <div className={styles.value}>
-                  {loan.createTime
-                    ? new Date(loan.createTime).toLocaleDateString()
-                    : "-"}
+                  {loan.startDate}
                 </div>
               </div>
               <div
@@ -252,9 +272,21 @@ const LoanRequestPage = () => {
 
             <div className={styles.cardBody}>
               <div className={styles.amountSection}>
-                <div className={styles.label}>Loan Amount</div>
+                <div className={styles.label}>Installment Amount</div>
                 <div className={styles.amount}>
-                  ₹ {loan.principalAmount?.toLocaleString()}
+                  ₹ {loan.installmentAmount.toLocaleString()}
+                </div>
+              </div>
+              <div className={styles.headerItem}>
+                <div className={styles.label}>End Date</div>
+                <div className={styles.value}>
+                  {loan.endDate}
+                </div>
+              </div>
+              <div className={styles.headerItem}>
+                <div className={styles.label}>Type</div>
+                <div className={styles.value}>
+                  {loan.type}
                 </div>
               </div>
 
@@ -273,69 +305,7 @@ const LoanRequestPage = () => {
                 View Details
               </button> */}
 
-              <button
-  className={styles.viewButton}
-  onClick={() =>{
-    setSelectedLoan({
-      // keep old modal field names
-      amount: loan.principalAmount,
-      interestRate: loan.interestRate,
-      duration: `${loan.tenureMonths} months`,
-      emi: Math.round(loan.outstandingAmount / loan.tenureMonths),
-      startDate: loan.createTime
-        ? new Date(loan.createTime).toLocaleDateString()
-        : "-",
-      endDate: loan.tenureMonths
-        ? new Date(
-            new Date(loan.createTime).setMonth(
-              new Date(loan.createTime).getMonth() + loan.tenureMonths
-            )
-          ).toLocaleDateString()
-        : "-",
-      // totalAmount:
-      //   loan.principalAmount +
-      //   (loan.principalAmount * loan.interestRate * loan.tenureMonths) /
-      //     (12 * 100), // simple interest calc
-      totalAmount: loan.principalAmount,
-      remainingAmount: loan.outstandingAmount,
-      status: loan.status,
-      mno: mobileNumber,
-      DisbursedLoanId: loan.id
-    })
 
-    setSelectedLoanData({
-      // keep old modal field names
-      amount: loan.principalAmount,
-      interestRate: loan.interestRate,
-      duration: `${loan.tenureMonths} months`,
-      emi: Math.round(loan.outstandingAmount / loan.tenureMonths),
-      startDate: loan.createTime
-        ? new Date(loan.createTime).toLocaleDateString()
-        : "-",
-      endDate: loan.tenureMonths
-        ? new Date(
-            new Date(loan.createTime).setMonth(
-              new Date(loan.createTime).getMonth() + loan.tenureMonths
-            )
-          ).toLocaleDateString()
-        : "-",
-      // totalAmount:
-      //   loan.principalAmount +
-      //   (loan.principalAmount * loan.interestRate * loan.tenureMonths) /
-      //     (12 * 100), // simple interest calc
-      totalAmount: loan.principalAmount,
-      remainingAmount: loan.outstandingAmount,
-      status: loan.status,
-      mno: mobileNumber,
-      loanNumber: loan.loanNumber,
-      transactionId: loan.transactionId,
-      DisbursedLoanId: loan.id
-    })
-  }
-  }
->
-  View Details
-</button>
 {/* ✅ Why this w */}
 
             </div>
@@ -353,7 +323,7 @@ const LoanRequestPage = () => {
   );
 };
 
-export default LoanRequestPage;
+export default RepaymentInstallment;
 
 // "use client";
 // import React from "react";

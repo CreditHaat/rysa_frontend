@@ -38,7 +38,7 @@ const Bankdetails = () => {
 
   const initPayloadRef = useRef(null); //we are declaring this to store the form id because React's useCallback closures capture the value of variables at the time they are declared, not the updated value.
 
-  const { SelectedLenderData, setSelectedLenderData } = useContext(SelectedLenderContext);//added this to send the product name from this data to init api for saving logger
+  const { SelectedLenderData, setSelectedLenderData,  globalSettlementAmount , setGlobalSettlementAmount } = useContext(SelectedLenderContext);//added this to send the product name from this data to init api for saving logger
   const { formSubmissionData, setFormSubmissionData, payloadForSelect, setPayloadForSelect } = useContext(OnSearchContext);
 
   const router = useRouter();
@@ -477,7 +477,8 @@ const Bankdetails = () => {
           bankCode: "HDFC",
           accountNumber: "1234567890",
           vpa: "user@upi",
-          settlementAmount: "1666.67",
+          // settlementAmount: "1666.67",
+          settlementAmount: globalSettlementAmount,
           mobileNumber: formSubmissionData.contactNumber,
           stage: 4, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
           productName: SelectedLenderData.message.order.provider.descriptor.name,

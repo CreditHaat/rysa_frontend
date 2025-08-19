@@ -23,7 +23,7 @@ const roboto = Roboto({
 const ClickToRedirectLoader = () => {
 
     const { formSubmissionData, setFormSubmissionData, payloadForSelect, setPayloadForSelect } = useContext(OnSearchContext);
-    const { SelectedLenderData, setSelectedLenderData } = useContext(SelectedLenderContext);
+    const { SelectedLenderData, setSelectedLenderData, globalSettlementAmount , setGlobalSettlementAmount } = useContext(SelectedLenderContext);
 
     const router = useRouter();
 
@@ -66,7 +66,8 @@ const ClickToRedirectLoader = () => {
                     bankCode: "HDFC",
                     accountNumber: "1234567890",
                     vpa: "user@upi",
-                    settlementAmount: "1666.67",
+                    // settlementAmount: "1666.67",
+                    settlementAmount: globalSettlementAmount,
                     version: parsedData.context.version,
                     paymentId: parsedData.message.order.payments[0].id,
                     mobileNumber: formSubmissionData.contactNumber,

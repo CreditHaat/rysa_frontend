@@ -5,6 +5,7 @@ import { OnSearchProvider } from "@/component/Rysa/ONDC/context/OnSearchProvider
 import { SelectedLenderProvider } from "@/component/Rysa/ONDC/context/SelectedLenderProvider";
 import { OnStatusProvider } from "@/component/Rysa/ONDC/context/OnStatusProvider";
 import { FinalLoanOfferProvider } from "@/component/Rysa/ONDC/context/FinalLoanOfferProvider";
+import {SelectedLoanProvider} from "@/component/Rysa/RysaContexts/SelectedLoanProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({ children }) {
             <SelectedLenderProvider>
               <OnStatusProvider>
                 <FinalLoanOfferProvider>
+                  <SelectedLoanProvider>
                   {children}
+                  </SelectedLoanProvider>
                 </FinalLoanOfferProvider>
               </OnStatusProvider>
             </SelectedLenderProvider>

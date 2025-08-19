@@ -1,11 +1,14 @@
 // LoanDetailsModal.js
 "use client";
 
-import React from "react";
+import React,{useState} from "react";
 import styles from "./LoanDetailsModal.module.css";
 import { useRouter } from "next/navigation";
+import RepaymentInstallment from "./RepaymentInstallments";
 
 export default function LoanDetailsModal({ loan, onClose }) {
+
+  const [showRepaymentList, setShowRepaymentList] = useState(false);
 
   const router = useRouter();
 
@@ -13,10 +16,26 @@ export default function LoanDetailsModal({ loan, onClose }) {
     router.push(`/myContener/PartPaymentPage?mobilenumber=${loan.mno}`);
   }
 
+  const handlePreClosure=()=>{
+    router.push(`/myContener/PreCloserPage?mobilenumber=${loan.mno}`);
+  }
+
+  const handleMissedEmi=()=>{
+    router.push(`/myContener/missedemi?mobilenumber=${loan.mno}`);
+  }
+
+  const handleRepaymentList = () =>{
+    // setShowRepaymentList(true);
+    router.push(`/myContener/repaymentlist?loanId=${loan.DisbursedLoanId}`);
+  }
+
   if (!loan) return null;
 
   return (
-    <div className={styles.overlay}>
+
+    <>
+      {/* {!showRepaymentList?(<> */}
+        <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
           <span className={styles.title}>Loan Details</span>
@@ -70,18 +89,26 @@ export default function LoanDetailsModal({ loan, onClose }) {
             <div className={styles.label}>Total Amount</div>
             <div className={styles.value}>₹{loan.totalAmount.toLocaleString()}</div>
           </div>
-          <div>
+          {/* <div>
             <div className={styles.label}>Remaining Amount</div>
             <div className={styles.value}>₹{loan.remainingAmount.toLocaleString()}</div>
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.buttonRow}>
-          <button className={styles.actionButton}>Repayment</button>
-          <button className={styles.actionButtonOutline}>Pre-Closure</button>
+          {/* <button className={styles.actionButton} onClick={handleMissedEmi}>Repayment</button> */}
+          <button className={styles.actionButton} onClick={handleMissedEmi}>MissedEmiPayment</button>
+          <button className={styles.actionButtonOutline} onClick={handlePreClosure} >Pre-Closure</button>
           <button className={styles.actionButtonOutline} onClick={handlePartPaymentClick}>Part Payment</button>
+          <button className={styles.actionButtonOutline} onClick={handleRepaymentList}>Repayment List</button>
         </div>
       </div>
     </div>
+      {/* </>):(<>
+      {console.log("loanId : ",loan.DisbursedLoanId)}
+      </>)} */}
+    </>
+
+    
   );
 }

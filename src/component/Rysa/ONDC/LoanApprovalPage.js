@@ -23,6 +23,7 @@ import CallbackLoader from "./LoadingPages/CallbackLoader";
 import FinalLoanOfferContext from "./context/FinalLoanOfferContext";
 import { Roboto } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
+import { calculateSettlement } from "./apis/settlementCalculator";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -30,6 +31,8 @@ const roboto = Roboto({
 });
 
 const LoanApprovalPage = () => {
+
+  const bffPercentage = 1;
 
   const searchParams = useSearchParams();
 
@@ -55,13 +58,65 @@ const LoanApprovalPage = () => {
 
   const [enteredTenure, setEnteredTenure] = useState();
 
-  const { SelectedLenderData, setSelectedLenderData } = useContext(SelectedLenderContext);
+  const { SelectedLenderData, setSelectedLenderData, globalSettlementAmount, setGlobalSettlementAmount, kycForm, setKycForm } = useContext(SelectedLenderContext);
 
   const [onSelectResponse, setOnSelectResponses] = useState(null);
   const [waitingForCallback, setWaitingForCallback] = useState(false);
   const [hittingInitApi, setHittingInitApi] = useState(false);
 
   // let externalFormWindow = null; // define this outside the function or in component scope
+
+  //////////////////////////////////////////////////////////
+
+  // useEffect(()=>{
+  //   handleCalculate();
+  // },[])
+
+  const handleCalculate = (principal, processingFee, loanTermMonths, bffPercent) => {
+    console.log("Inside the handleCalculate");
+    // const principal = 400000;
+    // const processingFee = 1800;
+    // const loanTermMonths = 5;
+    // const bffPercent = 1; // 1% annualized
+
+    // principal = 400000;
+    // processingFee = 1800;
+    // loanTermMonths = 5;
+    // bffPercent = 1; // 1% annualized
+
+    console.log("principal : ", principal);
+    console.log("processingFee", processingFee);
+    console.log("loanTermMonths", loanTermMonths);
+    console.log("bffPercent", bffPercent);
+
+    const bapAmount = calculateSettlement(
+      principal,
+      processingFee,
+      loanTermMonths,
+      bffPercent,
+      "BAP"
+    );
+    const bppAmount = calculateSettlement(
+      principal,
+      processingFee,
+      loanTermMonths,
+      bffPercent,
+      "BPP"
+    );
+
+    console.log("The bapamount is : ", bapAmount);
+    console.log("The bpp amount is : ", bppAmount);
+
+    // setSettlementAmount(bppAmount);
+    setGlobalSettlementAmount(bppAmount);
+
+    // setSettlementBAP(bapAmount);
+    // setSettlementBPP(bppAmount);
+
+
+  };
+
+  /////////////////////////////////////////////////////////
 
   useEffect(() => {
     console.log("After loading the loanapproval page the selectedLenderData is :: ", SelectedLenderData);
@@ -71,31 +126,168 @@ const LoanApprovalPage = () => {
       setTenure(SelectedLenderData.message.order.items[0].tags[0].list[1].value);
     }
 
+    // pramaan.ondc.org/beta/preprod/mock/seller
+    if (SelectedLenderData.context.bpp_id === "go-app-gateway.qa1.paywithr.io") {
+      // if(SelectedLenderData.context.bpp_id === "xyz"){
+      setWaitingForCallback(true);
+      console.log("The selected Lender data loan amunt is :", SelectedLenderData.message.order.quote.breakup[0].price.value);
+      setLoanAmount(SelectedLenderData.message.order.quote.breakup[0].price.value);
+      doSubmit();
+    }
+
     console.log("The payload for select is : ", payloadForSelect);
   }, [])
 
-  // const handleApplyRecord = async() => {
-  //   try{
-  //     const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}createApplyRecord`,{
-  //       "productName": "ONDC",
-  //       "mobileNumber": formSubmissionData.contactNumber,
-  //       "stage": 2
-  //     },{
-  //       headers:{
-  //         "Content-Type": "application/json"
+  //this is dosubmit function which we will only use for the ring lender as their we dont need to submit form we will not need any e hence we are creating seperate function for it
+  // const doSubmit = async () => {
+  //   // e.preventDefault();
+  //   // externalFormWindowRef.current = window.open("", "_blank");
+  //   // externalFormWindowRef.current = window.open("/ondc/waiting", "_blank");
+  //   externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+
+
+  //   try {
+
+  //     const formUrl = SelectedLenderData.message.order.items[0].xinput.form.url.replace("/get/", "/post/");
+  //     const formId = SelectedLenderData.message.order.items[0].xinput.form.id;
+  //     const response = await selectLoanAmountForm(formUrl, loanAmount, formId);
+  //     console.log("The response of loanAmount form is : ", response);
+  //     if (response.data.submission_id) {
+
+  //       // await handleApplyRecord();
+
+  //       const updatedPayload = {
+  //         bppId: SelectedLenderData.context.bpp_id,
+  //         bppUri: SelectedLenderData.context.bpp_uri,
+  //         formId: SelectedLenderData.message.order.items[0].xinput.form.id,
+  //         itemId: SelectedLenderData.message.order.items[0].id,
+  //         providerId: SelectedLenderData.message.order.provider.id,
+  //         status: "SUCCESS",
+  //         submissionId: response.data.submission_id,
+  //         transactionId: SelectedLenderData.context.transaction_id,
+  //         mobileNumber: formSubmissionData.contactNumber,
+  //         stage: 2, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
+  //         productName: SelectedLenderData.message.order.provider.descriptor.name,
+  //         loanAmount: SelectedLenderData.message.order.quote.breakup[0].price.value, //this loan amount will be stored in userInfo table
+  //         version: SelectedLenderData.context.version
+  //       };
+
+  //       console.log("The updated payload before sending to the select is : ", updatedPayload);
+  //       setWaitingForCallback(true);
+  //       const selectResponse = await select(updatedPayload);
+
+
+  //       console.log("The select response that we got is : ", selectResponse);
+
+  //       if (selectResponse.status === 200) {
+  //         if (selectResponse.data.gateway_response.message.ack.status === "ACK") {
+
+  //           console.log("Got the success response of select and that is : ", selectResponse);
+
+  //         }
+
   //       }
-  //     });
-  //     console.log("handle apply record is : ",response);
-  //   }catch(error){
-  //     console.log("error in saving apply record : ",error);
+  //     }
+  //     //else to write a logger of form problem
+  //     else {
+  //       console.log("Error in loanAmount Form");
+  //       //here we will write the user in apply fail as we haven't created the apply record for the user
+  //       // await handleApplyFail();
+  //     }
+
+  //   } catch (error) {
+  //     console.log("The error is : ", error);
   //   }
-  // }
+
+  // };
+
+  const doSubmit = async () => {
+    // e.preventDefault();
+    // externalFormWindowRef.current = window.open("", "_blank");
+    // externalFormWindowRef.current = window.open("/ondc/waiting", "_blank");
+
+    //now as we dont want to redirect the user to kyc so here we will not open the new tab
+    // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+
+
+    try {
+
+      const formUrl = SelectedLenderData.message.order.items[0].xinput.form.url.replace("/get/", "/post/");
+      const formId = SelectedLenderData.message.order.items[0].xinput.form.id;
+      const loanAmount = SelectedLenderData.message.order.quote.breakup[0].price.value;
+      const response = await selectLoanAmountForm(formUrl, loanAmount, formId);
+      console.log("The response of loanAmount form is : ", response);
+      if (response.data.submission_id) {
+
+        // await handleApplyRecord();
+
+        const updatedPayload = {
+          bppId: SelectedLenderData.context.bpp_id,
+          bppUri: SelectedLenderData.context.bpp_uri,
+          formId: SelectedLenderData.message.order.items[0].xinput.form.id,
+          itemId: SelectedLenderData.message.order.items[0].id,
+          providerId: SelectedLenderData.message.order.provider.id,
+          status: "SUCCESS",
+          submissionId: response.data.submission_id,
+          transactionId: SelectedLenderData.context.transaction_id,
+          mobileNumber: formSubmissionData.contactNumber,
+          stage: 2, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
+          productName: SelectedLenderData.message.order.provider.descriptor.name,
+          loanAmount: SelectedLenderData.message.order.quote.breakup[0].price.value, //this loan amount will be stored in userInfo table
+          version: SelectedLenderData.context.version
+        };
+        // const updatedPayload = {
+        //   bppId: SelectedLenderData.context.bpp_id,
+        //   bppUri: SelectedLenderData.context.bpp_uri,
+        //   formId: SelectedLenderData.message.order.items[0].xinput.form.id,
+        //   itemId: SelectedLenderData.message.order.items[0].id,
+        //   providerId: SelectedLenderData.message.order.provider.id,
+        //   status: "SUCCESS",
+        //   submissionId: response.data.submission_id,
+        //   transactionId: SelectedLenderData.context.transaction_id,
+        //   mobileNumber: formSubmissionData.contactNumber,
+        //   stage: 2, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
+        //   productName: SelectedLenderData.message.order.provider.descriptor.name,
+        //   loanAmount: loanAmount, //this loan amount will be stored in userInfo table
+        //   version: SelectedLenderData.context.version
+        // };
+
+        console.log("The updated payload before sending to the select is : ", updatedPayload);
+        setWaitingForCallback(true);
+        const selectResponse = await select(updatedPayload);
+
+
+        console.log("The select response that we got is : ", selectResponse);
+
+        if (selectResponse.status === 200) {
+          if (selectResponse.data.gateway_response.message.ack.status === "ACK") {
+
+            console.log("Got the success response of select and that is : ", selectResponse);
+
+          }
+
+        }
+      }
+      //else to write a logger of form problem
+      else {
+        console.log("Error in loanAmount Form");
+        //here we will write the user in apply fail as we haven't created the apply record for the user
+        // await handleApplyFail();
+      }
+
+    } catch (error) {
+      console.log("The error is : ", error);
+    }
+
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // externalFormWindowRef.current = window.open("", "_blank");
     // externalFormWindowRef.current = window.open("/ondc/waiting", "_blank");
-    externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+
+    //now as we dont want to redirect the user to kyc so here we will not open the new tab
+    // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
 
 
     try {
@@ -163,7 +355,52 @@ const LoanApprovalPage = () => {
 
       if ((parsedData.message.order.items[0].xinput.form.url)) {
 
-        setInitPayload({...initPayload,formId: parsedData.message.order.items[0].xinput.form.id});
+        //here we will call the function to generate settlementAmount
+        // 1. Extract Principal (Loan Amount) from on_select breakup
+        const principalEntry = parsedData?.message?.order?.quote?.breakup?.find(
+          (item) => item.title === "PRINCIPAL"
+        );
+        const principal = parseFloat(principalEntry?.price?.value || 0);
+
+        // 2. Extract Processing Fee (PF)
+        const processingFeeEntry = parsedData?.message?.order?.quote?.breakup?.find(
+          (item) => item.title === "PROCESSING_FEE"
+        );
+        const processingFee = parseFloat(processingFeeEntry?.price?.value || 0);
+
+        // const term = parsedData?.message?.order?.items?.[0]?.tags?.[0]?.list?.[1]?.value;
+        const termRaw = parsedData?.message?.order?.items?.[0]?.tags?.[0]?.list?.[1]?.value || "";
+        // Extract digits only
+        const term = termRaw.replace(/\D/g, "");
+        console.log(term); // "5"
+        console.log("The loan term that we are getting is : ", term);
+
+        handleCalculate(principal, processingFee, term, bffPercentage);
+
+        // const tenureEntry = parsedData?.message?.order?.quote?.breakup?.find(
+        //   (item) => item.title === "TENURE"
+        // );
+        // if (tenureEntry?.price?.value) {
+        //   loanTermMonths = parseInt(tenureEntry.price.value, 10);
+        // }
+
+        // // OR it may come inside items[0].xinput.form.submission.data
+        // if (!loanTermMonths) {
+        //   loanTermMonths =
+        //   parsedData?.message?.order?.items?.[0]?.xinput?.form?.submission?.data
+        //       ?.loan_tenure_months || null;
+        // }
+
+        // 5. Calculate amounts
+        const bffAmount = (processingFee * bffPercentage) / 100;
+        const settlementAmount = processingFee - bffAmount;
+
+        // 4. Calculate correctly
+        // const bffAmount = (principal * bffPercentage) / 100;   // ✅ BFF on principal
+        // const settlementAmount = processingFee - bffAmount;    // ✅ PF - BFF
+
+
+        setInitPayload({ ...initPayload, formId: parsedData.message.order.items[0].xinput.form.id });
 
         setSelectedLenderData(parsedData);
 
@@ -182,79 +419,22 @@ const LoanApprovalPage = () => {
 
         const formUrl = parsedData?.message?.order?.items?.[0]?.xinput?.form?.url;
         console.log("The form url is : ", formUrl);
-        const returnUrl = encodeURIComponent(window.location.href);
-        console.log("The return url of the form is : ", returnUrl);
+        // const returnUrl = encodeURIComponent(window.location.href);
+        // console.log("The return url of the form is : ", returnUrl);
 
-        // 3. Use in handleWebSocketMessageForSelect
-        if (formUrl && externalFormWindowRef.current) {
-          const redirectUrl = `${formUrl}`;
-          externalFormWindowRef.current.location = redirectUrl;
-        }
+        //Instead of redirecting the user from here we will redirect the user to the kyc when user will click on the next button of reviewLoan Details page
+        //here we will show the review loan details page
 
-      }
-
-      // setWaitingForCallback(false);
-
-    } catch (error) {
-      console.error("Error parsing on_select content:", error);
-    }
-  }, []);
-
-  useWebSocketONDCSelect(handleWebSocketMessageForSelect);
-
-  const handleWebSocketMessageForStatus = useCallback((data) => {
-
-    console.log("When we got the status callback");
-
-    // alert("The onstatus is called");
+        //here we will store the kyc form
+        setKycForm(formUrl);
 
 
-    try {
+        // // 3. Use in handleWebSocketMessageForSelect
+        // if (formUrl && externalFormWindowRef.current) {
+        //   const redirectUrl = `${formUrl}`;
+        //   externalFormWindowRef.current.location = redirectUrl;
+        // }
 
-      // ✅ CLOSE FORM TAB IF OPEN
-      if (externalFormWindowRef.current && !externalFormWindowRef.current.closed) {
-
-        console.log("Inside the if of externalFormWindowRef");
-
-        externalFormWindowRef.current.close(); // Close form tab
-        window.focus(); // Focus back to loanapproval tab
-
-        console.log("After window.focus");
-      }
-
-      const parsedData = JSON.parse(data.content);
-      //here we should be creating one global variable or context which will hold this onstatus callback
-
-      if (parsedData.message.order.items[0].xinput.form_response.status === "APPROVED" && parsedData.message.order.items[0].xinput.form_response.submission_id) {
-        //so here we will take that submission id and then will hit that init api
-
-        //here we will store the onSelect callback
-        setOnStatusData(parsedData);
-
-        //   //here we will call the init api with the values(taken from onStatus ) which it will need
-        //here we are only setting the value which we get from onStatus needed for calling init1 api which we call in bankDetails page
-        const initPayload2 = {
-          transactionId: parsedData.context.transaction_id,
-          bppId: parsedData.context.bpp_id,
-          bppUri: parsedData.context.bpp_uri,
-          providerId: parsedData.message.order.provider.id,
-          itemId: parsedData.message.order.items[0].id,
-          // formId: parsedData.message.order.items[0].xinput.form.id,
-          submissionId: parsedData.message.order.items[0].xinput.form_response.submission_id,
-          bankCode: "HDFC",
-          accountNumber: "1234567890",
-          vpa: "user@upi",
-          settlementAmount: "1666.67",
-          initAttempt: 1
-        }
-
-        // setInitPayload(...initPayload,initPayload2);
-        setInitPayload(prev => ({
-          ...prev,
-          ...initPayload2
-        }));
-        
-        // setFinalLoanOffer(parsedData);
         setFinalLoanOffer({
           loanAmount: parsedData.message.order.quote.breakup[0].price.value,//This is the principal loan amount
           processingFees: parsedData.message.order.quote.breakup[2].price.value, //This is processing_fee
@@ -263,6 +443,8 @@ const LoanApprovalPage = () => {
           insuranceCharges: parsedData.message.order.quote.breakup[4].price.value,
           netDisbursedAmount: parsedData.message.order.quote.breakup[5].price.value,
           otherCharges: parsedData.message.order.quote.breakup[6].price.value,
+
+          // netDisbursedAmount: parsedData.message.order.quote.breakup
 
           //Loan Information
           interestRate: parsedData.message.order.items[0].tags[0].list[0].value,
@@ -286,28 +468,21 @@ const LoanApprovalPage = () => {
           // emiTenure: 
         })
 
-        // router.push("/ondc/bankdetails");
+
         router.push("/ondc/loanoffer");
-        // here instead of redirecting the user to the bank details page firstly we will show him the loan offer and then from that loanoffer page user will be redirected to bankDetails page
 
-        // const initResponse = await init(initPayload);
-        // handleInit(initPayload);
-
-        //for temporarily we are calling our init api from here but after we will be calling init api on another page after taking the bank details
-        const submissionId = parsedData.message.order.items[0].xinput.form_response.submission_id;
-        console.log("The submission id that we got is : ", submissionId);
-      }else {
-        console.log("Your application not accepted");
       }
 
-    } catch (error) {
-      console.log("Error while getting onstatus : ", error);
-    }
+      // setWaitingForCallback(false);
 
+    } catch (error) {
+      console.error("Error parsing on_select content:", error);
+    }
   }, []);
 
+  useWebSocketONDCSelect(handleWebSocketMessageForSelect);
 
-  useWebSocketONDCstatus(handleWebSocketMessageForStatus);
+  //first we was calling the onStatus websocket here now we will call it in next reviewloanoffer page
 
 
 
