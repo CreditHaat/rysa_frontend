@@ -26,7 +26,8 @@ import useWebSocketONDCstatus from "./Websocket/useWebSocketONDCstatus";
 import HittingApisLoader from "./LoadingPages/HittingApisLoader";
 import { useRouter } from 'next/navigation';
 import OnSearchContext from "./context/OnSearchContext";
-import logo from "../../Rysa/ONDC/images/ondc_registered_logo.png";
+// import logo from "../../Rysa/ONDC/images/ondc_registered_logo.png";
+import logo2 from "../../Rysa/ONDC/images/Rysa_logo2.png";
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
@@ -124,7 +125,8 @@ const Bankdetails = () => {
       padding: "8px",
       width: "100%",
       minHeight: "70px",
-      border: "none",
+      // border: "none",
+      borderRadius: "10px",
       cursor: "pointer",
       borderRadius: "50px",
     }),
@@ -163,6 +165,7 @@ const Bankdetails = () => {
     control: (provided) => ({
       ...provided,
       minHeight: 'unset',
+      borderRadius: "10px",
       height: '36px', // set your desired height
     }),
     valueContainer: (provided) => ({
@@ -179,7 +182,6 @@ const Bankdetails = () => {
       height: '36px',
     }),
   };
-
 
 
   const handleaccountnameChange = (e) => {
@@ -548,13 +550,15 @@ const Bankdetails = () => {
             <div className={`${roboto.className} container-block`}>
               <div className="card-block">
                 <div className="header-block">
-                  <div className="LogoPart-block">
-                    <Image
-                      src={logo}
-                      alt="Hdb tag"
-                      style={{ alignContent: "center", width: "auto", height: "auto" }}
-                    />
-                  </div>
+                  <div className="headerLogo">
+                  <Image
+                    src={logo2}
+                    alt="NA"
+                    style={{alignContent:"center",width:"200px",height:"100px", top:"-4"}}
+                    // height={50}
+                    // width={50}
+                  />
+                </div>
                 </div>
                 <div className="cardForm-block">
                   <div className="content-block">
@@ -591,7 +595,7 @@ const Bankdetails = () => {
                           </span>
                         </div>
                         {formErrors.accountname && (
-                          <span className="error">{formErrors.accountname}</span>
+                          <span className="error1">{formErrors.accountname}</span>
                         )}
                       </div>
 
@@ -602,7 +606,8 @@ const Bankdetails = () => {
                           Select Account Type
                         </label> */}
                         <Select
-                          classNamePrefix="myselect"
+                          classNamePrefix="myselect1"
+                          className="select"
                           id="accountType"
                           name="accountType"
                           placeholder="Choose account type"
@@ -622,6 +627,19 @@ const Bankdetails = () => {
                             }))
                           }
                         // styles={customStyles}
+                        styles={{
+                            control: (provided) => ({
+                              ...provided,
+                              borderRadius: '10px',
+                              minHeight: '50px',
+                              height: '50px',
+                              fontSize: '14px',
+                            }),
+                            menu: (provided) => ({
+                              ...provided,
+                              borderRadius: '10px',
+                            }),
+                          }}
                         />
 
                         {formErrors.accountType && (

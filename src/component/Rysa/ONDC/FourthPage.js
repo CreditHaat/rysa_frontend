@@ -105,7 +105,7 @@ export default function FourthPage() {
             <span>12</span><span>24</span><span>36</span><span>48</span>
           </div>
         </div>
-        <div className={styles.buttonDiv}>
+        <div className={styles.btnContainer}>
          <button type="button"
                     className={styles.nextBtn}
                     onClick={() => {

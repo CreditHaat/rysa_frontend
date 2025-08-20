@@ -7,6 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 // import hdb from "../../components/Yubi/newplimages/HDB.png";
 import ondclogo from "./images/ondc_registered_logo.png";
+import logo2 from './images/Rysa_logo2.png';
 // import { Roboto } from "next/font/google";
 import SelectedLenderContext from "./context/SelectedLenderContext";
 import { useRouter } from 'next/navigation';
@@ -496,12 +497,14 @@ const LoanApprovalPage = () => {
         !waitingForCallback ? (<>
           <div className={`${roboto.className} pageContainerloanpage`}>
             <div className="loan-block">
-              <div className="loan-head">
-                <div className="hdb-logo">
+              <div className="header-block">
+                <div className="headerLogo">
                   <Image
-                    src={ondclogo}
-                    alt="Hdb tag"
-                    style={{ alignContent: "center", width: "auto", height: "auto" }}
+                    src={logo2}
+                    alt="NA"
+                    style={{ alignContent: "center", width: "200px", height: "100px", top: "-4" }}
+                  // height={50}
+                  // width={50}
                   />
                 </div>
               </div>
@@ -533,7 +536,7 @@ const LoanApprovalPage = () => {
 
                       {/* Loan Amount Slider */}
                       <div className="sliderContainer">
-                        <span>₹{minAmt}</span>
+                        <span className="sliderAmount">₹{minAmt}</span>
                         <input
                           type="range"
                           min={minAmt}
@@ -543,7 +546,7 @@ const LoanApprovalPage = () => {
                           onChange={(e) => setLoanAmount(Number(e.target.value))}
                           className="slider"
                         />
-                        <span>₹{maxAmt}</span>
+                        <span className="sliderAmount">₹{maxAmt}</span>
                       </div>
 
                       {/* Tenure Input Field */}

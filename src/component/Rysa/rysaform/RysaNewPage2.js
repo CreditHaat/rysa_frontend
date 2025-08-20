@@ -1184,10 +1184,10 @@ const handleBackButton = () => {
                   onChange={handleMaritalStatusChange}
                   styles={customStyles}
                   placeholder="Select Marital Status"
-                  menuIsOpen={isMaritalStatusMenuOpen}
-                  onFocus={handleMaritalStatusFocus}
-                  onBlur={handleMaritalStatusBlur}
-                  onClick={handleMaritalStatusClick}
+                  // menuIsOpen={isMaritalStatusMenuOpen}
+                  // onFocus={handleMaritalStatusFocus}
+                  // onBlur={handleMaritalStatusBlur}
+                  // onClick={handleMaritalStatusClick}
                   isSearchable={false}
                   menuPosition="auto"
                   components={{ Option: CustomOption }}

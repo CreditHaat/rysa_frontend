@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styles from './ReviewLoan.module.css';
 // import hdb from '../../../public/Jays/HDB.png';
 import ondclogo from "./images/ondc_registered_logo.png";
+import logo2 from "./images/Rysa_logo2.png";
 import { useRouter } from 'next/navigation';
 import FinalLoanOfferContext from "./context/FinalLoanOfferContext";
 import { useContext } from 'react';
@@ -190,9 +191,9 @@ const contCharges={
       <div className={styles.header}>
          <div className={styles.headerLogo}>
                   <Image
-                    src={ondclogo}
+                    src={logo2}
                     alt="NA"
-                    style={{alignContent:"center",width:"50",height:"50", top:"-4"}}
+                    style={{alignContent:"center",width:"200px",height:"100px", top:"-4"}}
                     // height={50}
                     // width={50}
                   />

@@ -7,7 +7,17 @@
     /* align-items: start; */
     padding-top: 120px; /* Create space at the top */
   }
-  
+  .headerLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 50%; */
+    border-radius: 10px 10px 0px 0px;
+    /* padding-bottom: 12px; */
+    height: 30%;
+    padding-top: 1.5rem;
+    padding-bottom: 2.0rem;
+ }
   /* Carousel background */
   .carousel-background {
     position: absolute;

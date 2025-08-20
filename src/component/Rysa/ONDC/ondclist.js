@@ -18,6 +18,7 @@ import "./NewBlFirstPage.module.css"
 import per from '../../../../public/Group_10.png'
 import { Roboto } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
+import logo2 from './images/Rysa_logo2.png';
 
 const roboto = Roboto({
     weight: ['400', '700'],
@@ -343,36 +344,36 @@ const Ondclist = () => {
 
             // console.log("The lender.context.bpp_id : ", lender.context.bpp_id, " and onSelectResponse : ", onSelectResponse.context.bpp_id);
 
-                // if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
-                    var minValue = 0;
-                    if (lender.message?.order?.items[0]?.xinput?.form?.url) {
-                        console.log("Inside the else if");
-                        setSelectedLenderData(lender);
-                        for(const tempLender of lenders){
-                            if(tempLender.context.bpp_id === lender.context.bpp_id){
-                                minValue = tempLender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[4]?.value;
-                                console.log("The min value that we got is : ",minValue);
-                            }
-                            
-                        }
-                        // if(lender.context.bpp_id === "go-app-gateway.qa1.paywithr.io"){
-                        //     //here we will not show the loan offer page, we will directly hit the second select api
-
-                            
-                        // }else{
-                            // ✅ Navigate to the next page
-                        router.push(`/ondc/loanapproval?minAmt=${minValue}`);
-                        // }
-                        
-                        // console.log("after router.push");
-                    } else {
-                        console.log("url not present in the form : ", lender);
+            // if (lender.context.bpp_id === onSelectResponse.context.bpp_id) {
+            var minValue = 0;
+            if (lender.message?.order?.items[0]?.xinput?.form?.url) {
+                console.log("Inside the else if");
+                setSelectedLenderData(lender);
+                for (const tempLender of lenders) {
+                    if (tempLender.context.bpp_id === lender.context.bpp_id) {
+                        minValue = tempLender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[4]?.value;
+                        console.log("The min value that we got is : ", minValue);
                     }
-                // } else {
-                //     console.log("lender is : ", lender);
-                //     console.log("on select response is : ", onSelectResponse);
+
+                }
+                // if(lender.context.bpp_id === "go-app-gateway.qa1.paywithr.io"){
+                //     //here we will not show the loan offer page, we will directly hit the second select api
+
+
+                // }else{
+                // ✅ Navigate to the next page
+                router.push(`/ondc/loanapproval?minAmt=${minValue}`);
                 // }
-            
+
+                // console.log("after router.push");
+            } else {
+                console.log("url not present in the form : ", lender);
+            }
+            // } else {
+            //     console.log("lender is : ", lender);
+            //     console.log("on select response is : ", onSelectResponse);
+            // }
+
 
         } catch (error) {
             console.log("error : ", error);
@@ -420,7 +421,7 @@ const Ondclist = () => {
         //                 console.log("lender is : ", lender);
         //                 console.log("on select response is : ", onSelectResponse);
         //             }
-                
+
 
         //     } catch (error) {
         //         console.log("error : ", error);
@@ -443,11 +444,11 @@ const Ondclist = () => {
 
             //here we will be setting the final lenders of which we got the first onselect if the user is without account aggregator and second onselect if user is with account aggregator
             //now temporarily we will create this only for users which are without account aggregator
-            if(parsedData?.message?.order?.items?.[0]?.price?.value){
+            if (parsedData?.message?.order?.items?.[0]?.price?.value) {
                 // tejas deshmukh
                 setConfirmLenders(prev => [...prev, parsedData]);
             }
-            
+
 
             // setLenders((prevLenders) => {
             //     const newLenders = [parsedData, ...prevLenders];
@@ -492,21 +493,15 @@ const Ondclist = () => {
 
                 <div className={styles.numberStart}>
                     <div className={styles.numberOneDiv}> {/*header*/}
-                        <header className={styles.hero1}>
-                            {/* <button className={styles.backBtn1} onClick={() => history.back()}>&lt; Back</button> */}
-                            <div className={styles.heroText1}>
-                                <h1 className={styles.title1} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }} />
-                                <p className={styles.subtitle1} dangerouslySetInnerHTML={{ __html: slides[currentSlide].subtitle }} />
-                            </div>
-                            <div className={styles.progressBar1}>
-                                {slides.map((_, i) => (
-                                    <span key={i} className={i === currentSlide ? styles.dotActive1 : styles.dot1} onClick={() => setSlide(i)} />
-                                ))}
-                            </div>
-                            <div className={styles.imgWrap1}>
-                                <Image src={slides[currentSlide].img} alt="Hero visual" fill priority style={{ objectFit: 'cover' }} />
-                            </div>
-                        </header>
+                        <div className={styles.headerLogo}>
+                            <Image
+                                src={logo2}
+                                alt="NA"
+                                style={{ alignContent: "center", width: "200px", height: "100px", top: "-4" }}
+                            // height={50}
+                            // width={50}
+                            />
+                        </div>
                     </div>{/*header end*/}
                     <div className={styles.numberTwoDiv}>
                         <div className={`${roboto.className} ${styles.listpageContainer}`}>
@@ -564,7 +559,7 @@ const Ondclist = () => {
                                                     </div> */}
                                                             <div className={styles.cardBody}>
                                                                 {/* <h1 className={styles.amount}>INR {lender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[5]?.value || "N/A"} */}
-                                                                
+
                                                                 {/* <h1 className={styles.amount}>INR {lender?.message?.order?.items?.[0]?.price?.value || "N/A"} */}
                                                                 <h1 className={styles.amount}>INR {lender?.message?.order?.quote?.breakup?.[0]?.price?.value || "N/A"}
                                                                 </h1>
@@ -590,12 +585,12 @@ const Ondclist = () => {
                                                             </div>
                                                             <div>
                                                                 {<button
-                                                                        className={styles.cardButton}
-                                                                        onClick={() => handleGetLoanClick(lender)}
-                                                                    
-                                                                    >
-                                                                        Get Loan
-                                                                    </button>}
+                                                                    className={styles.cardButton}
+                                                                    onClick={() => handleGetLoanClick(lender)}
+
+                                                                >
+                                                                    Get Loan
+                                                                </button>}
                                                             </div>
                                                         </div>
                                                     </>) : null}

@@ -172,7 +172,7 @@ export default function PartPaymentPage() {
               onChange={(e) => setAmountToPay(e.target.value)}
             />
 
-            <div className={styles.label} style={{ marginTop: "14px" }}>
+            {/* <div className={styles.label} style={{ marginTop: "14px" }}>
               Choose Adjustment
             </div>
 
@@ -195,7 +195,7 @@ export default function PartPaymentPage() {
             </div>
 
             {error && <div className={styles.error}>{error}</div>}
-            {success && <div className={styles.success}>{success}</div>}
+            {success && <div className={styles.success}>{success}</div>} */}
 
             <div className={styles.btnContainer}>
               <button type="submit" className={styles.nextBtn}>
