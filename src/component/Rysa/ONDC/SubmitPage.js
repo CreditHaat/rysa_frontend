@@ -54,7 +54,7 @@ export default function SubmitPage() {
         <path className={styles.checkmark} fill="none" d="M14 27l7 7 16-16" />
       </svg>
 
-      <h1 className={styles.title}>Loan Application<br />Submitted!</h1>
+      <h1 className={styles.title}>All Done<br /></h1>
 {/* 
       <p className={styles.ref}>
         Reference number is<br />
@@ -62,10 +62,10 @@ export default function SubmitPage() {
       </p> */}
 {/* SelectedLenderData.message.order.quote.breakup[0].price.value */}
       <p className={styles.message}>
-        Your loan amount of<br />
-        <strong>{SelectedLenderData?.message?.order?.quote?.breakup?.[0]?.price?.value || 'NA'}</strong><br />
+      The amount will be credited<br/>to your account shortly<br />
+        {/* <strong>{SelectedLenderData?.message?.order?.quote?.breakup?.[0]?.price?.value || 'NA'}</strong><br />
         has been approved and shall be<br />
-        credited to your account 
+        credited to your account  */}
         {/* <strong>{account}</strong> */}
       </p>
     </div>

@@ -29,6 +29,7 @@ import OnSearchContext from "./context/OnSearchContext";
 // import logo from "../../Rysa/ONDC/images/ondc_registered_logo.png";
 import logo2 from "../../Rysa/ONDC/images/Rysa_logo2.png";
 import { Roboto } from 'next/font/google';
+import FormError from "./LoadingPages/formError";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -37,9 +38,18 @@ const roboto = Roboto({
 
 const Bankdetails = () => {
 
+  const [showFormError, setShowFormError] = useState(false);
+
+  //Declaring this variables so that we can use it while filling the form data again or second time
+  const [globalFormUrl, setGlobalFormUrl] = useState(null);
+  // formDataRef, formIdForParam, paymentId
+  const [globalFormIdForParam, setGlobalFormIdForParam] = useState(null);
+  const [globalPaymentId, setGlobalPaymentId] = useState(null);
+  ///////////////////////////////////////////////////////////
+
   const initPayloadRef = useRef(null); //we are declaring this to store the form id because React's useCallback closures capture the value of variables at the time they are declared, not the updated value.
 
-  const { SelectedLenderData, setSelectedLenderData,  globalSettlementAmount , setGlobalSettlementAmount } = useContext(SelectedLenderContext);//added this to send the product name from this data to init api for saving logger
+  const { SelectedLenderData, setSelectedLenderData, globalSettlementAmount, setGlobalSettlementAmount } = useContext(SelectedLenderContext);//added this to send the product name from this data to init api for saving logger
   const { formSubmissionData, setFormSubmissionData, payloadForSelect, setPayloadForSelect } = useContext(OnSearchContext);
 
   const router = useRouter();
@@ -250,6 +260,68 @@ const Bankdetails = () => {
     return isValid;
   };
 
+  // const handleSubmit = async (e) => {
+
+  //   // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+
+  //   formDataRef.current = formData;
+  //   console.log("The formData while hitting the init api is : ", formData);
+  //   e.preventDefault();
+
+  //   console.log("Inside handleSubmit");
+
+  //   if (validateForm()) {
+  //     externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+  //     console.log("Form submitted successfully", formData);
+
+  //     //here we will save the data into userInfo table
+  //     // const response = .{process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}saveUserInfo`);
+
+  //     //init1 call -- calling init first time
+  //     const updatedInitPayload = {
+  //       ...initPayload,
+  //       bankCode: formData.IFSC,//this fields are optional for the api
+  //       accountNumber: formData.accountNumber,//this fields are optional for the api
+
+  //       mobileNumber: formSubmissionData.contactNumber,
+  //       stage: 4, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
+  //       productName: SelectedLenderData.message.order.provider.descriptor.name,
+
+  //       //form data to save
+  //       formType: "KYC Form",//1 is for bank Details
+  //       version: SelectedLenderData.context.version
+
+  //       // vpa: "user@upi",
+  //       // settlementAmount: "1666.67"
+  //     };
+  //     setWaitingLoader(true);
+  //     // callinng handle init for first init1 call
+  //     handleInit(updatedInitPayload);
+
+  //   }
+  // };
+
+  //Code for ONDC ------------------------------------------------------------------------------------
+
+  const openOrFocusWindow = () => {
+    // If no window yet OR if it's closed
+    if (
+      !externalFormWindowRef.current ||
+      externalFormWindowRef.current.closed
+    ) {
+      externalFormWindowRef.current = window.open(
+        "/ondc/redirecting",
+        "_blank"
+      );
+    } else {
+      // If window is already open, bring it to focus
+      externalFormWindowRef.current.focus();
+    }
+  };
+
+  const [firstTimeSubmitFlag, setFirstTimeSubmitFlag] = useState(true);//we created this flag just to see that user is submitting the bank details form at first or is he submitting it again due to some reason
+
+
   const handleSubmit = async (e) => {
 
     // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
@@ -260,38 +332,74 @@ const Bankdetails = () => {
 
     console.log("Inside handleSubmit");
 
-    if (validateForm()) {
-      externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
-      console.log("Form submitted successfully", formData);
+    if (firstTimeSubmitFlag === true) {
+      if (validateForm()) {
+        externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+        console.log("Form submitted successfully", formData);
 
-      //here we will save the data into userInfo table
-      // const response = .{process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}saveUserInfo`);
+        //here we will save the data into userInfo table
+        // const response = .{process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}saveUserInfo`);
 
-      //init1 call -- calling init first time
-      const updatedInitPayload = {
-        ...initPayload,
-        bankCode: formData.IFSC,//this fields are optional for the api
-        accountNumber: formData.accountNumber,//this fields are optional for the api
+        //init1 call -- calling init first time
+        const updatedInitPayload = {
+          ...initPayload,
+          bankCode: formData.IFSC,//this fields are optional for the api
+          accountNumber: formData.accountNumber,//this fields are optional for the api
 
-        mobileNumber: formSubmissionData.contactNumber,
-        stage: 4, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
-        productName: SelectedLenderData.message.order.provider.descriptor.name,
+          mobileNumber: formSubmissionData.contactNumber,
+          stage: 4, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
+          productName: SelectedLenderData.message.order.provider.descriptor.name,
 
-        //form data to save
-        formType: "KYC Form",//1 is for bank Details
-        version: SelectedLenderData.context.version
+          //form data to save
+          formType: "KYC Form",//1 is for bank Details
+          version: SelectedLenderData.context.version
 
-        // vpa: "user@upi",
-        // settlementAmount: "1666.67"
-      };
-      setWaitingLoader(true);
-      // callinng handle init for first init1 call
-      handleInit(updatedInitPayload);
+          // vpa: "user@upi",
+          // settlementAmount: "1666.67"
+        };
+        setWaitingLoader(true);
+        // callinng handle init for first init1 call
+        handleInit(updatedInitPayload);
 
+      }
+    } else {
+      if (validateForm()) {
+        // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
+        openOrFocusWindow();
+        console.log("Form submitted successfully", formData);
+        setWaitingLoader(true);
+        handleBankDetailsForm(globalFormUrl, formDataRef, globalFormIdForParam, globalPaymentId);
+
+        //here we will save the data into userInfo table
+        // const response = .{process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}saveUserInfo`);
+
+        //init1 call -- calling init first time
+        // const updatedInitPayload = {
+        //   ...initPayload,
+        //   bankCode: formData.IFSC,//this fields are optional for the api
+        //   accountNumber: formData.accountNumber,//this fields are optional for the api
+
+        //   mobileNumber: formSubmissionData.contactNumber,
+        //   stage: 4, //here in backend select methid we will check that if the stage is 2 then we will create a apply record for that user
+        //   productName: SelectedLenderData.message.order.provider.descriptor.name,
+
+        //   //form data to save
+        //   formType: "KYC Form",//1 is for bank Details
+        //   version: SelectedLenderData.context.version
+
+        //   // vpa: "user@upi",
+        //   // settlementAmount: "1666.67"
+        // };
+
+
+        // callinng handle init for first init1 call
+        // handleInit(updatedInitPayload);
+
+      }
     }
-  };
 
-  //Code for ONDC ------------------------------------------------------------------------------------
+
+  };
 
   const handleInit = async (initPayload) => {
 
@@ -346,6 +454,11 @@ const Bankdetails = () => {
           const formUrl = parsedData?.message?.order?.items?.[0]?.xinput?.form?.url.replace("/get/", "/post/");
           
           const paymentId = parsedData?.message?.order?.payments?.[0]?.id;
+
+          setGlobalFormUrl(formUrl);
+          setGlobalFormIdForParam(formIdForParam);
+          setGlobalPaymentId(paymentId);
+
           // here we will call the bankDetailsform function
           handleBankDetailsForm(formUrl, formDataRef, formIdForParam, paymentId);//inside this we will call the init2 api
           //here inside we will hit init2 where we will get the oninit api in which we get the link of emandate form
@@ -392,13 +505,13 @@ const Bankdetails = () => {
       console.log("here the form url and the id should be the same : ", formUrl, " id is : ", formIdForParam);
 
       const response = await bankDetailsForm(formUrl, formDataRef, formIdForParam);
-      if (response.status === 200) {
+      if (response?.status === 200) {
         // externalFormWindowRef.current = window.open("/ondc/waiting", "_blank");
         // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
         console.log("Got the response from bankDetails form : ", response);
 
         // if (response.data.status === "Successful" && response.data.submission_id) {
-          if(response.data.submission_id){
+          if(response?.data?.submission_id){
 
           const updatedInitPayload = {
             ...initPayload,
@@ -427,12 +540,36 @@ const Bankdetails = () => {
           // externalFormWindowRef2.current = window.open("/ondc/redirecting", "_blank");
 
         } else {
-          console.log("Not hitting any apis now because of incorrect response");
+          console.log("Not hitting any apis now because of incorrect response in response.status is 200", response);
+          externalFormWindowRef.current.close();
+          setWaitingLoader(false);
+
+          // alert("Try with another bank account number");
+          setFirstTimeSubmitFlag(false);
+          setShowFormError(true);
+          // router.push("/ondc/form-error");
         }
 
+      }else {
+        console.log("Not hitting any apis now because of incorrect response in response.status is not 200", response);
+        externalFormWindowRef.current.close();
+        setWaitingLoader(false);//here we will close the loader which is used to show the waiting for callbacks screen
+
+        // alert("Try with another bank account number");
+        setFirstTimeSubmitFlag(false); //If this is true then we hit the first init api but if we are submiting the bank details form at second time we dont need to hit the first init api so we are making it false
+        setShowFormError(true); //this is used to show user that his bank details form is not accepted due to some reason please fill it again by clicking on next button of that page
+        // router.push("/ondc/form-error");
       }
     } catch (error) {
       console.log("error in calling bankDetails form from BankDetails.js : ", error);
+      externalFormWindowRef.current.close();
+      console.log("Not hitting any apis now because of incorrect response in response.status is error ", response);
+      setWaitingLoader(false);//here we will close the loader which is used to show the waiting for callbacks screen
+
+      // alert("Try with another bank account number");
+      setFirstTimeSubmitFlag(false); //If this is true then we hit the first init api but if we are submiting the bank details form at second time we dont need to hit the first init api so we are making it false
+      setShowFormError(true); //this is used to show user that his bank details form is not accepted due to some reason please fill it again by clicking on next button of that page
+      // router.push("/ondc/form-error");
     }
   }
 
@@ -544,7 +681,10 @@ const Bankdetails = () => {
   return (
     <>
 
-      {
+    {
+        !showFormError ?
+          (<>
+            {
         !waitingLoader ?
           (<>
             <div className={`${roboto.className} container-block`}>
@@ -741,6 +881,16 @@ const Bankdetails = () => {
 
           </>)
       }
+          </>):
+          (<>
+            {
+        showFormError &&
+        <FormError setShowFormError={setShowFormError} />
+      }
+          </>)
+    }
+
+      
 
 
 

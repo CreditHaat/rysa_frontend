@@ -247,6 +247,10 @@ export const bankDetailsForm = async (formUrl, formData, formIdForParam) => {
 
     } catch (error) {
         console.log("Error in submitting bankDetails form to lender", error);
+        if(error.response){
+            return error.response;
+        }
+        return null;
     }
 }
 
