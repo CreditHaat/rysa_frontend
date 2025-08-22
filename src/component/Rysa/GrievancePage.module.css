@@ -1,0 +1,456 @@
+/* GrievancePage.module.css */
+
+.container {
+  /* min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif; */
+  min-height: 100vh;
+  background-color: #f7f6fd;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styles */
+.header {
+  background-color: #f7f6fd;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoCircle {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.navigation {
+  display: flex;
+  gap: 30px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #6039D2;
+}
+
+.navSpan {
+  border: 1px solid #333;
+  padding: 2px;
+  background-color: white;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .navigation {
+    gap: 20px;
+  }
+
+  .content {
+    padding: 25px;
+    margin: 20px 10px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .companyName {
+    font-size: 22px;
+  }
+
+  .main {
+    padding: 20px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .companyName {
+    font-size: 20px;
+  }
+}
+
+.companyNameheading {
+  color: #6039D2;
+  font-size: 26px;
+}
+
+/* Main Content */
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  /* flex: 1;
+  padding: 40px 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box; */
+}
+
+.content {
+  line-height: 1.6;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+
+.intro {
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Company Info Section */
+.companyInfo {
+  margin-bottom: 30px;
+}
+
+.companyName {
+  color: #6039D2;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.address {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.address p {
+  margin: 2px 0;
+}
+
+/* Escalation Section */
+.escalation {
+  margin-bottom: 30px;
+}
+
+.escalationTitle {
+  color: #6039D2;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.escalationText {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Grievance Officer Section */
+.grievanceOfficer {
+  margin-bottom: 40px;
+}
+
+.officerTitle {
+  color: #6039D2;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.officerName {
+  font-weight: normal;
+  font-size: 14px;
+  color: #555;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactItem {
+  display: flex;
+  font-size: 14px;
+}
+
+.label {
+  color: #6039D2;
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.value {
+  color: #555;
+}
+
+/* Footer.module.css */
+
+.footer {
+  background: #6039D2;
+  color: white;
+  padding: 40px 20px;
+  margin-top: auto;
+}
+
+.containerFooter {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 30px 0;
+  color: white;
+}
+
+.quickLinks {
+  margin-top: 20px;
+}
+
+.quickLinksTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: white;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linksList li {
+  margin-bottom: 8px;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+  display: inline-block;
+}
+
+.link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.atag {
+  color: #6039D2;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* .atag:hover {
+  color: #5932cf;
+  font-size: 14px;
+  line-height: 1.6;
+} */
+
+.atag:focus {
+  color: #3f13c5;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  .quickLinksTitle {
+    font-size: 16px;
+  }
+
+  .link {
+    font-size: 13px;
+  }
+}
+
+/* Footer */
+/* .footer {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 40px 30px;
+  margin-top: auto;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.footerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission {
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.footerTitle {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.quickLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quickLinks li {
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.quickLinks li:hover {
+  opacity: 0.8;
+}
+
+.socialIcon {
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.socialIcon:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+/*
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .nav {
+    gap: 20px;
+  }
+
+  .main {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .footerContent {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .contactItem {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .label {
+    min-width: auto;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .main {
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .footer {
+    padding: 30px 15px;
+  }
+} */

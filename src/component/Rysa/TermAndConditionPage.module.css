@@ -1,0 +1,486 @@
+/* TermAndCondition.module.css */
+.container {
+    min-height: 100vh;
+    background-color: #f7f6fd;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #f7f6fd;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logoCircle {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.navigation {
+    display: flex;
+    gap: 30px;
+}
+
+.navLink {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.navLink:hover {
+    color: #6039D2;
+}
+.navSpan{
+  border: 1px solid #333;
+  padding: 2px;
+  background-color: white;
+}
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .navigation {
+        gap: 20px;
+    }
+
+    .content {
+        padding: 25px;
+        margin: 20px 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .companyName {
+        font-size: 22px;
+    }
+
+    .main {
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navigation {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .companyName {
+        font-size: 20px;
+    }
+}
+
+.main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.content {
+    /* background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.companyName {
+    color: #6039D2;
+    font-size: 26px;
+}
+
+.policyContent {
+    text-align: left;
+}
+
+.sectionTitle {
+    color: #6039D2;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.paragraph {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.link {
+    color: #6039D2;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+.atag {
+  color: #6039D2;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.atag:focus {
+  color: #3f13c5;
+  font-size: 15px;
+  line-height: 1.6;
+}
+/* styles.module.css */
+
+/* Fixed ordered list styling */
+/* BULLETPROOF ORDERED LIST SOLUTION */
+.orderedList {
+    /* Reset everything first */
+    all: unset;
+    
+    /* Force list behavior */
+    display: block !important;
+    list-style: none !important;
+    counter-reset: list-counter;
+    
+    /* Spacing */
+    margin: 15px 0 !important;
+    padding: 0 !important;
+    
+    /* Text styling */
+    color: #333;
+    line-height: 1.6;
+    font-size: 14px;
+    text-align: justify;
+}
+
+
+.orderedList li {
+    /* Reset everything first */
+    all: unset;
+    
+    /* Force list item behavior */
+    display: block !important;
+    counter-increment: list-counter;
+    position: relative;
+    
+    /* Spacing */
+    margin: 0 0 0.5rem 0 !important;
+    padding: 0 0 0 30px !important;
+    
+    /* Text styling */
+    color: #333;
+    line-height: 1.6;
+    font-size: 12px;
+    text-align: justify;
+}
+
+/* Create custom numbers */
+.orderedList li::before {
+    content: counter(list-counter) ". ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* font-weight: non; */
+    color: #333;
+    width: 25px;
+}
+
+.orderedList.numbered {
+    counter-reset: numbered-counter 0;
+}
+
+.orderedList.numbered li {
+    counter-increment: numbered-counter 1;
+}
+
+.orderedList.numbered li::before {
+    content: counter(numbered-counter, decimal) ". ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+    color: #333 !important;
+    width: 30px;
+    z-index: 10;
+}
+
+/* Alternative approach - if counters still don't work */
+.orderedList.manualNumbers li:nth-child(1)::before { content: "1. "; }
+.orderedList.manualNumbers li:nth-child(2)::before { content: "2. "; }
+.orderedList.manualNumbers li:nth-child(3)::before { content: "3. "; }
+.orderedList.manualNumbers li:nth-child(4)::before { content: "4. "; }
+.orderedList.manualNumbers li:nth-child(5)::before { content: "5. "; }
+.orderedList.manualNumbers li:nth-child(6)::before { content: "6. "; }
+.orderedList.manualNumbers li:nth-child(7)::before { content: "7. "; }
+.orderedList.manualNumbers li:nth-child(8)::before { content: "8. "; }
+.orderedList.manualNumbers li:nth-child(9)::before { content: "9. "; }
+.orderedList.manualNumbers li:nth-child(10)::before { content: "10. "; }
+
+/* UNORDERED LIST - Keep your existing code */
+.listDisc1 {
+    all: unset;
+    display: block !important;
+    margin: 15px 0 !important;
+    padding: 0 !important;
+    color: #333;
+    line-height: 1.6;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.listDisc1 li {
+    all: unset;
+    display: block !important;
+    position: relative;
+    margin: 0 0 0.5rem 0 !important;
+    padding: 0 0 0 25px !important;
+    color: #333;
+    line-height: 1.6;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.listDisc1 li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #333;
+    font-size: 16px;
+}
+
+/* For upper-alpha lists (A, B, C...) */
+.orderedList.upperAlpha {
+    counter-reset: alpha-counter;
+}
+
+.orderedList.upperAlpha li {
+    counter-increment: alpha-counter;
+}
+
+.orderedList.upperAlpha li::before {
+    content: counter(alpha-counter, upper-alpha) ". ";
+}
+
+/* BULLETPROOF UNORDERED LIST SOLUTION */
+.listDisc1 {
+    /* Reset everything first */
+    all: unset;
+    
+    /* Force list behavior */
+    display: block !important;
+    
+    /* Spacing */
+    margin: 15px 0 !important;
+    padding: 0 !important;
+    
+    /* Text styling */
+    color: #333;
+    line-height: 1.6;
+    font-size: 12px;
+    text-align: justify;
+}
+
+.listDisc1 li {
+    /* Reset everything first */
+    all: unset;
+    
+    /* Force list item behavior */
+    display: block !important;
+    position: relative;
+    
+    /* Spacing */
+    margin: 0 0 0.5rem 0 !important;
+    padding: 0 0 0 25px !important;
+    
+    /* Text styling */
+    color: #333;
+    line-height: 1.6;
+    font-size: 14px;
+    text-align: justify;
+}
+
+/* Create custom bullets */
+.listDisc1 li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* font-weight: bold; */
+    color: #333;
+    font-size: 16px;
+}
+
+.spans {
+    font-weight: 600;
+    color: #222;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .navigation {
+        gap: 20px;
+    }
+
+    .content {
+        padding: 25px;
+        margin: 20px 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .companyName {
+        font-size: 22px;
+    }
+
+    .main {
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navigation {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .companyName {
+        font-size: 20px;
+    }
+}
+
+/* Footer.module.css */
+
+.footer {
+  background: #6039D2;
+  color: white;
+  padding: 40px 20px;
+  margin-top: auto;
+}
+
+.containerFooter {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 30px 0;
+  color: white;
+}
+
+.quickLinks {
+  margin-top: 20px;
+}
+
+.quickLinksTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: white;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linksList li {
+  margin-bottom: 8px;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+  display: inline-block;
+}
+
+.link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px;
+  }
+  
+  .description {
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+  
+  .quickLinksTitle {
+    font-size: 16px;
+  }
+  
+  .link {
+    font-size: 13px;
+  }
+}

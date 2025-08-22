@@ -18,14 +18,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Rysa Coming Soon",
+  title: "AryseFin",
 };
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
         {/* <title>Rysa</title> */}
-        <link rel="icon" href="/Rysa_logo.png" />
+        <link rel="icon" href="/Aryse_Fin_w.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
