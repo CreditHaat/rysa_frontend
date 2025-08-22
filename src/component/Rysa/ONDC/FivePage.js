@@ -129,7 +129,7 @@ const contCharges={
         {/* ========== Contigent charges ========== */}
         <h3 className={styles.sectionTitle}>Contigent charges</h3>
         <div className={styles.row}>
-          <span>For closure charge</span> <span className={styles.valueAm}>{contCharges.closureCharge}</span>
+          <span>Foreclosure charge</span> <span className={styles.valueAm}>{contCharges.closureCharge}</span>
         </div>
         <div className={styles.row}>
           <span>Late payment charge</span> <span className={styles.valueAm}>{contCharges.latePaymentCharge}</span>

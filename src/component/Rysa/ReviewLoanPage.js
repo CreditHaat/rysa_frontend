@@ -102,7 +102,7 @@ export default function ReviewLoanPage() {
         {/* ========== Contigent charges ========== */}
         {/* <h3 className={styles.sectionTitle}>Contigent charges</h3>
         <div className={styles.row}>
-          <span>For closure charge</span> <span className={styles.valueAm}>{contCharges.closureCharge}</span>
+          <span>Foreclosure charge</span> <span className={styles.valueAm}>{contCharges.closureCharge}</span>
         </div>
         <div className={styles.row}>
           <span>Late payment charge</span> <span className={styles.valueAm}>{contCharges.latePaymentCharge}</span>
@@ -154,7 +154,7 @@ export default function ReviewLoanPage() {
             <tr>
               <td> <span className={styles.netValue}>
                 Interest payable<br />
-                (interest rate {summary.interestRate}%)</span>
+                (interest rate {summary.interestRate})</span>
               </td>
               <td className={styles.colDout}>:</td>
               <td className={styles.valueAm}>{cur(summary.interestPayable)}</td>
@@ -194,7 +194,7 @@ export default function ReviewLoanPage() {
               <th colSpan="2" className={styles.sectionTitle}>Contingent charges</th>
             </tr>
             <tr>
-              <td><span className={styles.netValue}>For closure charge</span></td>
+              <td><span className={styles.netValue}>Foreclosure charge</span></td>
               <td className={styles.colDout}>:</td>
               <td className={styles.valueAm}>{contCharges.closureCharge}</td>
             </tr>
