@@ -18,7 +18,7 @@ import "./NewBlFirstPage.module.css"
 import per from '../../../../public/Group_10.png'
 import { Roboto } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
-import logo2 from './images/Rysa_logo2.png';
+import logo2 from './images/Aryse_Fin.png';
 
 const roboto = Roboto({
     weight: ['400', '700'],
