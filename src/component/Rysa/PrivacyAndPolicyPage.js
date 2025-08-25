@@ -54,7 +54,7 @@ const TermAndCondition = () => {
                             AryseFin while accessing, collecting, storing, retrieving, disclosing, transferring,
                             or using information it may receive from its users (&ldquo;You&rdquo;, &ldquo;Your&rdquo;, &ldquo;Customer&rdquo;)
                             who access/ use the Portal(s) (defined below) to receive the Services. Capitalised terms used but not
-                            defined in this Policy shall have the meaning as set out in AryseFin's <a href='https://fe.getrysa.com/Rysa' className={styles.atag}>Terms and Conditions</a>.
+                            defined in this Policy shall have the meaning as set out in AryseFins <a href='https://fe.getrysa.com/Rysa' className={styles.atag}>Terms and Conditions</a>.
                         </p>
 
                         <p className={styles.paragraph}>

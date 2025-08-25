@@ -20,7 +20,7 @@ export default function useWebSocketONDCInit(onMessage) {
 
     console.log("UID is ready, setting up websocket: ",uid);
 
-    const socket = new SockJS('https://uat.getrysa.com/ws'); // Change if backend runs elsewhere
+    const socket = new SockJS('https://los.arysefin.com/ws'); // Change if backend runs elsewhere
 
     const client = new Client({
       webSocketFactory: () => socket,

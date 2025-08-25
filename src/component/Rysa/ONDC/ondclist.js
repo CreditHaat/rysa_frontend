@@ -27,6 +27,8 @@ const roboto = Roboto({
 
 const Ondclist = () => {
 
+    const [backendProducts, setBackendProducts] = useState([]);
+
     const searchParams = useSearchParams();
     const mno = searchParams.get("mobilenumber");
     // const [mno1, setMno1] = useState(mno);
@@ -446,6 +448,7 @@ const Ondclist = () => {
             //now temporarily we will create this only for users which are without account aggregator
             if (parsedData?.message?.order?.items?.[0]?.price?.value) {
                 // tejas deshmukh
+                
                 setConfirmLenders(prev => [...prev, parsedData]);
             }
 
@@ -485,6 +488,26 @@ const Ondclist = () => {
         //   }
 
     }, [SelectedLenderData])
+
+    useEffect(()=>{
+        fetchLendersByPincode(411014);
+    },[])
+
+    const fetchLendersByPincode=async(pincode)=>{
+        try{
+            const formData = new FormData();
+            formData.append("pincode", pincode);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchByPincode`,formData);
+
+            if(response.status === 200){
+                setBackendProducts(response.data);
+            }
+
+            console.log("response from fetchLendersByPincode : ",response);
+        }catch(error){
+            console.log("error in fetching lenders by pincode : ",error);
+        }
+    }
 
     return (
         <>
