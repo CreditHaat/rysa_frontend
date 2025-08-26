@@ -126,7 +126,7 @@ function RysaComingSoPage() {
                                 className="object-contain"
                             />
                         </div>
-                        <p className={styles.footeraboutText}>Rysa is a lending service platform (LSP) that makes borrowing easy, transparent, and  human.
+                        <p className={styles.footeraboutText}>Aryse Fin is a lending service platform (LSP) that makes borrowing easy, transparent, and  human.
                             Backed by trusted NBFCs and banks.</p>
                     </div>
                 <div className={styles.footerTermText}>

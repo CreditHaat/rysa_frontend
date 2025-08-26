@@ -639,7 +639,7 @@ const handleApplyClick = () => {
 //   router.push('/LoanList');
 // };
 const handleBackButton = () => {
-  router.push('/LoanForm1');
+  router.push('/personal_loan');
     // setActiveContainer("RysaNewPage"); // Switch the active container to 'NewPlPage'
   };
   return (

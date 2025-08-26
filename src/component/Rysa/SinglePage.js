@@ -22,7 +22,7 @@ export default function SinglePage() {
   const router = useRouter();
 
   const handleApplyClick = () => {
-    router.push("/LoanForm1");
+    router.push("/personal_loan");
   };
 
   return (
@@ -162,7 +162,7 @@ export default function SinglePage() {
               <p>
                 From tier-1 cities to towns,
                 <br />
-                Rysa supports every borrower.
+                Aryse Fin supports every borrower.
               </p>
             </div>
           </div>
@@ -179,7 +179,7 @@ export default function SinglePage() {
             <div className={styles.textBox}>
               <h2 className={styles.htag}>No Tension Loans</h2>
               <p className={styles.ptag}>
-                Rysa works with India&rsquo;s top lenders &mdash; NBFCs and
+                Aryse Fin works with India&rsquo;s top lenders &mdash; NBFCs and
                 Banks &mdash; to remove the stress from your loan.
               </p>
             </div>
@@ -249,7 +249,7 @@ export default function SinglePage() {
             <div className={styles.textBox}>
               <h3 className={styles.htag}>Built for Everyday People.</h3>
               <p className={styles.ptag}>
-                You don&rsquo;t need a perfect score. Rysa helps real people
+                You don&rsquo;t need a perfect score. Aryse Fin helps real people
                 build real credit
               </p>
             </div>
@@ -369,7 +369,7 @@ export default function SinglePage() {
               Trusted by Thousands
             </h2>
             <p className="text-md text-gray-600 mt-5 mb-8">
-              Join the Rysa family today
+              Join the Aryse Fin family today
             </p>
           </div>
 
@@ -406,7 +406,7 @@ export default function SinglePage() {
                 />
               </div>
               <p className={styles.footeraboutText}>
-                Rysa is a lending service platform (LSP) that makes borrowing
+                Aryse Fin is a lending service platform (LSP) that makes borrowing
                 easy, transparent, and human. Backed by trusted NBFCs and banks.
               </p>
             </div>
