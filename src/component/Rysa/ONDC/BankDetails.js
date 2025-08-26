@@ -26,8 +26,8 @@ import useWebSocketONDCstatus from "./Websocket/useWebSocketONDCstatus";
 import HittingApisLoader from "./LoadingPages/HittingApisLoader";
 import { useRouter } from 'next/navigation';
 import OnSearchContext from "./context/OnSearchContext";
-// import logo from "../../Rysa/ONDC/images/ondc_registered_logo.png";
-import logo2 from "../../Rysa/ONDC/images/Rysa_logo2.png";
+import logo2 from "../../Rysa/ONDC/images/Aryse_Fin.png";
+// import logo2 from "../../Rysa/ONDC/images/Rysa_logo2.png";
 import { Roboto } from 'next/font/google';
 import FormError from "./LoadingPages/formError";
 
@@ -76,9 +76,9 @@ const Bankdetails = () => {
     // branchName: "",
     // salarySlipLink: "",
   });
-
+  
   const formDataRef = useRef(formData);
-
+  
   const [formErrors, setFormErrors] = useState({});
   const [activeContainer, setActiveContainer] = useState("BankDetails");
   const accountnameRef = useRef(null);
@@ -86,7 +86,7 @@ const Bankdetails = () => {
   const branchNameRef = useRef(null);
   const IFSCRef = useRef(null);
   const accountNumberRef = useRef(null);
-
+  
   const CustomOption = ({
     data,
     innerRef,
@@ -128,7 +128,7 @@ const Bankdetails = () => {
       />
     </div>
   );
-
+  
   const customStyles = {
     input: (provided) => ({
       ...provided,
@@ -170,7 +170,7 @@ const Bankdetails = () => {
       display: "none",
     }),
   };
-
+  
   const customStyles2 = {
     control: (provided) => ({
       ...provided,
@@ -192,20 +192,20 @@ const Bankdetails = () => {
       height: '36px',
     }),
   };
-
-
+  
+  
   const handleaccountnameChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, accountname: value });
     setFormErrors((prevErrors) => ({ ...prevErrors, accountname: "" }));
   };
-
-
+  
+  
   const handleIFSCChange = (e) => {
     const value = e.target.value.toUpperCase();
     setFormData({ ...formData, IFSC: value });
     setFormErrors((prevErrors) => ({ ...prevErrors, IFSC: "" }));
-
+    
     if (value && value.length === 11) {
       if (accountNumberRef.current) {
         accountNumberRef.current.focus();
@@ -224,8 +224,8 @@ const Bankdetails = () => {
     const errors = {};
     let isValid = true;
     const data = new FormData();
-
-
+    
+    
     if (!formData.accountname) {
       errors.accountname = "Account holder name is required";
       isValid = false;
@@ -233,12 +233,12 @@ const Bankdetails = () => {
       errors.accountname = "Account holder name must be at least 2 characters";
       isValid = false;
     }
-
+    
     if (!formData.accountType) {
       errors.accountType = "Please select account type";
       isValid = false;
     }
-
+    
     if (!formData.IFSC) {
       errors.IFSC = "IFSC code is required";
       isValid = false;
@@ -246,7 +246,7 @@ const Bankdetails = () => {
       errors.IFSC = "Please enter a valid IFSC code";
       isValid = false;
     }
-
+    
     if (!formData.accountNumber) {
       errors.accountNumber = "Account number is required";
       isValid = false;
@@ -255,11 +255,11 @@ const Bankdetails = () => {
         "Please enter a valid account number (9-18 digits)";
       isValid = false;
     }
-
+    
     setFormErrors(errors);
     return isValid;
   };
-
+  
   // const handleSubmit = async (e) => {
 
   //   // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
@@ -318,12 +318,12 @@ const Bankdetails = () => {
       externalFormWindowRef.current.focus();
     }
   };
-
+  
   const [firstTimeSubmitFlag, setFirstTimeSubmitFlag] = useState(true);//we created this flag just to see that user is submitting the bank details form at first or is he submitting it again due to some reason
-
-
+  
+  
   const handleSubmit = async (e) => {
-
+  
     // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
 
     formDataRef.current = formData;
@@ -353,7 +353,7 @@ const Bankdetails = () => {
           //form data to save
           formType: "KYC Form",//1 is for bank Details
           version: SelectedLenderData.context.version
-
+          
           // vpa: "user@upi",
           // settlementAmount: "1666.67"
         };
