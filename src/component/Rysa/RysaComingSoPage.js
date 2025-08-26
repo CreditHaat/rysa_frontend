@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { FaBars, FaTimes } from "react-icons/fa";
 import styles from './RysaComingSo.module.css';
-import logo from "../../../public/Rysa_logo.png";
+import logo from "../../../public/Aryse_Fin.png";
 import logo2 from "../../../public/logo2_3.png";
 function RysaComingSoPage() {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,53 +21,67 @@ function RysaComingSoPage() {
         <div className={styles.container}>
             {/* Navigation Header */}
             <nav className={styles.navbar}>
-                <div className={styles.navContainer}>
-                    {/* Logo */}
-                    <div className={styles.logo}>
-                        <div className={styles.logoIcon}>
-                            <Image
-                                src={logo}
-                                alt="Logo"
-                                width={45}
-                                height={45}
-                            //   className="object-contain"
-                            />
-                        </div>
-                    </div>
+          <div className={styles.navContainer}>
+            {/* Logo */}
+            <div className={styles.logoNav}>
+              <Image
+                src={logo}
+                alt="Logo"
+                width={80}
+                height={65}
+                //   className="object-contain"
+              />
+            </div>
 
-                    {/* हंबरगर बटन */}
-                    {/* <div className={styles.navRightHumberger}> */}
-                        {/* हंबरगर आयकॉन */}
-                        {/* <button onClick={toggleMenu} className={styles.hamburgerBtn}>
+            {/* हंबरगर बटन */}
+            {/* <div className={styles.navRightHumberger}> */}
+              {/* हंबरगर आयकॉन */}
+              {/* <button onClick={toggleMenu} className={styles.hamburgerBtn}>
               &#9776; 
             </button> */}
-                        {/* <button onClick={toggleMenu} className={styles.hamburgerBtn}>
-                            {isOpen ? <FaTimes /> : <FaBars />}
-                        </button>
-                    </div> */}
+              {/* <button onClick={toggleMenu} className={styles.hamburgerBtn}>
+                {isOpen ? <FaTimes /> : <FaBars />}
+              </button>
+            </div>
 
+            {isOpen && (
+              <div className={styles.humberView}>
+                <a href="#" className={styles.navLinkHumberger}>
+                  Home
+                </a>
+                <a href="#" className={styles.navLinkHumberger}>
+                  Loans
+                </a>
+                <a href="#" className={styles.navLinkHumberger}>
+                  About
+                </a>
+              </div>
+            )} */}
 
-                    {isOpen && (
-                        <div className={styles.humberView}>
-                            <a href="#" className={styles.navLinkHumberger}>Home</a>
-                            <a href="#" className={styles.navLinkHumberger}>Loans</a>
-                            <a href="#" className={styles.navLinkHumberger}>About</a>
-                        </div>
-                    )}
-
-                    {/* Navigation Links */}
-                    {/* <div className={styles.navRight}>
-                        <div className={styles.navLinks}>
-
-                            <div className={styles.navAncor}><a href="#" className={styles.navLink}>Home</a></div>
-                            <div className={styles.navAncor}><a href="#" className={styles.navLink}>Loans</a></div>
-                            <div className={styles.navAncor}><a href="#" className={styles.navLink}>About</a></div>
-                        </div>
-                    </div> */}
-                    {/* Login Button */}
-                    {/* <button className={styles.loginBtn}>Login</button> */}
+            {/* Navigation Links */}
+            {/* <div className={styles.navRight}>
+              <div className={styles.navLinks}>
+                <div className={styles.navAncor}>
+                  <a href="#" className={styles.navLink}>
+                    Home
+                  </a>
                 </div>
-            </nav>
+                <div className={styles.navAncor}>
+                  <a href="#" className={styles.navLink}>
+                    Loans
+                  </a>
+                </div>
+                <div className={styles.navAncor}>
+                  <a href="#" className={styles.navLink}>
+                    About
+                  </a>
+                </div>
+              </div>
+              <button className={styles.loginBtn}>Login</button>
+            </div> */}
+            {/* Login Button */}
+          </div>
+        </nav>
 
             {/* Hero Section */}
             <section className={styles.heroSection}>
@@ -102,39 +116,23 @@ function RysaComingSoPage() {
             </section>
             {/* footer part start */}
             <footer className={styles.footer}>
-                <div className={styles.footerMainContainer}>
-                    {/* 🔵 Column 1: Logo + About */}
                     <div className={styles.footerlogoAndText}>
                         <div className={styles.footerLogo}>
                             <Image
-                                src="/logo2_3.png"
+                                src="/Aryse_Fin_w.png"
                                 alt="Logo"
-                                width={60}
-                                height={60}
+                                width={80}
+                                height={80}
                                 className="object-contain"
                             />
                         </div>
                         <p className={styles.footeraboutText}>Rysa is a lending service platform (LSP) that makes borrowing easy, transparent, and  human.
                             Backed by trusted NBFCs and banks.</p>
                     </div>
-
-
-                </div>
-                {/* 🟡 Column 4: Quick Links */}
-                <div className={styles.footerTermText1}>
+                <div className={styles.footerTermText}>
                     <h3 className="footerText1"> <button className={styles.footerSpan1}>Terms &amp; Conditions </button> And <button className={styles.footerSpan}>Privacy Policy</button></h3>
                 </div>
-                {/* <div className={styles.footerNavLink1}>
-                    <ul className={styles.footerNavList1}>
-                        <li><button className={styles.footerNavButton1}>Terms</button></li>
-                        <li><button className={styles.footerNavButton1}>Conditions</button></li>
-                        <li><button className={styles.footerNavButton1}>Privacy Policy</button></li>
-                        <li><button className={styles.footerNavButton1}>FAQs</button></li>
-                    </ul>
-                </div> */}
-
-
-                <div className={styles.footersocialIcons}>
+                {/* <div className={styles.footersocialIcons}>
                     <a href="#" className="hover:text-pink-300">
                         <i className="fab fa-instagram"></i>
                     </a>
@@ -144,7 +142,7 @@ function RysaComingSoPage() {
                     <a href="#" className="hover:text-blue-300">
                         <i className="fab fa-linkedin"></i>
                     </a>
-                </div>
+                </div> */}
             </footer>
         </div>
     )

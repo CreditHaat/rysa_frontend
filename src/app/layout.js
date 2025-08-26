@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         {/* <title>Rysa</title> */}
-        <link rel="icon" href="/Aryse_Fin_w.png" />
+        <link rel="icon" href="/Aryse_Fin.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -1,41 +1,94 @@
 /* nav.module.css */
+.topMostDiv{
+  overflow: hidden;
+  scrollbar-width: none;
+
+}
+/* Alternative: Hide scrollbar but keep scrolling functionality */
+.topMostDiv-scrollable {
+    overflow: auto; /* Allow scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.topMostDiv-scrollable::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+/* If you want to hide both horizontal and vertical scrollbars separately */
+.topMostDiv-custom {
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: auto; /* Show vertical scrolling but hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.topMostDiv-custom::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
 /* ----------nav section------------ */
 .container {
-  min-height: 100vh;
+  width: 100%;
+  min-height: auto;
   background: linear-gradient(to right, #f197b6, #8563ec);
-  font-family: 'Arial', sans-serif;
 }
 
 /* Navigation Styles */
 .navbar {
   background-color: #ffffff;
   backdrop-filter: blur(10px);
-  padding: 0.5rem 0;
-  position: sticky;
+  padding: 0px 0;
   top: 0;
   z-index: 100;
+  width: 100%;
 }
 
 .navContainer {
-  max-width: 1200px;
-  margin: 0 auto;
+  position: sticky;
+  width: 100%;
+  /* max-width: 1200px; */
+  margin: 4px;
+  padding-bottom: 4px;
   display: flex;
   /* justify-content: space-between;  */
-  align-items: center;
+  /* align-items: center; */
   /* padding: 0 2rem; */
 }
 
 .navRight {
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 2rem; 
+  align-items: right;
+  justify-content: right;
+  justify-items: right;
+  /* gap: 2rem; */
+  padding-right: 20px;
+  /* background: #ef2222; */
+  /* background: #ed0d0d;  */
 }
+/* CSS */
+.logoNav {
+  margin-left: 20px;
+  height: 50px;
+  width: 70px; /* Increase the width of the container */
+  /* background-color: red; */
+  display: flex; /* Aligns the image in the center */
+  justify-content: center;
+  align-items: center;
+}
+
+.logoNav img {
+  width: 100%;  /* Image takes full width of the container */
+  height: 100%; /* Image scales to fit height */
+  object-fit: contain; /* Ensures the image fits while maintaining aspect ratio */
+}
+
 
 .navLinks {
   display: flex;
   gap: 0rem; 
   margin-right: 1rem; 
-  margin-left: 50rem;
+  /* margin-left: 50rem; */
 }
 
 .navLink {
@@ -62,9 +115,10 @@
   border-radius: 1rem;
   /* transform: scale(1.1); */
 }
+
 /*  Login Button  */
 .loginBtn {
-  padding: 0.6rem 1.5rem;
+  padding: 0.6rem 1.3rem;
   background-color: #5f57f6;
   color: white;
   font-size: 1rem;
@@ -92,13 +146,15 @@
 .heroSection {
   padding: 5px 0;
   /* min-height: 100px; */
-  min-height: calc(100vh - 80px);
+  /* min-height: calc(100vh - 80px); */
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .heroContainer {
-  max-width: 1200px;
+  width: 100%;
+  max-width: auto;
   /* margin: 0 auto; */
   padding: 0 2rem;
   display: flex;
@@ -148,6 +204,9 @@
 }
 
 .heroImageContainer {
+  bottom: 0;
+  width: 100%;
+  right: 0;
   flex: 0 0 400px;
   height: 500px;
   position: relative;
@@ -157,8 +216,9 @@
   width: 100%;
   height: 100%;
   position: absolute;
+  /* right: 0; */
   bottom: -5px;
-  left: 95px;
+  /* left: 95px; */
   /* width: 100px; Adjust as needed
   height: auto; */
 }
@@ -169,83 +229,90 @@
   backdrop-filter: blur(10px);
   padding: 3rem 0 0 0;
   margin-top: 0rem;
+  background: #000;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* card feature section  */
+/* card feature section */
 .loanFeaturesSection {
   display: flex;
   height: 20rem;
   width: 100%;
-  /* justify-content: space-between; */
-  background: linear-gradient(to left, #bb78e7, #9d51d1,#9d51d1, #b142ed, #cb8df5);
-  /* padding: 3rem 1rem; */
   color: white;
   text-align: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Changed from wrap to nowrap */
   overflow: hidden;
-  /* gap: 1rem; */
+  margin: 0; /* Remove any default margins */
+  padding: 0; /* Remove any default padding */
 }
-/* Feature Box 1 */
-.featureBox{
+
+/* Feature Box - Main container */
+.featureBox {
+  flex: 1; /* Equal width distribution */
+  min-width: 0; /* Allow shrinking */
+  display: flex;
+  flex-direction: column;
   transition: transform 0.3s ease;
-}
-.featureBox:hover{
-   transform: scale(1.1);
-}
-.featureBox1 {
-  flex: 1 1 30%;
-  background: linear-gradient(to bottom, #8961f7, #3814b0);
-  padding: 2rem;
-  height: 20rem;
-  width: 421.5px;
-  border-radius: none;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  justify-items: center;
-  /* transition: transform 0.3s ease; Smooth transition for scale effect */
-}
-/* Feature Box 2 */
-.featureBox2 {
-  flex: 1 1 30%;
-  background-image: linear-gradient(to top, #8d61f4, #7d7deb);
-  padding: 2rem;
-  height: 20rem;
-  width: 421.5px;
-  border-radius: none;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  justify-items: center;
-  transition: transform 0.3s ease; /* Smooth transition for scale effect */
+  position: relative;
+  margin: 0; /* Remove margins */
+  padding: 0; /* Remove padding from main container */
 }
 
-/* Feature Box 3 */
+.featureBox:hover {
+  transform: scale(1.05); /* Reduced scale to prevent overflow */
+}
+
+/* Feature Box Content Areas */
+.featureBox1,
+.featureBox2,
 .featureBox3 {
-  flex: 1 1 30%;
-  background-image: linear-gradient(to bottom, #8961f7, #3814b0);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
-  height: 20rem;
-  width: 421.0px;
-  border-radius: none;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  justify-items: center;
-  transition: transform 0.3s ease; /* Smooth transition for scale effect */
+  height: calc(20rem - 35px); /* Subtract empty child height */
+  position: relative;
+  margin: 0;
 }
 
-.emptychild1{
+.featureBox1 {
+  background: linear-gradient(to bottom, #8961f7, #3814b0);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.featureBox2 {
+  background: linear-gradient(to top, #8d61f4, #7d7deb);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.featureBox3 {
+  background: linear-gradient(to bottom, #8961f7, #3814b0);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Empty children - Top strips */
+.emptychild1,
+.emptychild2,
+.emptychild3 {
+  height: 35px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.emptychild1 {
   background: #6a51f7;
-  /* flex: 1;       प्रत्येक child समान वाटा घेईल */
-  height: 35px;
-   width: 100.33%;
 }
-.emptychild2{
+
+.emptychild2 {
   background: #8d60f7;
-  /* flex: 1;       प्रत्येक child समान वाटा घेईल */
-  height: 35px;
-   width: 100.33%;
 }
+
 .emptychild3 {
   background: #6a51f7;
-  /* flex: 1;       प्रत्येक child समान वाटा घेईल */
-  height: 35px;
-   width: 100.33%;
 }
 
 .icon {
@@ -313,6 +380,38 @@
   border-radius: 0.3rem;
 }
 @media (max-width: 768px) {
+  .logoNav {
+    margin-left: 0px;
+    height: 50px;
+    width: 70px; /* Increase the width of the container */
+    /* background-color: red; */
+    display: flex; /* Aligns the image in the center */
+    justify-content: left;
+    align-items: left;
+  }
+  .navbar {
+    background-color: #ffffff;
+    backdrop-filter: blur(10px);
+    padding: 0px 0;
+    padding-top: 7px;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+  }
+  .navContainer {
+    position: sticky;
+    width: 100%;
+    /* max-width: 1200px; */
+    /* margin: 4px; */
+    /* padding-top: 4px; */
+    padding-bottom: 4px;
+    padding-right: 4px;
+    display: flex;
+    justify-content: space-between; 
+    /* gap: 15.5rem; */
+    /* align-items: center; */
+    /* padding: 0.5rem; */
+  }
   .navLinks {
     display: none;
   }
@@ -335,57 +434,107 @@
     display: none; 
   }
 
-  .navContainer {
+  /* .navContainer {
     justify-content: space-between;
     padding: 0 1rem;
+  } */
+}
+@media (max-width: 1024px) {
+  .heroContainer {
+    gap: 3rem;
+    padding: 0 1.5rem;
+  }
+  
+  .heroTitle {
+    font-size: 5rem;
+  }
+  
+  .heroImageContainer {
+    flex: 0 0 350px;
+    height: 450px;
+    bottom: 0;
+  }
+  .heroImage {
+    position: relative;
+    bottom: -45px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
-@media (max-width: 768px) {
-  .navLinks {
-    display: none; 
+@media(max-width: 1087px) {
+  .heroContainer {
+    gap: 3rem;
+    padding: 0 1.5rem;
   }
-
-  .navRight {
-    display: none; 
+  
+  .heroTitle {
+    font-size: 5rem;
   }
-
-  .navRightHumberger {
-    display: block;
-    margin-left: auto; 
+  .heroImageContainer {
+    flex: 0 0 350px;
+    height: 450px;
+    bottom: 0;
   }
-
-  .hamburgerBtn {
-    display: block;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color: black;
-    cursor: pointer;
-  }
-
-  .loginBtn {
-    display: none;
-  }
-
-  .navContainer {
-    justify-content: space-between;
-    padding: 0 1rem;
-  }
-
-  .humberView {
-    top: 60px;
-    right: 1rem;
-    width: 200px;
-    background-color: #444;
-  }
-
-  .navLinkHumberger {
-    padding: 0.7rem 1rem;
-    font-size: 1rem;
-    text-align: left;
+  .heroImage {
+    position: relative;
+    bottom: -45px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
+@media (max-width: 1113px) {
+  .heroContainer {
+    gap: 3rem;
+    padding: 0 1.5rem;
+  }
+  
+  .heroTitle {
+    font-size: 5rem;
+  }
+  .heroImageContainer {
+    flex: 0 0 350px;
+    height: 450px;
+    bottom: 0;
+  }
+  .heroImage {
+    position: relative;
+    bottom: -45px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+@media (max-width: 771px){
+  .heroContainer {
+    gap: 3rem;
+    padding: 0 1.5rem;
+  }
+  
+  .heroTitle {
+    font-size: 5rem;
+  }
+  .heroImageContainer {
+    flex: 0 0 350px;
+    height: 450px;
+    /* bottom: -20px; */
+  }
+  .heroImage {
+    position: relative;
+    /* bottom: -20px; */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+/* Medium Tablets */
 @media (max-width: 768px) {
+  .heroSection {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+
   .heroContainer {
     flex-direction: column;
     text-align: center;
@@ -393,27 +542,137 @@
     padding: 0 1rem;
   }
 
+  .heroContent {
+    max-width: 100%;
+  }
+
+  .heroTitle {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .applyBtn {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .heroImageContainer {
+    flex: none;
+    width: 100%;
+    max-width: 400px;
+    height: 350px;
+    position: static;
+    margin: 0 auto;
+    bottom: 0;
+  }
+
+  .heroImage {
+    position: relative;
+    bottom: -65px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .heroSection {
+    padding: 1rem 0;
+  }
+
+  .heroContainer {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
   .heroTitle {
     font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
 
   .heroSubtitle {
     font-size: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .applyBtn {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 1.5rem;
   }
 
   .heroImageContainer {
-    bottom: 0px;
-    width: 100%;
-    height: auto;
-    position: static;
+    max-width: 300px;
+    height: 250px;
+    bottom: 0;
   }
-
   .heroImage {
-    position: static;
+    position: relative;
+    bottom: -40px;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
   }
 }
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .applyBtn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .heroImageContainer {
+    max-width: 450px;
+    height: 400px;
+  }
+  .heroImage {
+    position: relative;
+    bottom: -40px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* ========== FEATURE SECTION RESPONSIVE ========== */
+
+/* Large Tablets and Small Desktops */
+@media (max-width: 1024px) {
+  .loanFeaturesSection {
+    padding: 0 1rem;
+  }
+
+  .featureBox h3 {
+    font-size: 1.4rem;
+  }
+
+  .featureBox p {
+    font-size: 1rem;
+  }
+
+  .icon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Medium Tablets */
 @media (max-width: 768px) {
   .loanFeaturesSection {
     flex-direction: column;
@@ -421,69 +680,100 @@
     padding: 2rem 1rem;
   }
 
+  .featureBox {
+    width: 100%;
+    margin-bottom: 1rem;
+    max-width: none;
+  }
+
   .featureBox1,
   .featureBox2,
   .featureBox3 {
-    width: 100%;
-    margin-bottom: 1rem;
     height: auto;
+    min-height: 200px;
+    padding: 1.5rem;
   }
 
   .featureBox h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .featureBox p {
     font-size: 1rem;
   }
+
+  .icon {
+    font-size: 2.2rem;
+  }
 }
+
+/* Small Mobile */
 @media (max-width: 480px) {
-  .heroContainer {
-    flex-direction: column;
-    text-align: center;
-    gap: 2rem;
-    padding: 0 1rem;
+  .loanFeaturesSection {
+    padding: 1.5rem 0.5rem;
   }
 
-  .heroTitle {
-    font-size: 2.5rem;
+  .featureBox {
+    margin-bottom: 0.5rem;
   }
 
-  .heroSubtitle {
+  .featureBox1,
+  .featureBox2,
+  .featureBox3 {
+    padding: 1rem;
+    min-height: 180px;
+  }
+
+  .featureBox h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .featureBox p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .emptychild1,
+  .emptychild2,
+  .emptychild3 {
+    height: 25px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .featureBox1,
+  .featureBox2,
+  .featureBox3 {
+    padding: 0.8rem;
+    min-height: 160px;
+  }
+
+  .featureBox h3 {
     font-size: 1rem;
   }
-  .heroImageContainer {
-    margin-bottom: -5px;
-  padding-bottom: 0px;
-    width: 100%;
-    height: auto;
-    /* position: static; */
+
+  .featureBox p {
+    font-size: 0.8rem;
   }
 
-  .heroImage {
-    bottom: -200rem;
-    /* position: ; */
-    width: 100%;
-    height: auto;
+  .icon {
+    font-size: 1.8rem;
   }
 }
 /* -----------------------middle page css ------------------------*/
-
-/* Main container styles */
-/* .main {
-  background-color: #ecf4ff;
-  width: 100%;
-  padding-bottom: 4rem;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-} */
-
 /* CSS for full-page scroll */
 .mainDiv {
   display: block;
   height: auto;
   overflow: visible; /* scroll block */
+  width: 100%;
 }
 
 .stickyContainer {
@@ -492,7 +782,9 @@
   height: auto;
   width: 100%;
   overflow: visible;
-  background: #f9f9f9;
+  background: #f7f6fd;
+  padding: 20px 0;
+  /* margin: -20px 0; */
 }
 
 .Card {
@@ -509,7 +801,17 @@
 } */
 
 /* Common styles for all parts */
-.firstPart, .secondPart, .thirdPart, .fourthPart {
+.firstPart,  .thirdPart {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0;
+  margin: 20px 0;
+  position: relative; /* Parent container needs relative positioning for absolute children */
+  padding-top: 3rem;
+  margin-right: 2px;
+}
+.secondPart, .fourthPart {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -517,6 +819,7 @@
   margin: 20px 0;
   position: relative; /* Parent container needs relative positioning for absolute children */
   padding-top: 3rem;
+  margin-left: 2px;
 }
 
 .circle {
@@ -534,10 +837,11 @@
   FIRST PART STYLES
   ========================== */
 .firstPart {
-  padding-left: 14rem;
+  /* padding-left: 14rem; */
+  right: 0;
   padding-bottom: 3rem;
   flex-direction: row; /* Change this from 'row-reverse' to 'row' to show text box before image */
-  position: relative; /* Make sure the parent container is relative for absolute children */
+  position: none; /* Make sure the parent container is relative for absolute children */
 }
 
 .firstPart .circle {
@@ -567,49 +871,6 @@
   border-right: 5px solid transparent; /* Initially transparent border */
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-/* .firstPart .textBox:hover {
-  background-color: rgba(237, 218, 248, 0.7);  
-  backdrop-filter: blur(5px);  
-  border-left: 5px solid pink; 
-  border-bottom: 5px solid pink; 
-  transform: scale(1.2); 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
-  z-index: 3;
-} */
-/* ==========================
-  Pseudo Elements for Pink Lines on Hover
-  ========================== */
-/* .firstPart .textBox::before,
-.firstPart .textBox::after {
-  content: '';
-  position: absolute;
-  background-color: pink;
-  transition: all 0.3s ease;
-}
-
-.firstPart .textBox::before {
-  width: 5px;
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform: scaleY(0); 
-}
-
-.firstPart .textBox::after {
-  width: 100%;
-  height: 5px;
-  bottom: 0;
-  left: 0;
-  transform: scaleX(0); 
-}
-
-.firstPart .textBox:hover::before {
-  transform: scaleY(1);
-}
-
-.firstPart .textBox:hover::after {
-  transform: scaleX(1); 
-} */
 .firstPart .textBox .htag {
   padding-top: 3rem;
   color: #000000;
@@ -638,11 +899,6 @@
   border-top-right-radius: 60px;  /* गोलाकार कोपरे */
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease; /* होव्ह इफेक्टसाठी ट्रांझिशन */
 }
-/* .firstPart .imageContainer:hover img {
-  transform: scale(1.1); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
-  z-index: 3;
-} */
 
 /* ==========================
   SECOND PART STYLES
@@ -650,7 +906,7 @@
 
 /* Second Part: Image → Text Box → Circle Line (Image on the left) */
 .secondPart {
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   padding-top: 5rem;
   padding-bottom: 3rem;
   flex-direction: row; /* Image on the left */
@@ -675,50 +931,10 @@
   border-bottom-right-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-/* .secondPart .textBox:hover {
-  background-color: #ccc6ec;  
-  backdrop-filter: blur(5px);  
-  border-right: 5px solid pink;  
-  border-bottom: 5px solid pink; 
-  transform: scale(1.2); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); 
-  z-index: 1; 
-} */
 
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-/* .secondPart .textBox::before,
-.secondPart .textBox::after {
-  content: '';
-  position: absolute;
-  background-color: pink;
-  transition: all 0.3s ease;
-}
-
-.secondPart .textBox::before {
-  width: 5px;
-  height: 100%;
-  top: 0;
-  right: 0; 
-  transform: scaleY(0); 
-}
-
-.secondPart .textBox::after {
-  width: 100%;
-  height: 5px;
-  bottom: 0;
-  left: 0;
-  transform: scaleX(0); 
-}
-
-.secondPart .textBox:hover::before {
-  transform: scaleY(1); 
-}
-
-.secondPart .textBox:hover::after {
-  transform: scaleX(1); 
-} */
 .secondPart .textBox .htag {
   padding-top: 1rem;
   color: #000000;
@@ -740,7 +956,7 @@
   position: absolute;
   z-index: 1;
   top: 20px;  /* Circle will appear above the text box */
-  left: 59rem; /* Circle will be on the left side of the text box */
+  left: 59rem; 
   width: 100px; /* Smaller circle size */
   height: 100px; /* Same size for height */
 }
@@ -753,11 +969,7 @@
   border-top-right-radius: 60px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-/* .secondPart .imageContainer:hover img {
-  transform: scale(1.1); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
-  z-index: 3;
-} */
+
 
 /* ==========================
   THIRD PART STYLES
@@ -792,49 +1004,10 @@
   border-top-left-radius: 10px;   /* डाव्या वरच्या काठाला 5px गोलाकार */
   border-bottom-left-radius: 10px;
 }
-/* .thirdPart .textBox:hover {
-  background-color: rgba(237, 218, 248, 0.7);  
-  backdrop-filter: blur(5px);  
-  border-left: 5px solid pink;  
-  border-bottom: 5px solid pink; 
-  transform: scale(1.2); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); 
-  z-index: 3;
-} */
+
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-/* .thirdPart .textBox::before,
-.thirdPart .textBox::after {
-  content: '';
-  position: absolute;
-  background-color: pink;
-  transition: all 0.3s ease;
-}
-
-.thirdPart .textBox::before {
-  width: 5px;
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform: scaleY(0); 
-}
-
-.thirdPart .textBox::after {
-  width: 100%;
-  height: 5px;
-  bottom: 0;
-  left: 0;
-  transform: scaleX(0); 
-}
-
-.thirdPart .textBox:hover::before {
-  transform: scaleY(1); 
-}
-
-.thirdPart .textBox:hover::after {
-  transform: scaleX(1); 
-} */
 .thirdPart .textBox .htag {
   padding-top: 3rem;
    color: #000000;
@@ -864,11 +1037,6 @@
   height: 100%; /* Ensures the image takes full container size */
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-/* .thirdPart .imageContainer:hover img {
-  transform: scale(1.1); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
-  z-index: 3;
-} */
 
 /* ==========================
   FOURTH PART STYLES
@@ -898,50 +1066,10 @@
   transition: all 0.3s ease; /* Transition for smooth hover effect */
 }
 
-/* .fourthPart .textBox:hover {
-  background-color: #ccc6ec;  
-  backdrop-filter: blur(5px);  
-  border-right: 5px solid pink;  
-  border-bottom: 5px solid pink; 
-  transform: scale(1.2); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.3); 
-  z-index: 1; 
-} */
 
 /* ==========================
   Pseudo Elements for Pink Lines on Hover
   ========================== */
-/* .fourthPart .textBox::before,
-.fourthPart .textBox::after {
-  content: '';
-  position: absolute;
-  background-color: pink;
-  transition: all 0.3s ease;
-}
-
-.fourthPart .textBox::before {
-  width: 5px;
-  height: 100%;
-  top: 0;
-  right: 0; 
-  transform: scaleY(0); 
-}
-
-.fourthPart .textBox::after {
-  width: 100%;
-  height: 5px;
-  bottom: 0;
-  left: 0;
-  transform: scaleX(0); 
-}
-
-.fourthPart .textBox:hover::before {
-  transform: scaleY(1); 
-}
-
-.fourthPart .textBox:hover::after {
-  transform: scaleX(1); 
-} */
 
 .fourthPart .textBox .htag {
   color: #000000;
@@ -964,15 +1092,10 @@
   position: absolute;
   z-index: 3;
   top: 40px;  /* Circle will appear above the text box */
-  left: 56rem; /* Circle will be on the left side of the text box */
+  left: 56rem; 
   opacity: 0.8;
   transition: all 0.3s ease; /* Transition for smooth effect */
 }
-
-/* When text box is hovered, reduce circle size */
-/* .fourthPart .textBox:hover ~ .circleLine {
-  transform: scale(0.6); 
-} */
 
 .fourthPart .imageContainer img {
   object-fit: cover;
@@ -982,11 +1105,7 @@
   border-top-right-radius: 60px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
-/* .fourthPart .imageContainer:hover img {
-  transform: scale(1.1); 
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.5); 
-  z-index: 3;
-} */
+
 /* ==========================
   MOBILE RESPONSIVE STYLES
   ========================== */
@@ -1005,6 +1124,7 @@
   .stickyContainer {
     position: relative; /* Make sticky container non-sticky on small screens */
     height: auto;
+    margin: -20px 0;
   }
   
   /* Card Styles */
@@ -1202,6 +1322,17 @@
   VERY SMALL SCREEN (Mobile Phones)
   ========================== */
 @media screen and (max-width: 480px) {
+  .mainDiv {
+    flex-direction: column; /* Stack elements vertically */
+    height: auto; /* Allow height to adjust according to content */
+    overflow: visible; /* Allow scrolling */
+  }
+  
+  /* Sticky Container */
+  .stickyContainer {
+    position: relative; /* Make sticky container non-sticky on small screens */
+    height: auto;
+  }
   
   /* Adjust Padding and Margin for Small Phones */
   .firstPart, .secondPart, .thirdPart, .fourthPart {
@@ -1254,13 +1385,343 @@
   }
 
 }
+/* ============================
+other mobile reposive code
+============================ */
+@media screen and (min-width: 540px) and (max-width: 768px) {
+  .Card {
+    padding: 20px;
+  }
+
+  .firstPart, .secondPart, .thirdPart, .fourthPart {
+    padding: 30px 20px;
+  }
+
+  .textBox {
+    max-width: 450px;
+    min-height: 220px;
+    padding: 25px;
+  }
+
+  .textBox .htag {
+    font-size: 1.8rem;
+  }
+
+  .textBox .ptag {
+    font-size: 1.1rem;
+  }
+
+  .imageContainer {
+    max-width: 350px;
+    height: 280px;
+  }
+
+  .circle {
+    width: 100px;
+    height: 100px;
+  }
+   .circle {
+    width: 120px;
+    height: 120px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Alternating layout for tablet landscape */
+  .firstPart .circle {
+    left: -60px;
+  }
+
+  .firstPart .imageContainer {
+    order: 2;
+  }
+
+  .firstPart .textBox {
+    order: 1;
+  }
+
+  .secondPart .imageContainer {
+    order: 1;
+  }
+
+  .secondPart .textBox {
+    order: 2;
+  }
+
+  .secondPart .circleLine {
+    /* right: -30px; */
+    left: 27rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+  }
+
+  .thirdPart .circle {
+    left: -60px;
+  }
+
+  .thirdPart .imageContainer {
+    order: 2;
+  }
+
+  .thirdPart .textBox {
+    order: 1;
+  }
+
+  .fourthPart .imageContainer {
+    order: 1;
+  }
+
+  .fourthPart .textBox {
+    order: 2;
+  }
+
+  .fourthPart .circleLine {
+    /* right: -40px; */
+    left: 27rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Tablet Landscape - 820x1180, 853x1280, 912x1366 */
+@media screen and (min-width: 820px) and (max-width: 912px) {
+  .firstPart, .secondPart, .thirdPart, .fourthPart {
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-between; */
+    padding: 40px 30px;
+  }
+
+  .textBox {
+    max-width: 400px;
+    min-height: 250px;
+    padding: 30px;
+  }
+
+  .textBox .htag {
+    font-size: 2rem;
+  }
+
+  .imageContainer {
+    max-width: 320px;
+    height: 350px;
+  }
+
+  .circle {
+    width: 120px;
+    height: 120px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Alternating layout for tablet landscape */
+  .firstPart .circle {
+    left: -60px;
+  }
+
+  .firstPart .imageContainer {
+    order: 2;
+  }
+
+  .firstPart .textBox {
+    order: 1;
+  }
+
+  .secondPart .imageContainer {
+    order: 1;
+  }
+
+  .secondPart .textBox {
+    order: 2;
+  }
+
+  .secondPart .circleLine {
+    /* right: -30px; */
+    left: 47rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+  }
+
+  .thirdPart .circle {
+    left: -60px;
+  }
+
+  .thirdPart .imageContainer {
+    order: 2;
+  }
+
+  .thirdPart .textBox {
+    order: 1;
+  }
+
+  .fourthPart .imageContainer {
+    order: 1;
+  }
+
+  .fourthPart .textBox {
+    order: 2;
+  }
+
+  .fourthPart .circleLine {
+    /* right: -40px; */
+    left: 46rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Large Tablet/Small Desktop - 1024x600, 1024x768 */
+@media screen and (min-width: 913px) and (max-width: 1024px) {
+  .firstPart, .secondPart, .thirdPart, .fourthPart {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 40px;
+  }
+
+  .textBox {
+    max-width: 480px;
+    height: 280px;
+    padding: 35px;
+  }
+
+  .textBox .htag {
+    font-size: 2.2rem;
+    padding-top: 1rem;
+  }
+
+  .textBox .ptag {
+    font-size: 1.2rem;
+  }
+
+  .imageContainer {
+    max-width: 380px;
+    height: 400px;
+  }
+
+  .circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  /* Desktop-like layout for larger tablets */
+  .firstPart {
+    justify-content: flex-end;
+  }
+
+  .firstPart .circle {
+    left: 100px;
+    top: 50px;
+    width: 120px;
+    height: 120px;
+  }
+
+  .secondPart {
+    justify-content: flex-start;
+  }
+
+  .secondPart .circleLine {
+    right: 40px;
+    top: 20px;
+    width: 90px;
+    height: 90px;
+  }
+
+  .thirdPart {
+    justify-content: flex-end;
+  }
+
+  .thirdPart .circle {
+    left: 150px;
+    top: 40px;
+    width: 90px;
+    height: 90px;
+  }
+
+  .fourthPart {
+    justify-content: flex-start;
+  }
+
+  .fourthPart .circleLine {
+    right: 60px;
+    top: 40px;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Responsive landscape mode adjustments */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .Card {
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .firstPart, .secondPart, .thirdPart, .fourthPart {
+    padding: 20px 10px;
+    margin: 10px 0;
+  }
+
+  .textBox {
+    min-height: 150px;
+    padding: 15px;
+  }
+
+  .textBox .htag {
+    font-size: 1.4rem;
+    padding-bottom: 10px;
+  }
+
+  .imageContainer {
+    height: 200px;
+  }
+
+  .circle {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Hover effects - only on larger screens */
+@media (hover: hover) and (pointer: fine) {
+  .textBox:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 4;
+  }
+
+  .imageContainer:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .firstPart .textBox:hover ~ .circle {
+    transform: scale(0.8) translateX(-50%);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .imageContainer img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
 /* ---------------footer css ----------------------*/
 /* footerPage.module.css */
 
 /* Main Background */
 .footerMain {
  
-  background-color: #ecf4ff;
+  background-color: #f7f6fd;
   font-family: 'Roboto', sans-serif;
   color: #333;
 }
@@ -1271,8 +1732,8 @@
   margin-bottom: -50px;
   width: 100%;
   height: 800px;
-  background-image: url('/sharing-moment-friendship.jpg');
-  background-size: 1400px 700px;
+  background-image: url('/3boys.png');
+  background-size: 100% 700px;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -1435,13 +1896,16 @@
 } 
 .footerNavLink {
   flex: 1 1 200px;                  
-  min-width: 180px;                
+  min-width: 180px;
+  /* background-color: red;                */
 }
 
 /* Move Column 4 to second row under Column 2 */
 .footerNavLink {
   justify-items: left ;
-  left: 20px;
+  padding-left: 40px;
+  /* background-color: green; */
+  /* left:0px; */
   /* justify-items: center; */
   padding-top: 30px;
   order: 4;                        
@@ -1494,38 +1958,42 @@
 .footernavItem:hover {
   color: #f0a500; 
 }
-.footersocialIcons {
-
+/* .footersocialIcons {
+  width: 100%;
   padding-left: 67rem;
   display: flex;
   justify-content: right;
-  align-items: center;
+  align-items: right;
+  align-items: right;
   gap: 16px;
   margin-top: 20px;
   padding-right: 3rem;
   font-size: 1.5rem;
   color: white;
+  background: #e02d2d;
 
-}
-.iconInstagram, 
+} */
+/* .iconInstagram, 
 .iconFacebook, 
 .iconLinkedin {
-  font-size: 1.5rem; /* Set the size of the icons to 1.5rem */
-  color: white; /* Default color of the icons is white */
-  transition: color 0.3s ease; /* Smooth transition for color change */
-}
+  font-size: 1.5rem;
+  color: white;
+  transition: color 0.3s ease; 
+} */
 
 /* Hover effect to change icon color to #f0a500 */
-.iconInstagram:hover,
+/* .iconInstagram:hover,
 .iconFacebook:hover,
 .iconLinkedin:hover {
-  color: #f0a500; /* Change color on hover */
-}
+  color: #f0a500; 
+} */
 .footersocialIcons {
   display: flex;
   gap: 15px;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
+  font-size: 25px;
+  padding-right: 15px;
 }
 
 .iconInstagram {
@@ -1582,8 +2050,6 @@
     align-items: center;
     gap: 15px;
   }
-
-  /* Reset all ordering */
   .footerlogoAndText{
     margin-left: -60px;
     flex: none;
@@ -1598,10 +2064,7 @@
     order: 0;
   }
   .footerLoanLinks{
-    /* margin-top: -200px; */
-    /* margin-left: -0px; */
-    /* margin-right: -10px; */
-    /* padding-left: -10px; */
+   
     flex: none;
     width: 100%;
     order: 0;
@@ -1620,30 +2083,29 @@
     order: 2;
   }
   .footerLoanLinks {
-    order: 2;        /* Same as city to appear next to it */
+    order: 2;        
     max-width: 50%;
   }
   .footerNavLink {
     order: 3;
-    max-width: 60%;  /* Center width */
+    max-width: 60%;  
   }
 
   .footerNavLink {
-    margin: 40px auto; /* Center the 4th column */
+    margin: 40px auto; 
   }
 }
 @media (max-width: 768px) {
   .footersocialIcons {
-    justify-content: center;  /* center-align on smaller screens */
+    justify-content: center; 
     gap: 12px;
     padding: 0 1rem;
   }
   .iconInstagram, .iconFacebook, .iconLinkedin {
-    font-size: 1.3rem;         /* slightly smaller icons */
+    font-size: 1.3rem;         
   }
 }
 
-/* Mobile: 480px and below */
 @media (max-width: 480px) {
   .footersocialIcons {
     margin-right: 15px;
@@ -1652,7 +2114,7 @@
     padding: 0.5rem 0;
   }
   .iconInstagram, .iconFacebook, .iconLinkedin {
-    font-size: 1rem;         /* mobile-optimized size */
+    font-size: 1rem;         
   }
   .iconInstagram:hover, .iconFacebook:hover, .iconLinkedin :hover {
     color: #f0a500;
