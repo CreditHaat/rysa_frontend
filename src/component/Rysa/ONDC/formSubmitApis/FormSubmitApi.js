@@ -51,51 +51,6 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
                 }
             }
 
-            // formData.append("panName","Tejas Bharat Deshmukh");
-            // formData.append("dob","18/03/2002");
-            // // formData.append("dob","");
-            // formData.append("gender", "male");
-            // formData.append("pan","HKLPD8102E");
-            // // formData.append("pan","HKLPD8102F");
-            // formData.append("contactNumber", "8010489800");
-            // // formData.append("contactNumber", "9136565845");
-            // formData.append("email", "deshmukht100@gmail.com");
-            // formData.append("officialemail", "deshmukht100@gmail.com");
-            // formData.append("employmentType", "salaried");
-            // formData.append("endUse", "consumerDurablePurchase");
-            // formData.append("income", "100000");
-            // formData.append("companyName", "Credithaat");
-            // formData.append("udyamNumber", "UDYAM-ABC123");
-            // formData.append("addressL1", "pune");
-            // formData.append("addressL2", "pune");
-            // formData.append("city", "pune");
-            // formData.append("state", "MAHARASHTRA");
-            // formData.append("pincode", "411014");
-            // // formData.append("aa_id", "8010489800@finvu");
-            // formData.append("bureauConsent", "on");
-
-
-            //     dob: "1995-07-01", // format: yyyy-mm-dd
-            //     gender: "male", // must match option value
-            //     pan: "ABCDE1234F",
-            //     contactNumber: "8010489800",
-            //     email: "deshmukht100@gmail.com",
-            //     officialemail: "deshmukht@company.com",
-            //     employmentType: "salaried",
-            //     endUse: "consumerDurablePurchase",
-            //     income: "100000",
-            //     companyName: "Credithaat",
-            //     udyamNumber: "UDYAM-ABC123",
-            //     addressL1: "123 Main Street",
-            //     addressL2: "Floor 2, Apt 5B",
-            //     city: "Pune",
-            //     state: "Maharashtra",
-            //     pincode: "411001",
-            //     aa_id: "8010489800@finvu",
-            //     bureauConsent: "on"
-
-            // formData.append("panName", "Tejas Bharat Deshmukh");
-
             const response = await axios.post(formUrl, formData.toString(), {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -124,9 +79,18 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
                     //for lenders without account aggregator
                     const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
                     console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ", response);
+
+                    const formSubmissionStatus = "approved";
+                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
+                    
+
                     return withoutAccountAggregatorResponse;
                 // }
 
+            }else{
+                const formSubmissionStatus = "rejected";
+                console.log("The form response that we got in else is : ",response);
+                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
             }
 
         }
@@ -157,7 +121,14 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
                 const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
                 console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ", response);
 
+                const formSubmissionStatus = "approved";
+                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
+                    
                 return withoutAccountAggregatorResponse;
+            }else{
+                const formSubmissionStatus = "rejected";
+                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
+                    // return withoutAccountAggregatorResponse;
             }
 
         }
@@ -165,8 +136,28 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
         return null;
     } catch (error) {
         console.log("error in onsearch : ", error);
+        const formSubmissionStatus = "rejected";
+                console.log("The form response that we got in catch is : ",error);
+                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, error, formUrl, formSubmissionStatus, payloadForSelect.productName);
+        
     }
 };
+
+const writeFormLogs=async(transactionId, formSubmissionData, responseparam, gatewayUrl, formSubmissionStatus, productName)=>{
+    try{
+        const formLogRequest={
+            transactionId,
+            "ondcFormDataDTO":formSubmissionData,
+            "response": responseparam,
+            gatewayUrl,
+            formSubmissionStatus,
+            productName
+        }
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}WriteFormLogs`,formLogRequest);
+    }catch(error){
+        console.log("Error while saving the formSubmissionData");
+    }
+  }
 
 export const selectLoanAmountForm = async (formUrl, amount, formId) => {
 

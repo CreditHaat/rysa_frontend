@@ -113,41 +113,50 @@ const Ondclist = () => {
                         //creating a version variable to check and manage form according to version i.e. 2.0.0 or 2.0.1
                         const version = lender.context?.version;
 
-                        const response = await onSearchForm(
-                            lender.message.catalog.providers?.[0]?.items?.[0]?.xinput?.form?.url.replace("/get/", "/post/"),
-                            setFormSubmissionData,
-                            formSubmissionData,
-                            setPayloadForSelect,
-                            {
-                                transactionId,
-                                bppId,
-                                bppUri,
-                                providerId,
-                                itemId,
-                                formId,
-                                submissionId,
-                                status,
-                            },
-                            version
+                        const productName = lender?.message?.catalog?.descriptor?.name || "NA";
+
+                        for (const product of backendProducts) {
+                            if (product.bppId === bppId) {
+                                console.log("Matched Product:", product);
+
+                                const response = await onSearchForm(
+                                    lender.message.catalog.providers?.[0]?.items?.[0]?.xinput?.form?.url.replace("/get/", "/post/"),
+                                    setFormSubmissionData,
+                                    formSubmissionData,
+                                    setPayloadForSelect,
+                                    {
+                                        transactionId,
+                                        bppId,
+                                        bppUri,
+                                        providerId,
+                                        itemId,
+                                        formId,
+                                        submissionId,
+                                        status,
+                                        productName
+                                    },
+                                    version
 
 
-                        );
-                        console.log("The response we are getting from the select2api is :: ", response);
-                        // if (response?.status === 200 && response.data.gateway_response.message.ack === "ACK") {
-                        //   console.log("Still correct transactionId:", transactionId);
-                        //   setConfirmLenders(prev => [...prev, lender]);
-                        // }
-                        if (response !== undefined && response !== null && response.status === 200) {
-                            if (response.data.gateway_response.message.ack.status === "ACK") {
-                                console.log("Still correct transactionId:", transactionId);
-                                // setConfirmLenders(prev => [...prev, lender]);
-                                //tejas deshmukh
-                                //here we store the lenders whose ack will be ACK into a confirmLendesr ref variable and then we will display that variable to the user screen then when user will click on any of the lender then we will show him a loan amount adjustment screen annd when he will adjust and submit loan amount then we'll be taking that particular lenders form from the response and hit that loan adjustment amount to select loan amount form
-                                // showConfirmLenders(true);
+                                );
+                                console.log("The response we are getting from the select2api is :: ", response);
+                                // if (response?.status === 200 && response.data.gateway_response.message.ack === "ACK") {
+                                //   console.log("Still correct transactionId:", transactionId);
+                                //   setConfirmLenders(prev => [...prev, lender]);
+                                // }
+                                if (response !== undefined && response !== null && response.status === 200) {
+                                    if (response.data.gateway_response.message.ack.status === "ACK") {
+                                        console.log("Still correct transactionId:", transactionId);
+                                        // setConfirmLenders(prev => [...prev, lender]);
+                                        //tejas deshmukh
+                                        //here we store the lenders whose ack will be ACK into a confirmLendesr ref variable and then we will display that variable to the user screen then when user will click on any of the lender then we will show him a loan amount adjustment screen annd when he will adjust and submit loan amount then we'll be taking that particular lenders form from the response and hit that loan adjustment amount to select loan amount form
+                                        // showConfirmLenders(true);
+                                    }
+                                } else {
+                                    //logic loading ...
+
+                                }
                             }
-                        } else {
-                            //logic loading ...
-
                         }
                     }
                 }
@@ -433,6 +442,7 @@ const Ondclist = () => {
 
     }
 
+
     // Improved WebSocket message handler
     const handleWebSocketMessageForSelect = useCallback((data) => {
         console.log('Received from WebSocket:', data);
@@ -448,7 +458,7 @@ const Ondclist = () => {
             //now temporarily we will create this only for users which are without account aggregator
             if (parsedData?.message?.order?.items?.[0]?.price?.value) {
                 // tejas deshmukh
-                
+
                 setConfirmLenders(prev => [...prev, parsedData]);
             }
 
@@ -489,25 +499,136 @@ const Ondclist = () => {
 
     }, [SelectedLenderData])
 
-    useEffect(()=>{
-        fetchLendersByPincode(411014);
-    },[])
+    useEffect(() => {
+        // fetchLendersByPincode(411014);
+        getSortedLenders(mobileNumber);
+    }, [])
 
-    const fetchLendersByPincode=async(pincode)=>{
-        try{
+    // const fetchLendersByPincode=async(pincode)=>{
+    //     try{
+    //         const formData = new FormData();
+    //         formData.append("pincode", pincode);
+    //         const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchByPincode`,formData);
+
+    //         if(response.status === 200){
+    //             setBackendProducts(response.data);
+    //         }
+
+    //         console.log("response from fetchLendersByPincode : ",response);
+    //     }catch(error){
+    //         console.log("error in fetching lenders by pincode : ",error);
+    //     }
+    // }
+
+    const getSortedLenders = async (mobilenumber) => {
+        try {
             const formData = new FormData();
-            formData.append("pincode", pincode);
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchByPincode`,formData);
+            console.log("mobilenumber we are sending to getSortedLenders is : ", mobilenumber);
+            formData.append("mobile", mobilenumber);
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getSortedProducts`,
+                {
+                    params: {
+                        mobile: mobilenumber
+                    }
+                }
+            );
 
-            if(response.status === 200){
+            if (response.status === 200) {
                 setBackendProducts(response.data);
+                console.log("The response that we got from the getSortedProducts is : ", response);
             }
 
-            console.log("response from fetchLendersByPincode : ",response);
-        }catch(error){
-            console.log("error in fetching lenders by pincode : ",error);
+            console.log("response from fetchLendersByPincode : ", response);
+        } catch (error) {
+            console.log("error in fetching lenders by pincode : ", error);
         }
     }
+
+    // const handleGetLoanClickForElsePart=async(e)=>{
+    //     await getLendersListRysa(e);
+    // }
+
+    const getLendersListRysa = async (e) => {
+        e.preventDefault();
+        //here firstly we will call arysfin getUserInfo api where we will get all the details of that user
+        // try {
+            
+
+        // } catch (error) {
+        //     console.log("got error while fetching lenders", error);
+        // }
+
+        // setIsLoading(true);
+
+        try {
+
+            const formData = new FormData();
+            formData.append("mobileNumber", mobileNumber);
+            const userDetailsResponse = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getUserDetails`, formData);
+            const userDetails={
+                "workPincode" : userDetailsResponse?.data?.workPincode || "",
+                "maritalStatus" : userDetailsResponse?.data?.maritalStatus || "",
+                "paymentType" : userDetailsResponse?.data?.paymentType || ""
+
+            }
+            if(userDetailsResponse.status === 200){
+                console.log("The response that we got from getUserInfo is : ",userDetailsResponse);
+            }
+
+            const payload = {
+                mobilenumber: mobileNumber,
+                dob: formSubmissionData.dob,
+                profession: formSubmissionData.employmentType,
+                income: formSubmissionData.income,
+                payment_type: userDetails.paymentType, //
+                residentialPincode: formSubmissionData.pincode,
+                firstname: formSubmissionData.firstName,
+                lastname: formSubmissionData.lastName,
+                pan: formSubmissionData.pan,
+                gender: formSubmissionData.gender,
+                addressline1: formSubmissionData.addressL1,
+                email: formSubmissionData.email,
+                officeaddresspincode: userDetails.workPincode, //
+                maritalstatus: userDetails.maritalStatus, //
+                company: formSubmissionData.companyName,
+                // agent_id: formData.agentId,
+                // agent: formData.agent,
+                // email: ONDCFormData.email,
+                agentid: 3534873,
+                agent: "arysefinlead",
+            };
+
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL_CH}user/reg/embeddedarysefin`,
+                payload,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=", // ✅ your token
+                    },
+                }
+            );
+
+            if (response.data.code === 200 && response.data.data?.redirectionlink) {
+                let redirectUrl = response.data.data.redirectionlink;
+
+                // If URL already has ?, append with &, otherwise add ?
+                redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
+
+                window.location.href = redirectUrl;
+            } else {
+                console.error(
+                    "API did not return a valid redirect link",
+                    response.data
+                );
+            }
+        } catch (error) {
+            console.error("Error calling user/reg/embedded API:", error);
+        } finally {
+            // setIsLoading(false);
+        }
+    };
 
     return (
         <>
@@ -623,7 +744,89 @@ const Ondclist = () => {
                                 </>
                             ) : (
                                 // <div>Finding the lenders suitable for you...</div>
-                                <div></div>
+                                //here we will show the credithaat lender to the lender i.e if no lender is present for that user
+
+                                <>
+                                    <div className={styles.allnewcardContainer}>
+
+                                        {backendProducts
+                                            .filter(lender => lender.productName === "credithaat")
+                                            .map((lender, index) => (
+                                                <div className={styles.newcardContainer} key={index}>
+
+                                                    {
+                                                        !lender.error ? (<>
+                                                            <div className="newcard-container">
+
+                                                                {/* {!lender.error?(<> */}
+
+                                                                <div className={styles.cardLogo}>
+                                                                    {/* <Image
+                                                    src={lender?.message?.catalog?.providers?.[0]?.descriptor?.images?.[0]?.url || clock}
+                                                    // src={clock}
+                                                    alt="Logo"
+                                                    width={100}
+                                                    height={40}
+                                                    className="logo-image"
+                                                    style={{ width: "auto" }}
+                                                    /> */}
+                                                                    <img
+                                                                        // src={lender?.message?.catalog?.providers?.[0]?.descriptor?.images?.[0]?.url}
+                                                                        src={lender.logo}
+                                                                        //   alt="Lender Logo"
+                                                                        alt="Lender Logo"
+                                                                        width={100}
+                                                                        height={40}
+                                                                        //   onError={(e) => { e.currentTarget.src = clock }}
+                                                                        style={{ objectFit: "contain" }}
+                                                                    />
+                                                                    {" "}
+                                                                    {/* Display image here */}
+                                                                </div>
+                                                                {/* <div className="subcardheader">
+                                                    <p className="card-subtitle">{lender.product}</p>
+                                                    </div> */}
+                                                                <div className={styles.cardBody}>
+                                                                    {/* <h1 className={styles.amount}>INR {lender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[5]?.value || "N/A"} */}
+
+                                                                    {/* <h1 className={styles.amount}>INR {lender?.message?.order?.items?.[0]?.price?.value || "N/A"} */}
+                                                                    <h1 className={styles.amount}>INR {lender.maxAmount || "N/A"}
+                                                                    </h1>
+                                                                    <p className={styles.maxAmount}>Max. Amount</p>
+                                                                </div>
+                                                                <div className={styles.cardInfo}>
+                                                                    <div className={styles.infoItem}>
+                                                                        {/* <span role="img" aria-label="clock">⏱</span>{lender.description} */}
+                                                                        <span role="img" aria-label="clock">
+                                                                            <Image src={clock} width={15} height={15} alt="clock" />
+                                                                        </span>
+                                                                        {lender.tenureRange || "NA"}
+
+                                                                    </div>
+                                                                    <div className={styles.infoItem}>
+                                                                        {/* <span role="img" aria-label="interest">💰</span>{lender.interest} */}
+                                                                        {/* <span role="img" aria-label="interest"></span> */}
+                                                                        <span role="img" aria-label="percentage">
+                                                                            <Image src={per} alt='percentage image' width={15} height={15} />
+                                                                        </span>
+                                                                        {/* {lender.interest} */ <p>Interest {lender.interestRange}</p>}
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    {<button
+                                                                        className={styles.cardButton}
+                                                                        onClick={(e) => getLendersListRysa(e)}
+
+                                                                    >
+                                                                        Get Loan
+                                                                    </button>}
+                                                                </div>
+                                                            </div>
+                                                        </>) : null}
+                                                </div>
+                                            ))}
+                                    </div>
+                                </>
                             )}
                             {/* </div> */}
                         </div>

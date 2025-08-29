@@ -473,6 +473,8 @@ const LoanApprovalPage = () => {
 
         router.push("/ondc/loanoffer");
 
+      }else if(parsedData?.error || parsedData?.message?.ack?.status === "NACK"){
+        window.location.href = `/yubi/RejectionPage`;
       }
 
       // setWaitingForCallback(false);

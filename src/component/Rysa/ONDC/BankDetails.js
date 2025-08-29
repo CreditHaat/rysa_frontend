@@ -658,7 +658,10 @@ const Bankdetails = () => {
         // const submissionId = parsedData.message.order.items[0].xinput.form_response.submission_id;
         // console.log("The submission id that we got is : ",submissionId);
       } else {
-        console.log("Not gone in if part of handleWebSocketMessageForStatus");
+        // console.log("Not gone in if part of handleWebSocketMessageForStatus");
+        console.log("Your application not accepted", parsedData);
+        localStorage.setItem('mobileNumberForRejection', formSubmissionData.contactNumber);
+        window.location.href = `/ondc/RejectionPage?mobilenumber=${formSubmissionData.contactNumber}`;
       }
 
     } catch (error) {

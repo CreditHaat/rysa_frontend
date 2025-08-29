@@ -13,11 +13,13 @@ import OnStatusContext from "./context/OnStatusContext";
 import SelectedLenderContext from "./context/SelectedLenderContext";
 import useWebSocketONDCstatus from "./Websocket/useWebSocketONDCstatus";
 import CallbackLoader from "./LoadingPages/CallbackLoader";
+import OnSearchContext from "./context/OnSearchContext";
 
 export default function ReviewLoanPage() {
 
   const externalFormWindowRef = useRef(null);
 
+  const { formSubmissionData} = useContext(OnSearchContext);
   const {finalLoanOffer, setFinalLoanOffer} = useContext(FinalLoanOfferContext);
   const { onStatusData, setOnStatusData, initPayload, setInitPayload } = useContext(OnStatusContext);
   const { SelectedLenderData, setSelectedLenderData, globalSettlementAmount, setGlobalSettlementAmount, kycForm, setKycForm } = useContext(SelectedLenderContext);
@@ -169,6 +171,9 @@ const contCharges={
         router.push("/ondc/bankdetails");
       } else {
         console.log("Your application not accepted");
+        console.log("Your application not accepted", parsedData);
+        localStorage.setItem('mobileNumberForRejection', formSubmissionData.contactNumber);
+        window.location.href = `/ondc/RejectionPage?mobilenumber=${formSubmissionData.contactNumber}`;
       }
 
     } catch (error) {

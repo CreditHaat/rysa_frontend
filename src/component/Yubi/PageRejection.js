@@ -16,7 +16,7 @@ export default function RejectPage() {
   const [interestRate, setInterestRate] = useState("");
   
   const handleNextClick = () => {
-    window.location.href = "https://app.credithaat.com";
+    window.location.href = "https://app.credithaat.com/RejectionPage";
   };
 
   return (
