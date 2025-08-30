@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import "./NewPlPage.css";
-import Image from 'next/image';
+import Image from "next/image";
 // import hdb from '../../../public/Jays/HDB.png';
 // import listimage1 from "./newplimages/updatedpl_jounreybannerimage.jpeg";
 // import listimage2 from "./newplimages/finalimage3.png";
@@ -10,7 +10,7 @@ import styles from "./NewPlFirstPage.module.css";
 // import EmblaCarousel from "./Emblacarousel/js/EmblaCarousel";
 import axios from "axios";
 // import BLApplyLenders from "../BLApplyPrimeSecondJourney/BLApplyLenders";
-import NewBlListPage from "../NewBlListPage"
+import NewBlListPage from "../NewBlListPage";
 // import Loader from '../BLApplyPrimeSecondJourney/LendersLoader';
 import Loader from "./LendersLoader";
 import ApplicationLoader from "./ApplicationLoader";
@@ -247,7 +247,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
       // setLastname(surname);
       // setFirstName(fname);
 
-      // 
+      //
       const nameParts = capitalizedValue.trim().split(" ").filter(Boolean);
 
       const fname = nameParts[0] || "";
@@ -261,7 +261,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
       setFirstName(fname);
       setLastname(lname);
       setFatherName(fathername);
-//
+      //
       // Validate name
       if (capitalizedValue.trim() === "") {
         setFormErrors((prevErrors) => ({
@@ -307,15 +307,15 @@ const RaysaNewPage = ({ params, searchParams }) => {
     //   valid = false;
     // }
     if (!formData.fullname) {
-  errors.fullname = "Full name is required";
-  valid = false;
-} else {
-  const nameParts = formData.fullname.trim().split(/\s+/); // split by whitespace
-  if (nameParts.length < 3) {
-    errors.fullname = "Please enter full name";
-    valid = false;
-  }
-}
+      errors.fullname = "Full name is required";
+      valid = false;
+    } else {
+      const nameParts = formData.fullname.trim().split(/\s+/); // split by whitespace
+      if (nameParts.length < 3) {
+        errors.fullname = "Please enter full name";
+        valid = false;
+      }
+    }
 
     // Mobile Number validation
     if (!formData.mobileNumber.trim()) {
@@ -334,7 +334,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
       errors.profession = ""; // Clear error if the profession is valid
     }
 
-    if (!formData.paymentType) {
+    if (!formData.paymentType || formData.paymentType === "NA") {
       errors.paymentType = "Payment type is required";
       valid = false;
     }
@@ -403,37 +403,66 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
       const urllink = location.search?.split("?")[1] || "null";
 
-      const formData1 = new FormData();
-      formData1.append("userPhoneNumber", formData.mobileNumber);
-      formData1.append("firstName", firstName);// added apend father name here
-      formData1.append("fatherName",fatherName);
-      formData1.append("lastName", lastname);
-      formData1.append("profession", formData.profession);
-      formData1.append("income", formData.monthlyIncome);
-      formData1.append("paymentType", formData.paymentType);
-      formData1.append("pan", formData.pan);
-      formData1.append("dsa", dsa);
-      formData1.append("channel", channel);
-      formData1.append("source", source);
-      formData1.append("sub_source", subSource);
-      formData1.append("campaign", urllink);
-      formData1.append("sub_dsa", subDsa);
-      // localStorage.setItem("userFormData", JSON.stringify(formData1));
-//axios1
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}chfronetendotpgenerator_PlApplyNewRysa`,
-        formData1
+      // try {
+      // Build payload as per backend LeadController
+      const payload2 = {
+        mobilenumber: formData.mobileNumber, // ✅ backend expects "mobilenumber" (lowercase)
+        firstname: firstName,
+        lastname: lastname,
+        father_name: fatherName, // ✅ backend expects "father_name"
+        pan: formData.pan,
+        monthlyIncome: formData.monthlyIncome,
+        paymentType: formData.paymentType, // ✅ must be integer in backend
+        occupation: formData.profession, // ✅ backend maps salaried/self_employed/etc.
+      };
+
+      const response2 = await axios.post(
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/leadcreate`,
+        payload2,
+        {
+          headers: {
+            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=", // ✅ backend requires token header
+          },
+        }
       );
 
-      if (response.data.code === 0) {
-        setStgOneHitId(response.data.obj.stgOneHitId);
-        setstgTwoHitId(response.data.obj.stgTwoHitId);
-        sett_experian_log_id(response.data.obj.t_experian_log_id);
-        handleDataLayerStart(
-          response.data.obj.user_exist,
-          formData.mobileNumber,
-          formData.profession
-        );
+      const payload = {
+        Mobilenumber: formData.mobileNumber,
+        firstname: firstName,
+        fathername: fatherName,
+        lastname: lastname,
+        profession: formData.profession,
+        monthlyIncome: formData.monthlyIncome,
+        paymentType: formData.paymentType,
+        pan: formData.pan,
+        dsa,
+        channel,
+        source,
+        sub_source: subSource,
+        campaign: urllink,
+        sub_dsa: subDsa,
+        agent_id: "1246569", // if mandatory
+        agent: "BTI", // if mandatory
+      };
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/send`,
+        payload
+      );
+      console.log("response is", response);
+      console.log("response of send api is stg:", response.data.stgOneHitId);
+      if (response.data.code === 0 || response.data.code === 200) {
+        console.log("response of the send api code is", response.data.code);
+        setStgOneHitId(response.data.stgOneHitId);
+        setstgTwoHitId(response.data.stgTwoHitId);
+        sett_experian_log_id(response.data.t_experian_log_id);
+
+        localStorage.setItem("stgOneHitId", response.data.stgOneHitId);
+        localStorage.setItem("stgTwoHitId", response.data.stgTwoHitId);
+        // handleDataLayerStart(
+        //   response.data.obj.user_exist,
+        //   formData.mobileNumber,
+        //   formData.profession
+        // );
       }
 
       if (response.status === 200) {
@@ -449,22 +478,47 @@ const RaysaNewPage = ({ params, searchParams }) => {
     verify_otp_credithaat_from_backend();
     // setIsOtpBottomSheetVisible(false);
   };
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const verify_otp_credithaat_from_backend = async (e) => {
+    if (isVerifying) {
+      console.log("Already verifying, skipping duplicate call...");
+      return;
+    }
+
+    setIsVerifying(true);
     // e.preventDefault();
+    const finalStgOneHitId = stgOneHitId || localStorage.getItem("stgOneHitId");
+    const finalStgTwoHitId = stgTwoHitId || localStorage.getItem("stgTwoHitId");
+
+    console.log(
+      "Using final IDs for verify:",
+      finalStgOneHitId,
+      finalStgTwoHitId
+    );
+
+    if (!finalStgOneHitId || !finalStgTwoHitId) {
+      console.error("Missing Stage IDs");
+      setIsVerifying(false);
+      return;
+    }
+
     setOtpLoader(true);
     try {
-      const formData1 = new FormData();
-      formData1.append("mobileNumber", formData.mobileNumber);
-      formData1.append("otp", upotp);
-      formData1.append("stgOneHitId", stgOneHitId);
-      formData1.append("stgTwoHitId", stgTwoHitId);
-      formData1.append("t_experian_log_id", t_experian_log_id);
+      const payload = {
+        Mobilenumber: formData.mobileNumber, // match backend field name
+        OTP: upotp, // backend expects OTP
+        stgOneHitId: finalStgOneHitId,
+        stgTwoHitId: finalStgTwoHitId,
+        otpGenerationStatusfromexperian: "1", // required in backend validation
+        agent_id: "1246569",
+        agent: "BTI",
+      };
 
       // axios2otp
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}verifyOTPNewPersonalloan`,
-        formData1
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/verify`,
+        payload
       );
 
       console.log("The otp response is :: ", response);
@@ -480,27 +534,27 @@ const RaysaNewPage = ({ params, searchParams }) => {
         setOtpVerified(true);
         setOtpLoader(false);
         // setResidentialPincodeFlag(response.data.code === 0 || response.data.code === 2);
-        if (response.data.obj.dob === "" || response.data.obj.dob === null) {
-          setDobFlag(true);
-        }
-        if (
-          response.data.obj.pincode === "" ||
-          response.data.obj.pincode === null
-        ) {
-          setResidentialPincodeFlag(true);
-        }
-        if (
-          response.data.obj.gender === "" ||
-          response.data.obj.gender === null
-        ) {
-          setGenderFlag(true);
-        }
-        if (
-          response.data.obj.address1 === "" ||
-          response.data.obj.address1 === null
-        ) {
-          setAddressFlag(true);
-        }
+        // if (response.data.obj.dob === "" || response.data.obj.dob === null) {
+        //   setDobFlag(true);
+        // }
+        // if (
+        //   response.data.obj.pincode === "" ||
+        //   response.data.obj.pincode === null
+        // ) {
+        //   setResidentialPincodeFlag(true);
+        // }
+        // if (
+        //   response.data.obj.gender === "" ||
+        //   response.data.obj.gender === null
+        // ) {
+        //   setGenderFlag(true);
+        // }
+        // if (
+        //   response.data.obj.address1 === "" ||
+        //   response.data.obj.address1 === null
+        // ) {
+        //   setAddressFlag(true);
+        // }
         // setGenderFlag(true);
         // setAddressFlag(true);
         // Close the OTP Bottom Sheet only when the OTP is correct
@@ -511,6 +565,12 @@ const RaysaNewPage = ({ params, searchParams }) => {
         } else {
           setActiveContainer("RysaNewPage2"); // Display NewPlApplyDS if self-employed
         }
+      } else if (response.data.code === -1) {
+        // ❌ Invalid OTP
+        setOtpLoader(false);
+        setOtpStatus("Incorrect OTP! Try Again..");
+        setUpOtp("");
+        setOtpInputs(["", "", "", "", "", ""]);
       } else {
         // setOtpLoader(false);
         // // setOtpStatus("Incorrect OTP! Try Again..");
@@ -521,14 +581,16 @@ const RaysaNewPage = ({ params, searchParams }) => {
         // // setOtpInputs(new Array(6).fill(""));
 
         setOtpLoader(false);
-      // Clear OTP status first, then set the error message
-      setOtpStatus("");
-      setTimeout(() => {
-        setOtpStatus("Incorrect OTP! Try Again..");
-      }, 50);
+        // Clear OTP status first, then set the error message
+        setOtpStatus("");
+        setTimeout(() => {
+          setOtpStatus("Incorrect OTP! Try Again..");
+        }, 50);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setIsVerifying(false); // unlock for next attempt
     }
   };
 
@@ -539,6 +601,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
     try {
       const formData1 = new FormData();
       formData1.append("mobilenumber", formData.mobileNumber);
+
+      // Windows.location.href = `https://www.arysefin.com/ondc?mobilenumber=${formData.mobileNumber}`;
 
       // axios3lenderlist
       const response = await axios.post(
@@ -592,8 +656,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
   };
   const nextInputRef = useRef(null);
   const paymentTypeRef = useRef(null);
-  const [isProfessionMenuOpen, setIsProfessionMenuOpen] = useState(false);
-  const [isPaymentTypeMenuOpen, setIsPaymentTypeMenuOpen] = useState(false);
+  // const [isProfessionMenuOpen, setIsProfessionMenuOpen] = useState(false);
+  // const [isPaymentTypeMenuOpen, setIsPaymentTypeMenuOpen] = useState(false);
   const monthlyIncomeRef = useRef(null); // Reference for the monthly income field
   const mobileNumberRef = useRef(null);
 
@@ -606,33 +670,38 @@ const RaysaNewPage = ({ params, searchParams }) => {
         {...innerProps}
         style={{
           padding: "10px",
-          position: "relative", // Ensures that the radio button is placed on the right side
+          position: "relative",
+          cursor: "pointer",
+          backgroundColor: isSelected ? "#f0f0f0" : "white",
+        }}
+        onClick={() => {
+          selectOption(data); // ✅ This will trigger onChange and close menu
         }}
       >
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between", // Space between label and radio button
-            alignItems: "center", // Aligns the label and radio button
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <span>{data.label}</span> {/* Label on the left */}
+          <span>{data.label}</span>
           <input
             type="radio"
-            name="profession"
+            name={data.name || "option"}
             value={data.value}
             checked={isSelected}
-            onChange={() => selectOption(data)} // Select option when radio button is clicked
+            readOnly
+            style={{ pointerEvents: "none" }}
           />
         </div>
 
-        {/* Horizontal line below the option and radio button */}
         <hr
           style={{
             margin: "5px 0",
             border: "0",
-            borderTop: "1px solid #ddd", // Optional styling for the horizontal line
-            width: "100%", // Ensure the line spans the entire width
+            borderTop: "1px solid #ddd",
+            width: "100%",
           }}
         />
       </div>
@@ -703,88 +772,95 @@ const RaysaNewPage = ({ params, searchParams }) => {
       setFormErrors({ ...formErrors, mobileNumber: "" });
     }
 
-    if (value.length === 10) {
-      // Automatically focus and open the profession dropdown when mobile number has 10 digits
-      setTimeout(() => {
-        if (nextInputRef.current) {
-          mobileNumberRef.current.blur();
-          nextInputRef.current.focus(); // Focus on the Profession field
-          setIsProfessionMenuOpen(true); // Open the dropdown
-        }
-      }, 100); // Small delay to ensure focus is set first
-    }
+    // if (value.length === 10) {
+    //   // Automatically focus and open the profession dropdown when mobile number has 10 digits
+    //   setTimeout(() => {
+    //     if (nextInputRef.current) {
+    //       mobileNumberRef.current.blur();
+    //       nextInputRef.current.focus(); // Focus on the Profession field
+    //       setIsProfessionMenuOpen(true); // Open the dropdown
+    //     }
+    //   }, 100); // Small delay to ensure focus is set first
+    // }
   };
 
   const handleProfessionChange = (selectedOption) => {
-    setFormData({ ...formData, profession: selectedOption.value });
+    // console.log("Selected profession:", selectedOption);
 
-    // Only clear the error if a valid profession is selected (not 'NA')
+    // ✅ Update state
+    setFormData({
+      ...formData,
+      profession: selectedOption.value,
+    });
+
+    // ✅ Clear error if valid option selected
     if (selectedOption.value !== "NA") {
-      setFormErrors({ ...formErrors, profession: "" }); // Clear error for valid option
+      setFormErrors({
+        ...formErrors,
+        profession: "",
+      });
     } else {
-      setFormErrors({ ...formErrors, profession: "Profession is required" }); // Show error if 'NA' is selected
+      setFormErrors({
+        ...formErrors,
+        profession: "Profession is required",
+      });
     }
 
-    setIsProfessionMenuOpen(false); // Close the profession dropdown
-
-    // Automatically focus on the next field (paymentType)
-    if (paymentTypeRef.current) {
-      paymentTypeRef.current.focus();
-      setTimeout(() => {
-        setIsPaymentTypeMenuOpen(true); // Open payment type dropdown after focus
-      }, 100);
-    }
+    // ✅ Menu will automatically close after selection due to react-select default behavior
   };
 
   // Handle profession field interactions
-  const handleProfessionFocus = () => {
-    setIsProfessionMenuOpen(true); // Open dropdown menu
-  };
+  // const handleProfessionFocus = () => {
+  //   setIsProfessionMenuOpen(true); // Open dropdown menu
+  // };
 
-  const handleProfessionBlur = () => {
-    setIsProfessionMenuOpen(false); // Close dropdown menu when focus leaves
-  };
+  // const handleProfessionBlur = () => {
+  //   setIsProfessionMenuOpen(false); // Close dropdown menu when focus leaves
+  // };
 
-  const handleProfessionClick = (e) => {
-    e.stopPropagation(); // Prevent the keyboard from opening when clicking on the profession field
-    setIsProfessionMenuOpen(true); // Open dropdown menu
-  };
+  // const handleProfessionClick = (e) => {
+  //   e.stopPropagation(); // Prevent the keyboard from opening when clicking on the profession field
+  //   setIsProfessionMenuOpen(true); // Open dropdown menu
+  // };
 
   const handlePaymentTypeChange = (selectedOption) => {
-    // Set the form data with the selected value
-    setFormData({ ...formData, paymentType: selectedOption.value });
+    // console.log("Selected payment type:", selectedOption);
 
-    // Check if the selected value is not 'NA' (Select Payment Type)
+    // ✅ Update state
+    setFormData({
+      ...formData,
+      paymentType: selectedOption.value,
+    });
+
+    // ✅ Clear error if valid option selected
     if (selectedOption.value !== "NA") {
-      // Clear any error if a valid option is selected
-      setFormErrors({ ...formErrors, paymentType: "" });
+      setFormErrors({
+        ...formErrors,
+        paymentType: "",
+      });
     } else {
-      // Show error if 'Select Payment Type' is selected
-      setFormErrors({ ...formErrors, paymentType: "Payment type is required" });
+      setFormErrors({
+        ...formErrors,
+        paymentType: "Payment type is required",
+      });
     }
 
-    // Optionally close the menu after selection
-    setIsPaymentTypeMenuOpen(false);
-
-    // Automatically focus on the monthly income field after selection
-    if (monthlyIncomeRef.current) {
-      monthlyIncomeRef.current.focus();
-    }
+    // ✅ Menu will automatically close after selection
   };
 
   // Handle Payment Type field interactions
-  const handlePaymentTypeFocus = () => {
-    setIsPaymentTypeMenuOpen(true); // Open dropdown menu when focused
-  };
+  // const handlePaymentTypeFocus = () => {
+  //   setIsPaymentTypeMenuOpen(true); // Open dropdown menu when focused
+  // };
 
-  const handlePaymentTypeBlur = () => {
-    setIsPaymentTypeMenuOpen(false); // Close dropdown menu when blurred
-  };
+  // const handlePaymentTypeBlur = () => {
+  //   setIsPaymentTypeMenuOpen(false); // Close dropdown menu when blurred
+  // };
 
-  const handlePaymentTypeClick = (e) => {
-    e.stopPropagation(); // Prevent the keyboard from opening when clicking on the Payment Type field
-    setIsPaymentTypeMenuOpen(true); // Open dropdown menu
-  };
+  // const handlePaymentTypeClick = (e) => {
+  //   e.stopPropagation(); // Prevent the keyboard from opening when clicking on the Payment Type field
+  //   setIsPaymentTypeMenuOpen(true); // Open dropdown menu
+  // };
 
   function handleDataLayerStart(flag, mobile_number, emptype) {
     console.log("INside handledatalayer , ", flag, mobile_number, emptype);
@@ -819,9 +895,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
     console.log(cpi);
 
     if (lenderCpi === 1) {
-
       // if (productname === "HDB") {
-          try {
+      try {
         const savedData = localStorage.getItem("userFormData");
         if (!savedData) {
           console.error("❌ No user data found in localStorage");
@@ -856,7 +931,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
         // ✅ STEP 0: Create lead on RYSA
         const createLeadResponse = await axios.post(
-          `https://uat.getrysa.com/api/leadcreate`,
+          `http://localhost:8080/api/leadcreate`,
           leadPayload,
           {
             headers: {
@@ -884,10 +959,10 @@ const RaysaNewPage = ({ params, searchParams }) => {
         console.error("❌ HDB API Error:", err);
       }
 
-          // setRedirectionLinkLoader(false);
-          return;
-        // }
-      
+      // setRedirectionLinkLoader(false);
+      return;
+      // }
+
       setRedirectionLinkLoader(true);
       const lenderApplicationLink = localStorage.getItem("applicationLink");
 
@@ -936,7 +1011,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
       // return; // Exit the function to avoid further execution
     } else {
       // if (productname === "HDB") {
-          try {
+      try {
         const savedData = localStorage.getItem("userFormData");
         if (!savedData) {
           console.error("❌ No user data found in localStorage");
@@ -1011,7 +1086,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
         formData1.append("product", productname);
 
         // setlenderName(productname);
-// axios5apiExecution
+        // axios5apiExecution
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}apiExecution`,
           formData1,
@@ -1055,7 +1130,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
         }
 
         console.log("for partner page", response);
-      } catch (error) { }
+      } catch (error) {}
     }
   };
 
@@ -1084,9 +1159,9 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
   const [otpLoader, setOtpLoader] = useState(false);
   // i am added this
-// setTimeout(() => {
-//   // इथे अधिक UI अपडेट करा
-// }, 1000);
+  // setTimeout(() => {
+  //   // इथे अधिक UI अपडेट करा
+  // }, 1000);
 
   // State for progress calculation
   const [progress, setProgress] = useState(0);
@@ -1113,16 +1188,31 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
   //slider
   const slides = [
-    { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s141.png' },
-    { title: 'Festive Loan,<br> Bonanza!', subtitle: 'Exclusive benefits for limited period.', img: '/s171.png' },
-    { title: 'Easy Loans, Happy<br> Moments!', subtitle: 'Quick money,zero worries.', img: '/s11.png' },
+    {
+      title: "Simple Loans,Big<br> Smiles!",
+      subtitle: "Get money when you need it, stress‑free.",
+      img: "/s141.png",
+    },
+    {
+      title: "Festive Loan,<br> Bonanza!",
+      subtitle: "Exclusive benefits for limited period.",
+      img: "/s171.png",
+    },
+    {
+      title: "Easy Loans, Happy<br> Moments!",
+      subtitle: "Quick money,zero worries.",
+      img: "/s11.png",
+    },
   ];
 
   const [currentSlide, setSlide] = useState(0);
   const [currentStep, setStep] = useState(1);
 
   useEffect(() => {
-    const id = setInterval(() => setSlide(i => (i + 1) % slides.length), 3500);
+    const id = setInterval(
+      () => setSlide((i) => (i + 1) % slides.length),
+      3500
+    );
     return () => clearInterval(id);
   }, []);
   return (
@@ -1171,8 +1261,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
           lenderProduct={lenderProduct}
           mainFormData={formData}
           firstName={firstName}
-          lastName= {lastname}
-          fatherName= {fatherName}
+          lastName={lastname}
+          fatherName={fatherName}
           dobFlag={dobFlag}
           residentialPincodeFlag={residentialPincodeFlag}
           genderFlag={genderFlag}
@@ -1196,74 +1286,98 @@ const RaysaNewPage = ({ params, searchParams }) => {
             home add
             <EmblaCarousel slides={SLIDES} options={OPTIONS} />
           </div> */}
-          <div className={styles.header} style={{
-            width: '100%',
-            maxWidth: '414px',
-            // height: '200px',
-            background: 'linear-gradient(to right, #f3b2f5 50%, #a78afa)',
-            boxSizing: 'border-box',
-            margin: '0 auto',
-            position: 'relative',
-            padding: '24px 20px 10px 20px',
-            minHeight: '190px',
-            color: '#ffffff',
-            marginBottom: '-35px',
-            top: '-100px',
-            // border:'2px solid ',
-          }}>
-
-            <div className={styles.heroText} style={{
-              paddingTop: '15px',
-              position: 'relative',
-              zIndex: 2
-            }}>
-              <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }} style={{
-                fontSize: '22px',
-                fontWeight: 700,
-                lineHeight: 1.2
-              }} />
-              <p className={styles.subtitle} dangerouslySetInnerHTML={{ __html: slides[currentSlide].subtitle }} style={{
-                fontSize: '14px',
-                marginTop: '4px'
-              }} />
+          <div
+            className={styles.header}
+            style={{
+              width: "100%",
+              maxWidth: "414px",
+              // height: '200px',
+              background: "linear-gradient(to right, #f3b2f5 50%, #a78afa)",
+              boxSizing: "border-box",
+              margin: "0 auto",
+              position: "relative",
+              padding: "24px 20px 10px 20px",
+              minHeight: "190px",
+              color: "#ffffff",
+              marginBottom: "-35px",
+              top: "-100px",
+              // border:'2px solid ',
+            }}
+          >
+            <div
+              className={styles.heroText}
+              style={{
+                paddingTop: "15px",
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              <h1
+                className={styles.title}
+                dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }}
+                style={{
+                  fontSize: "22px",
+                  fontWeight: 700,
+                  lineHeight: 1.2,
+                }}
+              />
+              <p
+                className={styles.subtitle}
+                dangerouslySetInnerHTML={{
+                  __html: slides[currentSlide].subtitle,
+                }}
+                style={{
+                  fontSize: "14px",
+                  marginTop: "4px",
+                }}
+              />
             </div>
             <div
               className={styles.progressBar}
               style={{
-                justifyContent: 'center',
-                marginTop: '35px',
-                display: 'flex',
-                gap: '6px'
+                justifyContent: "center",
+                marginTop: "35px",
+                display: "flex",
+                gap: "6px",
               }}
             >
               {slides.map((_, i) => (
                 <span
                   key={i}
                   style={{
-                    alignItems: 'center',
-                    paddingLeft: '10px',
-                    width: '28px',
-                    height: '6px',
-                    borderRadius: '2px',
-                    background: i === currentSlide ? '#ffffff' : '#ffffff66', // Conditional background
-                    cursor: 'pointer'
+                    alignItems: "center",
+                    paddingLeft: "10px",
+                    width: "28px",
+                    height: "6px",
+                    borderRadius: "2px",
+                    background: i === currentSlide ? "#ffffff" : "#ffffff66", // Conditional background
+                    cursor: "pointer",
                   }}
                   onClick={() => setSlide(i)}
                 />
               ))}
             </div>
-            <div className={styles.imgWrap} style={{
-              position: 'absolute',
-              right: '2px',
-              bottom: '0px',
-              width: '180px',
-              height: '170px',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              marginBottom: '20px'
-            }}>
-              <Image src={slides[currentSlide].img} alt="Hero visual" fill priority style={{ objectFit: 'cover' }}
-                className="object-cover w-full h-full" />
+            <div
+              className={styles.imgWrap}
+              style={{
+                position: "absolute",
+                right: "2px",
+                bottom: "0px",
+                width: "180px",
+                height: "170px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                marginBottom: "20px",
+              }}
+            >
+              <Image
+                src={slides[currentSlide].img}
+                alt="Hero visual"
+                fill
+                priority
+                style={{ objectFit: "cover" }}
+                className="object-cover w-full h-full"
+              />
             </div>
           </div>
           {/* 👉 Move Apply Now here */}
@@ -1271,7 +1385,16 @@ const RaysaNewPage = ({ params, searchParams }) => {
             className="newfirstcard-container"
             // style={{ top:'0px',boxSizing: "content-box" }}
           >
-            <div style={{ textAlign:'center', top:'0px',color: '#777777', position:'absolute', fontSize:'16px', paddingTop:'30px'}}>
+            <div
+              style={{
+                textAlign: "center",
+                top: "0px",
+                color: "#777777",
+                position: "absolute",
+                fontSize: "16px",
+                paddingTop: "30px",
+              }}
+            >
               Please provide your personal information
             </div>
             <div className="progress-bar-container">
@@ -1375,7 +1498,6 @@ const RaysaNewPage = ({ params, searchParams }) => {
                   style={{ position: "relative" }}
                 >
                   <Select
-                    instanceId="profession-select" 
                     id="profession"
                     name="profession"
                     value={professionOptions.find(
@@ -1386,22 +1508,12 @@ const RaysaNewPage = ({ params, searchParams }) => {
                     onChange={handleProfessionChange}
                     styles={customStyles}
                     placeholder="Select Occupation"
-                    // onBlur={() =>
-                    //   // Only set the error if the user hasn't selected a valid profession
-                    //   setFormErrors({
-                    //     ...formErrors,
-                    //     profession: formData.profession === "NA" ? "Employment type is required" : "",
-                    //   })
-                    // }
-                    menuIsOpen={isProfessionMenuOpen} // Use isProfessionMenuOpen state
-                    onFocus={handleProfessionFocus} // Open dropdown when focused
-                    onBlur={handleProfessionBlur} // Close dropdown when blurred
-                    onClick={handleProfessionClick} // Prevent keyboard opening when clicked
-                    isSearchable={false} // Prevent searching in the dropdown
-                    // menuPortalTarget={document.body} // Ensure the menu is rendered outside the container
-                    menuPosition="absolute" // Position relative to the viewport
-                    components={{ Option: CustomOption }} // Use the custom option component
+                    isSearchable={false}
+                    menuPosition="absolute"
+                    components={{ Option: CustomOption }}
+                    // ✅ REMOVED: menuIsOpen, onFocus, onBlur, onClick - let react-select handle menu state
                   />
+
                   {formErrors.profession && (
                     <span
                       className="error"
@@ -1419,7 +1531,6 @@ const RaysaNewPage = ({ params, searchParams }) => {
                 style={{ position: "relative" }}
               >
                 <Select
-                  instanceId="payment-type-select"
                   id="paymentType"
                   name="paymentType"
                   value={paymentTypeOptions.find(
@@ -1430,22 +1541,12 @@ const RaysaNewPage = ({ params, searchParams }) => {
                   onChange={handlePaymentTypeChange}
                   styles={customStyles}
                   placeholder="Select Payment Type"
-                  // onBlur={() =>
-                  //   // Only set the error if the user hasn't selected a valid profession
-                  //   setFormErrors({
-                  //     ...formErrors,
-                  //     profession: formData.profession === "NA" ? "Employment type is required" : "",
-                  //   })
-                  // }
-                  menuIsOpen={isPaymentTypeMenuOpen} // Use isPaymentTypeMenuOpen state
-                  onFocus={handlePaymentTypeFocus} // Open dropdown when focused
-                  onBlur={handlePaymentTypeBlur} // Close dropdown when blurred
-                  onClick={handlePaymentTypeClick} // Prevent keyboard from opening when clicked
-                  isSearchable={false} // Prevent searching in the dropdown
-                  // menuPortalTarget={document.body} // Ensure the menu is rendered outside the container
-                  menuPosition="absolute" // Position relative to the viewport
-                  components={{ Option: CustomOption }} // Use the custom option component
+                  isSearchable={false}
+                  menuPosition="absolute"
+                  components={{ Option: CustomOption }}
+                  // ✅ REMOVED: menuIsOpen, onFocus, onBlur, onClick - let react-select handle menu state
                 />
+
                 {formErrors.paymentType && (
                   <span
                     className="error"
@@ -1511,8 +1612,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
                     inputStage === "alphabets"
                       ? "text"
                       : inputStage === "numbers"
-                        ? "tel"
-                        : "text"
+                      ? "tel"
+                      : "text"
                   }
                   inputMode="text"
                   id="pan"

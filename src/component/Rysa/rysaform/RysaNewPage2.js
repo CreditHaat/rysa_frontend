@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import "./NewPlPage2.css";
 import styles from "./NewPIFirstPage2.module.css";
 // import EmblaCarousel from "./Emblacarousel/js/EmblaCarousel";
@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import Loader from "./NewBlJourneyD/LendersLoader";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import RedirectionLoader from "./NewBlJourneyD/RedirectionLoader";
 import ApplicationLoader from "./NewBlJourneyD/ApplicationLoader";
 import ApplicationPopup from "./NewBlJourneyD/ErrorPopup";
@@ -25,7 +25,7 @@ import {
   FaUser,
   FaChevronDown,
 } from "react-icons/fa"; // Font Awesome icons for React
-import Select from 'react-select';
+import Select from "react-select";
 // import ApplicationPopup from "../NewBlJourneyD/ApplicationPopup";
 import ErrorPopup from "./NewBlJourneyD/ErrorPopup";
 // import {Roboto} from 'next/font/google';
@@ -35,7 +35,7 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 const RysaNewPage2 = ({
-   dobFlag,
+  dobFlag,
   mainFormData,
   firstName,
   fatherName,
@@ -96,10 +96,18 @@ const RysaNewPage2 = ({
   const [companySuggestions, setCompanySuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [link, setLink] = useState(""); // added new code
-  const [officialInfoVisible, setOfficialInfoVisible] = useState(false);// adde new code
+  const [officialInfoVisible, setOfficialInfoVisible] = useState(false); // adde new code
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page when component mounts
   }, []);
+
+  console.log(
+    "dob flag is as below:",
+    dobFlag,
+    genderFlag,
+    addressFlag,
+    residentialPincodeFlag
+  );
 
   const maritalStatusOptions = [
     { value: "NA", label: "Select Marital Status" },
@@ -244,7 +252,8 @@ const RysaNewPage2 = ({
       spouseName: "",
     };
 
-    if (dobFlag && !formData.dob) {
+    // if (dobFlag && !formData.dob) {
+    if (!formData.dob) {
       errors.dob = "Date of birth is required";
       valid = false;
     }
@@ -257,20 +266,20 @@ const RysaNewPage2 = ({
       valid = false;
     }
 
-    if (addressFlag) {
-      // Validate Address
-      if (!formData.address.trim()) {
-        errors.address = "Address is required";
-        valid = false;
-      }
+    // if (addressFlag) {
+    // Validate Address
+    if (!formData.address.trim()) {
+      errors.address = "Address is required";
+      valid = false;
     }
+    // }
 
-    if (genderFlag) {
-      if (!formData.gender) {
-        errors.gender = "Gender is required";
-        valid = false;
-      }
+    // if (genderFlag) {
+    if (!formData.gender) {
+      errors.gender = "Gender is required";
+      valid = false;
     }
+    // }
 
     if (!formData.maritalStatus) {
       errors.maritalStatus = "Marital status is required";
@@ -292,11 +301,11 @@ const RysaNewPage2 = ({
       valid = false;
     }
 
-    if (residentialPincodeFlag) {
-      if (!formData.residentialPincode) {
-        errors.residentialPincode = "Home pincode is required";
-      }
+    // if (residentialPincodeFlag) {
+    if (!formData.residentialPincode) {
+      errors.residentialPincode = "Home pincode is required";
     }
+    // }
 
     // if (!formData.ITR) errors.ITR = 'ITR is required';
 
@@ -369,9 +378,14 @@ const RysaNewPage2 = ({
       if (query.length >= 1) {
         fetch(
           `${
-            process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL
-          }getCompanyNames?query=${encodeURIComponent(query)}`
+            process.env.NEXT_PUBLIC_REACT_APP_BASE_URL
+          }company/getCompanyNames?query=${encodeURIComponent(query)}`
         )
+          // fetch(
+          //   `${
+          //     process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL
+          //   }getCompanyNames?query=${encodeURIComponent(query)}`
+          // )
           .then((res) => res.json())
           .then((data) => {
             console.log("✅ API returned:", data);
@@ -394,7 +408,7 @@ const RysaNewPage2 = ({
         setCompanySuggestions([]);
         setShowSuggestions(false);
       }
-    }, 300);
+    }, 150);
 
     return () => clearTimeout(handler);
   }, [formData.companyName]);
@@ -454,6 +468,32 @@ const RysaNewPage2 = ({
     console.log("Inside handle form submit");
     e.preventDefault();
     try {
+      const payload = {
+        mobilenumber: mainFormData.mobileNumber, // must always be included
+        gender: formData.gender,
+        address: formData.address,
+        dob: formData.dob,
+        email: formData.email,
+        workEmail: formData.officeemail, // backend expects "workEmail"
+        workPincode: formData.officePincode, // backend expects "workPincode"
+        company_name: formData.companyName, // backend expects "company_name"
+        residentialPincode: formData.residentialPincode,
+        loanAmount: formData.loanAmount,
+        maritalStatus: formData.maritalStatus,
+        spouseName: formData.spouseName,
+      };
+
+      const response2 = await axios.post(
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/leadcreate`,
+        payload,
+        {
+          headers: {
+            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=", // required
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       const formData1 = new FormData();
       formData1.append("mobileNumber", mainFormData.mobileNumber);
       formData1.append("firstName", firstName);
@@ -477,34 +517,93 @@ const RysaNewPage2 = ({
 
       // setIsLoadingforLoader(true);
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}PlApplyNew_SalariedRysa`,
-        formData1
-      );
+      // const response = await axios.post(
+      //   `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL}PlApplyNew_SalariedRysa`,
+      //   formData1
+      // );
 
-     const formDataObject = {};
-    formData1.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
+      const formDataObject = {};
+      formData1.forEach((value, key) => {
+        formDataObject[key] = value;
+      });
 
-    // Store the plain object in localStorage
-    localStorage.setItem("userFormData", JSON.stringify(formDataObject));
+      // Store the plain object in localStorage
+      localStorage.setItem("userFormData", JSON.stringify(formDataObject));
       // if(cpi===1){
       // apiExecutionBackend(lenderProduct);
       // }
 
-      if (response.data.code === 0) {
+      if (response2.data.code === 200) {
         //Here when the code is 0 we are calling lendersList backend which will give us lendersList accrding to user
-        getLendersList(e);
-        //  router.push('/LoanList');
+        getLendersListRysa(e);
+        // window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
       }
 
-      if (response.status === 200) {
-      } else {
-        console.error("Submission failed:", response.statusText);
-      }
+      // if (response.status === 200) {
+      // } else {
+      //   console.error("Submission failed:", response.statusText);
+      // }
     } catch (error) {
       console.error("Error submitting form:", error);
+    }
+  };
+
+  const getLendersListRysa = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const payload = {
+        mobilenumber: mainFormData.mobileNumber,
+        dob: formData.dob,
+        profession: mainFormData.profession,
+        income: mainFormData.monthlyIncome,
+        payment_type: mainFormData.paymentType,
+        pincode: formData.residentialPincode,
+        firstname: firstName,
+        lastname: lastName,
+        pan: mainFormData.pan,
+        gender: formData.gender,
+        addressline1: formData.address,
+        email: formData.email,
+        officeaddresspincode: formData.officePincode,
+        maritalstatus: formData.maritalStatus,
+        company: formData.companyName,
+        // agent_id: formData.agentId,
+        // agent: formData.agent,
+        // email: formData.email,
+        agentid: 3534873,
+        agent: "arysefinlead",
+      };
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_REACT_UAT_BASE_URL_CH}user/reg/embeddedarysefin`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=", // ✅ your token
+          },
+        }
+      );
+
+      if (response.data.code === 200 && response.data.data?.redirectionlink) {
+        let redirectUrl = response.data.data.redirectionlink;
+
+        // If URL already has ?, append with &, otherwise add ?
+        redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
+
+        window.location.href = redirectUrl;
+      } else {
+        console.error(
+          "API did not return a valid redirect link",
+          response.data
+        );
+      }
+    } catch (error) {
+      console.error("Error calling user/reg/embedded API:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -609,37 +708,52 @@ const RysaNewPage2 = ({
       } catch (error) {}
     }
   };
-//slider
+  //slider
   const slides = [
-    { title: 'Simple Loans,Big<br> Smiles!', subtitle: 'Get money when you need it, stress‑free.', img: '/s141.png' },
-    { title: 'Festive Loan,<br> Bonanza!', subtitle: 'Exclusive benefits for limited period.', img: '/s171.png' },
-    { title: 'Easy Loans, Happy<br> Moments!', subtitle: 'Quick money,zero worries.', img: '/s11.png' },
+    {
+      title: "Simple Loans,Big<br> Smiles!",
+      subtitle: "Get money when you need it, stress‑free.",
+      img: "/s141.png",
+    },
+    {
+      title: "Festive Loan,<br> Bonanza!",
+      subtitle: "Exclusive benefits for limited period.",
+      img: "/s171.png",
+    },
+    {
+      title: "Easy Loans, Happy<br> Moments!",
+      subtitle: "Quick money,zero worries.",
+      img: "/s11.png",
+    },
   ];
 
   const [currentSlide, setSlide] = useState(0);
   const [currentStep, setStep] = useState(1);
 
   useEffect(() => {
-    const id = setInterval(() => setSlide(i => (i + 1) % slides.length), 3500);
+    const id = setInterval(
+      () => setSlide((i) => (i + 1) % slides.length),
+      3500
+    );
     return () => clearInterval(id);
   }, []);
 
-//next button
-const router = useRouter();
-const handleApplyClick = () => {
+  //next button
+  const router = useRouter();
+  const handleApplyClick = () => {
     if (validateForm()) {
       // ✅ All fields are filled, navigate
-      router.push('/LoanList');
+      router.push("/LoanList");
     } else {
       // ❌ Do not navigate
-      console.warn('Form has errors. Fix them first.');
+      console.warn("Form has errors. Fix them first.");
     }
   };
-//   const handleApplyClick = () => {
-//   router.push('/LoanList');
-// };
-const handleBackButton = () => {
-  router.push('/personal_loan');
+  //   const handleApplyClick = () => {
+  //   router.push('/LoanList');
+  // };
+  const handleBackButton = () => {
+    router.push("/personal_loan");
     // setActiveContainer("RysaNewPage"); // Switch the active container to 'NewPlPage'
   };
   return (
@@ -658,77 +772,101 @@ const handleBackButton = () => {
         {/* <div className="carousel-background">
           <EmblaCarousel slides={SLIDES} options={OPTIONS} />
         </div> */}
-        <div className={styles.header} style={{
-                    width: '100%',
-                    maxWidth: '414px',
-                    // height: '200px',
-                    background: 'linear-gradient(to right, #f3b2f5 50%, #a78afa)',
-                    boxSizing: 'border-box',
-                    margin: '0 auto',
-                    position: 'relative',
-                    padding: '24px 20px 10px 20px',
-                    minHeight: '190px',
-                    color: '#ffffff',
-                    marginBottom: '-35px',
-                    top: '-100px',
-                  }}>
-        
-                    <div className={styles.heroText} style={{
-                      paddingTop: '15px',
-                      position: 'relative',
-                      zIndex: 2
-                    }}>
-                      <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }} style={{
-                        fontSize: '22px',
-                        fontWeight: 700,
-                        lineHeight: 1.2
-                      }} />
-                      <p className={styles.subtitle} dangerouslySetInnerHTML={{ __html: slides[currentSlide].subtitle }} style={{
-                        fontSize: '14px',
-                        marginTop: '4px'
-                      }} />
-                    </div>
-                    <div
-                      className={styles.progressBar}
-                      style={{
-                        justifyContent: 'center',
-                        marginTop: '35px',
-                        display: 'flex',
-                        gap: '6px'
-                      }}
-                    >
-                      {slides.map((_, i) => (
-                        <span
-                          key={i}
-                          style={{
-                            alignItems: 'center',
-                            paddingLeft: '10px',
-                            width: '28px',
-                            height: '6px',
-                            borderRadius: '2px',
-                            background: i === currentSlide ? '#ffffff' : '#ffffff66', // Conditional background
-                            cursor: 'pointer'
-                          }}
-                          onClick={() => setSlide(i)}
-                        />
-                      ))}
-                    </div>
-                    <div className={styles.imgWrap} style={{
-                      position: 'absolute',
-                      right: '2px',
-                      bottom: '0px',
-                      width: '180px',
-                      height: '170px',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      marginBottom: '20px'
-                    }}>
-                      <Image src={slides[currentSlide].img} alt="Hero visual" fill priority style={{ objectFit: 'cover' }}
-                        className="object-cover w-full h-full" />
-                    </div>
-                  </div>
-        
-         <div
+        <div
+          className={styles.header}
+          style={{
+            width: "100%",
+            maxWidth: "414px",
+            // height: '200px',
+            background: "linear-gradient(to right, #f3b2f5 50%, #a78afa)",
+            boxSizing: "border-box",
+            margin: "0 auto",
+            position: "relative",
+            padding: "24px 20px 10px 20px",
+            minHeight: "190px",
+            color: "#ffffff",
+            marginBottom: "-35px",
+            top: "-100px",
+          }}
+        >
+          <div
+            className={styles.heroText}
+            style={{
+              paddingTop: "15px",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            <h1
+              className={styles.title}
+              dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }}
+              style={{
+                fontSize: "22px",
+                fontWeight: 700,
+                lineHeight: 1.2,
+              }}
+            />
+            <p
+              className={styles.subtitle}
+              dangerouslySetInnerHTML={{
+                __html: slides[currentSlide].subtitle,
+              }}
+              style={{
+                fontSize: "14px",
+                marginTop: "4px",
+              }}
+            />
+          </div>
+          <div
+            className={styles.progressBar}
+            style={{
+              justifyContent: "center",
+              marginTop: "35px",
+              display: "flex",
+              gap: "6px",
+            }}
+          >
+            {slides.map((_, i) => (
+              <span
+                key={i}
+                style={{
+                  alignItems: "center",
+                  paddingLeft: "10px",
+                  width: "28px",
+                  height: "6px",
+                  borderRadius: "2px",
+                  background: i === currentSlide ? "#ffffff" : "#ffffff66", // Conditional background
+                  cursor: "pointer",
+                }}
+                onClick={() => setSlide(i)}
+              />
+            ))}
+          </div>
+          <div
+            className={styles.imgWrap}
+            style={{
+              position: "absolute",
+              right: "2px",
+              bottom: "0px",
+              width: "180px",
+              height: "170px",
+              borderRadius: "8px",
+              overflow: "hidden",
+              marginBottom: "20px",
+            }}
+          >
+            <Image
+              src={slides[currentSlide].img}
+              alt="Hero visual"
+              fill
+              priority
+              style={{ objectFit: "cover" }}
+              className="object-cover w-full h-full"
+            />
+          </div>
+        </div>
+
+        <div
           className="plsecfnewfirstcard-container"
           style={{ boxSizing: "content-box" }}
         >
@@ -747,7 +885,7 @@ const handleBackButton = () => {
               </div>
             </div>
 
-            <div style={{ marginBottom: '25px' }}>
+            <div style={{ marginBottom: "25px" }}>
               <div
                 className={styles.inputWrapper}
                 style={{ position: "relative" }}
@@ -785,118 +923,115 @@ const handleBackButton = () => {
               )}
             </div>
 
-            {addressFlag && (
-              <>
-                <div className={styles.formGroup} style={{ marginBottom: '10px' }}>
-                  <div
-                    className={styles.inputWrapper}
-                    style={{ position: "relative" }}
-                  >
-                    <input
-                      type="text"
-                      id="address"
-                      name="address"
-                      placeholder="Enter residential address"
-                      value={formData.address}
-                      className={styles.input}
-                      onChange={(e) => {
-                        setFormData({ ...formData, address: e.target.value });
-                        if (formErrors.address) {
-                          setFormErrors({ ...formErrors, address: "" });
-                        }
-                      }}
-                    />
-                    <span
-                      className={styles.icon}
-                      style={{
-                        position: "absolute",
-                        right: "10px",
-                        top: "50%",
-                        color: "#00000061", // Adjusting the icon color
-                        transform: "translateY(-50%)", // Center the icon vertically
-                        cursor: "pointer",
-                      }}
-                    >
-                      <FaHome />
-                    </span>
-                  </div>
-                  {formErrors.address && (
-                    <span className="error">{formErrors.address}</span>
-                  )}
-                </div>
-              </>
-            )}
+            {/* {addressFlag && ( */}
+            {/* <> */}
+            <div className={styles.formGroup} style={{ marginBottom: "10px" }}>
+              <div
+                className={styles.inputWrapper}
+                style={{ position: "relative" }}
+              >
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  placeholder="Enter residential address"
+                  value={formData.address}
+                  className={styles.input}
+                  onChange={(e) => {
+                    setFormData({ ...formData, address: e.target.value });
+                    if (formErrors.address) {
+                      setFormErrors({ ...formErrors, address: "" });
+                    }
+                  }}
+                />
+                <span
+                  className={styles.icon}
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "50%",
+                    color: "#00000061", // Adjusting the icon color
+                    transform: "translateY(-50%)", // Center the icon vertically
+                    cursor: "pointer",
+                  }}
+                >
+                  <FaHome />
+                </span>
+              </div>
+              {formErrors.address && (
+                <span className="error">{formErrors.address}</span>
+              )}
+            </div>
+            {/* </> */}
+            {/* )} */}
 
             <div>
               {/* Gender Selection */}
-              {genderFlag && (
-                <div className={styles.formGroup}>
-                  <label style={{ fontWeight: "bold" }}>Gender</label>
-                  <div className={styles.radioGroup}>
-                    {["Male", "Female", "Other"].map((gender) => (
-                      <label
-                        key={gender}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        <input
-                          type="radio"
-                          value={gender}
-                          checked={formData.gender === gender}
-                          onChange={handleGenderChange}
-                          style={{ marginRight: "8px" }}
-                        />
-                        {gender}
-                      </label>
-                    ))}
-                  </div>
-                  {formErrors.gender && (
-                    <p style={{ color: "red" }}>{formErrors.gender}</p>
-                  )}
-                </div>
-              )}
-
-              {/* DOB Date Picker */}
-              {dobFlag && (
-                <div className={styles.formGroup}>
-                  <label style={{ fontWeight: "bold" }}>Date of Birth</label>
-                  <div
-                    className="input-wrapper"
-                    style={{ position: "relative" }}
-                  >
-                    <DatePicker
-                      selected={formData.dob}
-                      onChange={handleDateChange2}
-                      dateFormat="dd/MM/yyyy"
-                      className={styles.input}
-                      placeholderText="DD/MM/YYYY"
-                      ref={dobInputRef} // Use the ref for the actual input element
-                      showYearDropdown // This enables the year selection dropdown
-                      yearDropdownItemNumber={50} // This controls how many years are shown in the dropdown
-                      scrollableYearDropdown // Allows you to scroll through years in the dropdown
-                    />
-                    <span
-                      className="icon"
+              {/* {genderFlag && ( */}
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: "bold" }}>Gender</label>
+                <div className={styles.radioGroup}>
+                  {["Male", "Female", "Other"].map((gender) => (
+                    <label
+                      key={gender}
                       style={{
-                        position: "absolute",
-                        right: "10px",
-                        top: "50%",
-                        color: "#00000061",
-                        transform: "translateY(-50%)",
-                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "8px",
                       }}
                     >
-                      <FaCalendar />
-                    </span>
-                  </div>
-                  {formErrors.dob && (
-                    <div className="error-message">{formErrors.dob}</div>
-                  )}
+                      <input
+                        type="radio"
+                        value={gender}
+                        checked={formData.gender === gender}
+                        onChange={handleGenderChange}
+                        style={{ marginRight: "8px" }}
+                      />
+                      {gender}
+                    </label>
+                  ))}
                 </div>
-              )}
+                {formErrors.gender && (
+                  <p style={{ color: "red" }}>{formErrors.gender}</p>
+                )}
+              </div>
+              {/* // )} */}
+
+              {/* DOB Date Picker */}
+              {/* {dobFlag && ( */}
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: "bold" }}>Date of Birth</label>
+                <div className="input-wrapper" style={{ position: "relative" }}>
+                  <DatePicker
+                    selected={formData.dob}
+                    onChange={handleDateChange2}
+                    dateFormat="dd/MM/yyyy"
+                    className={styles.input}
+                    placeholderText="DD/MM/YYYY"
+                    ref={dobInputRef} // Use the ref for the actual input element
+                    showYearDropdown // This enables the year selection dropdown
+                    yearDropdownItemNumber={50} // This controls how many years are shown in the dropdown
+                    scrollableYearDropdown // Allows you to scroll through years in the dropdown
+                  />
+                  <span
+                    className="icon"
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      color: "#00000061",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FaCalendar />
+                  </span>
+                </div>
+                {formErrors.dob && (
+                  <div className="error-message">{formErrors.dob}</div>
+                )}
+              </div>
+              {/* )} */}
             </div>
 
             <>
@@ -1027,7 +1162,9 @@ const handleBackButton = () => {
                   </span>
                 </div>
                 {formErrors.loanAmount && (
-                  <span loanAmount="error" className="error">{formErrors.loanAmount}</span>
+                  <span loanAmount="error" className="error">
+                    {formErrors.loanAmount}
+                  </span>
                 )}
               </div>
 
@@ -1115,59 +1252,57 @@ const handleBackButton = () => {
                 )}
               </div>
 
-              {residentialPincodeFlag && (
-                <>
-                  <div className={styles.formGroup}>
-                    <div
-                      className={styles.inputWrapper}
-                      style={{ position: "relative" }}
-                    >
-                      <input
-                        type="text"
-                        id="residentialPincode"
-                        name="residentialPincode"
-                        placeholder="Enter Home Pincode"
-                        inputMode="numeric"
-                        value={formData.residentialPincode}
-                        className={styles.input}
-                        onChange={(e) => {
-                          const value = e.target.value
-                            .replace(/\D/g, "")
-                            .slice(0, 6); // Keep only digits and limit to 6
-                          setFormData({
-                            ...formData,
-                            residentialPincode: value,
-                          });
-                          if (formErrors.officePincode) {
-                            setFormErrors({
-                              ...formErrors,
-                              residentialPincode: "",
-                            });
-                          }
-                        }}
-                      />
-                      <span
-                        className={styles.icon}
-                        style={{
-                          position: "absolute",
-                          right: "10px",
-                          top: "50%",
-                          color: "#00000061",
-                          transform: "translateY(-50%)",
-                          cursor: "pointer",
-                        }}
-                      >
-                        <FaMapPin /> {/* Map pin (location) icon */}
-                      </span>
-                    </div>
-                    {formErrors.residentialPincode && (
-                      <span className="error">
-                        {formErrors.residentialPincode}
-                      </span>
-                    )}
-                  </div>
-                </>
-              )}
+              {/* {residentialPincodeFlag && ( */}
+              {/* <> */}
+              <div className={styles.formGroup}>
+                <div
+                  className={styles.inputWrapper}
+                  style={{ position: "relative" }}
+                >
+                  <input
+                    type="text"
+                    id="residentialPincode"
+                    name="residentialPincode"
+                    placeholder="Enter Home Pincode"
+                    inputMode="numeric"
+                    value={formData.residentialPincode}
+                    className={styles.input}
+                    onChange={(e) => {
+                      const value = e.target.value
+                        .replace(/\D/g, "")
+                        .slice(0, 6); // Keep only digits and limit to 6
+                      setFormData({
+                        ...formData,
+                        residentialPincode: value,
+                      });
+                      if (formErrors.residentialPincode) {
+                        setFormErrors({
+                          ...formErrors,
+                          residentialPincode: "",
+                        });
+                      }
+                    }}
+                  />
+                  <span
+                    className={styles.icon}
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      color: "#00000061",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FaMapPin /> {/* Map pin (location) icon */}
+                  </span>
+                </div>
+                {formErrors.residentialPincode && (
+                  <span className="error">{formErrors.residentialPincode}</span>
+                )}
+              </div>
+              {/* </> */}
+              {/* // )} */}
 
               <div
                 className={styles.formGroup}
@@ -1176,7 +1311,7 @@ const handleBackButton = () => {
                 <Select
                   id="maritalStatus"
                   name="maritalStatus"
-                  instanceId="maritalStatus-select" 
+                  instanceId="maritalStatus-select"
                   value={maritalStatusOptions.find(
                     (option) => option.value === formData.maritalStatus
                   )}
