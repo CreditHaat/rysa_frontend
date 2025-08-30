@@ -535,8 +535,8 @@ const RysaNewPage2 = ({
 
       if (response2.data.code === 200) {
         //Here when the code is 0 we are calling lendersList backend which will give us lendersList accrding to user
-        getLendersListRysa(e);
-        // window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
+        // getLendersListRysa(e);
+        window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
       }
 
       // if (response.status === 200) {
@@ -753,7 +753,7 @@ const RysaNewPage2 = ({
   //   router.push('/LoanList');
   // };
   const handleBackButton = () => {
-    router.push("/personal_loan");
+    router.push("/personal-loan");
     // setActiveContainer("RysaNewPage"); // Switch the active container to 'NewPlPage'
   };
   return (

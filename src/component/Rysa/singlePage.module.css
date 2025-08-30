@@ -2120,4 +2120,20 @@ other mobile reposive code
     color: #f0a500;
   }
 }
+.footerTermText{
+font-size: 1rem;
+}
+.footerSpan1{
+  color:#f3b2f5;
+
+}
+.footerSpan{
+ color:#f3b2f5;
+}
+.footerSpan1:active{
+    color: #e373e7;
+}
+.footerSpan:active{
+    color: #e373e7;
+}
 
