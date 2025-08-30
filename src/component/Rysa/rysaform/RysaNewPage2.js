@@ -55,9 +55,9 @@ const RysaNewPage2 = ({
     officeemail: "",
     officePincode: "",
     residentialPincode: "",
-    loanAmount: "",
-    maritalStatus: "",
-    spouseName: "",
+    // loanAmount: "",
+    // maritalStatus: "",
+    // spouseName: "",
   });
 
   const [formData, setFormData] = useState({
@@ -69,9 +69,9 @@ const RysaNewPage2 = ({
     officeemail: "",
     officePincode: "",
     residentialPincode: "",
-    loanAmount: "",
-    maritalStatus: "",
-    spouseName: "",
+    // loanAmount: "",
+    // maritalStatus: "",
+    // spouseName: "",
   });
 
   const [consent, setConsent] = useState(false);
@@ -247,9 +247,9 @@ const RysaNewPage2 = ({
       officeemail: "",
       officePincode: "",
       residentialPincode: "",
-      loanAmount: "",
-      maritalStatus: "",
-      spouseName: "",
+      // loanAmount: "",
+      // maritalStatus: "",
+      // spouseName: "",
     };
 
     // if (dobFlag && !formData.dob) {
@@ -281,25 +281,25 @@ const RysaNewPage2 = ({
     }
     // }
 
-    if (!formData.maritalStatus) {
-      errors.maritalStatus = "Marital status is required";
-      valid = false;
-    }
+    // if (!formData.maritalStatus) {
+    //   errors.maritalStatus = "Marital status is required";
+    //   valid = false;
+    // }
 
-    if (!formData.loanAmount.trim()) {
-      errors.loanAmount = "Loan amount is required";
-      valid = false;
-    }
+    // if (!formData.loanAmount.trim()) {
+    //   errors.loanAmount = "Loan amount is required";
+    //   valid = false;
+    // }
 
-    if (!formData.maritalStatus) {
-      errors.maritalStatus = "Marital status is required";
-      valid = false;
-    }
+    // if (!formData.maritalStatus) {
+    //   errors.maritalStatus = "Marital status is required";
+    //   valid = false;
+    // }
 
-    if (formData.maritalStatus === "married" && !formData.spouseName.trim()) {
-      errors.spouseName = "Spouse name is required";
-      valid = false;
-    }
+    // if (formData.maritalStatus === "married" && !formData.spouseName.trim()) {
+    //   errors.spouseName = "Spouse name is required";
+    //   valid = false;
+    // }
 
     // if (residentialPincodeFlag) {
     if (!formData.residentialPincode) {
@@ -478,9 +478,9 @@ const RysaNewPage2 = ({
         workPincode: formData.officePincode, // backend expects "workPincode"
         company_name: formData.companyName, // backend expects "company_name"
         residentialPincode: formData.residentialPincode,
-        loanAmount: formData.loanAmount,
-        maritalStatus: formData.maritalStatus,
-        spouseName: formData.spouseName,
+        // loanAmount: formData.loanAmount,
+        // maritalStatus: formData.maritalStatus,
+        // spouseName: formData.spouseName,
       };
 
       const response2 = await axios.post(
@@ -511,9 +511,9 @@ const RysaNewPage2 = ({
       formData1.append("officePincode", formData.officePincode);
       formData1.append("companyName", formData.companyName);
       formData1.append("pincode", formData.residentialPincode);
-      formData1.append("loanAmount", formData.loanAmount);
-      formData1.append("maritalStatus", formData.maritalStatus);
-      formData1.append("spouseName", formData.spouseName);
+      // formData1.append("loanAmount", formData.loanAmount);
+      // formData1.append("maritalStatus", formData.maritalStatus);
+      // formData1.append("spouseName", formData.spouseName);
 
       // setIsLoadingforLoader(true);
 
@@ -1128,7 +1128,7 @@ const RysaNewPage2 = ({
                 )}
               </div>
 
-              <div className={styles.formGroup}>
+              {/* <div className={styles.formGroup}>
                 <div
                   className={styles.inputWrapper}
                   style={{ position: "relative" }}
@@ -1166,7 +1166,7 @@ const RysaNewPage2 = ({
                     {formErrors.loanAmount}
                   </span>
                 )}
-              </div>
+              </div> */}
 
               <div className={styles.formGroup}>
                 <div
@@ -1304,7 +1304,7 @@ const RysaNewPage2 = ({
               {/* </> */}
               {/* // )} */}
 
-              <div
+              {/* <div
                 className={styles.formGroup}
                 style={{ position: "relative" }}
               >
@@ -1335,9 +1335,9 @@ const RysaNewPage2 = ({
                     {formErrors.maritalStatus}
                   </span>
                 )}
-              </div>
+              </div> */}
 
-              {formData.maritalStatus === "married" && (
+              {/* {formData.maritalStatus === "married" && (
                 <div className={styles.formGroup}>
                   <div
                     className={styles.inputWrapper}
@@ -1370,7 +1370,7 @@ const RysaNewPage2 = ({
                     <span className="error">{formErrors.spouseName}</span>
                   )}
                 </div>
-              )}
+              )} */}
 
               <button onClick={handleBackButton} className="back-button">
                 <FaArrowLeft />

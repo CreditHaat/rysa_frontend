@@ -222,47 +222,46 @@ const RaysaNewPage = ({ params, searchParams }) => {
     // Switch back to character input mode after entering 4 numbers (to allow the last character)
     return "text"; // Character keyboard after 4 numbers
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "fullname") {
-      // Remove non-alphabetical characters except spaces
+      // Allow alphabets and spaces (keep trailing space intact)
       const sanitizedValue = value.replace(/[^a-zA-Z\s]/g, "");
 
-      // Capitalize first letter of each word
-      const capitalizedValue = sanitizedValue
-        .split(" ") // Split the name by spaces
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        ) // Capitalize first letter and make the rest lowercase
-        .join(" "); // Join the words back into a single string
+      // Capitalize each word BUT don’t trim trailing space while typing
+      const words = sanitizedValue.split(" ");
+      const capitalizedWords = words.map(
+        (word, index) =>
+          word ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() : "" // keep empty string for trailing space
+      );
+      const capitalizedValue = capitalizedWords.join(" ");
 
-      // Split the capitalized value into first name and last name
-      // const nameParts = capitalizedValue.trim().split(" ");
-      // const fname = nameParts.length > 0 ? nameParts[0] : "";
-      // const surname =
-      //   nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+      // Split for first / father / last name (ignore empty parts here)
+      const nameParts = capitalizedValue.trim().split(/\s+/);
 
-      // // Update first name and last name
-      // setLastname(surname);
-      // setFirstName(fname);
+      let fname = "";
+      let fathername = "";
+      let lname = "";
 
-      //
-      const nameParts = capitalizedValue.trim().split(" ").filter(Boolean);
-
-      const fname = nameParts[0] || "";
-      const lname = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
-      const fathername =
-        nameParts.length > 2
-          ? nameParts.slice(1, nameParts.length - 1).join(" ")
-          : "";
+      if (nameParts.length === 1) {
+        fname = nameParts[0];
+      } else if (nameParts.length === 2) {
+        fname = nameParts[0];
+        lname = nameParts[1];
+      } else if (nameParts.length >= 3) {
+        fname = nameParts[0];
+        lname = nameParts[nameParts.length - 1];
+        fathername = nameParts.slice(1, nameParts.length - 1).join(" ");
+      }
 
       // Set states
       setFirstName(fname);
       setLastname(lname);
       setFatherName(fathername);
-      //
-      // Validate name
+
+      // Validation
       if (capitalizedValue.trim() === "") {
         setFormErrors((prevErrors) => ({
           ...prevErrors,
@@ -275,15 +274,74 @@ const RaysaNewPage = ({ params, searchParams }) => {
         }));
       }
 
-      // Update form data with the formatted capitalized name
       setFormData((prevData) => ({ ...prevData, [name]: capitalizedValue }));
     } else {
-      // For other fields (if needed)
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
-
-    // Optionally, you can call updateProgress() if necessary
   };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   if (name === "fullname") {
+  //     // Remove non-alphabetical characters except spaces
+  //     const sanitizedValue = value.replace(/[^a-zA-Z\s]/g, "");
+
+  //     // Capitalize first letter of each word
+  //     const capitalizedValue = sanitizedValue
+  //       .split(" ") // Split the name by spaces
+  //       .map(
+  //         (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  //       ) // Capitalize first letter and make the rest lowercase
+  //       .join(" "); // Join the words back into a single string
+
+  //     // Split the capitalized value into first name and last name
+  //     // const nameParts = capitalizedValue.trim().split(" ");
+  //     // const fname = nameParts.length > 0 ? nameParts[0] : "";
+  //     // const surname =
+  //     //   nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+
+  //     // // Update first name and last name
+  //     // setLastname(surname);
+  //     // setFirstName(fname);
+
+  //     //
+  //     const nameParts = capitalizedValue.trim().split(" ").filter(Boolean);
+
+  //     const fname = nameParts[0] || "";
+  //     const lname = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+  //     const fathername =
+  //       nameParts.length > 2
+  //         ? nameParts.slice(1, nameParts.length - 1).join(" ")
+  //         : "";
+
+  //     // Set states
+  //     setFirstName(fname);
+  //     setLastname(lname);
+  //     setFatherName(fathername);
+  //     //
+  //     // Validate name
+  //     if (capitalizedValue.trim() === "") {
+  //       setFormErrors((prevErrors) => ({
+  //         ...prevErrors,
+  //         fullname: "Name is required",
+  //       }));
+  //     } else {
+  //       setFormErrors((prevErrors) => ({
+  //         ...prevErrors,
+  //         fullname: "",
+  //       }));
+  //     }
+
+  //     // Update form data with the formatted capitalized name
+  //     setFormData((prevData) => ({ ...prevData, [name]: capitalizedValue }));
+  //   } else {
+  //     // For other fields (if needed)
+  //     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  //   }
+
+  //   // Optionally, you can call updateProgress() if necessary
+  // };
 
   const handleKeyDown = (e) => {
     if (e.target.name === "fullname" && !/^[a-zA-Z\s]*$/.test(e.key)) {
@@ -311,7 +369,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
       valid = false;
     } else {
       const nameParts = formData.fullname.trim().split(/\s+/); // split by whitespace
-      if (nameParts.length < 3) {
+      if (nameParts.length < 2) {
         errors.fullname = "Please enter full name";
         valid = false;
       }
@@ -417,7 +475,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
       };
 
       const response2 = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/leadcreate`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/leadcreate`,
         payload2,
         {
           headers: {
