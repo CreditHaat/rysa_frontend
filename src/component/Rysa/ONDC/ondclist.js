@@ -70,6 +70,16 @@ const Ondclist = () => {
     return () => clearInterval(id);
   }, []);
 
+    useEffect(() => {
+    const timer = setTimeout(() => {
+      // console.log("⏰ Callback executed after 50 seconds!");
+      setLoading(false);
+      // ✅ Place your logic here (API call, state update, etc.)
+    }, 50000); // 50,000 ms = 50 seconds
+
+    return () => clearTimeout(timer); // cleanup if component unmounts
+  }, []);
+
   // const [mobileNumber, setMobileNumber] = useState("8329223729");//we will be changing this afterwards
 
   const [loading, setLoading] = useState(true);

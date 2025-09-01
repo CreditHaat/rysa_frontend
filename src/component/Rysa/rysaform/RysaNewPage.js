@@ -469,6 +469,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
         lastname: lastname,
         father_name: fatherName, // ✅ backend expects "father_name"
         pan: formData.pan,
+        panName: formData.fullname,
         monthlyIncome: formData.monthlyIncome,
         paymentType: formData.paymentType, // ✅ must be integer in backend
         occupation: formData.profession, // ✅ backend maps salaried/self_employed/etc.
