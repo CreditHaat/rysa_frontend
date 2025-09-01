@@ -669,6 +669,14 @@ const Ondclist = () => {
         }
       );
 
+      if(response.data.data?.redirectionlink){
+
+        let redirectUrl = response.data.data.redirectionlink;
+        // If URL already has ?, append with &, otherwise add ?
+        redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
+        window.location.href = redirectUrl;
+      }
+
       if (response.data.code === 200 && response.data.data?.redirectionlink) {
         let redirectUrl = response.data.data.redirectionlink;
 
@@ -844,7 +852,7 @@ const Ondclist = () => {
                   <>
                     <div className={styles.allnewcardContainer}>
                       {backendProducts
-                        .filter((lender) => lender.productName === "credithaat")
+                        .filter((lender) => lender.productName === "CreditHaat")
                         .map((lender, index) => (
                           <div className={styles.newcardContainer} key={index}>
                             {!lender.error ? (

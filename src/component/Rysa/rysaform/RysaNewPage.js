@@ -617,6 +617,20 @@ const RaysaNewPage = ({ params, searchParams }) => {
         // setGenderFlag(true);
         // setAddressFlag(true);
         // Close the OTP Bottom Sheet only when the OTP is correct
+        const data = response.data;
+
+        if (!data.dob || data.dob === "") {
+          setDobFlag(true);
+        }
+        if (!data.gender || data.gender === "") {
+          setGenderFlag(true);
+        }
+        if (!data.email || data.email === "") {
+          setEmailFlag(true);
+        }
+        if (!data.pincode || data.pincode === "") {
+          setResidentialPincodeFlag(true);
+        }
         setIsOtpBottomSheetVisible(false);
 
         if (formData.profession === "Salaried") {
@@ -1325,7 +1339,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
           dobFlag={dobFlag}
           residentialPincodeFlag={residentialPincodeFlag}
           genderFlag={genderFlag}
-          addressFlag={addressFlag}
+          emailFlag={emailFlag}
+          // addressFlag={addressFlag}
           setActiveContainer={setActiveContainer}
           getLendersList={getLendersList}
         />
