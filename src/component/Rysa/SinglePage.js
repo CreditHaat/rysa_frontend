@@ -45,11 +45,7 @@ export default function SinglePage() {
               </div>
 
               {/* हंबरगर बटन */}
-              <div className={styles.navRightHumberger}>
-                {/* हंबरगर आयकॉन */}
-                {/* <button onClick={toggleMenu} className={styles.hamburgerBtn}>
-              &#9776; 
-            </button> */}
+              {/* <div className={styles.navRightHumberger}>
                 <button onClick={toggleMenu} className={styles.hamburgerBtn}>
                   {isOpen ? <FaTimes /> : <FaBars />}
                 </button>
@@ -67,10 +63,10 @@ export default function SinglePage() {
                     About
                   </a>
                 </div>
-              )}
+              )} */}
 
               {/* Navigation Links */}
-              <div className={styles.navRight}>
+              {/* <div className={styles.navRight}>
                 <div className={styles.navLinks}>
                   <div className={styles.navAncor}>
                     <a href="#" className={styles.navLink}>
@@ -89,7 +85,7 @@ export default function SinglePage() {
                   </div>
                 </div>
                 <button className={styles.loginBtn}>Login</button>
-              </div>
+              </div> */}
               {/* Login Button */}
             </div>
           </nav>
@@ -437,7 +433,7 @@ export default function SinglePage() {
             </div> */}
             </div>
             {/* 🟡 Column 4: Quick Links */}
-            <div className={styles.footerNavLink}>
+            {/* <div className={styles.footerNavLink}>
               <p className={styles.footernavPtag}>Quick Links</p>
               <ul className={styles.footernavUrl}>
                 <li className={styles.footernavItem}>About</li>
@@ -445,7 +441,7 @@ export default function SinglePage() {
                 <li className={styles.footernavItem}>SBlog</li>
                 <li className={styles.footernavItem}>FAQs</li>
               </ul>
-            </div>
+            </div> */}
 
             {/* ✅ Social Icons */}
 
@@ -460,7 +456,7 @@ export default function SinglePage() {
         <i className="fab fa-linkedin"></i>
       </a>
     </div> */}
-            <div className={styles.footersocialIcons}>
+            {/* <div className={styles.footersocialIcons}>
               <a href="#" className="hover:text-pink-300">
                 <i className="fab fa-instagram"></i>
               </a>
@@ -470,7 +466,7 @@ export default function SinglePage() {
               <a href="#" className="hover:text-blue-300">
                 <i className="fab fa-linkedin"></i>
               </a>
-            </div>
+            </div> */}
           </footer>
         </main>
       </div>

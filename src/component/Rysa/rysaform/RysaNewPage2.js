@@ -2329,7 +2329,7 @@ const RysaNewPage2 = ({
 
             {/* {addressFlag && ( */}
             {/* <> */}
-            <div className={styles.formGroup} style={{ marginBottom: "10px" }}>
+            <div className={styles.formGroup} style={{ marginBottom: "30px" }}>
               <div
                 className={styles.inputWrapper}
                 style={{ position: "relative" }}
@@ -2396,7 +2396,7 @@ const RysaNewPage2 = ({
                     ))}
                   </div>
                   {formErrors.gender && (
-                    <p style={{ color: "red" }}>{formErrors.gender}</p>
+                    <p style={{ color: "red", fontSize: "12px", fontWeight:"700", position:"absolute"}}>{formErrors.gender}</p>
                   )}
                 </div>
               )}
@@ -2435,7 +2435,7 @@ const RysaNewPage2 = ({
                     </span>
                   </div>
                   {formErrors.dob && (
-                    <div className="error-message">{formErrors.dob}</div>
+                    <div className="error-message" style={{ color: "red", fontSize: "12px", fontWeight:"700", position:"absolute"}}>{formErrors.dob}</div>
                   )}
                 </div>
               )}
