@@ -1261,20 +1261,35 @@ const RaysaNewPage = ({ params, searchParams }) => {
   }, [formData]);
 
   //slider
+  // const slides = [
+  //   {
+  //     title: "Simple Loans,Big<br> Smiles!",
+  //     subtitle: "Get money when you need it, stress‑free.",
+  //     img: "/s141.png",
+  //   },
+  //   {
+  //     title: "Festive Loan,<br> Bonanza!",
+  //     subtitle: "Exclusive benefits for limited period.",
+  //     img: "/s171.png",
+  //   },
+  //   {
+  //     title: "Easy Loans, Happy<br> Moments!",
+  //     subtitle: "Quick money,zero worries.",
+  //     img: "/s11.png",
+  //   },
+  // ];
+
   const slides = [
     {
-      title: "Simple Loans,Big<br> Smiles!",
-      subtitle: "Get money when you need it, stress‑free.",
-      img: "/s141.png",
+      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      img: "/s11.png",
     },
     {
-      title: "Festive Loan,<br> Bonanza!",
-      subtitle: "Exclusive benefits for limited period.",
-      img: "/s171.png",
+      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      img: "/s11.png",
     },
     {
-      title: "Easy Loans, Happy<br> Moments!",
-      subtitle: "Quick money,zero worries.",
+      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
       img: "/s11.png",
     },
   ];
