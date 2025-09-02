@@ -101,6 +101,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
   const [errorPopup, setErrorPopup] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [dobFlag, setDobFlag] = useState(false);
+  const [emailFlag, setEmailFlag] = useState(false);
   const [cpi, setCpi] = useState(0);
   const [lenderProduct, setLenderProduct] = useState(null);
   const [lenderDetails, setLenderDetails] = useState(null);
