@@ -505,7 +505,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
         agent: "BTI", // if mandatory
       };
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/send`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/send`,
         payload
       );
       console.log("response is", response);
@@ -577,7 +577,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
       // axios2otp
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/verify`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/verify`,
         payload
       );
 
@@ -1281,15 +1281,15 @@ const RaysaNewPage = ({ params, searchParams }) => {
 
   const slides = [
     {
-      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
       img: "/s11.png",
     },
     {
-      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
       img: "/s11.png",
     },
     {
-      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
       img: "/s11.png",
     },
   ];
@@ -1388,7 +1388,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
               position: "relative",
               padding: "24px 20px 10px 20px",
               minHeight: "190px",
-              color: "#ffffff",
+              color: "black",
               marginBottom: "-35px",
               top: "-100px",
               // border:'2px solid ',

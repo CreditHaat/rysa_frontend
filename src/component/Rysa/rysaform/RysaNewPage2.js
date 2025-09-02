@@ -2131,15 +2131,15 @@ const RysaNewPage2 = ({
 
   const slides = [
     {
-      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
       img: "/s11.png",
     },
     {
-      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
       img: "/s11.png",
     },
     {
-      title: "Get loan upto </br>25 LACS.</br> Disbursal in</br> 4 Hours.",
+      title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
       img: "/s11.png",
     },
   ];
@@ -2201,7 +2201,7 @@ const RysaNewPage2 = ({
             position: "relative",
             padding: "24px 20px 10px 20px",
             minHeight: "190px",
-            color: "#ffffff",
+            color: "black",
             marginBottom: "-35px",
             top: "-100px",
           }}
