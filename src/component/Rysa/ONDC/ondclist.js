@@ -12,13 +12,14 @@ import OnSearchContext from "./context/OnSearchContext";
 import useWebSocketONDCSelect from "./Websocket/useWebSocketONDCSelect";
 import SelectedLenderContext from "./context/SelectedLenderContext";
 import { useRouter } from "next/navigation";
-import LendersLoader from "./LoadingPages/LendersLoader";
+// import LendersLoader from "./LoadingPages/LendersLoader";
 import styles from "./styleondclist.module.css";
 import "./NewBlFirstPage.module.css";
 import per from "../../../../public/Group_10.png";
 import { Roboto } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import logo2 from "./images/Aryse_Fin.png";
+import LendersLoader from "./LoadingPages/Auto_start_timer"; 
 
 const roboto = Roboto({
   weight: ["400", "700"],

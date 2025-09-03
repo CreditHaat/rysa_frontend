@@ -2132,15 +2132,15 @@ const RysaNewPage2 = ({
   const slides = [
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s33.png",
+      img: "/s6.png",
     },
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s33.png",
+      img: "/s6.png",
     },
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s33.png",
+      img: "/s6.png",
     },
   ];
 
@@ -2206,6 +2206,21 @@ const RysaNewPage2 = ({
             top: "-100px",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              top: "0px",
+              left: "2px",
+              zIndex: 10,
+            }}
+          >
+            <Image
+              src="/Aryse_Fin.png"
+              alt="image_logo"
+              width={50}
+              height={50}
+            />
+          </div>
           <div
             className={styles.heroText}
             style={{
