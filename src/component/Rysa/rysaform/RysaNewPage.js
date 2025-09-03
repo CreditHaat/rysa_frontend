@@ -1282,15 +1282,15 @@ const RaysaNewPage = ({ params, searchParams }) => {
   const slides = [
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s11.png",
+      img: "/s33.png",
     },
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s11.png",
+      img: "/s33.png",
     },
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s11.png",
+      img: "/s33.png",
     },
   ];
 
@@ -1422,7 +1422,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                 }}
               />
             </div>
-            <div
+            {/* <div
               className={styles.progressBar}
               style={{
                 justifyContent: "center",
@@ -1446,7 +1446,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                   onClick={() => setSlide(i)}
                 />
               ))}
-            </div>
+            </div>  */}
             <div
               className={styles.imgWrap}
               style={{

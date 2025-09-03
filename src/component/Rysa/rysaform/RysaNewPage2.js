@@ -2132,15 +2132,15 @@ const RysaNewPage2 = ({
   const slides = [
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s11.png",
+      img: "/s33.png",
     },
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s11.png",
+      img: "/s33.png",
     },
     {
       title: "Get upto ₹25 Lacs.</br> Disbursal within</br> 24 Hours.",
-      img: "/s11.png",
+      img: "/s33.png",
     },
   ];
 
@@ -2234,7 +2234,7 @@ const RysaNewPage2 = ({
               }}
             />
           </div>
-          <div
+          {/* <div
             className={styles.progressBar}
             style={{
               justifyContent: "center",
@@ -2258,7 +2258,7 @@ const RysaNewPage2 = ({
                 onClick={() => setSlide(i)}
               />
             ))}
-          </div>
+          </div> */}
           <div
             className={styles.imgWrap}
             style={{
