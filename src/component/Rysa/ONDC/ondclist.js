@@ -70,12 +70,12 @@ const Ondclist = () => {
     return () => clearInterval(id);
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       // console.log("⏰ Callback executed after 50 seconds!");
       setLoading(false);
       // ✅ Place your logic here (API call, state update, etc.)
-    }, 50000); // 50,000 ms = 50 seconds
+    }, 30000); // 50,000 ms = 30 seconds
 
     return () => clearTimeout(timer); // cleanup if component unmounts
   }, []);
@@ -669,8 +669,7 @@ const Ondclist = () => {
         }
       );
 
-      if(response.data.data?.redirectionlink){
-
+      if (response.data.data?.redirectionlink) {
         let redirectUrl = response.data.data.redirectionlink;
         // If URL already has ?, append with &, otherwise add ?
         redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
