@@ -12,7 +12,6 @@
 //   subsets: ['latin'],
 // });
 
-
 // function OTPVerification({ verifyOTP, upotp, otpStatus, setUpOtp }) {
 //   const otpInputRefs = useRef(Array(6).fill().map(() => React.createRef()));
 //   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -85,9 +84,9 @@
 //             }
 
 //             // Additional checks can be added here
-//             const isAndroidChrome = 
-//                 /Android/i.test(navigator.userAgent) &&  
-//                 /Chrome/i.test(navigator.userAgent);  
+//             const isAndroidChrome =
+//                 /Android/i.test(navigator.userAgent) &&
+//                 /Chrome/i.test(navigator.userAgent);
 
 //             if (!isAndroidChrome) {
 //                 console.log("Not Android Chrome");
@@ -144,7 +143,7 @@
 //             while (otpArray.length < 6) {
 //                 otpArray.push('');
 //             }
-            
+
 //             // setOtpInputs(otpArray);
 //             setOtp(otpArray);
 //             setUpOtp(otpArray);
@@ -163,7 +162,7 @@
 //             setTimeout(() => {
 //                 abortController.abort();
 //             }, 5000);
-            
+
 //         };
 //     };
 
@@ -177,8 +176,6 @@
 //         setOTP(inputValue);
 //     }
 // };
-
-
 
 // //-------------------------------------------------------------------------------------------
 
@@ -216,8 +213,6 @@
 //     setOtp(new Array(6).fill(""));
 //   };
 
-
-
 //   //We are using this useEffect for calling the otpVarify function when the user enters the otp
 
 //   /////////////////////////////
@@ -234,7 +229,7 @@
 //                 <p className='para1' style={{fontSize: '20px', color:'#000000' }}>
 //                   Please check SMS
 //                   </p>
-//                 <p className='para' style={{fontSize: '20px', color:'rgba(0, 0, 0, 0.71)', marginTop:'-10px' }}>We've sent a sms on mobile  number</p>  
+//                 <p className='para' style={{fontSize: '20px', color:'rgba(0, 0, 0, 0.71)', marginTop:'-10px' }}>We've sent a sms on mobile  number</p>
 //       <form style={{ textAlign: 'center',    background: 'linear-gradient(to top, #999999, #ffffff)',  // Gradient from bottom (#999999) to top (#ffffff)
 //  }} onSubmit={handleSubmit} className='linear'>
 //         <div style={{ textAlign: 'center' }} className="otp-inputs">
@@ -251,11 +246,9 @@
 //           ))}
 //         </div>
 
-
 //         {/* {setUpOtp(otp.join(''))} */}
 //         <p style={{ color: 'red', textAlign: 'center' }}>{otpStatus}</p>
 
-       
 //         {/* <button style={{marginTop:'0px',backgroundColor:'#ffffff',color:'black',padding:'10px',borderRadius:'10px',width:'140px',marginRight:'80px'}} className="otpclose-btnn" >cancel</button> */}
 //         <button onClick={verifyOTP} style={{marginTop:'0px', marginBottom:'20px', backgroundColor:'#6039d2',color:'white',padding:'10px',borderRadius:'10px', border:'none',width:'200px', height:'50px', fontSize:'larger'}} className={`${roboto.className} button-container verify-button`}>Verify</button>
 //       </form>
@@ -265,36 +258,38 @@
 
 // export default OTPVerification;
 
-"use client"
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import otpimage from '../../../../../public/otpimagess.png';
-import Image from 'next/image';
-import { Roboto } from 'next/font/google';
+import React, { useState, useEffect, useRef } from "react";
+import otpimage from "../../../../../public/otpimagess.png";
+import Image from "next/image";
+import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
-  weight: ['400', '700'],
-  subsets: ['latin'],
+  weight: ["400", "700"],
+  subsets: ["latin"],
 });
 
 function OTPVerification({ verifyOTP, upotp, otpStatus, setUpOtp }) {
-  const otpInputRefs = useRef(Array(6).fill().map(() => React.createRef()));
+  const otpInputRefs = useRef(
+    Array(6)
+      .fill()
+      .map(() => React.createRef())
+  );
   const [otp, setOtp] = useState(new Array(6).fill(""));
-  
+
   // Unified OTP update function to ensure consistent state updates
-  
+
   const updateOTP = (newOtpArray) => {
-
-
     // Ensure we're working with an array of strings
-    const normalizedOtp = newOtpArray.map(val => val.toString());
+    const normalizedOtp = newOtpArray.map((val) => val.toString());
     setOtp(normalizedOtp);
     setUpOtp(normalizedOtp.join(""));
   };
 
   const handleManualChange = (e, index) => {
     const value = e.target.value;
-    
+
     if (e.keyCode === 8 || !isNaN(value)) {
       let newOtp = [...otp];
 
@@ -312,40 +307,40 @@ function OTPVerification({ verifyOTP, upotp, otpStatus, setUpOtp }) {
     }
   };
 
-  useEffect(() => {
-    const setupWebOTPRetrieval = async () => {
-      if (!('OTPCredential' in window)) return;
+  // useEffect(() => {
+  //   const setupWebOTPRetrieval = async () => {
+  //     if (!('OTPCredential' in window)) return;
 
-      try {
-        const abortController = new AbortController();
-        
-        const credential = await navigator.credentials.get({
-          otp: { transport: ['sms'] },
-          signal: abortController.signal
-        });
+  //     try {
+  //       const abortController = new AbortController();
 
-        if (credential) {
-          const otpArray = credential.code.split('').slice(0, 6);
-          while (otpArray.length < 6) {
-            otpArray.push('');
-          }
-          
-          // Use the unified update function for autofill
-          updateOTP(otpArray);
-        }
+  //       const credential = await navigator.credentials.get({
+  //         otp: { transport: ['sms'] },
+  //         signal: abortController.signal
+  //       });
 
-        return () => {
-          setTimeout(() => abortController.abort(), 5000);
-        };
-      } catch (error) {
-        console.error('OTP Retrieval Error:', error);
-      }
-    };
+  //       if (credential) {
+  //         const otpArray = credential.code.split('').slice(0, 6);
+  //         while (otpArray.length < 6) {
+  //           otpArray.push('');
+  //         }
 
-    if (window.isSecureContext && /Android/i.test(navigator.userAgent)) {
-      setupWebOTPRetrieval();
-    }
-  }, [updateOTP]);
+  //         // Use the unified update function for autofill
+  //         updateOTP(otpArray);
+  //       }
+
+  //       return () => {
+  //         setTimeout(() => abortController.abort(), 5000);
+  //       };
+  //     } catch (error) {
+  //       console.error('OTP Retrieval Error:', error);
+  //     }
+  //   };
+
+  //   if (window.isSecureContext && /Android/i.test(navigator.userAgent)) {
+  //     setupWebOTPRetrieval();
+  //   }
+  // }, [updateOTP]);
 
   // useEffect(() => {
   //   if (otpStatus === "Incorrect OTP! Try Again..") {
@@ -354,37 +349,35 @@ function OTPVerification({ verifyOTP, upotp, otpStatus, setUpOtp }) {
   //   }
   // }, [otpStatus]);
 
-  
   const inputRefs = useRef([]); //added1
 
-useEffect(() => {
-  if (otpStatus === "Incorrect OTP! Try Again..") {
-    setOtp(Array(6).fill(""));
-    setUpOtp("");
-    setTimeout(() => inputRefs.current[0]?.focus(), 50);//added1
-  }
-}, [otpStatus, setUpOtp]); 
+  useEffect(() => {
+    if (otpStatus === "Incorrect OTP! Try Again..") {
+      setOtp(Array(6).fill(""));
+      setUpOtp("");
+      setTimeout(() => inputRefs.current[0]?.focus(), 50); //added1
+    }
+  }, [otpStatus, setUpOtp]);
 
+  //   useEffect(() => {
+  //   if (otpStatus === "Incorrect OTP! Try Again..") {
+  //     setTimeout(() => {
+  //       setOtp(new Array(6).fill("")); // Clear OTP inputs after 300ms delay
+  //       setUpOtp(""); // Reset the OTP string
+  //     }, 300); // Adjust the delay to ensure the UI updates smoothly
+  //   }
+  // }, [otpStatus, setUpOtp]);
 
-//   useEffect(() => {
-//   if (otpStatus === "Incorrect OTP! Try Again..") {
-//     setTimeout(() => {
-//       setOtp(new Array(6).fill("")); // Clear OTP inputs after 300ms delay
-//       setUpOtp(""); // Reset the OTP string
-//     }, 300); // Adjust the delay to ensure the UI updates smoothly
-//   }
-// }, [otpStatus, setUpOtp]);
-
-// useEffect(() => {
-//     if (otpStatus === "Incorrect OTP! Try Again..") {
-//       // Reset OTP input values
-//       setOtp(new Array(6).fill("")); // Clear the OTP input values
-//       setUpOtp(""); // Reset the upotp value as well
-//     }
-//      setTimeout(() => {
-//       // Additional action after OTP is cleared (if needed)
-//     }, 200); // Short delay, you can adjust as needed
-//   }, [otpStatus, setUpOtp]); 
+  // useEffect(() => {
+  //     if (otpStatus === "Incorrect OTP! Try Again..") {
+  //       // Reset OTP input values
+  //       setOtp(new Array(6).fill("")); // Clear the OTP input values
+  //       setUpOtp(""); // Reset the upotp value as well
+  //     }
+  //      setTimeout(() => {
+  //       // Additional action after OTP is cleared (if needed)
+  //     }, 200); // Short delay, you can adjust as needed
+  //   }, [otpStatus, setUpOtp]);
 
   useEffect(() => {
     if (upotp.length === 6) {
@@ -397,68 +390,81 @@ useEffect(() => {
   };
 
   return (
-    <div className={`${roboto.className} otp-container`}  style={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-  }}>
+    <div
+      className={`${roboto.className} otp-container`}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
       <Image
         src={otpimage}
         width={300}
         height={300}
         layout="intrinsic"
         alt="otpimage"
-        
       />
-      <p className='para1' style={{fontSize: '20px', color:'#000000'}}>
+      <p className="para1" style={{ fontSize: "20px", color: "#000000" }}>
         Please check SMS
       </p>
-      <p className='para' style={{fontSize: '20px', color:'rgba(0, 0, 0, 0.71)', marginTop:'-10px'}}>
-         We&rsquo;ve sent a sms on mobile number
+      <p
+        className="para"
+        style={{
+          fontSize: "20px",
+          color: "rgba(0, 0, 0, 0.71)",
+          marginTop: "-10px",
+        }}
+      >
+        We&rsquo;ve sent a sms on mobile number
       </p>
-      <form style={{
-        textAlign: 'center',
-        // background: 'linear-gradient(to top, #999999, #ffffff)',
-      }} onSubmit={handleSubmit} className='linear'>
-        <div style={{textAlign: 'center'}} className="otp-inputs">
+      <form
+        style={{
+          textAlign: "center",
+          // background: 'linear-gradient(to top, #999999, #ffffff)',
+        }}
+        onSubmit={handleSubmit}
+        className="linear"
+      >
+        <div style={{ textAlign: "center" }} className="otp-inputs">
           {otp.map((data, index) => (
             <input
               style={{
-                height:'40px',
-                width:'40px',
-                margin:'5px',
-                color: 'black',
-                fontWeight: '600',
-                borderRadius:'2px',
-                border:'solid #3e2780 1px',
-                textAlign:'center'
+                height: "40px",
+                width: "40px",
+                margin: "5px",
+                color: "black",
+                fontWeight: "600",
+                borderRadius: "2px",
+                border: "solid #3e2780 1px",
+                textAlign: "center",
               }}
               type="number"
               name="otp"
               maxLength="1"
               key={index}
-              ref={el => (inputRefs.current[index] = el)}//added1
+              ref={(el) => (inputRefs.current[index] = el)} //added1
               value={data}
               onChange={(e) => handleManualChange(e, index)}
               onKeyDown={(e) => handleManualChange(e, index)}
             />
           ))}
         </div>
-        <p style={{color: 'red', textAlign: 'center'}}>{otpStatus}</p>
-        <button 
+        <p style={{ color: "red", textAlign: "center" }}>{otpStatus}</p>
+        <button
           onClick={verifyOTP}
           style={{
-            marginTop:'0px',
-            marginBottom:'20px',
-            backgroundColor:'#6039d2',
-            color:'white',
-            padding:'10px',
-            borderRadius:'10px',
-            border:'none',
-            width:'200px',
-            height:'50px',
-            fontSize:'larger'
+            marginTop: "0px",
+            marginBottom: "20px",
+            backgroundColor: "#6039d2",
+            color: "white",
+            padding: "10px",
+            borderRadius: "10px",
+            border: "none",
+            width: "200px",
+            height: "50px",
+            fontSize: "larger",
           }}
           className={`${roboto.className} button-container verify-button`}
         >

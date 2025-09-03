@@ -1588,6 +1588,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                   style={{ position: "relative" }}
                 >
                   <Select
+                    instanceId="profession"
                     id="profession"
                     name="profession"
                     value={professionOptions.find(
@@ -1621,6 +1622,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                 style={{ position: "relative" }}
               >
                 <Select
+                  instanceId="paymentType"
                   id="paymentType"
                   name="paymentType"
                   value={paymentTypeOptions.find(
