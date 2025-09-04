@@ -636,9 +636,25 @@ const Ondclist = () => {
         formData
       );
       const userDetails = {
-        workPincode: userDetailsResponse?.data?.workPincode || "",
-        maritalStatus: userDetailsResponse?.data?.maritalStatus || "",
-        paymentType: userDetailsResponse?.data?.paymentType ?? "",
+        // workPincode: userDetailsResponse?.data?.workPincode || "",
+        // maritalStatus: userDetailsResponse?.data?.maritalStatus || "",
+        // paymentType: userDetailsResponse?.data?.paymentType ?? "",
+        mobilenumber: mobileNumber,
+        dob: userDetailsResponse?.data?.dob || "",
+        profession: userDetailsResponse?.data?.profession || "",
+        income: userDetailsResponse?.data?.income || "",
+        payment_type: userDetailsResponse?.data?.paymentType ?? "",
+        pincode: userDetailsResponse?.data?.pincode || "",
+        firstname: userDetailsResponse?.data?.firstNameFromPan || "",
+        lastname: userDetailsResponse?.data?.lastNameFromPan || "",
+        pan: userDetailsResponse?.data?.pan || "",
+        gender: userDetailsResponse?.data?.gender || "",
+        addressline1: userDetailsResponse?.data?.addressline1 || "",
+        email: userDetailsResponse?.data?.email || "",
+        officeaddresspincode: userDetailsResponse?.data?.workPincode || "",
+        maritalstatus: userDetailsResponse?.data?.maritalStatus || "",
+        company: userDetailsResponse?.data?.company || ""
+
       };
       if (userDetailsResponse.status === 200) {
         console.log(
@@ -649,20 +665,20 @@ const Ondclist = () => {
 
       const payload = {
         mobilenumber: mobileNumber,
-        dob: formSubmissionData?.dob || "NA",
-        profession: formSubmissionData?.employmentType || "NA",
-        income: formSubmissionData?.income || "NA",
-        payment_type: userDetails?.paymentType ?? "NA", //
-        pincode: formSubmissionData?.pincode || "NA",
-        firstname: formSubmissionData?.firstName || "NA",
-        lastname: formSubmissionData?.lastName || "NA",
-        pan: formSubmissionData?.pan || "NA",
-        gender: formSubmissionData?.gender || "NA",
-        addressline1: formSubmissionData?.addressL1 || "NA",
-        email: formSubmissionData?.email || "NA",
-        officeaddresspincode: userDetails?.workPincode || "NA", //
-        maritalstatus: userDetails?.maritalStatus || "NA", //
-        company: formSubmissionData?.companyName || "NA",
+        dob: formSubmissionData?.dob ||  userDetails.mobilenumber,
+        profession: formSubmissionData?.employmentType || userDetails.profession,
+        income: formSubmissionData?.income || userDetails.income,
+        payment_type: userDetails?.payment_type, //
+        pincode: formSubmissionData?.pincode || userDetails.pincode,
+        firstname: formSubmissionData?.firstName || userDetails.firstname,
+        lastname: formSubmissionData?.lastName || userDetails.lastname,
+        pan: formSubmissionData?.pan || userDetails.pan,
+        gender: formSubmissionData?.gender || userDetails.gender,
+        addressline1: formSubmissionData?.addressL1 || userDetails.addressline1,
+        email: formSubmissionData?.email || userDetails.email,
+        officeaddresspincode: userDetails?.workPincode || userDetails.officeaddresspincode, //
+        maritalstatus: userDetails?.maritalStatus || userDetails.maritalstatus, //
+        company: formSubmissionData?.companyName || userDetails.company,
         // agent_id: formData.agentId,
         // agent: formData.agent,
         // email: ONDCFormData.email,
@@ -726,8 +742,8 @@ const Ondclist = () => {
                     height: "100px",
                     top: "-4",
                   }}
-                  // height={50}
-                  // width={50}
+                // height={50}
+                // width={50}
                 />
               </div>
             </div>
