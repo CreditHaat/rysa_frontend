@@ -19,7 +19,7 @@ import per from "../../../../public/Group_10.png";
 import { Roboto } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import logo2 from "./images/Aryse_Fin.png";
-import LendersLoader from "./LoadingPages/Auto_start_timer"; 
+import LendersLoader from "./LoadingPages/Auto_start_timer";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -27,7 +27,6 @@ const roboto = Roboto({
 });
 
 const Ondclist = () => {
-
   const [gotSortedProductFlag, setGotSortedProductFlag] = useState(false);
 
   const [backendProducts, setBackendProducts] = useState([]);
@@ -257,9 +256,8 @@ const Ondclist = () => {
     }
   }, []);
 
-    useWebSocketONDC(handleWebSocketMessage, gotSortedProductFlag);
+  useWebSocketONDC(handleWebSocketMessage, gotSortedProductFlag);
   // Use the WebSocket hook with the improved handler
- 
 
   // Fixed getContent function
   const getContent = useCallback(() => {
@@ -602,7 +600,7 @@ const Ondclist = () => {
           "The response that we got from the getSortedProducts is : ",
           response
         );
-        if(Object.keys(response.data).length>1){
+        if (Object.keys(response.data).length > 1) {
           console.log("setting the sortedProduct flag as true");
           setGotSortedProductFlag(true);
           // useWebSocketONDC(handleWebSocketMessage);
@@ -640,7 +638,7 @@ const Ondclist = () => {
       const userDetails = {
         workPincode: userDetailsResponse?.data?.workPincode || "",
         maritalStatus: userDetailsResponse?.data?.maritalStatus || "",
-        paymentType: userDetailsResponse?.data?.paymentType || "",
+        paymentType: userDetailsResponse?.data?.paymentType ?? "",
       };
       if (userDetailsResponse.status === 200) {
         console.log(
@@ -651,20 +649,20 @@ const Ondclist = () => {
 
       const payload = {
         mobilenumber: mobileNumber,
-        dob: formSubmissionData.dob,
-        profession: formSubmissionData.employmentType,
-        income: formSubmissionData.income,
-        payment_type: userDetails.paymentType, //
-        pincode: formSubmissionData.pincode,
-        firstname: formSubmissionData.firstName,
-        lastname: formSubmissionData.lastName,
-        pan: formSubmissionData.pan,
-        gender: formSubmissionData.gender,
-        addressline1: formSubmissionData.addressL1,
-        email: formSubmissionData.email,
-        officeaddresspincode: userDetails.workPincode, //
-        maritalstatus: userDetails.maritalStatus, //
-        company: formSubmissionData.companyName,
+        dob: formSubmissionData?.dob || "NA",
+        profession: formSubmissionData?.employmentType || "NA",
+        income: formSubmissionData?.income || "NA",
+        payment_type: userDetails?.paymentType ?? "NA", //
+        pincode: formSubmissionData?.pincode || "NA",
+        firstname: formSubmissionData?.firstName || "NA",
+        lastname: formSubmissionData?.lastName || "NA",
+        pan: formSubmissionData?.pan || "NA",
+        gender: formSubmissionData?.gender || "NA",
+        addressline1: formSubmissionData?.addressL1 || "NA",
+        email: formSubmissionData?.email || "NA",
+        officeaddresspincode: userDetails?.workPincode || "NA", //
+        maritalstatus: userDetails?.maritalStatus || "NA", //
+        company: formSubmissionData?.companyName || "NA",
         // agent_id: formData.agentId,
         // agent: formData.agent,
         // email: ONDCFormData.email,

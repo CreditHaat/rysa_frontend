@@ -85,7 +85,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
   const [otpStatus, setOtpStatus] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
   const [activeSecondForm, setActiveSecondForm] = useState(false);
-  const [residentialPincodeFlag, setResidentialPincodeFlag] = useState(false);
+  // const [residentialPincodeFlag, setResidentialPincodeFlag] = useState(false);
   const [isCameFromBackend, setIsCameFromBackend] = useState(false);
   const [isOtpBottomSheetVisible, setIsOtpBottomSheetVisible] = useState(false);
   const [consent, setConsent] = useState(false);
@@ -101,7 +101,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
   const [errorPopup, setErrorPopup] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [dobFlag, setDobFlag] = useState(false);
-  const [emailFlag, setEmailFlag] = useState(false);
+  // const [emailFlag, setEmailFlag] = useState(false);
   const [cpi, setCpi] = useState(0);
   const [lenderProduct, setLenderProduct] = useState(null);
   const [lenderDetails, setLenderDetails] = useState(null);
@@ -593,31 +593,6 @@ const RaysaNewPage = ({ params, searchParams }) => {
       ) {
         setOtpVerified(true);
         setOtpLoader(false);
-        // setResidentialPincodeFlag(response.data.code === 0 || response.data.code === 2);
-        // if (response.data.obj.dob === "" || response.data.obj.dob === null) {
-        //   setDobFlag(true);
-        // }
-        // if (
-        //   response.data.obj.pincode === "" ||
-        //   response.data.obj.pincode === null
-        // ) {
-        //   setResidentialPincodeFlag(true);
-        // }
-        // if (
-        //   response.data.obj.gender === "" ||
-        //   response.data.obj.gender === null
-        // ) {
-        //   setGenderFlag(true);
-        // }
-        // if (
-        //   response.data.obj.address1 === "" ||
-        //   response.data.obj.address1 === null
-        // ) {
-        //   setAddressFlag(true);
-        // }
-        // setGenderFlag(true);
-        // setAddressFlag(true);
-        // Close the OTP Bottom Sheet only when the OTP is correct
         const data = response.data;
 
         if (!data.dob || data.dob === "") {
@@ -626,12 +601,12 @@ const RaysaNewPage = ({ params, searchParams }) => {
         if (!data.gender || data.gender === "") {
           setGenderFlag(true);
         }
-        if (!data.email || data.email === "") {
-          setEmailFlag(true);
-        }
-        if (!data.pincode || data.pincode === "") {
-          setResidentialPincodeFlag(true);
-        }
+        // if (!data.email || data.email === "") {
+        //   setEmailFlag(true);
+        // }
+        // if (!data.pincode || data.pincode === "") {
+        //   setResidentialPincodeFlag(true);
+        // }
         setIsOtpBottomSheetVisible(false);
 
         if (formData.profession === "Salaried") {
@@ -1353,9 +1328,9 @@ const RaysaNewPage = ({ params, searchParams }) => {
           lastName={lastname}
           fatherName={fatherName}
           dobFlag={dobFlag}
-          residentialPincodeFlag={residentialPincodeFlag}
+          // residentialPincodeFlag={residentialPincodeFlag}
           genderFlag={genderFlag}
-          emailFlag={emailFlag}
+          // emailFlag={emailFlag}
           // addressFlag={addressFlag}
           setActiveContainer={setActiveContainer}
           getLendersList={getLendersList}
