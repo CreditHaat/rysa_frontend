@@ -7,15 +7,30 @@ import UIDContext from '../../context/UIDContext';
 import { generateTransactionId } from '../KeyGenerationApis/KeyGeneration';
 
 
-export default function useWebSocketONDC(onMessage) {
+export default function useWebSocketONDC(onMessage, gotSortedProductFlag) {
 
     const { uid, setUId, isWebsocketConnectionEstablished, setIsWebsocketConnectionEstablished} = useContext(UIDContext);
     //here we will call the function to create the transactionId
     // const response = generateTransactionId();
     // setUId(response.data);
 
+    // useEffect(()=>{
+    //   if(gotSortedProductFlag===false){
+    //     console.log("returning from websocket because got sorted product flag is false");
+    //     return;
+    //   }
+    // },[gotSortedProductFlag])
+
         // ✅ Generate transaction ID on mount and set UID safely
         useEffect(() => {
+
+          if (!gotSortedProductFlag) {
+            console.log("❌ Skipping WebSocket because gotSortedProductFlag is false");
+            return;
+          }
+
+          console.log("not skipping websocket as the value of gotSortedProductFlag is : ",gotSortedProductFlag);
+
             const fetchTransactionId = async () => {
                 try {
                     const response = await generateTransactionId();
@@ -29,10 +44,17 @@ export default function useWebSocketONDC(onMessage) {
             if (!uid) {
                 fetchTransactionId();
             }
-        }, [uid, setUId]);
+        }, [uid, setUId, gotSortedProductFlag]);
 
     
   useEffect(() => {
+
+    if (!gotSortedProductFlag) {
+      console.log("❌ Skipping WebSocket because gotSortedProductFlag is false");
+      return;
+    }
+
+    console.log("not skipping websocket as the value of gotSortedProductFlag is : ",gotSortedProductFlag);
 
     if(uid===null || uid === undefined){
         return;
@@ -67,7 +89,7 @@ export default function useWebSocketONDC(onMessage) {
     return () => {
       client.deactivate();
     };
-  }, [onMessage, uid]);
+  }, [onMessage, uid, gotSortedProductFlag]);
 }
 
 // import { useEffect, useRef } from 'react';

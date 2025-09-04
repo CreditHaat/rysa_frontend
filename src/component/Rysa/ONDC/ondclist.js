@@ -27,6 +27,9 @@ const roboto = Roboto({
 });
 
 const Ondclist = () => {
+
+  const [gotSortedProductFlag, setGotSortedProductFlag] = useState(false);
+
   const [backendProducts, setBackendProducts] = useState([]);
 
   const searchParams = useSearchParams();
@@ -254,8 +257,9 @@ const Ondclist = () => {
     }
   }, []);
 
+    useWebSocketONDC(handleWebSocketMessage, gotSortedProductFlag);
   // Use the WebSocket hook with the improved handler
-  useWebSocketONDC(handleWebSocketMessage);
+ 
 
   // Fixed getContent function
   const getContent = useCallback(() => {
@@ -298,6 +302,10 @@ const Ondclist = () => {
 
       //here uid refers to the transactionId of the api
 
+      // if(gotSortedProductFlag !== true){
+      //   console.log("Returning before search beacuse gotSortedProductFlag is false");
+      //   return;
+      // }
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}search`,
         {
@@ -594,6 +602,11 @@ const Ondclist = () => {
           "The response that we got from the getSortedProducts is : ",
           response
         );
+        if(Object.keys(response.data).length>1){
+          console.log("setting the sortedProduct flag as true");
+          setGotSortedProductFlag(true);
+          // useWebSocketONDC(handleWebSocketMessage);
+        }
       }
 
       console.log("response from fetchLendersByPincode : ", response);

@@ -138,7 +138,7 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
         console.log("error in onsearch : ", error);
         const formSubmissionStatus = "rejected";
                 console.log("The form response that we got in catch is : ",error);
-                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, error, formUrl, formSubmissionStatus, payloadForSelect.productName);
+                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, error?.response?.data || error, formUrl, formSubmissionStatus, payloadForSelect.productName);
         
     }
 };
