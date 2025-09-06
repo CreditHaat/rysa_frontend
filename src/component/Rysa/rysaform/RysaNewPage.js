@@ -56,16 +56,15 @@ const roboto = Roboto({
 // ];
 
 const RaysaNewPage = ({ params, searchParams }) => {
-
-  const [mounted, setMounted] = useState(false);//added by tejas to prevent hydration error
-useEffect(() => setMounted(true), []);//added by tejas to prevent hydration error
+  const [mounted, setMounted] = useState(false); //added by tejas to prevent hydration error
+  useEffect(() => setMounted(true), []); //added by tejas to prevent hydration error
 
   const [submitButtonText, setSubmitButtonText] = useState("next");
 
   const [link, setLink] = useState();
 
-  const [genderFlag, setGenderFlag] = useState(false);
-  const [addressFlag, setAddressFlag] = useState(false);
+  // const [genderFlag, setGenderFlag] = useState(false);
+  // const [addressFlag, setAddressFlag] = useState(false);
 
   const [formErrors, setFormErrors] = useState({
     fullname: "",
@@ -106,7 +105,7 @@ useEffect(() => setMounted(true), []);//added by tejas to prevent hydration erro
   const [isLoading, setIsLoading] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [dobFlag, setDobFlag] = useState(false);
+  // const [dobFlag, setDobFlag] = useState(false);
   // const [emailFlag, setEmailFlag] = useState(false);
   const [cpi, setCpi] = useState(0);
   const [lenderProduct, setLenderProduct] = useState(null);
@@ -599,14 +598,14 @@ useEffect(() => setMounted(true), []);//added by tejas to prevent hydration erro
       ) {
         setOtpVerified(true);
         setOtpLoader(false);
-        const data = response.data;
+        // const data = response.data;
 
-        if (!data.dob || data.dob === "") {
-          setDobFlag(true);
-        }
-        if (!data.gender || data.gender === "") {
-          setGenderFlag(true);
-        }
+        // if (!data.dob || data.dob === "") {
+        //   setDobFlag(true);
+        // }
+        // if (!data.gender || data.gender === "") {
+        //   setGenderFlag(true);
+        // }
         // if (!data.email || data.email === "") {
         //   setEmailFlag(true);
         // }
@@ -620,7 +619,10 @@ useEffect(() => setMounted(true), []);//added by tejas to prevent hydration erro
         } else {
           setActiveContainer("RysaNewPage2"); // Display NewPlApplyDS if self-employed
         }
-      } else if (response.data.code === -1 && response?.data?.isExperianOtp === "true") {
+      } else if (
+        response.data.code === -1 &&
+        response?.data?.isExperianOtp === "true"
+      ) {
         // ❌ Invalid OTP
         setOtpLoader(false);
         setOtpStatus("Incorrect OTP! Try Again..");
@@ -633,15 +635,13 @@ useEffect(() => setMounted(true), []);//added by tejas to prevent hydration erro
           setOtpStatus("");
           setIsOtpBottomSheetVisible(false);
         }, 2000); //for two seconds show incorrect otp text and then close that otp Bottom sheet
-
-      }else if (response.data.code === -1) {
+      } else if (response.data.code === -1) {
         // ❌ Invalid OTP
         setOtpLoader(false);
         setOtpStatus("Incorrect OTP! Try Again..");
         setUpOtp("");
         setOtpInputs(["", "", "", "", "", ""]);
-      }
-       else {
+      } else {
         // setOtpLoader(false);
         // // setOtpStatus("Incorrect OTP! Try Again..");
         // setOtpStatus("Incorrect OTP! Try Again..");
@@ -1351,9 +1351,9 @@ useEffect(() => setMounted(true), []);//added by tejas to prevent hydration erro
           firstName={firstName}
           lastName={lastname}
           fatherName={fatherName}
-          dobFlag={dobFlag}
+          // dobFlag={dobFlag}
           // residentialPincodeFlag={residentialPincodeFlag}
-          genderFlag={genderFlag}
+          // genderFlag={genderFlag}
           // emailFlag={emailFlag}
           // addressFlag={addressFlag}
           setActiveContainer={setActiveContainer}
@@ -1889,9 +1889,7 @@ useEffect(() => setMounted(true), []);//added by tejas to prevent hydration erro
                   onClick={handleNextClick}
                 >
                   {/* Next */}
-                  {
-                    submitButtonText
-                  }
+                  {submitButtonText}
                 </button>
                 {/* className={`w-full  ${styles.submitButton}`} */}
               </div>

@@ -35,13 +35,13 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 const RysaNewPage2 = ({
-  dobFlag,
+  // dobFlag,
   mainFormData,
   firstName,
   fatherName,
   lastName,
   getLendersList,
-  genderFlag,
+  // genderFlag,
   // emailFlag,
   // addressFlag,
   // residentialPincodeFlag,
@@ -245,12 +245,12 @@ const RysaNewPage2 = ({
       // spouseName: "",
     };
 
-    if (dobFlag && !formData.dob) {
-      if (!formData.dob) {
-        errors.dob = "Date of birth is required";
-        valid = false;
-      }
+    // if (dobFlag && !formData.dob) {
+    if (!formData.dob) {
+      errors.dob = "Date of birth is required";
+      valid = false;
     }
+    // }
 
     // if (emailFlag) {
     if (!formData.email) {
@@ -270,12 +270,12 @@ const RysaNewPage2 = ({
     }
     // }
 
-    if (genderFlag) {
-      if (!formData.gender) {
-        errors.gender = "Gender is required";
-        valid = false;
-      }
+    // if (genderFlag) {
+    if (!formData.gender) {
+      errors.gender = "Gender is required";
+      valid = false;
     }
+    // }
 
     // if (!formData.maritalStatus) {
     //   errors.maritalStatus = "Marital status is required";
@@ -995,93 +995,90 @@ const RysaNewPage2 = ({
 
             <div>
               {/* Gender Selection */}
-              {genderFlag && (
-                <div className={styles.formGroup}>
-                  <label style={{ fontWeight: "bold" }}>Gender</label>
-                  <div className={styles.radioGroup}>
-                    {["Male", "Female", "Other"].map((gender) => (
-                      <label
-                        key={gender}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        <input
-                          type="radio"
-                          value={gender}
-                          checked={formData.gender === gender}
-                          onChange={handleGenderChange}
-                          style={{ marginRight: "8px" }}
-                        />
-                        {gender}
-                      </label>
-                    ))}
-                  </div>
-                  {formErrors.gender && (
-                    <p
+              {/* {genderFlag && ( */}
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: "bold" }}>Gender</label>
+                <div className={styles.radioGroup}>
+                  {["Male", "Female", "Other"].map((gender) => (
+                    <label
+                      key={gender}
                       style={{
-                        color: "red",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        position: "absolute",
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "8px",
                       }}
                     >
-                      {formErrors.gender}
-                    </p>
-                  )}
+                      <input
+                        type="radio"
+                        value={gender}
+                        checked={formData.gender === gender}
+                        onChange={handleGenderChange}
+                        style={{ marginRight: "8px" }}
+                      />
+                      {gender}
+                    </label>
+                  ))}
                 </div>
-              )}
+                {formErrors.gender && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "12px",
+                      fontWeight: "700",
+                      position: "absolute",
+                    }}
+                  >
+                    {formErrors.gender}
+                  </p>
+                )}
+              </div>
+              {/* )} */}
 
               {/* DOB Date Picker */}
-              {dobFlag && (
-                <div className={styles.formGroup}>
-                  <label style={{ fontWeight: "bold" }}>Date of Birth</label>
-                  <div
-                    className="input-wrapper"
-                    style={{ position: "relative" }}
+              {/* {dobFlag && ( */}
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: "bold" }}>Date of Birth</label>
+                <div className="input-wrapper" style={{ position: "relative" }}>
+                  <DatePicker
+                    selected={formData.dob}
+                    onChange={handleDateChange2}
+                    dateFormat="dd/MM/yyyy"
+                    className={styles.input}
+                    placeholderText="DD/MM/YYYY"
+                    ref={dobInputRef} // Use the ref for the actual input element
+                    showYearDropdown // This enables the year selection dropdown
+                    yearDropdownItemNumber={50} // This controls how many years are shown in the dropdown
+                    scrollableYearDropdown // Allows you to scroll through years in the dropdown
+                  />
+                  <span
+                    className="icon"
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      color: "#00000061",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
                   >
-                    <DatePicker
-                      selected={formData.dob}
-                      onChange={handleDateChange2}
-                      dateFormat="dd/MM/yyyy"
-                      className={styles.input}
-                      placeholderText="DD/MM/YYYY"
-                      ref={dobInputRef} // Use the ref for the actual input element
-                      showYearDropdown // This enables the year selection dropdown
-                      yearDropdownItemNumber={50} // This controls how many years are shown in the dropdown
-                      scrollableYearDropdown // Allows you to scroll through years in the dropdown
-                    />
-                    <span
-                      className="icon"
-                      style={{
-                        position: "absolute",
-                        right: "10px",
-                        top: "50%",
-                        color: "#00000061",
-                        transform: "translateY(-50%)",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <FaCalendar />
-                    </span>
-                  </div>
-                  {formErrors.dob && (
-                    <div
-                      className="error-message"
-                      style={{
-                        color: "red",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        position: "absolute",
-                      }}
-                    >
-                      {formErrors.dob}
-                    </div>
-                  )}
+                    <FaCalendar />
+                  </span>
                 </div>
-              )}
+                {formErrors.dob && (
+                  <div
+                    className="error-message"
+                    style={{
+                      color: "red",
+                      fontSize: "12px",
+                      fontWeight: "700",
+                      position: "absolute",
+                    }}
+                  >
+                    {formErrors.dob}
+                  </div>
+                )}
+              </div>
+              {/*  )} */}
             </div>
 
             <>
