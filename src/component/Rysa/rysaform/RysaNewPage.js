@@ -56,6 +56,12 @@ const roboto = Roboto({
 // ];
 
 const RaysaNewPage = ({ params, searchParams }) => {
+
+  const [mounted, setMounted] = useState(false);//added by tejas to prevent hydration error
+useEffect(() => setMounted(true), []);//added by tejas to prevent hydration error
+
+  const [submitButtonText, setSubmitButtonText] = useState("next");
+
   const [link, setLink] = useState();
 
   const [genderFlag, setGenderFlag] = useState(false);
@@ -614,13 +620,28 @@ const RaysaNewPage = ({ params, searchParams }) => {
         } else {
           setActiveContainer("RysaNewPage2"); // Display NewPlApplyDS if self-employed
         }
-      } else if (response.data.code === -1) {
+      } else if (response.data.code === -1 && response?.data?.isExperianOtp === "true") {
         // ❌ Invalid OTP
         setOtpLoader(false);
         setOtpStatus("Incorrect OTP! Try Again..");
         setUpOtp("");
         setOtpInputs(["", "", "", "", "", ""]);
-      } else {
+
+        setSubmitButtonText("Resend OTP");
+
+        setTimeout(() => {
+          setOtpStatus("");
+          setIsOtpBottomSheetVisible(false);
+        }, 2000); //for two seconds show incorrect otp text and then close that otp Bottom sheet
+
+      }else if (response.data.code === -1) {
+        // ❌ Invalid OTP
+        setOtpLoader(false);
+        setOtpStatus("Incorrect OTP! Try Again..");
+        setUpOtp("");
+        setOtpInputs(["", "", "", "", "", ""]);
+      }
+       else {
         // setOtpLoader(false);
         // // setOtpStatus("Incorrect OTP! Try Again..");
         // setOtpStatus("Incorrect OTP! Try Again..");
@@ -1279,6 +1300,9 @@ const RaysaNewPage = ({ params, searchParams }) => {
     );
     return () => clearInterval(id);
   }, []);
+
+  if (!mounted) return null; // or a fallback skeleton //added by tejas to prevent hydration error
+
   return (
     <>
       {/* {rejectionPage && <RejectionPage lenderName={lenderProduct} />} */}
@@ -1864,7 +1888,10 @@ const RaysaNewPage = ({ params, searchParams }) => {
                   className={`${styles.button} ${styles.submitButton}`}
                   onClick={handleNextClick}
                 >
-                  Next
+                  {/* Next */}
+                  {
+                    submitButtonText
+                  }
                 </button>
                 {/* className={`w-full  ${styles.submitButton}`} */}
               </div>
