@@ -33,21 +33,13 @@ function personalDetailePage3() {
                         <div className={styles.progressBar}>
                             <div className={styles.stepNumber}>2</div>
                             <div
-                                className={styles.progressBarFill}
+                                className={styles.progressBarFill2}
                             // style={{ width: `${progress}%` }}
                             ></div>
                         </div>
                         {/* first no:3 progress bar */}
-                        <div className={styles.progressBar}>
-                            <div className={styles.stepNumber}>3</div>
-                            <div
-                                className={styles.progressBarFill}
-                            // style={{ width: `${progress}%` }}
-                            ></div>
-                        </div>
-                        {/* first no:4 progress bar */}
                         <div className={styles.progressBarlast}>
-                            <div className={styles.stepNumberLast}>4</div>
+                            <div className={styles.stepNumberLast}>3</div>
                         </div>
                     </div>
                     <div className={styles.headering}><h3>personal Details</h3></div>

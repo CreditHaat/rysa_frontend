@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { Outfit } from "next/font/google";
-import PersonalDetailPage from "../../component/NewJourney/personalDetailePage";
+import PersonalDetailPage from "../../component/NewJourney/personalDetailePage2";
 import PersonalDetailPage2 from "../../component/NewJourney/personalDetailePage2";
 import PersonalDetailPage3 from "../../component/NewJourney/personalDetailePage3";
 
@@ -21,8 +21,8 @@ function page() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       />
       
-      <PersonalDetailPage />
-      {/* <PersonalDetailPage2 /> */}
+      {/* <PersonalDetailPage /> */}
+      <PersonalDetailPage2 />
       {/* <PersonalDetailPage3 /> */}
     </div>
   )

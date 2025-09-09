@@ -4,14 +4,16 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { FaChevronDown } from "react-icons/fa";
 import { style } from '@mui/system';
+import { useRouter } from "next/navigation"; 
+import personalDetailePage2 from './personalDetailePage2';
 
 function personalDetailePage() {
     // bottom sheet functin here
     const [showSheet, setShowSheet] = useState(false);
     const [employmentType, setEmploymentType] = useState('');
-
     const [showSheetPayment, setShowSheetPayment] = useState(false);
     const [paymentType, setPaymentType] = useState('');
+    const router = useRouter(); 
 
     // form validation functions
     const [formErrors, setFormErrors] = useState({
@@ -127,6 +129,7 @@ function personalDetailePage() {
             console.log('Form is valid, proceeding to next step');
             console.log('Form Data:', formData);
             // Add your navigation logic here
+            router.push("/personalDetailePage2");
         } else {
             console.log('Form has errors');
         }
@@ -160,21 +163,13 @@ function personalDetailePage() {
                         <div className={styles.progressBar}>
                             <div className={styles.stepNumber}>2</div>
                             <div
-                                className={styles.progressBarFill}
+                                className={styles.progressBarFill2}
                             // style={{ width: `${progress}%` }}
                             ></div>
                         </div>
                         {/* first no:3 progress bar */}
-                        <div className={styles.progressBar}>
-                            <div className={styles.stepNumber}>3</div>
-                            <div
-                                className={styles.progressBarFill}
-                            // style={{ width: `${progress}%` }}
-                            ></div>
-                        </div>
-                        {/* first no:4 progress bar */}
                         <div className={styles.progressBarlast}>
-                            <div className={styles.stepNumberLast}>4</div>
+                            <div className={styles.stepNumberLast}>3</div>
                         </div>
                     </div>
                     <div className={styles.headering}><h3>personal Details</h3></div>
@@ -214,26 +209,38 @@ function personalDetailePage() {
                     {/* third field */}
                     <div className={`${styles.fields} ${formErrors.employmentType ? styles.fieldserror : ""}`}>
                         <span className={styles.fieldName}>Employment Type</span>
-                        <input
-                            type='text'
-                            name='employmentType'
-                            value={employmentType}
-                            readOnly
-                            className={styles.inputfield}
-                            onClick={() => setShowSheet(true)}
-                        />
+                        <div className={styles.inputWrapper}>
+                            <input
+                                type='text'
+                                name='employmentType'
+                                value={employmentType}
+                                // value={formData.employmentType || ""}
+                                className={styles.inputfield1}
+                                readOnly
+                                onClick={() => setShowSheet(true)}
+                            />
+                            <div className={styles.iconContainer} onClick={() => setShowSheet(true)}>
+                                <FaChevronDown className={styles.iconInput} />
+                            </div>
+                        </div>
                     </div>
                     {/* fourth field */}
                     <div className={`${styles.fields} ${formErrors.paymentType ? styles.fieldserror : ""}`}>
                         <span className={styles.fieldName}>Payment Type</span>
-                        <input
-                            type='text'
-                            name='paymentType'
-                            value={paymentType}
-                            className={styles.inputfield}
-                            readOnly
-                            onClick={() => setShowSheetPayment(true)} 
-                        /><span className={styles.iconInput}><FaChevronDown /></span>
+                        <div className={styles.inputWrapper}>
+                            <input
+                                type="text"
+                                name="paymentType"
+                                // value={paymentType}
+                                value={formData.paymentType || ""}
+                                className={styles.inputfield1}
+                                readOnly
+                                onClick={() => setShowSheetPayment(true)}
+                            />
+                            <div className={styles.iconContainer} onClick={() => setShowSheetPayment(true)}>
+                                <FaChevronDown className={styles.iconInput} />
+                            </div>
+                        </div>
                     </div>
                     {/* fifth field */}
                     <div className={`${styles.fields} ${formErrors.monthlyIncome ? styles.fieldserror : ""}`}>
