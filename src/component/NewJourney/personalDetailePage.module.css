@@ -37,7 +37,7 @@
     max-width: 412px;
     min-width: 300px;
     height: auto;
-    background: #f8b944;
+    background: #F9BA45;
     color: black;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -60,6 +60,7 @@
     align-items: center;
     justify-items: center;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .progressBar {

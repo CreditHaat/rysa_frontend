@@ -23,7 +23,7 @@ function page() {
       
       {/* <PersonalDetailPage /> */}
       {/* <PersonalDetailPage2 /> */}
-      {/* <PersonalDetailPage3 /> */}
+      <PersonalDetailPage3 />
     </div>
   )
 }

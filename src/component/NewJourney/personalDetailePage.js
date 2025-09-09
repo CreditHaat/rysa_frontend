@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import styles from "./personalDetailePage.module.css";
 import { useState } from 'react';
@@ -5,9 +6,11 @@ import Image from 'next/image';
 import { FaChevronDown } from "react-icons/fa";
 import { style } from '@mui/system';
 import { useRouter } from "next/navigation"; 
-import personalDetailePage2 from './personalDetailePage2';
+import PersonalDetailePage2 from './personalDetailePage2';
+import PersonalDetailePage3 from './personalDetailePage3';
 
-function personalDetailePage() {
+
+function PersonalDetailePage() {
     // bottom sheet functin here
     const [showSheet, setShowSheet] = useState(false);
     const [employmentType, setEmploymentType] = useState('');
@@ -23,14 +26,33 @@ function personalDetailePage() {
         paymentType: "",
         monthlyIncome: "",
     });
+      const [formData, setFormData] = useState({
+    // Page 1
+    pinCode: "",
+    address: "",
+    employmentType: "",
+    paymentType: "",
+    monthlyIncome: "",
+    // Page 2
+    panNumber: "",
+    fullName: "",
+    email: "",
+    selectedGender: "",
+    selectedDate: "",
+    // Page 3
+    companyName: "",
+    workEmail: "",
+    workPINCode: "",
+  });
+
     
-    const [formData, setFormData] = useState({
-        pinCode: "",
-        address: "",
-        employmentType: "",
-        paymentType: "",
-        monthlyIncome: "",
-    });
+    // const [formData, setFormData] = useState({
+    //     pinCode: "",
+    //     address: "",
+    //     employmentType: "",
+    //     paymentType: "",
+    //     monthlyIncome: "",
+    // });
 
     const validateForm = () => {
         let valid = true;
@@ -55,8 +77,8 @@ function personalDetailePage() {
         if (!formData.address) {
             errors.address = "Residential Address is required";
             valid = false;
-        } else if (formData.address.trim().length < 10) {
-            errors.address = "Address must be at least 10 characters long";
+        } else if (formData.address.trim().length < 3) {
+            errors.address = "Address must be at least 3 characters long";
             valid = false;
         }
 
@@ -124,18 +146,40 @@ function personalDetailePage() {
     };
 
     // Handle next button click
+     const [activeContainer, setActiveContainer] = useState("personalDetailePage");
     const handleNext = () => {
         if (validateForm()) {
             console.log('Form is valid, proceeding to next step');
             console.log('Form Data:', formData);
             // Add your navigation logic here
-            router.push("/personalDetailePage2");
+            //router.push("/personalDetailePage2");
+            setActiveContainer("PersonalDetailePage2")
         } else {
             console.log('Form has errors');
         }
     };
+     const handleBack = () => {
+        setActiveContainer("FirstPage");  // give that mobile number page file name where we are taking only mobilenumber field
+    };
 
     return (
+        <>
+        {activeContainer === "PersonalDetailePage2" && (
+        <PersonalDetailePage2
+          mainFormData={formData}
+          setFormData={setFormData}
+          setActiveContainer={setActiveContainer}
+        />
+      )}
+
+      {activeContainer === "PersonalDetailePage3" && (
+        <PersonalDetailePage3
+          mainFormData={formData}
+          setFormData={setFormData}
+          setActiveContainer={setActiveContainer}
+        />
+      )}
+            {activeContainer === "personalDetailePage" && (
         <div className={styles.container}>
             <div className={styles.mainHeaderPart} >
                 <Image
@@ -146,7 +190,7 @@ function personalDetailePage() {
                     alt="Aryse_Fin logo"
                     priority
                 />
-                <div className={styles.logoName}>AryseFin</div>
+                <div className={styles.logoName}></div>
             </div>
             <div className={styles.mainForm}>
                 <div className={styles.header}>
@@ -255,13 +299,17 @@ function personalDetailePage() {
                     </div>
                     {/* button part here */}
                     <div className={styles.btn}>
-                        {/* back button  */}
-                        <div className={styles.backbtn}>Back</div>
-                        {/* emptyspace */}
-                        <div className={styles.emptyspace}></div>
-                        {/* next button  */}
-                        <div className={styles.nextbtn} onClick={handleNext}>Next</div>
-                    </div>
+                                {/* back button  */}
+                                <div className={styles.backbtn} 
+                                onClick={handleBack}
+                                >Back</div>
+                                {/* emptyspace */}
+                                <div className={styles.emptyspace}></div>
+                                {/* next button  */}
+                                <div className={styles.nextbtn} 
+                                onClick={handleNext}
+                                >Next</div>
+                            </div>
                 </div>
                 {/* BottomSheet for employ type  */}
                 {showSheet && (
@@ -327,7 +375,9 @@ function personalDetailePage() {
                 )}
             </div>
         </div>
+            )}
+        </>
     )
 }
 
-export default personalDetailePage
+export default PersonalDetailePage

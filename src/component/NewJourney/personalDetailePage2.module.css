@@ -58,6 +58,7 @@
     align-items: center;
     justify-items: center;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .progressBar {
@@ -167,7 +168,16 @@
     background: #FFF;
     margin-top: 30px;
 }
-
+.fields1 {
+    display: flex;
+    flex-direction: column;
+    /* padding: 10px 25px 21px 25px; */
+    gap: 10px;
+    border-radius: 8px;
+    /* border: 1px solid rgba(122, 122, 122, 0.18); */
+    background: #FFF;
+    margin-top: 30px;
+}
 .fieldName {
     color: rgba(0, 0, 0, 0.74);
     font-size: 12px;
@@ -175,7 +185,14 @@
     font-weight: 400;
     word-wrap: break-word;
 }
-
+.gendertitle {
+    color: rgba(0, 0, 0, 0.74);
+    font-size: 12px;
+    font-family: Outfit;
+    font-weight: 400;
+    word-wrap: break-word;
+    padding: 0 0 0 25px;
+}
 .inputfield {
     font-size: 20px;
     outline: none;
@@ -201,7 +218,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    padding: 5px;
+    /* padding: 5px; */
     border-radius: 4px;
     transition: background-color 0.2s ease;
 }
@@ -605,11 +622,56 @@
 
 /* Enhanced input field styling */
 .inputfield:focus {
-    outline: 2px solid #9747FF;
+    /* outline: 2px solid #9747FF; */
     outline-offset: -2px;
     border-radius: 4px;
 }
 
 .inputfield.inputError:focus {
     outline: 2px solid #ef4444;
+}
+/* Additional CSS styles to add to your existing personalDetailePage2.module.css file */
+
+/* Gender field error styling */
+.genderError {
+    border: 1px solid #ef4444;
+    border-radius: 8px;
+    padding: 2px;
+}
+
+.genderOptionError {
+    border: 2px solid #ef4444 !important;
+    /* background-color: #fef2f2 !important; */
+}
+
+.genderOptionError:hover {
+    border:2px solid #ef4444 !important;
+    /* background-color: #fee2e2 !important; */
+}
+/* Additional CSS styles to add to your existing personalDetailePage2.module.css file */
+
+/* Outer field container error styling */
+.fieldError {
+    border: 2px solid #ef4444 !important;
+    /* background-color: #fef2f2 !important; */
+}
+
+/* Remove the inner input field error styles since we want outer container to be red */
+.inputError {
+    /* Remove or comment out the existing inputError styles */
+    border: none !important;
+    /* outline: none !important; */
+}
+
+/* Keep the input focus styles but make sure they don't conflict */
+.inputfield:focus {
+    /* outline: 2px solid #9747FF; */
+    outline-offset: -2px;
+    border-radius: 4px;
+}
+
+/* Override focus when parent has error */
+.fieldError .inputfield:focus {
+    outline: 2px solid #ef4444;
+    outline-offset: -2px;
 }

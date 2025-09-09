@@ -21,7 +21,7 @@ function page() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       />
       
-      {/* <PersonalDetailPage /> */}
+      <PersonalDetailPage />
       {/* <PersonalDetailPage2 /> */}
       {/* <PersonalDetailPage3 /> */}
     </div>
