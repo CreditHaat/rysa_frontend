@@ -403,8 +403,16 @@ const RaysaNewPage = ({ params, searchParams }) => {
       valid = false;
     }
 
-    if (!formData.monthlyIncome)
+    if (!formData.monthlyIncome) {
       errors.monthlyIncome = "Monthly income is required";
+      valid = false;
+    } else if (isNaN(formData.monthlyIncome)) {
+      errors.monthlyIncome = "Monthly income must be a number";
+      valid = false;
+    } else if (Number(formData.monthlyIncome) < 1000) {
+      errors.monthlyIncome = "Monthly income must be at least 1000";
+      valid = false;
+    }
 
     // PAN validation with regex
     if (!formData.pan) {
@@ -1200,7 +1208,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
         }
 
         console.log("for partner page", response);
-      } catch (error) {}
+      } catch (error) { }
     }
   };
 
@@ -1487,7 +1495,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
           {/* 👉 Move Apply Now here */}
           <div
             className="newfirstcard-container"
-            // style={{ top:'0px',boxSizing: "content-box" }}
+          // style={{ top:'0px',boxSizing: "content-box" }}
           >
             <div
               style={{
@@ -1616,7 +1624,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                     isSearchable={false}
                     menuPosition="absolute"
                     components={{ Option: CustomOption }}
-                    // ✅ REMOVED: menuIsOpen, onFocus, onBlur, onClick - let react-select handle menu state
+                  // ✅ REMOVED: menuIsOpen, onFocus, onBlur, onClick - let react-select handle menu state
                   />
 
                   {formErrors.profession && (
@@ -1650,7 +1658,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                   isSearchable={false}
                   menuPosition="absolute"
                   components={{ Option: CustomOption }}
-                  // ✅ REMOVED: menuIsOpen, onFocus, onBlur, onClick - let react-select handle menu state
+                // ✅ REMOVED: menuIsOpen, onFocus, onBlur, onClick - let react-select handle menu state
                 />
 
                 {formErrors.paymentType && (
@@ -1718,8 +1726,8 @@ const RaysaNewPage = ({ params, searchParams }) => {
                     inputStage === "alphabets"
                       ? "text"
                       : inputStage === "numbers"
-                      ? "tel"
-                      : "text"
+                        ? "tel"
+                        : "text"
                   }
                   inputMode="text"
                   id="pan"
@@ -1773,7 +1781,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
               /> */}
                   {showFullConsent ? (
                     <>
-                      You hereby consent to CreditHaat being appointed as your
+                      You hereby consent to Aryse Fin being appointed as your
                       authorized representative to receive your Credit
                       Information from Experian for the purpose of accessing
                       credit worthiness and availing pre-approved offers (“End
@@ -1783,7 +1791,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                       or communicate via WhatsApp regarding my application. This
                       consent overrides any registration for DNC / NDNC. I
                       confirm I am in India, I am a major and a resident of
-                      India and I have read and I accept CreditHaat Privacy
+                      India and I have read and I accept Aryse Fin Privacy
                       Policy Click here to read the PRIVACY POLICY & TERMS OF
                       SERVICE
                       <span
@@ -1799,7 +1807,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
                     </>
                   ) : (
                     <>
-                      You hereby consent to CreditHaat being appointed as your
+                      You hereby consent to Aryse Fin being appointed as your
                       authorized representative...
                       <span
                         onClick={() => setShowFullConsent(true)}
@@ -1876,7 +1884,7 @@ const RaysaNewPage = ({ params, searchParams }) => {
               </div>
               <div style={{ marginBottom: "50px" }}>
                 Calculation:
-                <br /> CreditHaat does not charge any fees from the user.
+                <br /> Aryse Fin does not charge any fees from the user.
                 <br /> A sample loan calculation for ₹1,00,000 borrowed for 1
                 year, with interest rate @13% per annum*, is as provided below:{" "}
                 <br />
