@@ -20,8 +20,8 @@ function FirstPage() {
 
     // Handle mobile number input
     const handleMobileChange = (e) => {
-        const value = e.target.value.replace(/\D/g, ''); // Only numbers
-        if (value.length <= 10) {
+        const value = e.target.value;
+        if (value.length <= 13) {
             setMobileNumber(value);
             // Clear error when user starts typing
             if (formErrors.mobileNumber) {
@@ -29,30 +29,22 @@ function FirstPage() {
             }
         }
     };
+    
 
-    // Validation for mobile number 
+    // Enhanced validation for mobile number 
     const validateForm = () => {
         let valid = true;
         const errors = {
             mobileNumber: ""
         };
 
-        // Validation for mobile no 
-        // if (!mobileNumber) {
-        //     errors.mobileNumber = "Mobile number is required";
-        //     valid = false;
-        // } else if (mobileNumber.length !== 10) {
-        //     errors.mobileNumber = "Mobile number must be exactly 10 digits";
-        //     valid = false;
-        // }
-
-        // validatin for mobile no 
-        if (!mobileNumber) {
+        if (!mobileNumber.trim()) {
             errors.mobileNumber = "Mobile number is required";
             valid = false;
         } else {
-
-            if (digitsOnly.length < 14) {
+            const digitsOnly = mobileNumber.replace(/\D/g, '');
+            
+            if (digitsOnly.length < 10) {
                 errors.mobileNumber = "Mobile number must be at least 10 digits";
                 valid = false;
             }
@@ -64,39 +56,28 @@ function FirstPage() {
 
     // Handle check eligibility button click
     const handleCheckEligibility = () => {
-        if (isLoading) return; // Prevent multiple clicks
+        if (isLoading) return;
 
+        // Always validate form when button is clicked
         if (validateForm()) {
-            setIsLoading(true);
+            const digitsOnly = mobileNumber.replace(/\D/g, '');
+            const finalMobile = digitsOnly.slice(-10); // last 10 digits
 
+            console.log("OTP sending to:", finalMobile);
+
+            setIsLoading(true);
             setTimeout(() => {
                 setIsLoading(false);
                 setShowOTPbottomsheet(true);
-                // Auto-focus first OTP input
                 setTimeout(() => {
                     otpRefs.current[0]?.focus();
                 }, 100);
             }, 500);
         }
+        // If validation fails, the error state will automatically make the input red
     };
 
     // Handle OTP input change
-    // const handleOtpChange = (index, value) => {
-    //     // Only allow single digit
-    //     if (value.length <= 1 && /^\d*$/.test(value)) {
-    //         const newOtp = [...otp];
-    //         newOtp[index] = value;
-    //         setOtp(newOtp);
-    //         setOtpError('');
-
-    //         // Auto-focus next input
-    //         if (value && index < 5) {
-    //             setTimeout(() => {
-    //                 otpRefs.current[index + 1]?.focus();
-    //             }, 10);
-    //         }
-    //     }
-    // };
     const handleOtpChange = (index, value) => {
         const newOtp = [...otp];
 
@@ -115,7 +96,6 @@ function FirstPage() {
             }
         }
     };
-
 
     // Handle OTP input keydown (for backspace) - Fixed for mobile
     const handleOtpKeyDown = (index, e) => {
@@ -278,27 +258,23 @@ function FirstPage() {
                                         type='tel'
                                         name='mobileNo'
                                         value={mobileNumber}
-                                        // inputMode="numeric"
+                                        inputMode="numeric"
                                         onChange={handleMobileChange}
                                         placeholder='Enter Mobile number'
                                         className={`${styles.inputfield} ${formErrors.mobileNumber ? styles.inputError : ''}`}
-                                        maxLength={14}
+                                        maxLength={13}
                                     />
-                                    {formErrors.mobileNumber && (
-                                        <div className={styles.errorMessage}>
-                                            {formErrors.mobileNumber}
-                                        </div>
-                                    )}
                                     <span>OTP will be send to your number for verification.</span>
                                 </div>
                                 <div>
                                     <button
                                         className={`${styles.btnelig} ${isLoading ? styles.loading : ''}`}
                                         onClick={handleCheckEligibility}
-                                        disabled={isLoading || mobileNumber.length !== 10}
+                                        disabled={isLoading}
                                     >
                                         {isLoading ? 'Checking...' : 'Check eligibility'}
                                     </button>
+
                                     <h3 className={styles.termText}>By proceeding, you agree to our <a href='/TermAndCondition'>Terms & Conditions</a> and <a href='/PrivacyAndPolicy'>Privacy Policy</a></h3>
                                 </div>
                             </div>
@@ -362,7 +338,9 @@ function FirstPage() {
                             <div className={styles.otpBottomSheet} onClick={(e) => e.stopPropagation()}>
                                 <div className={styles.otpHeader}>
                                     <h2>Please check message</h2>
-                                    <p>we've sent a code on <span className={styles.otpSpan}>{mobileNumber}</span></p>
+                                    <p>we've sent a code on <span className={styles.otpSpan}>
+                                        {mobileNumber.replace(/\D/g, '').slice(-10)}
+                                    </span></p>
                                 </div>
 
                                 <div className={styles.otpInputContainer}>
