@@ -182,15 +182,22 @@ function PersonalDetailePage() {
             {activeContainer === "personalDetailePage" && (
         <div className={styles.container}>
             <div className={styles.mainHeaderPart} >
-                <Image
-                    src="/Aryse_Fin.png"
-                    width={47}
-                    height={47}
-                    className={styles.logo}
-                    alt="Aryse_Fin logo"
-                    priority
-                />
-                <div className={styles.logoName}></div>
+                {/* mynew */}
+            <div className={styles.topchildren}>
+                            <div className={styles.logoContainer}>
+                                <Image
+                                    src="/AryseFin_logo.png"
+                                    width={80}
+                                    height={80}
+                                    className={styles.logo2}
+                                    alt="Aryse_Fin logo"
+                                    priority
+                                />
+                            </div>
+                        </div>
+
+
+                        {/* mynew */}
             </div>
             <div className={styles.mainForm}>
                 <div className={styles.header}>
@@ -226,7 +233,7 @@ function PersonalDetailePage() {
                     </div>
                     {/* first field */}
                     <div className={`${styles.fields} ${formErrors.pinCode ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>PIN Code</span>
+                        <span className={styles.fieldName}>Pincode </span>
                       <input
                         type="number"
                         name="pinCode"
@@ -242,7 +249,7 @@ function PersonalDetailePage() {
                     </div>
                     {/* second field */}
                     <div className={`${styles.fields} ${formErrors.address ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Residential Address</span>
+                        <span className={styles.fieldName}>Residential address</span>
                         <input 
                             type='text' 
                             name='address' 
@@ -255,8 +262,8 @@ function PersonalDetailePage() {
                         )} */}
                     </div>
                     {/* third field */}
-                    <div className={`${styles.fields} ${formErrors.employmentType ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Employment Type</span>
+                    <div className={`${styles.fields2} ${formErrors.employmentType ? styles.fieldserror : ""}`}>
+                        <span className={styles.fieldName}>Employment type</span>
                         <div className={styles.inputWrapper}>
                             <input
                                 type='text'
@@ -273,8 +280,8 @@ function PersonalDetailePage() {
                         </div>
                     </div>
                     {/* fourth field */}
-                    <div className={`${styles.fields} ${formErrors.paymentType ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Payment Type</span>
+                    <div className={`${styles.fields2} ${formErrors.paymentType ? styles.fieldserror : ""}`}>
+                        <span className={styles.fieldName}>Payment type</span>
                         <div className={styles.inputWrapper}>
                             <input
                                 type="text"
@@ -292,7 +299,7 @@ function PersonalDetailePage() {
                     </div>
                     {/* fifth field */}
                     <div className={`${styles.fields} ${formErrors.monthlyIncome ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Monthly Income</span>
+                        <span className={styles.fieldName}>Monthly income</span>
                         <input 
                             type='number' 
                             name='monthlyIncome' 
@@ -384,4 +391,4 @@ function PersonalDetailePage() {
     )
 }
 
-export default PersonalDetailePage
+export default PersonalDetailePage;

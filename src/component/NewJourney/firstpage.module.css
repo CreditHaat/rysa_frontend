@@ -39,7 +39,7 @@ justify-items: center;
 .logoContainer {
     width: 100%;
     /* height: 150px; */
-    margin: 10px 0;
+    margin: 25px 0 10px 0;
     justify-content: center;
     align-items: center;
     gap: 4px;
@@ -65,13 +65,15 @@ justify-items: center;
     /* background: green; */
 }
 .section{
-    margin: 20px 0;
+    margin: 30px 0;
 
 }
 .section h3 {
-    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
     font-weight: 600;
-    line-height: 30px;
+    line-height: 45px;
     color: black;
 }
 
@@ -80,8 +82,9 @@ justify-items: center;
 }
 
 .imageSection {
+    margin: 40px 0;
     display: flex;
-    gap: 10px;
+    gap: 40px;
     justify-content: space-between;
     justify-items: center;
     text-align: center;
@@ -91,7 +94,7 @@ justify-items: center;
  align-items: center;
 }
 .logosection {
- margin-left: 10px;
+ /* margin-left: 10px; */
  width: auto;
  height: auto;
 }
@@ -108,6 +111,9 @@ justify-items: center;
 .imageComponet h3 span{
     color: #6039D2;
 }
+.imageh3{
+    margin: 0 0 0 10px;
+}
 .mobilefield{
     display: grid;
     justify-items: center;
@@ -115,7 +121,7 @@ justify-items: center;
     align-items: center;
     gap: 20px;
 }
-.inputfield {
+/* .inputfield {
     font-size: 20px;
     width: 100%;
     outline: none;
@@ -128,12 +134,40 @@ justify-items: center;
 }
 .inputError {
     border: 2px solid red !important;
-    /* background-color: #fff5f5 !important; */
 }
 .inputfield:focus.inputError {
     border: 2px solid red !important;
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+} */
+ .fields {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 25px 21px 25px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(122, 122, 122, 0.18);
+    background: #FFF;
+    /* margin-top: 30px; */
 }
+
+.fieldserror {
+    border: 2px solid red;
+}
+
+.fieldName {
+    color: rgba(0, 0, 0, 0.74);
+    font-size: 12px;
+    font-family: Outfit;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.inputfield {
+    font-size: 20px;
+    outline: none;
+    border: none;
+}
+
 .mobilefield span{
     color: black;
     font-size: 12px;
@@ -142,7 +176,7 @@ justify-items: center;
 .btnelig{
     background-color: #6039D2;
     color: #FFFFFF;
-    border-radius: 10px;
+    border-radius: 50px;
     width: 100%;
     border: 2px solid #6061612E;
     padding: 10px 50px;
@@ -185,10 +219,11 @@ justify-items: center;
     width: 100%;
     height: auto;
     background-color: #6039D214;
-    padding: 10px;
+    /* padding: 10px; */
     border-radius: 10px;
     color: #000000;
-    padding: 10px 20px;
+    padding: 10px 10px;
+    text-align: justify;
 }
 .hedingEliText{
     text-align: center;
@@ -201,6 +236,7 @@ justify-items: center;
   list-style: none; /* Remove default bullet */
   padding-left: 0;
   types: none;
+  text-align: justify;
 }
 
 .customList li {
@@ -212,11 +248,11 @@ justify-items: center;
 .customList li::before {
   content: "";
   position: absolute;
-  left: -20px;
-  top: 4px;
-  width: 15px;
-  height: 15px;
-  background-color: #6039D2;
+  left: -18px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: #f9ba45;
   border-radius: 50%;
 }
 .footer{
@@ -248,7 +284,31 @@ justify-items: center;
     z-index: 1000;
     animation: fadeIn 0.3s ease-out;
 }
+.textBottomSheText {
+    height: 47px;
+    /* background: red; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+    padding-left: 20px;
+    padding-right: 5px;
+    text-align: justify;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #333;
+    background: #FFF;
+    border: 1px solid rgba(122, 122, 122, 0.18);
+    margin: 10px 0 0 0;
+}
+.textBottomShe::-webkit-scrollbar {
+    width: 6px;
+    /* scroll bar ची जाडी */
+}
 
+.ancBtoom {
+    color: #6039D2;
+}
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -401,9 +461,10 @@ justify-items: center;
     border-radius: 12px;
     padding: 16px;
     font-size: 16px;
-    font-weight: 600;
+    /* font-weight: 600; */
     cursor: pointer;
     transition: all 0.3s ease;
+    border-radius: 50px;
     /* box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3); */
 }
 
@@ -477,6 +538,7 @@ justify-items: center;
     .nextButton {
         padding: 14px;
         font-size: 15px;
+        border-radius: 50px;
     }
 }
 

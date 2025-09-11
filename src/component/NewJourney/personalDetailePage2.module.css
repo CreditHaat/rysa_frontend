@@ -1,23 +1,55 @@
 .Block {
     width: 100%;
-    height: 100vh;
-    background-color: white;
+    height: auto;
+    background-color: #F7F6FD;
     justify-content: center;
     align-items: center;
     display: grid;
     /* padding-left: 10px; */
     /* padding-right: 10px; */
     /* padding-top: 9px; */
-    padding: 10px;
+    padding: 0 10px 0px 10px;
 }
+
 
 .mainHeaderPart {
     width: 100%;
-    height: 150px;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    display: inline-flex;
+    margin: 0 0 30px 0;
+    
+}
+.topchildren {
+    width: 100%;
+    height: auto;
+    height: 90px;
+    border-bottom-left-radius: 500px;
+    border-bottom-right-radius: 500px;
+    background-color: #6039D2;
+    justify-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoContainer {
+    width: 100%;
+    /* height: 150px; */
+    margin: 25px 0 10px 0;
     justify-content: center;
     align-items: center;
     gap: 4px;
     display: inline-flex
+}
+
+.logo2 {
+    width: auto;
+    height: auto;
+    /* border-radius: 326.24px; */
+    /* border-radius: 50%; */
+
 }
 
 .logo {
@@ -92,7 +124,7 @@
 .progressBarFill {
     height: 5px;
     width: 100%;
-    background-color: #6a0dad;
+    background-color: #6039d2;
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
 }
@@ -102,7 +134,7 @@
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
      width: 50%;
-    background-color: #6a0dad;
+    background-color: #6039d2;
 }
 
 .stepNumber {
@@ -159,7 +191,7 @@
 
 .form {
     height: auto;
-    background-color: white;
+    background-color: #F7F6FD;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     padding: 10px;
@@ -182,7 +214,7 @@
     gap: 10px;
     border-radius: 8px;
     /* border: 1px solid rgba(122, 122, 122, 0.18); */
-    background: #FFF;
+    /* background: #FFF; */
     margin-top: 30px;
 }
 .fieldName {
@@ -245,7 +277,8 @@
 .backbtn {
     width: 25%;
     height: 60px;
-    background-color: #F5F5F5;
+    background-color: #FFF;
+    border: 1px solid rgba(122, 122, 122, 0.18);
     color: #868686;
     text-align: center;
     border-radius: 30px;
@@ -264,7 +297,7 @@
 .nextbtn {
     width: 70%;
     height: 60px;
-    background-color: #9747FF;
+    background-color: #6039d2;
     color: white;
     text-align: center;
     border-radius: 30px;
@@ -304,7 +337,7 @@
 
 .genderSelected {
     border-color: #9747FF !important;
-    background-color: #F0E6FF !important;
+    background-color: #F7F6FD !important;
     box-shadow: 0 0 0 1px #9747FF;
 }
 
@@ -398,7 +431,7 @@
 }
 
 .navButton {
-    background: #F3F4F6;
+    background: #F7F6FD;
     border: none;
     border-radius: 4px;
     width: 24px; /* Reduced from 32px */
@@ -422,7 +455,7 @@
 }
 
 .closeButton {
-    background: #F3F4F6;
+    background: #F7F6FD;
     border: none;
     border-radius: 50%;
     width: 24px; /* Reduced from 32px */
@@ -496,7 +529,7 @@
 }
 
 .selectedDay {
-    background-color: #9747FF !important;
+    background-color: #6039d2 !important;
     color: white !important;
     font-weight: 600;
 }
@@ -538,22 +571,22 @@
 }
 
 .clearButton {
-    background-color: #F3F4F6;
+    background-color: #F7F6FD;
     color: #6B7280;
 }
 
 .clearButton:hover {
-    background-color: #E5E7EB;
+    background-color: #F7F6FD;
     color: #374151;
 }
 
 .todayButton {
-    background-color: #9747FF;
+    background-color: #6039d2;
     color: white;
 }
 
 .todayButton:hover {
-    background-color: #8B5CF6;
+    background-color: #6039d2;
 }
 
 /* Mobile Responsiveness */
@@ -586,21 +619,21 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 4px;
-    color: #9747FF;
+    color: #6039d2;
     width: 24px;
     height: 24px;
 }
 
 .genderSelected .genderIcon {
-    color: #9747FF;
+    color: #F7F6FD;
 }
 
 .genderSelected .genderIcon svg path {
-    fill: #9747FF;
+    fill: #6039d2;
 }
 
 .genderOption:hover .genderIcon svg path {
-    fill: #8B5CF6;
+    fill: #6039d2;
 }
 /* Add these CSS classes to your existing CSS file */
 

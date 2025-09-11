@@ -3,6 +3,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import styles from "./firstpage.module.css";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
+import PersonalDetailePage from './personalDetailePage';
+import PersonalDetailePage2 from './personalDetailePage2';
+import PersonalDetailePage3 from './personalDetailePage3';
+
 
 function FirstPage() {
     const router = useRouter();
@@ -14,6 +18,26 @@ function FirstPage() {
     const [formErrors, setFormErrors] = useState({
         mobileNumber: "",
     });
+
+          const [mainFormData, setMainFormData] = useState({
+            mobileNumber:"",
+        // Page 1
+        pinCode: "",
+        address: "",
+        employmentType: "",
+        paymentType: "",
+        monthlyIncome: "",
+        // Page 2
+        panNumber: "",
+        fullName: "",
+        email: "",
+        selectedGender: "",
+        selectedDate: "",
+        // Page 3
+        companyName: "",
+        workEmail: "",
+        workPINCode: "",
+      });
 
     // Create ref for single OTP input
     const otpRef = useRef();
@@ -53,6 +77,7 @@ function FirstPage() {
         setFormErrors(errors);
         return valid;
     };
+     const [activeContainer, setActiveContainer] = useState("FirstPage");
 
     // Handle check eligibility button click
     const handleCheckEligibility = () => {
@@ -107,7 +132,8 @@ function FirstPage() {
                 // OTP is correct, navigate to next page
                 setIsLoading(false);
                 setShowOTPbottomsheet(false);
-                router.push('/personalDetailePage');
+                setActiveContainer("PersonalDetailePage");
+                // router.push('/personalDetailePage');
             } else {
                 // OTP is incorrect, reset OTP input
                 setIsLoading(false);
@@ -143,6 +169,29 @@ function FirstPage() {
 
     return (
         <>
+         {activeContainer === "PersonalDetailePage" && (
+        <PersonalDetailePage
+          mainFormData={mainformData}
+          setFormData={setMainFormData}
+          setActiveContainer={setActiveContainer}
+        />
+      )}
+         {activeContainer === "PersonalDetailePage2" && (
+        <PersonalDetailePage2
+          mainFormData={mainformData}
+          setFormData={setMainFormData}
+          setActiveContainer={setActiveContainer}
+        />
+      )}
+
+      {activeContainer === "PersonalDetailePage3" && (
+        <PersonalDetailePage3
+          mainFormData={mainformData}
+          setFormData={setMainFormData}
+          setActiveContainer={setActiveContainer}
+        />
+      )}
+            {activeContainer === "FirstPage" && (
             <div className={styles.topdiv}>
                 <div className={styles.mainContainer}>
                     <div className={styles.container}>
@@ -150,7 +199,7 @@ function FirstPage() {
                         <div className={styles.topchildren}>
                             <div className={styles.logoContainer}>
                                 <Image
-                                    src="/Aryse_Fin_n_w.png"
+                                    src="/AryseFin_logo.png"
                                     width={80}
                                     height={80}
                                     className={styles.logo}
@@ -163,30 +212,30 @@ function FirstPage() {
                         {/* second div */}
                         <div className={styles.children}>
                             <div className={styles.section}>
-                                <h3>Loans Upto  <span className={styles.spanSection}>₹25 Lacs,</span> <br />Start <span className={styles.spanSection}>@  10.99 % p.a</span>  </h3>
+                                <h3>Loans Upto  <span className={styles.spanSection}>₹25 Lacs,</span> <br /> </h3> <h3>Starting <span className={styles.spanSection}>  10.99 % p.a</span>  </h3>
                             </div>
                             <div className={styles.imageSection}>
                                 <div className={styles.imageComponet}>
                                     <Image
                                         src="/clock2.png"
-                                        width={40}
-                                        height={40}
+                                        width={50}
+                                        height={50}
                                         className={styles.logosection}
                                         alt="timer"
                                         priority
                                     />
-                                    <h3>Fast Approval<br /> <span>In 2 minutes</span></h3>
+                                    <h3>Sanction < br /> <span>in 2 minutes</span></h3> 
                                 </div>
                                 <div className={styles.imageComponet}>
                                     <Image
                                         src="/calendar2.png"
-                                        width={40}
-                                        height={40}
+                                        width={50}
+                                        height={50}
                                         className={styles.logosection2}
                                         alt="calender"
                                         priority
                                     />
-                                    <h3>Flexible EMI tenure <br /><span>upto 60 months</span></h3>
+                                    <h3 className={styles.imageh3}>Flexible EMI tenure <br /><span>upto 60 months</span></h3>
                                 </div>
                             </div>
                         </div>
@@ -194,9 +243,9 @@ function FirstPage() {
                         {/* third div */}
                         <div className={styles.children}>
                             <div className={styles.mobilefield}>
-                                <h3>Enter Mobile Number</h3>
+                                {/* <h3>Enter Mobile Number</h3> */}
                                 <div>
-                                    <input
+                                    {/* <input
                                         type='tel'
                                         name='mobileNo'
                                         value={mobileNumber}
@@ -205,9 +254,23 @@ function FirstPage() {
                                         placeholder='Enter Mobile number'
                                         className={`${styles.inputfield} ${formErrors.mobileNumber ? styles.inputError : ''}`}
                                         maxLength={13}
-                                    />
+                                    /> */}
+                                    <div className={`${styles.fields} ${formErrors.mobileNumber ? styles.fieldserror : ''}`}>
+                        <span className={styles.fieldName}>Enter mobile number</span>
+                        <input
+                             type='tel'
+                                        name='mobileNo'
+                                        value={mobileNumber}
+                                        inputMode="numeric"
+                                        onChange={handleMobileChange}
+                                        placeholder=' '
+                                        className={`${styles.inputfield} ${formErrors.mobileNumber ? styles.inputError : ''}`}
+                                        maxLength={13}
+                        />
+                    </div>
                                     <span>OTP will be send to your number for verification.</span>
                                 </div>
+                                
                                 <div>
                                     <button
                                         className={`${styles.btnelig} ${isLoading ? styles.loading : ''}`}
@@ -216,8 +279,23 @@ function FirstPage() {
                                     >
                                         {isLoading ? 'Checking...' : 'Check eligibility'}
                                     </button>
-
-                                    <h3 className={styles.termText}>By proceeding, you agree to our <a href='/TermAndCondition'>Terms & Conditions</a> and <a href='/PrivacyAndPolicy'>Privacy Policy</a></h3>
+                                   <div className={styles.textBottomSheText}>
+  <p>
+    You hereby consent to AryseFin being appointed as your authorized representative to receive your Credit 
+    Information from Experian for the purpose of accessing credit worthiness and availing pre-approved 
+    offers (“End Use Purpose”). You hereby agree to Terms and Conditions. I authorize Vibhuprada Services 
+    Private Limited (AryseFin), its partner financial institutes/lenders and their representatives to Call, 
+    SMS or communicate via WhatsApp regarding my application. This consent overrides any registration for
+    DNC / NDNC. I confirm I am in India, I am a major and a resident of India and I have read and I accept
+    AryseFin’s Privacy Policy Click here to read the <a href='/PrivacyAndPolicy' className={styles.ancBtoom}>PRIVACY POLICY</a> & <a href='/PrivacyAndPolicy' className={styles.ancBtoom}>TERMS OF SERVICE</a><br/> 
+    By agreeing and accepting the<a href='/PrivacyAndPolicy' className={styles.ancBtoom}> terms and conditions </a> set 
+    out herein, you provide your express consent to AryseFin (Vibhuprada Services Private Limited)
+    and its partners to access the credit bureaus and credit information report and credit score. 
+    You also hereby irrevocably and unconditionally consent to usage of such credit information 
+    being provided by credit bureaus.
+  </p>
+</div>
+                                    {/* <h3 className={styles.termText}>By proceeding, you agree to our <a href='/TermAndCondition'>Terms & Conditions</a> and <a href='/PrivacyAndPolicy'>Privacy Policy</a></h3> */}
                                 </div>
                             </div>
                         </div>
@@ -225,11 +303,11 @@ function FirstPage() {
                         {/* fourth div */}
                         <div className={styles.children}>
                             <div className={styles.textContainer}>
-                                <h3 className={styles.hedingEliText}>Instant Loan Eligibility Criteria</h3>
+                                <h3 className={styles.hedingEliText}>Loan Eligibility Criteria</h3>
                                 <ul className={styles.customList} type='none'>
                                     <li>Loan Amount Up to 25 lacks.</li>
                                     <li>Tenure: 3 to 60 months.</li>
-                                    <li>Rate of Interest (ROI): Starting from 12% per year.</li>
+                                    <li>Rate of Interest (ROI): Starting from 10.99% per year.</li>
                                     <li>Maximum APR: 45%.</li>
                                     <li>Processing Fee: 2.5% of loan amount + taxes as applicable.</li>
                                 </ul>
@@ -254,10 +332,15 @@ function FirstPage() {
                         {/* sixth div */}
                         <div className={styles.children}>
                             <div className={styles.textContainer2}>
-                                <h3>calculation</h3><br />
-                                <p>Calculation:CreditHaat does not charge any fees from the user.A sample loan calculation
-                                    for ₹1,00,000 borrowed for 1 year, with interest rate @13% per annum*,
-                                    is as provided below:<br />Processing fee (@ 2%) = ₹2,000 + GST = ₹2,360</p>
+                                {/* <h3>calculation</h3><br /> */}
+                                <p><i><strong>AryseFin does not charge any fees from the user.</strong></i><br/>
+Calculation: A sample loan calculation for ₹1,00,000 borrowed for 1 year, with interest rate @13% per annum*, is as provided below:<br/>
+Processing fee (@ 2%) = ₹2,000 + GST = ₹2,360<br/>
+Interest = ₹7,181<br/>
+EMI = ₹8,932<br/>
+Total amount to be repaid after a year = ₹1,10,129/-<br/>
+*Interest Rate varies based on your risk profile<br/>
+The maximum Annual Interest Rate (APR) can go up to 36%</p>
                             </div>
                         </div>
 
@@ -287,7 +370,7 @@ function FirstPage() {
 
             <div className={styles.otpHeader}>
                 <h2>Please check message</h2>
-                <p>we've sent a code on <span className={styles.otpSpan}>
+                <p>We have sent a code on <span className={styles.otpSpan}>
                     {mobileNumber.replace(/\D/g, '').slice(-10)}
                 </span></p>
             </div>
@@ -325,6 +408,8 @@ function FirstPage() {
 )}
                 </div>
             </div>
+                        )}
+
         </>
     );
 }

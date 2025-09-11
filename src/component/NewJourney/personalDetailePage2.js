@@ -427,15 +427,22 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
     return (
         <div className={styles.Block}>
             <div className={styles.mainHeaderPart} >
-                <Image
-                    src="/Aryse_Fin.png"
-                    width={55}
-                    height={55}
-                    className={styles.logo}
-                    alt="Aryse_Fin logo"
-                    priority
-                />
-                <div className={styles.logoName}></div>
+                {/* mynew */}
+            <div className={styles.topchildren}>
+                            <div className={styles.logoContainer}>
+                                <Image
+                                    src="/AryseFin_logo.png"
+                                    width={80}
+                                    height={80}
+                                    className={styles.logo2}
+                                    alt="Aryse_Fin logo"
+                                    priority
+                                />
+                            </div>
+                        </div>
+
+
+                        {/* mynew */}
             </div>
             <div className={styles.mainForm}>
                 <div className={styles.header}>
@@ -462,7 +469,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                     
                     {/* PAN No field with validation */}
                     <div className={`${styles.fields} ${panError ? styles.fieldError : ''}`}>
-                        <span className={styles.fieldName}>PAN No</span>
+                        <span className={styles.fieldName}>PAN</span>
                         <input 
                             type='text' 
                             name='PAN' 
@@ -476,7 +483,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                     
                     {/* Name as PAN field with validation */}
                     <div className={`${styles.fields} ${nameError ? styles.fieldError : ''}`}>
-                        <span className={styles.fieldName}>Name as PAN</span>
+                        <span className={styles.fieldName}>Name as on PAN</span>
                         <input
                             type='text'
                             name='fullname'
@@ -489,7 +496,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                     
                     {/* Email field with validation */}
                     <div className={`${styles.fields} ${emailError ? styles.fieldError : ''}`}>
-                        <span className={styles.fieldName}>Email</span>
+                        <span className={styles.fieldName}> Personal email</span>
                         <input
                             type='email'
                             name='Email'
@@ -631,4 +638,4 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
     )
 }
 
-export default PersonalDetailePage2
+export default PersonalDetailePage2;
