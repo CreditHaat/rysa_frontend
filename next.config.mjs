@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig = {
-     images: {
+  images: {
     domains: [
       "credithaatimages.s3.ap-south-1.amazonaws.com",
       "chdocsusers.s3.ap-south-1.amazonaws.com",
@@ -13,9 +13,11 @@ const nextConfig = {
       "hicredit-loan.oss-ap-south-1.aliyuncs.com",
     ],
   },
-  webpack: (config) => {
-    config.resolve.alias["@components"] = path.join(__dirname, "components");
-    return config;
+
+  turbopack: {
+    resolveAlias: {
+      "@components": path.join(__dirname, "components"), // ✅ Turbopack version of alias
+    },
   },
 };
 

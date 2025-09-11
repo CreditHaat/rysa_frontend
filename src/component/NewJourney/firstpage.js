@@ -8,15 +8,15 @@ function FirstPage() {
     const router = useRouter();
     const [showOTPbottomsheet, setShowOTPbottomsheet] = useState(false);
     const [mobileNumber, setMobileNumber] = useState('');
-    const [otp, setOtp] = useState(['', '', '', '', '', '']);
+    const [otp, setOtp] = useState(''); // Changed from array to string
     const [otpError, setOtpError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [formErrors, setFormErrors] = useState({
         mobileNumber: "",
     });
 
-    // Create refs for OTP inputs
-    const otpRefs = useRef([]);
+    // Create ref for single OTP input
+    const otpRef = useRef();
 
     // Handle mobile number input
     const handleMobileChange = (e) => {
@@ -70,88 +70,30 @@ function FirstPage() {
                 setIsLoading(false);
                 setShowOTPbottomsheet(true);
                 setTimeout(() => {
-                    otpRefs.current[0]?.focus();
+                    otpRef.current?.focus();
                 }, 100);
             }, 500);
         }
         // If validation fails, the error state will automatically make the input red
     };
 
-    // Handle OTP input change
-    const handleOtpChange = (index, value) => {
-        const newOtp = [...otp];
-
-        if (value === '') {
-            // backspace / delete case
-            newOtp[index] = '';
-            setOtp(newOtp);
-            return;
-        }
-
-        if (/^[0-9]$/.test(value)) {
-            newOtp[index] = value;
-            setOtp(newOtp);
-            if (index < otp.length - 1) {
-                otpRefs.current[index + 1]?.focus();
-            }
-        }
-    };
-
-    // Handle OTP input keydown (for backspace) - Fixed for mobile
-    const handleOtpKeyDown = (index, e) => {
-        if (e.key === 'Backspace') {
-            e.preventDefault(); // Prevent default backspace behavior
-
-            const newOtp = [...otp];
-
-            if (otp[index]) {
-                // Clear current field if it has value
-                newOtp[index] = '';
-                setOtp(newOtp);
-            } else if (index > 0) {
-                // Move to previous field and clear it
-                newOtp[index - 1] = '';
-                setOtp(newOtp);
-                setTimeout(() => {
-                    otpRefs.current[index - 1]?.focus();
-                }, 10);
-            }
-        }
-    };
-
-    // Handle OTP input focus - Additional mobile support
-    const handleOtpFocus = (index, e) => {
-        // Select all text on focus for better mobile experience
-        e.target.select();
-    };
-
-    // Handle OTP input paste
-    const handleOtpPaste = (e) => {
-        e.preventDefault();
-        const pastedData = e.clipboardData.getData('text').replace(/\D/g, '');
-
-        if (pastedData.length <= 6) {
-            const newOtp = ['', '', '', '', '', ''];
-            for (let i = 0; i < pastedData.length; i++) {
-                newOtp[i] = pastedData[i];
-            }
-            setOtp(newOtp);
+    // Handle single OTP input change
+    const handleOtpChange = (e) => {
+        const value = e.target.value;
+        // Only allow numeric input and limit to 6 digits
+        const numericValue = value.replace(/[^0-9]/g, '').slice(0, 6);
+        setOtp(numericValue);
+        
+        // Clear error when user starts typing
+        if (otpError) {
             setOtpError('');
-
-            // Focus on the next empty field or last field
-            const nextIndex = Math.min(pastedData.length, 5);
-            setTimeout(() => {
-                otpRefs.current[nextIndex]?.focus();
-            }, 10);
         }
     };
 
     // Handle OTP verification
     const handleVerifyOTP = () => {
-        const enteredOtp = otp.join('');
-
-        if (enteredOtp.length !== 6) {
-            setOtpError('Please enter complete OTP');
+        if (otp.length !== 6) {
+            setOtpError('Please enter complete 6-digit OTP');
             return;
         }
 
@@ -161,13 +103,13 @@ function FirstPage() {
         setTimeout(() => {
             const correctOtp = '123456'; // In real app, this would come from backend
 
-            if (enteredOtp === correctOtp) {
+            if (otp === correctOtp) {
                 // OTP is correct, navigate to next page
                 setIsLoading(false);
                 setShowOTPbottomsheet(false);
                 router.push('/personalDetailePage');
             } else {
-                // OTP is incorrect, reset OTP inputs
+                // OTP is incorrect, reset OTP input
                 setIsLoading(false);
                 setOtpError('Invalid OTP. Please try again.');
                 resetOtp();
@@ -175,22 +117,22 @@ function FirstPage() {
         }, 1500);
     };
 
-    // Reset OTP inputs
+    // Reset OTP input
     const resetOtp = () => {
-        setOtp(['', '', '', '', '', '']);
+        setOtp('');
         setTimeout(() => {
-            otpRefs.current[0]?.focus();
+            otpRef.current?.focus();
         }, 10);
     };
 
     // Handle resend OTP
-    const handleResendOTP = () => {
-        resetOtp();
-        setOtpError('');
-        // Here you would call API to resend OTP
-        console.log('Resending OTP to:', mobileNumber);
-        alert('OTP sent successfully!');
-    };
+    // const handleResendOTP = () => {
+    //     resetOtp();
+    //     setOtpError('');
+    //     // Here you would call API to resend OTP
+    //     console.log('Resending OTP to:', mobileNumber);
+    //     alert('OTP sent successfully!');
+    // };
 
     // Close bottom sheet
     const closeBottomSheet = () => {
@@ -326,66 +268,61 @@ function FirstPage() {
                                     Rights Reserved with Copyright & TradeMarks</h3>
                             </div>
                             <div className={styles.tandC}>
-                                <div>Terms & Conditions</div>
-                                <div>Privacy Policy</div>
+                                <div><a href='/TermAndCondition'>Terms & Conditions</a></div>
+                                <div><a href='/PrivacyAndPolicy'>Privacy Policy</a></div>
                             </div>
                         </div>
                     </div>
 
                     {/* OTP Bottom Sheet */}
-                    {showOTPbottomsheet && (
-                        <div className={styles.bottomSheetOverlay} onClick={closeBottomSheet}>
-                            <div className={styles.otpBottomSheet} onClick={(e) => e.stopPropagation()}>
-                                <div className={styles.otpHeader}>
-                                    <h2>Please check message</h2>
-                                    <p>we've sent a code on <span className={styles.otpSpan}>
-                                        {mobileNumber.replace(/\D/g, '').slice(-10)}
-                                    </span></p>
-                                </div>
+{showOTPbottomsheet && (
+    <div className={styles.bottomSheetOverlay} onClick={closeBottomSheet}>
+        <div className={styles.otpBottomSheet} onClick={(e) => e.stopPropagation()}>
+            {/* Cross Button */}
+            <button className={styles.crossButton} onClick={closeBottomSheet}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            </button>
 
-                                <div className={styles.otpInputContainer}>
-                                    {otp.map((digit, index) => (
-                                        <input
-                                            key={index}
-                                            ref={(el) => otpRefs.current[index] = el}
-                                            type="tel"
-                                            inputMode="numeric"
-                                            pattern="[0-9]*"
-                                            value={digit}
-                                            onChange={(e) => handleOtpChange(index, e.target.value)}
-                                            onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                                            onFocus={(e) => handleOtpFocus(index, e)}
-                                            onPaste={index === 0 ? handleOtpPaste : undefined}
-                                            className={`${styles.otpInput} ${otpError ? styles.otpInputError : ''}`}
-                                            maxLength="1"
-                                            autoComplete="one-time-code"
-                                        />
-                                    ))}
-                                </div>
+            <div className={styles.otpHeader}>
+                <h2>Please check message</h2>
+                <p>we've sent a code on <span className={styles.otpSpan}>
+                    {mobileNumber.replace(/\D/g, '').slice(-10)}
+                </span></p>
+            </div>
 
-                                {otpError && (
-                                    <div className={styles.errorMessage}>
-                                        {otpError}
-                                    </div>
-                                )}
+            <div className={styles.otpInputContainer}>
+                <input
+                    ref={otpRef}
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={otp}
+                    onChange={handleOtpChange}
+                    placeholder="Enter 6-digit OTP"
+                    className={`${styles.otpSingleInput} ${otpError ? styles.otpInputError : ''}`}
+                    maxLength="6"
+                    autoComplete="one-time-code"
+                />
+            </div>
 
-                                <div className={styles.resendContainer}>
-                                    <span>Didn't get a code? </span>
-                                    <button className={styles.resendButton} onClick={handleResendOTP}>
-                                        click to resend
-                                    </button>
-                                </div>
+            {otpError && (
+                <div className={styles.errorMessage}>
+                    {otpError}
+                </div>
+            )}
 
-                                <button
-                                    className={`${styles.nextButton} ${isLoading ? styles.loading : ''}`}
-                                    onClick={handleVerifyOTP}
-                                    disabled={isLoading}
-                                >
-                                    {isLoading ? 'Verifying...' : 'Next'}
-                                </button>
-                            </div>
-                        </div>
-                    )}
+            <button
+                className={`${styles.nextButton} ${isLoading ? styles.loading : ''}`}
+                onClick={handleVerifyOTP}
+                disabled={isLoading}
+            >
+                {isLoading ? 'Verifying...' : 'Verify'}
+            </button>
+        </div>
+    </div>
+)}
                 </div>
             </div>
         </>

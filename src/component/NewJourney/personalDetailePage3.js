@@ -82,9 +82,9 @@ function PersonalDetailePage3({ mainFormData, setActiveContainer, setFormData })
               <div className={styles.stepNumberLast}>3</div>
             </div>
           </div>
-          <div className={styles.headering}>
+          {/* <div className={styles.headering}>
             <h3>Personal Details</h3>
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.form}>
@@ -118,12 +118,15 @@ function PersonalDetailePage3({ mainFormData, setActiveContainer, setFormData })
           <div className={`${styles.fields} ${errors.workPINCode ? styles.errorField : ""}`}>
             <span className={styles.fieldName}>Work PIN Code</span>
             <input
-              type="text"
+              type="number"
               name="workPINCode"
               value={mainFormData.workPINCode || ""}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                        if (e.target.value.length <= 6) {
+                        handleInputChange(e);
+                         }
+                         }}
               className={styles.inputfield}
-              maxLength="6"
             />
             {errors.workPINCode &&
               mainFormData.workPINCode &&

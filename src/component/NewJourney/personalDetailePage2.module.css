@@ -1,10 +1,14 @@
-.container {
+.Block {
     width: 100%;
     height: 100vh;
     background-color: white;
     justify-content: center;
     align-items: center;
     display: grid;
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
+    /* padding-top: 9px; */
+    padding: 10px;
 }
 
 .mainHeaderPart {
@@ -82,20 +86,23 @@
     text-align: center;
     align-items: center;
     background-color: none;
+    opacity: 0.40;
 }
 
 .progressBarFill {
     height: 5px;
-    width: 50%;
+    width: 100%;
     background-color: #6a0dad;
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
 }
 .progressBarFill2 {
     height: 5px;
-    background-color: none;
+    /* background-color: none; */
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
+     width: 50%;
+    background-color: #6a0dad;
 }
 
 .stepNumber {
@@ -221,6 +228,7 @@
     /* padding: 5px; */
     border-radius: 4px;
     transition: background-color 0.2s ease;
+    margin-left: -20px;
 }
 
 .calendarButton:hover {
@@ -597,19 +605,19 @@
 /* Add these CSS classes to your existing CSS file */
 
 .inputError {
-    border: 1px solid #ef4444 !important;
+    border: 1px solid red !important;
     border-radius: 4px;
     padding: 8px;
 }
 
-.errorMessage {
+/* .errorMessage {
     color: #ef4444;
     font-size: 11px;
     font-family: Outfit;
     font-weight: 400;
     margin-top: 4px;
     display: block;
-}
+} */
 
 .successMessage {
     color: #22c55e;
@@ -621,38 +629,37 @@
 }
 
 /* Enhanced input field styling */
-.inputfield:focus {
-    /* outline: 2px solid #9747FF; */
+/* .inputfield:focus {
     outline-offset: -2px;
     border-radius: 4px;
-}
+} */
 
-.inputfield.inputError:focus {
+/* .inputfield.inputError:focus {
     outline: 2px solid #ef4444;
-}
+} */
 /* Additional CSS styles to add to your existing personalDetailePage2.module.css file */
 
 /* Gender field error styling */
 .genderError {
-    border: 1px solid #ef4444;
+    border: 1px solid red;
     border-radius: 8px;
     padding: 2px;
 }
 
 .genderOptionError {
-    border: 2px solid #ef4444 !important;
+    border: 2px solid red !important;
     /* background-color: #fef2f2 !important; */
 }
 
 .genderOptionError:hover {
-    border:2px solid #ef4444 !important;
+    border:2px solid red !important;
     /* background-color: #fee2e2 !important; */
 }
 /* Additional CSS styles to add to your existing personalDetailePage2.module.css file */
 
 /* Outer field container error styling */
 .fieldError {
-    border: 2px solid #ef4444 !important;
+    border: 2px solid red !important;
     /* background-color: #fef2f2 !important; */
 }
 
@@ -671,7 +678,7 @@
 }
 
 /* Override focus when parent has error */
-.fieldError .inputfield:focus {
-    outline: 2px solid #ef4444;
+/* .fieldError .inputfield:focus {
+    outline: 2px solid red;
     outline-offset: -2px;
-}
+} */

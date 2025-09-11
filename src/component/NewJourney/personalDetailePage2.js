@@ -425,7 +425,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.Block}>
             <div className={styles.mainHeaderPart} >
                 <Image
                     src="/Aryse_Fin.png"
@@ -452,7 +452,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                             <div className={styles.stepNumberLast}>3</div>
                         </div>
                     </div>
-                    <div className={styles.headering}><h3>personal Details</h3></div>
+                    {/* <div className={styles.headering}><h3>personal Details</h3></div> */}
                 </div>
 
                 <div className={styles.form}>

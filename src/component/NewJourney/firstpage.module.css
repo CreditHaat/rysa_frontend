@@ -124,13 +124,14 @@ justify-items: center;
     padding: 10px 50px;
     background-color: #FFFFFF;
     font-size: 18px;
+    text-align: center;
 }
 .inputError {
-    border: 2px solid #e74c3c !important;
+    border: 2px solid red !important;
     /* background-color: #fff5f5 !important; */
 }
 .inputfield:focus.inputError {
-    border: 2px solid #e74c3c !important;
+    border: 2px solid red !important;
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
 }
 .mobilefield span{
@@ -145,6 +146,7 @@ justify-items: center;
     width: 100%;
     border: 2px solid #6061612E;
     padding: 10px 50px;
+    cursor: pointer;
 }
 .termText{
     color: #000000;
@@ -260,9 +262,9 @@ justify-items: center;
 .otpBottomSheet {
     background: #F7F6FD;
     /* background: red; */
-
+     position: relative; 
     border-radius: 20px 20px 0 0;
-    /* padding: 30px 24px 40px; */
+    padding: 30px 24px 40px;
     width: 100%;
     max-width: 412px;
     margin: 0 auto;
@@ -303,55 +305,62 @@ justify-items: center;
     color: #3E2780;
 }
 
-/* OTP Input Container */
+/* Single OTP Input Container */
 .otpInputContainer {
     display: flex;
     justify-content: center;
-    gap: 12px;
     margin-bottom: 20px;
     padding: 0 0px;
 }
 
-/* Individual OTP Input */
-.otpInput {
-    width: 50px;
-    height: 50px;
+/* Single OTP Input Field */
+.otpSingleInput {
+    width: 100%;
+    max-width: 300px;
+    height: 55px;
     border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border-radius: 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: #333;
-    background: #f8f9fa;
+    background: white;
     transition: all 0.2s ease;
     outline: none;
+    letter-spacing: 8px;
+    padding: 0 20px;
 }
 
-.otpInput:focus {
-    /* border-color: #6c5ce7; */
-    background: white;
-    /* box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1); */
+.otpSingleInput:focus {
+    border-color: #6039D2;
+    box-shadow: 0 0 0 3px rgba(96, 57, 210, 0.1);
 }
 
-.otpInput:not(:placeholder-shown) {
-    /* border-color: #6c5ce7;
-    
-    */
-    background: white;
+.otpSingleInput::placeholder {
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: normal;
 }
 
 .otpInputError {
-    border-color: #e74c3c !important;
-    background: #fff5f5 !important;
+    border-color: red !important;
+    /* background: #fff5f5 !important; */
+}
+
+.otpInputError:focus {
+    border-color: red !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
 }
 
 /* Error Message */
 .errorMessage {
-    color: #e74c3c;
+    color: red;
     font-size: 12px;
     margin-top: 5px;
+    margin-bottom: 15px;
     font-weight: 500;
-    text-align: left;
+    text-align: center;
 }
 
 /* Resend Container */
@@ -459,15 +468,10 @@ justify-items: center;
         font-size: 16px;
     }
     
-    .otpInputContainer {
-        gap: 8px;
-        padding: 0 5px;
-    }
-    
-    .otpInput {
-        width: 50px;
+    .otpSingleInput {
+        font-size: 20px;
         height: 50px;
-        font-size: 18px;
+        letter-spacing: 6px;
     }
     
     .nextButton {
@@ -477,31 +481,39 @@ justify-items: center;
 }
 
 @media (max-width: 360px) {
-    .otpInputContainer {
-        gap: 6px;
-    }
-    
-    .otpInput {
-        width: 50px;
-        height: 50px;
-        font-size: 16px;
+    .otpSingleInput {
+        font-size: 18px;
+        height: 48px;
+        letter-spacing: 4px;
+        padding: 0 15px;
     }
 }
+.crossButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(96, 57, 210, 0.1);
+    border: 1px solid rgba(96, 57, 210, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #6039D2;
+    padding: 0;
+    z-index: 1001;
+}
 
-/* Enhanced input field styling for mobile number */
-/* .inputfield {
-    border: 2px solid #e0e0e0;
-    transition: border-color 0.2s ease;
-} */
-/* 
-.inputfield:focus {
-    border-color: #6c5ce7;
-    outline: none;
-} */
+.crossButton:hover {
+    background: rgba(96, 57, 210, 0.15);
+    border-color: rgba(96, 57, 210, 0.3);
+    transform: scale(1.05);
+}
 
-/* Enhanced button styling */
-/* .btnelig:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    opacity: 0.6;
-} */
+.crossButton:active {
+    transform: scale(0.95);
+    background: rgba(96, 57, 210, 0.2);
+}

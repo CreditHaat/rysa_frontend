@@ -205,7 +205,7 @@ function PersonalDetailePage() {
                         </div>
                         {/* first no:2 progress bar */}
                         <div className={styles.progressBar}>
-                            <div className={styles.stepNumber}>2</div>
+                            <div className={styles.stepNumber2}>2</div>
                             <div
                                 className={styles.progressBarFill2}
                             // style={{ width: `${progress}%` }}
@@ -216,7 +216,7 @@ function PersonalDetailePage() {
                             <div className={styles.stepNumberLast}>3</div>
                         </div>
                     </div>
-                    <div className={styles.headering}><h3>personal Details</h3></div>
+                    {/* <div className={styles.headering}><h3>personal Details</h3></div> */}
                 </div>
                 {/* form field start form here */}
 
@@ -227,14 +227,18 @@ function PersonalDetailePage() {
                     {/* first field */}
                     <div className={`${styles.fields} ${formErrors.pinCode ? styles.fieldserror : ""}`}>
                         <span className={styles.fieldName}>PIN Code</span>
-                        <input 
-                            type='text' 
-                            name='pinCode' 
-                            value={formData.pinCode}
-                            onChange={handleInputChange}
-                            className={styles.inputfield} 
-                            maxLength="6"
-                        />
+                      <input
+                        type="number"
+                        name="pinCode"
+                        value={formData.pinCode}
+                        onChange={(e) => {
+                        if (e.target.value.length <= 6) {
+                        handleInputChange(e);
+                         }
+                         }}
+                        className={styles.inputfield}
+                      />
+
                     </div>
                     {/* second field */}
                     <div className={`${styles.fields} ${formErrors.address ? styles.fieldserror : ""}`}>
@@ -290,7 +294,7 @@ function PersonalDetailePage() {
                     <div className={`${styles.fields} ${formErrors.monthlyIncome ? styles.fieldserror : ""}`}>
                         <span className={styles.fieldName}>Monthly Income</span>
                         <input 
-                            type='text' 
+                            type='number' 
                             name='monthlyIncome' 
                             value={formData.monthlyIncome}
                             onChange={handleInputChange}

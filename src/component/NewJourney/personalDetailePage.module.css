@@ -84,6 +84,7 @@
     text-align: center;
     align-items: center;
     background-color: none;
+    opacity: 0.40;
 }
 
 .progressBarFill {
@@ -98,6 +99,7 @@
     background-color: none;
     border-radius: 10px;
     transition: width 0.3s ease-in-out;
+    opacity: 0.40;
 }
 
 .stepNumber {
@@ -117,6 +119,24 @@
     font-size: 14px;
     background: white;
 }
+.stepNumber2 {
+    position: absolute;
+    text-align: center;
+    top: -10px;
+    left: -15px;
+    transform: translateX(-50%);
+    color: #000;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: white;
+    opacity: 0.40;
+}
 
 .stepNumberLast {
     position: absolute;
@@ -134,6 +154,7 @@
     justify-content: center;
     font-size: 14px;
     background: white;
+    opacity: 0.40;
 }
 
 .headering {
@@ -365,6 +386,12 @@
 .sheetOption:last-child {
     margin-bottom: 0;
     /* Remove margin from last option */
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* .bottomSheetOverlay {
