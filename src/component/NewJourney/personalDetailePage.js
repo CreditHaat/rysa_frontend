@@ -12,7 +12,7 @@ import { style } from '@mui/system';
 // import PersonalDetailePage3 from './personalDetailePage3';
 
 
-function PersonalDetailePage({ mainFormData, setFormData, setActiveContainer }) {
+function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContainer }) {
    // Props properly receive 
     console.log("Received mainFormData:", mainFormData); // Debug log
 

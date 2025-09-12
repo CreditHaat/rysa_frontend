@@ -6,7 +6,7 @@ import Image from 'next/image';
 import axios from 'axios';
 
 
-function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData }) {
+function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormData }) {
 
     // Form field states - initialize with mainFormData values
     const [panNumber, setPanNumber] = useState(mainFormData?.panNumber || '');

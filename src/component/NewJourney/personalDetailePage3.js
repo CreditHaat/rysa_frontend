@@ -4,7 +4,7 @@ import styles from "./personalDetailePage3.module.css";
 import Image from "next/image";
 import axios from "axios";
 
-function PersonalDetailePage3({ mainFormData, setActiveContainer, setFormData }) {
+function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormData }) {
   // State for validation errors only (keep local)
   const [errors, setErrors] = useState({
     companyName: false,
@@ -31,7 +31,7 @@ function PersonalDetailePage3({ mainFormData, setActiveContainer, setFormData })
       }));
     }
 
-    // ✅ Fetch company suggestions only for companyName field
+    //  Fetch company suggestions only for companyName field
     if (name === "companyName" && value.trim().length > 1) {
       try {
         const response = await axios.get(

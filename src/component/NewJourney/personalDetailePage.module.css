@@ -428,12 +428,12 @@
     margin-bottom: 0;
     /* Remove margin from last option */
 }
-
+/* 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 /* .bottomSheetOverlay {
     width: 100%;
