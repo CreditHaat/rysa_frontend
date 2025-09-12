@@ -83,7 +83,7 @@ const Ondclist = () => {
       // console.log("⏰ Callback executed after 50 seconds!");
       setLoading(false);
       // ✅ Place your logic here (API call, state update, etc.)
-    }, 30000); // 50,000 ms = 30 seconds
+    }, 60000); // 50,000 ms = 30 seconds
 
     return () => clearTimeout(timer); // cleanup if component unmounts
   }, []);
@@ -817,7 +817,7 @@ const Ondclist = () => {
         addressline1: formSubmissionData?.addressL1 || userDetails.addressline1,
         email: formSubmissionData?.email || userDetails.email,
         officeaddresspincode: userDetails?.workPincode || userDetails.officeaddresspincode, //
-        maritalstatus: userDetails?.maritalStatus || userDetails.maritalstatus, //
+        maritalstatus: userDetails?.maritalstatus || userDetails.maritalstatus, //
         company: formSubmissionData?.companyName || userDetails.company,
         // agent_id: formData.agentId,
         // agent: formData.agent,

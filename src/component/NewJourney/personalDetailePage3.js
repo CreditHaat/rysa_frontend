@@ -95,9 +95,13 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
           }
         );
 
-        console.log("Page3 API URL:", `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page4`);
-        console.log("Payload Sent:", payload);
-        console.log("Full Backend Response:", response.data);
+        // console.log("Page3 API URL:", `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page4`);
+        // console.log("Payload Sent:", payload);
+        // console.log("Full Backend Response:", response.data);
+
+    
+          window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
+
       } catch (error) {
         console.error("Error in Page4 API:", error);
       }

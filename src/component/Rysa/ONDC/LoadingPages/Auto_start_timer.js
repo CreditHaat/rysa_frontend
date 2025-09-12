@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
 
 const AutoStartTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const AutoStartTimer = () => {
   }, []);
 
   const getCircleProgress = () => {
-    const progress = ((30 - timeLeft) / 30) * 283; // 283 is circumference
+    const progress = ((60 - timeLeft) / 60) * 283; // 283 is circumference
     return progress;
   };
 
