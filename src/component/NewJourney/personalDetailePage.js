@@ -4,21 +4,23 @@ import styles from "./personalDetailePage.module.css";
 import { useState } from 'react';
 import Image from 'next/image';
 import { FaChevronDown } from "react-icons/fa";
+import axios from "axios";
+
 import { style } from '@mui/system';
-import { useRouter } from "next/navigation"; 
-import PersonalDetailePage2 from './personalDetailePage2';
-import PersonalDetailePage3 from './personalDetailePage3';
+// import { useRouter } from "next/navigation"; 
+// import PersonalDetailePage2 from './personalDetailePage2';
+// import PersonalDetailePage3 from './personalDetailePage3';
 
 
-function PersonalDetailePage() {
-    // bottom sheet functin here
+function PersonalDetailePage({ mainFormData, setFormData, setActiveContainer }) {
+   // Props properly receive 
+    console.log("Received mainFormData:", mainFormData); // Debug log
+
     const [showSheet, setShowSheet] = useState(false);
-    const [employmentType, setEmploymentType] = useState('');
+    const [employmentType, setEmploymentType] = useState(mainFormData?.employmentType || '');
     const [showSheetPayment, setShowSheetPayment] = useState(false);
-    const [paymentType, setPaymentType] = useState('');
-    const router = useRouter(); 
+    const [paymentType, setPaymentType] = useState(mainFormData?.paymentType || '');
 
-    // form validation functions
     const [formErrors, setFormErrors] = useState({
         pinCode: "",
         address: "",
@@ -26,24 +28,24 @@ function PersonalDetailePage() {
         paymentType: "",
         monthlyIncome: "",
     });
-      const [formData, setFormData] = useState({
-    // Page 1
-    pinCode: "",
-    address: "",
-    employmentType: "",
-    paymentType: "",
-    monthlyIncome: "",
-    // Page 2
-    panNumber: "",
-    fullName: "",
-    email: "",
-    selectedGender: "",
-    selectedDate: "",
-    // Page 3
-    companyName: "",
-    workEmail: "",
-    workPINCode: "",
-  });
+//       const [formData, setFormData] = useState({
+//     // Page 1
+//     pinCode: "",
+//     address: "",
+//     employmentType: "",
+//     paymentType: "",
+//     monthlyIncome: "",
+//     // Page 2
+//     panNumber: "",
+//     fullName: "",
+//     email: "",
+//     selectedGender: "",
+//     selectedDate: "",
+//     // Page 3
+//     companyName: "",
+//     workEmail: "",
+//     workPINCode: "",
+//   });
 
     
     // const [formData, setFormData] = useState({
@@ -65,43 +67,43 @@ function PersonalDetailePage() {
         };
 
         // validation for PIN Code
-        if (!formData.pinCode) {
+        if (!mainFormData.pinCode) {
             errors.pinCode = "PIN Code is required";
             valid = false;
-        } else if (!/^\d{6}$/.test(formData.pinCode)) {
+        } else if (!/^\d{6}$/.test(mainFormData.pinCode)) {
             errors.pinCode = "PIN Code must be exactly 6 digits";
             valid = false;
         }
 
         // validation for address
-        if (!formData.address) {
+        if (!mainFormData.address) {
             errors.address = "Residential Address is required";
             valid = false;
-        } else if (formData.address.trim().length < 3) {
+        } else if (mainFormData.address.trim().length < 3) {
             errors.address = "Address must be at least 3 characters long";
             valid = false;
         }
 
         // validation for employment type
-        if (!formData.employmentType) {
+        if (!mainFormData.employmentType) {
             errors.employmentType = "Employment Type is required";
             valid = false;
         }
 
         // validation for payment type
-        if (!formData.paymentType) {
+        if (!mainFormData.paymentType) {
             errors.paymentType = "Payment Type is required";
             valid = false;
         }
 
         // validation for monthly income
-        if (!formData.monthlyIncome) {
+        if (!mainFormData.monthlyIncome) {
             errors.monthlyIncome = "Monthly income is required";
             valid = false;
-        } else if (isNaN(formData.monthlyIncome)) {
+        } else if (isNaN(mainFormData.monthlyIncome)) {
             errors.monthlyIncome = "Monthly income must be a number";
             valid = false;
-        } else if (Number(formData.monthlyIncome) < 1000) {
+        } else if (Number(mainFormData.monthlyIncome) < 1000) {
             errors.monthlyIncome = "Monthly income must be at least 1000";
             valid = false;
         }
@@ -146,25 +148,70 @@ function PersonalDetailePage() {
     };
 
     // Handle next button click
-     const [activeContainer, setActiveContainer] = useState("personalDetailePage");
-    const handleNext = () => {
+        const employmentMapping = {
+        "Salaried": 1,
+        "Self employed": 2,
+        "Business": 3,
+    };
+
+    const paymentMapping = {
+        "Bank Transfer": 1,
+        "Cash": 2,
+        "Cheque": 3,
+    };
+
+    const handleNext = async () => {
+        console.log("Mobile Number being sent:", mainFormData.mobileNumber); // Debug log
+        
         if (validateForm()) {
-            console.log('Form is valid, proceeding to next step');
-            console.log('Form Data:', formData);
-            // Add your navigation logic here
-            //router.push("/personalDetailePage2");
-            setActiveContainer("PersonalDetailePage2")
+            console.log("Form is valid, sending to backend...");
+
+            try {
+                const payload = {
+                    mobileNumber: mainFormData.mobileNumber, 
+                    residentialPincode: mainFormData.pinCode,
+                    address: mainFormData.address,
+                    employmentType: employmentMapping[mainFormData.employmentType] || null,
+                    paymentType: paymentMapping[mainFormData.paymentType] || null,
+                    monthlyIncome: mainFormData.monthlyIncome,
+                };
+
+                console.log("Payload Sending:", payload);
+
+                const response = await axios.post(
+                    `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page2`,
+                    payload,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=",
+                        },
+                    }
+                );
+
+                console.log("Backend Response:", response.data);
+
+                if (response.data.status === "APPROVED") {
+                    setActiveContainer("PersonalDetailePage2");
+                } else {
+                    setActiveContainer("RejectPage");
+                }
+            } catch (error) {
+                console.error("Error while calling API:", error);
+                alert("Something went wrong");
+            }
         } else {
-            console.log('Form has errors');
+            console.log("Form has errors");
         }
     };
-     const handleBack = () => {
-        setActiveContainer("FirstPage");  // give that mobile number page file name where we are taking only mobilenumber field
+
+    const handleBack = () => {
+        setActiveContainer("FirstPage");
     };
 
     return (
         <>
-        {activeContainer === "PersonalDetailePage2" && (
+        {/* {activeContainer === "PersonalDetailePage2" && (
         <PersonalDetailePage2
           mainFormData={formData}
           setFormData={setFormData}
@@ -179,7 +226,7 @@ function PersonalDetailePage() {
           setActiveContainer={setActiveContainer}
         />
       )}
-            {activeContainer === "personalDetailePage" && (
+            {activeContainer === "personalDetailePage" && ( */}
         <div className={styles.container}>
             <div className={styles.mainHeaderPart} >
                 {/* mynew */}
@@ -237,7 +284,7 @@ function PersonalDetailePage() {
                       <input
                         type="number"
                         name="pinCode"
-                        value={formData.pinCode}
+                        value={mainFormData.pinCode || ''}
                         onChange={(e) => {
                         if (e.target.value.length <= 6) {
                         handleInputChange(e);
@@ -253,7 +300,7 @@ function PersonalDetailePage() {
                         <input 
                             type='text' 
                             name='address' 
-                            value={formData.address}
+                            value={mainFormData.address || ''}
                             onChange={handleInputChange}
                             className={styles.inputfield} 
                         />
@@ -268,7 +315,7 @@ function PersonalDetailePage() {
                             <input
                                 type='text'
                                 name='employmentType'
-                                value={employmentType}
+                                value={mainFormData.employmentType || ''}
                                 // value={formData.employmentType || ""}
                                 className={styles.inputfield1}
                                 readOnly
@@ -287,7 +334,7 @@ function PersonalDetailePage() {
                                 type="text"
                                 name="paymentType"
                                 // value={paymentType}
-                                value={formData.paymentType || ""}
+                                value={mainFormData.paymentType || ""}
                                 className={styles.inputfield1}
                                 readOnly
                                 onClick={() => setShowSheetPayment(true)}
@@ -303,7 +350,7 @@ function PersonalDetailePage() {
                         <input 
                             type='number' 
                             name='monthlyIncome' 
-                            value={formData.monthlyIncome}
+                            value={mainFormData.monthlyIncome || ''}
                             onChange={handleInputChange}
                             className={styles.inputfield} 
                         />
@@ -386,7 +433,7 @@ function PersonalDetailePage() {
                 )}
             </div>
         </div>
-            )}
+            {/* )} */}
         </>
     )
 }

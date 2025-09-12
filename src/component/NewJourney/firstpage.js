@@ -4,41 +4,40 @@ import styles from "./firstpage.module.css";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import PersonalDetailePage from './personalDetailePage';
+import RejectPage from '../Yubi/rejectionpage';
 import PersonalDetailePage2 from './personalDetailePage2';
 import PersonalDetailePage3 from './personalDetailePage3';
+import axios from "axios";
 
 
 function FirstPage() {
     const router = useRouter();
     const [showOTPbottomsheet, setShowOTPbottomsheet] = useState(false);
     const [mobileNumber, setMobileNumber] = useState('');
+    const [activeContainer, setActiveContainer] = useState("FirstPage");
+
     const [otp, setOtp] = useState(''); // Changed from array to string
     const [otpError, setOtpError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [formErrors, setFormErrors] = useState({
         mobileNumber: "",
     });
-
-          const [mainFormData, setMainFormData] = useState({
-            mobileNumber:"",
-        // Page 1
+    const [mainFormData, setMainFormData] = useState({
+        mobileNumber: "",
         pinCode: "",
         address: "",
         employmentType: "",
         paymentType: "",
         monthlyIncome: "",
-        // Page 2
         panNumber: "",
         fullName: "",
         email: "",
         selectedGender: "",
         selectedDate: "",
-        // Page 3
         companyName: "",
         workEmail: "",
         workPINCode: "",
-      });
-
+    });
     // Create ref for single OTP input
     const otpRef = useRef();
 
@@ -77,30 +76,109 @@ function FirstPage() {
         setFormErrors(errors);
         return valid;
     };
-     const [activeContainer, setActiveContainer] = useState("FirstPage");
 
     // Handle check eligibility button click
-    const handleCheckEligibility = () => {
+        const handleCheckEligibility = async () => {
         if (isLoading) return;
 
-        // Always validate form when button is clicked
         if (validateForm()) {
             const digitsOnly = mobileNumber.replace(/\D/g, '');
-            const finalMobile = digitsOnly.slice(-10); // last 10 digits
+            const finalMobile = digitsOnly.slice(-10);
 
-            console.log("OTP sending to:", finalMobile);
-
+            setMainFormData(prev => ({ ...prev, mobileNumber: finalMobile }));
             setIsLoading(true);
-            setTimeout(() => {
-                setIsLoading(false);
+
+            const queryParams = new URLSearchParams(window.location.search);
+            const payloadPage1 = {
+            //     mobileNumber: finalMobile,
+            //     channel: queryParams.get("channel") || null,
+            //     agent: queryParams.get("source") || null,
+            //     agentId: queryParams.get("dsa") ? parseInt(queryParams.get("dsa")) : null,
+            //     subAgent: queryParams.get("sub_dsa") || null,
+            //     subSource: queryParams.get("sub_source") || null,
+            //     campaign: queryParams.get("campaign") || null,
+            //     urllink: window.location.search?.slice(1) || null
+            // };
+
+            //             const queryParams = new URLSearchParams(window.location.search);
+            // const payloadPage1 = {
+                mobileNumber: finalMobile,
+                
+                //parameter mapping
+                agentId: queryParams.get("dsa") ? parseInt(queryParams.get("dsa")) : null,  // dsa → agent_id
+                agent: queryParams.get("source") || null,      // source → agent field  
+                channel: queryParams.get("channel") || null,   // channel → channel
+                
+                // Campaign(after ? mark all string as it is)
+                campaign: window.location.search?.slice(1) || null,
+                subAgent: queryParams.get("sub_dsa") || null,
+                subSource: queryParams.get("sub_source") || null,            
+            };
+
+            try {
+                // Save user info
+                const resPage1 = await axios.post(
+                    `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page1`,
+                    payloadPage1,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=",
+                        },
+                    }
+                    
+                );
+                console.log("Page1 API response:", resPage1.data);
+
+                // Send OTP
+                const otpPayload = { Mobilenumber: finalMobile };
+                const resOtp = await axios.post(
+                    `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/sendOtpArysefin`,
+                    otpPayload,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=",
+                        },
+                    }
+                );
+                console.log("OTP API response:", resOtp.data);
+
+                // Show OTP bottom sheet
                 setShowOTPbottomsheet(true);
-                setTimeout(() => {
-                    otpRef.current?.focus();
-                }, 100);
-            }, 500);
+                // setTimeout(() => otpRefs.current[0]?.focus(), 100);
+                setTimeout(() => otpRef.current?.focus(), 100);
+
+
+            } catch (err) {
+                console.error("Error in API calls:", err);
+                alert("Failed to save user info or send OTP, please try again.");
+            } finally {
+                setIsLoading(false);
+            }
         }
-        // If validation fails, the error state will automatically make the input red
     };
+    // const handleCheckEligibility = () => {
+    //     if (isLoading) return;
+
+    //     // Always validate form when button is clicked
+    //     if (validateForm()) {
+    //         const digitsOnly = mobileNumber.replace(/\D/g, '');
+    //         const finalMobile = digitsOnly.slice(-10); // last 10 digits
+
+    //         console.log("OTP sending to:", finalMobile);
+
+    //         setIsLoading(true);
+    //         setTimeout(() => {
+    //             setIsLoading(false);
+    //             setShowOTPbottomsheet(true);
+    //             setTimeout(() => {
+    //                 otpRef.current?.focus();
+    //             }, 100);
+    //         }, 500);
+    //     }
+    //     // If validation fails, the error state will automatically make the input red
+    // };
 
     // Handle single OTP input change
     const handleOtpChange = (e) => {
@@ -116,31 +194,59 @@ function FirstPage() {
     };
 
     // Handle OTP verification
-    const handleVerifyOTP = () => {
-        if (otp.length !== 6) {
+    // const handleVerifyOTP = () => {
+    //     if (otp.length !== 6) {
+    //         setOtpError('Please enter complete 6-digit OTP');
+    //         return;
+    //     }
+
+    //     setIsLoading(true);
+
+    //     // Simulate API call
+    //     setTimeout(() => {
+    //         const correctOtp = '123456'; // In real app, this would come from backend
+
+    //         if (otp === correctOtp) {
+    //             // OTP is correct, navigate to next page
+    //             setIsLoading(false);
+    //             setShowOTPbottomsheet(false);
+    //             setActiveContainer("PersonalDetailePage");
+    //             // router.push('/personalDetailePage');
+    //         } else {
+    //             // OTP is incorrect, reset OTP input
+    //             setIsLoading(false);
+    //             setOtpError('Invalid OTP. Please try again.');
+    //             resetOtp();
+    //         }
+    //     }, 1500);
+    // };
+    const handleVerifyOTP = async () => {
+       if (otp.length !== 6) {
             setOtpError('Please enter complete 6-digit OTP');
             return;
         }
-
         setIsLoading(true);
-
-        // Simulate API call
-        setTimeout(() => {
-            const correctOtp = '123456'; // In real app, this would come from backend
-
-            if (otp === correctOtp) {
-                // OTP is correct, navigate to next page
-                setIsLoading(false);
+        try {
+            const payload = { Mobilenumber: mainFormData.mobileNumber, OTP: otp };
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/verifyArysefinOtp`,
+                payload
+            );
+            if (res.data.code === 0) {
                 setShowOTPbottomsheet(false);
+                setMainFormData(prev => ({ ...prev, mobileNumber: mainFormData.mobileNumber }));
                 setActiveContainer("PersonalDetailePage");
-                // router.push('/personalDetailePage');
             } else {
-                // OTP is incorrect, reset OTP input
-                setIsLoading(false);
-                setOtpError('Invalid OTP. Please try again.');
+                setOtpError(res.data.msg || "Invalid OTP, please try again.");
                 resetOtp();
             }
-        }, 1500);
+        } catch (err) {
+            console.error("Error verifying OTP:", err.response?.data || err.message);
+            setOtpError("Verification failed, please try again.");
+            resetOtp();
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     // Reset OTP input
@@ -167,9 +273,47 @@ function FirstPage() {
         setOtpError('');
     };
 
+      if (activeContainer === "PersonalDetailePage") {
+        return (
+            <PersonalDetailePage
+                mainFormData={mainFormData}
+                setFormData={setMainFormData}
+                setActiveContainer={setActiveContainer}
+            />
+        );
+    }
+    if (activeContainer === "RejectPage") {
+    return (
+        <RejectPage
+            mainFormData={mainFormData}
+            setFormData={setMainFormData}
+            setActiveContainer={setActiveContainer}
+        />
+    );
+}
+
+    if (activeContainer === "PersonalDetailePage2") {
+        return (
+            <PersonalDetailePage2
+                mainFormData={mainFormData}
+                setFormData={setMainFormData}
+                setActiveContainer={setActiveContainer}
+            />
+        );
+    }
+
+    if (activeContainer === "PersonalDetailePage3") {
+        return (
+            <PersonalDetailePage3
+                mainFormData={mainFormData}
+                setFormData={setMainFormData}
+                setActiveContainer={setActiveContainer}
+            />
+        );
+    }
     return (
         <>
-         {activeContainer === "PersonalDetailePage" && (
+         {/* {activeContainer === "PersonalDetailePage" && (
         <PersonalDetailePage
           mainFormData={mainformData}
           setFormData={setMainFormData}
@@ -191,7 +335,7 @@ function FirstPage() {
           setActiveContainer={setActiveContainer}
         />
       )}
-            {activeContainer === "FirstPage" && (
+            {activeContainer === "FirstPage" && ( */}
             <div className={styles.topdiv}>
                 <div className={styles.mainContainer}>
                     <div className={styles.container}>
@@ -408,7 +552,7 @@ The maximum Annual Interest Rate (APR) can go up to 36%</p>
 )}
                 </div>
             </div>
-                        )}
+                        {/* )} */}
 
         </>
     );
