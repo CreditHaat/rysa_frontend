@@ -4,6 +4,7 @@ import { Outfit } from "next/font/google";
 import PersonalDetailPage from "../../component/NewJourney/personalDetailePage";
 import PersonalDetailPage2 from "../../component/NewJourney/personalDetailePage2";
 import PersonalDetailPage3 from "../../component/NewJourney/personalDetailePage3";
+import FirstPage from '@/component/NewJourney/firstpage';
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ function page() {
       {/* <PersonalDetailPage /> */}
       {/* <PersonalDetailPage2 /> */}
       {/* <PersonalDetailPage3 /> */}
+      <FirstPage/>
     </div>
   )
 }

@@ -3,9 +3,10 @@ import React from 'react'
 import styles from "./personalDetailePage2.module.css";
 import { useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 
 
-function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData }) {
+function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormData }) {
 
     // Form field states - initialize with mainFormData values
     const [panNumber, setPanNumber] = useState(mainFormData?.panNumber || '');
@@ -13,7 +14,11 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
     const [email, setEmail] = useState(mainFormData?.email || '');
     const [selectedGender, setSelectedGender] = useState(mainFormData?.selectedGender || '');
     const [selectedDate, setSelectedDate] = useState(mainFormData?.selectedDate || '');
-    
+    const genderMapping = {
+        Male: 1,
+        Female: 2,
+        Other: 3,
+        };
     const [formErrors, setFormErrors] = useState({
         panNumber: "",
         fullName: "",
@@ -21,6 +26,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
         selectedGender: "",
         selectedDate: "",
     });
+    
     
     // Error states for all fields
     const [panError, setPanError] = useState('');
@@ -230,7 +236,8 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
         // Update parent formData immediately
         setFormData(prev => ({
             ...prev,
-            selectedGender: gender
+            selectedGender: gender,
+            genderValue: genderMapping[gender] || null, // for backend
         }));
         clearError('gender');
     };
@@ -396,46 +403,131 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
     };
 
     // Handle next button click
-    const handleNext = () => {
-        if (validateAllFields()) {
-            // Before moving to next page, ensure all data is saved in parent
-            setFormData(prev => ({
-                ...prev,
-                panNumber: panNumber,
-                fullName: fullName,
-                email: email,
-                selectedGender: selectedGender,
-                selectedDate: selectedDate
-            }));
-            setActiveContainer("PersonalDetailePage3");
-        }
-    };
+    const handleNext = async () => {
+  if (validateAllFields()) {
+    try {
+      const payload = {
+        mobileNumber: mainFormData?.mobileNumber, // Page 1
+        pan: panNumber,
+        firstName: fullName, // backend will split it
+        email: email,
+        gender: mainFormData?.genderValue, //for backend we are sending integer value
+        dob: selectedDate,
+      };
+
+  const response = await axios.post(
+  `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page3`,
+  payload,
+  {
+    headers: {
+      "Content-Type": "application/json",
+      token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=",
+    },
+  }
+);
+
+console.log("response of page 3 api is:", response);
+
+// Correct check
+if (response.data.status === "APPROVED") {
+  console.log("Data saved successfully");
+
+  // Split name
+  const nameParts = fullName.trim().split(" ");
+  let firstName = "";
+  let middleName = "";
+  let lastName = "";
+
+  if (nameParts.length === 1) {
+    firstName = nameParts[0];
+  } else if (nameParts.length === 2) {
+    firstName = nameParts[0];
+    lastName = nameParts[1];
+  } else if (nameParts.length >= 3) {
+    firstName = nameParts[0];
+    lastName = nameParts[nameParts.length - 1];
+    middleName = nameParts.slice(1, -1).join(" ");
+  }
+
+  // OTP API payload
+  const otpPayload = {
+    Mobilenumber: mainFormData?.mobileNumber,
+    firstname: firstName,
+    middlename: middleName,
+    lastname: lastName,
+    email: email,
+    pan: panNumber,
+  };
+
+  // Call OTP API
+  const otpResponse = await axios.post(
+    `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/sendJourneyOTP`,
+    otpPayload,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        token: "Y3JlZGl0aGFhdHRlc3RzZXI=",
+      },
+    }
+  );
+
+  console.log("OTP API response:", otpResponse.data);
+
+} else {
+  console.log("Failed to save data:", response.data);
+}
+
+      // save bhi hoga + next page open bhi hoga
+      setFormData((prev) => ({
+        ...prev,
+        panNumber,
+        fullName,
+        email,
+        selectedGender,
+        selectedDate,
+      }));
+      setActiveContainer("PersonalDetailePage3");
+
+    } catch (error) {
+      console.error("Error saving Page 3 data:", error);
+      alert("Something went wrong while saving data");
+    }
+  }
+};
+
 
     const handleBack = () => {
-        // Save current data before going back
-        setFormData(prev => ({
-            ...prev,
-            panNumber: panNumber,
-            fullName: fullName,
-            email: email,
-            selectedGender: selectedGender,
-            selectedDate: selectedDate
-        }));
-        setActiveContainer("personalDetailePage");
+        // // Save current data before going back
+        // setFormData(prev => ({
+        //     ...prev,
+        //     panNumber: panNumber,
+        //     fullName: fullName,
+        //     email: email,
+        //     selectedGender: selectedGender,
+        //     selectedDate: selectedDate
+        // }));
+        setActiveContainer("PersonalDetailePage");
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.Block}>
             <div className={styles.mainHeaderPart} >
-                <Image
-                    src="/Aryse_Fin.png"
-                    width={55}
-                    height={55}
-                    className={styles.logo}
-                    alt="Aryse_Fin logo"
-                    priority
-                />
-                <div className={styles.logoName}></div>
+                {/* mynew */}
+            <div className={styles.topchildren}>
+                            <div className={styles.logoContainer}>
+                                <Image
+                                    src="/AryseFin_logo.png"
+                                    width={80}
+                                    height={80}
+                                    className={styles.logo2}
+                                    alt="Aryse_Fin logo"
+                                    priority
+                                />
+                            </div>
+                        </div>
+
+
+                        {/* mynew */}
             </div>
             <div className={styles.mainForm}>
                 <div className={styles.header}>
@@ -452,7 +544,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                             <div className={styles.stepNumberLast}>3</div>
                         </div>
                     </div>
-                    <div className={styles.headering}><h3>personal Details</h3></div>
+                    {/* <div className={styles.headering}><h3>personal Details</h3></div> */}
                 </div>
 
                 <div className={styles.form}>
@@ -462,7 +554,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                     
                     {/* PAN No field with validation */}
                     <div className={`${styles.fields} ${panError ? styles.fieldError : ''}`}>
-                        <span className={styles.fieldName}>PAN No</span>
+                        <span className={styles.fieldName}>PAN</span>
                         <input 
                             type='text' 
                             name='PAN' 
@@ -476,7 +568,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                     
                     {/* Name as PAN field with validation */}
                     <div className={`${styles.fields} ${nameError ? styles.fieldError : ''}`}>
-                        <span className={styles.fieldName}>Name as PAN</span>
+                        <span className={styles.fieldName}>Name as on PAN</span>
                         <input
                             type='text'
                             name='fullname'
@@ -489,7 +581,7 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
                     
                     {/* Email field with validation */}
                     <div className={`${styles.fields} ${emailError ? styles.fieldError : ''}`}>
-                        <span className={styles.fieldName}>Email</span>
+                        <span className={styles.fieldName}> Personal email</span>
                         <input
                             type='email'
                             name='Email'
@@ -631,4 +723,4 @@ function PersonalDetailePage2({ mainFormData, setActiveContainer, setFormData })
     )
 }
 
-export default PersonalDetailePage2
+export default PersonalDetailePage2;
