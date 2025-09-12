@@ -155,9 +155,9 @@ function PersonalDetailePage({ mainFormData, setFormData, setActiveContainer }) 
     };
 
     const paymentMapping = {
-        "Bank Transfer": 1,
-        "Cash": 2,
-        "Cheque": 3,
+        "Bank Transfer": 2,
+        "Cash": 0,
+        "Cheque": 1,
     };
 
     const handleNext = async () => {
