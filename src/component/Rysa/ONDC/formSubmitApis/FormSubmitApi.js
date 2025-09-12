@@ -44,9 +44,21 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
                     const month = String(dateObj.getMonth() + 1).padStart(2, "0");
                     const year = dateObj.getFullYear();
                     formData.append(key, `${day}/${month}/${year}`);
-                }else if(key === "aa_id"){
-                    
-                } else {
+                }
+                else if (key === "income" && (payloadForSelect.bppId === "bfl.ondcprod.ignosis.ai" || payloadForSelect.bppId === "pahal.ondcprod.ignosis.ai")) {
+                    const incomeNum = Number(value);
+                    if (!isNaN(incomeNum)) {
+                        formData.append(key, incomeNum * 12);
+                    } else {
+                        // Handle invalid income string
+                        console.error("Invalid income value:", value);
+                    }
+                }
+                // else if(key === "aa_id"){
+                // formData.append(key, value*12);
+                // } 
+
+                else {
                     formData.append(key, value);
                 }
             }
@@ -76,20 +88,20 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
                 //     return withAccountAggregatorResponse;
 
                 // } else {
-                    //for lenders without account aggregator
-                    const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
-                    console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ", response);
+                //for lenders without account aggregator
+                const withoutAccountAggregatorResponse = await handleWithoutAccountAggregator(response, formSubmissionData, payloadForSelect, setPayloadForSelect, version);
+                console.log("The response from handleWithout Account Aggregator for 2.0.1 is : ", response);
 
-                    const formSubmissionStatus = "approved";
+                const formSubmissionStatus = "approved";
                 writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
-                    
 
-                    return withoutAccountAggregatorResponse;
+
+                return withoutAccountAggregatorResponse;
                 // }
 
-            }else{
+            } else {
                 const formSubmissionStatus = "rejected";
-                console.log("The form response that we got in else is : ",response);
+                console.log("The form response that we got in else is : ", response);
                 writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
             }
 
@@ -100,7 +112,7 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
         if (version === "2.0.0") {
             const formData = new FormData();
             Object.entries(formSubmissionData).forEach(([key, value]) => {
-                if(key!== "panName"){
+                if (key !== "panName") {
                     formData.append(key, value);
                 }
             });
@@ -123,12 +135,12 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
 
                 const formSubmissionStatus = "approved";
                 writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
-                    
+
                 return withoutAccountAggregatorResponse;
-            }else{
+            } else {
                 const formSubmissionStatus = "rejected";
                 writeFormLogs(payloadForSelect.transactionId, formSubmissionData, response, formUrl, formSubmissionStatus, payloadForSelect.productName);
-                    // return withoutAccountAggregatorResponse;
+                // return withoutAccountAggregatorResponse;
             }
 
         }
@@ -137,39 +149,39 @@ export const onSearchForm = async (formUrl, setFormSubmissionData, formSubmissio
     } catch (error) {
         console.log("error in onsearch : ", error);
         const formSubmissionStatus = "rejected";
-                console.log("The form response that we got in catch is : ",error);
-                writeFormLogs(payloadForSelect.transactionId, formSubmissionData, error?.response?.data || error, formUrl, formSubmissionStatus, payloadForSelect.productName);
-        
+        console.log("The form response that we got in catch is : ", error);
+        writeFormLogs(payloadForSelect.transactionId, formSubmissionData, error?.response?.data || error, formUrl, formSubmissionStatus, payloadForSelect.productName);
+
     }
 };
 
-const writeFormLogs=async(transactionId, formSubmissionData, responseparam, gatewayUrl, formSubmissionStatus, productName)=>{
-    try{
-        const formLogRequest={
+const writeFormLogs = async (transactionId, formSubmissionData, responseparam, gatewayUrl, formSubmissionStatus, productName) => {
+    try {
+        const formLogRequest = {
             transactionId,
-            "ondcFormDataDTO":formSubmissionData,
+            "ondcFormDataDTO": formSubmissionData,
             "response": responseparam,
             gatewayUrl,
             formSubmissionStatus,
             productName
         }
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}WriteFormLogs`,formLogRequest);
-    }catch(error){
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}WriteFormLogs`, formLogRequest);
+    } catch (error) {
         console.log("Error while saving the formSubmissionData");
     }
-  }
+}
 
 export const selectLoanAmountForm = async (formUrl, amount, formId) => {
 
-    try{
+    try {
         const response = await axios.get(formUrl, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         });
 
-        console.log("the response that we got from the loanAmount is : ",response);
-    }catch(error){
+        console.log("the response that we got from the loanAmount is : ", response);
+    } catch (error) {
         console.log("Error in getting the loanAmount form");
     }
 
@@ -238,7 +250,7 @@ export const bankDetailsForm = async (formUrl, formData, formIdForParam) => {
 
     } catch (error) {
         console.log("Error in submitting bankDetails form to lender", error);
-        if(error.response){
+        if (error.response) {
             return error.response;
         }
         return null;

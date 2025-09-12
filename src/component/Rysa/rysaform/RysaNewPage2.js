@@ -532,6 +532,7 @@ const RysaNewPage2 = ({
       if (response2.data.code === 200) {
         //Here when the code is 0 we are calling lendersList backend which will give us lendersList accrding to user
         // getLendersListRysa(e);
+        // window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
         window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
       }
 

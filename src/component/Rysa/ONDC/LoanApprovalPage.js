@@ -493,6 +493,7 @@ const LoanApprovalPage = () => {
   return (
 
     <>
+    {!SelectedLenderData || Object.keys(SelectedLenderData).length === 0 ? (<>loading data .........</>):(<></>)}
       {/* {
       hittingInitApi && (<>processing.....</>)
     } */}

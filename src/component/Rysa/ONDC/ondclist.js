@@ -20,6 +20,7 @@ import { Roboto } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import logo2 from "./images/Aryse_Fin.png";
 import LendersLoader from "./LoadingPages/Auto_start_timer";
+import { select } from "./apis/ondcapi";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -27,6 +28,10 @@ const roboto = Roboto({
 });
 
 const Ondclist = () => {
+
+  const [consentDetails, setConsentDetails] = useState([]);
+  const [globalMinValue, setGlobalMinValue] = useState(0);
+
   const [gotSortedProductFlag, setGotSortedProductFlag] = useState(false);
 
   const [backendProducts, setBackendProducts] = useState([]);
@@ -429,7 +434,32 @@ const Ondclist = () => {
             minValue =
               tempLender?.message?.catalog?.providers?.[0]?.items?.[0]
                 ?.tags?.[0]?.list?.[4]?.value;
+
+            setGlobalMinValue(minValue);
+
             console.log("The min value that we got is : ", minValue);
+
+            const matchedConsent = consentDetails?.find(
+              (consent) => consent.bppId === lender.context.bpp_id
+            );
+
+            if (matchedConsent) {
+              console.log("The matched consent is : ", matchedConsent);
+              window.location.href = matchedConsent.redirectUrl;
+              // window.open(matchedConsent.redirectUrl, "_blank");
+
+            } else {
+              console.log(
+                "No matching consent found for bppId:",
+                lender.context.bpp_id,
+                "in consentDetails:",
+                consentDetails
+              );
+
+              router.push(`/ondc/loanapproval?minAmt=${minValue}`);
+
+            }
+
           }
         }
         // if(lender.context.bpp_id === "go-app-gateway.qa1.paywithr.io"){
@@ -437,7 +467,7 @@ const Ondclist = () => {
 
         // }else{
         // ✅ Navigate to the next page
-        router.push(`/ondc/loanapproval?minAmt=${minValue}`);
+        // router.push(`/ondc/loanapproval?minAmt=${minValue}`);
         // }
 
         // console.log("after router.push");
@@ -522,6 +552,45 @@ const Ondclist = () => {
         setConfirmLenders((prev) => [...prev, parsedData]);
       }
 
+      if (parsedData?.message?.order?.items?.[0]?.tags?.[0]?.list?.[0]?.descriptor?.code === "CONSENT_HANDLER") {
+        console.log("Entered in setting consent handler block");
+        const consentHandler = parsedData?.message?.order?.items?.[0]?.tags?.[0]?.list?.[0]?.value || null;
+        console.log("setting consent handler : ", consentHandler);
+        // setConsentHandler(consentHandler);
+        // setConsentHandler({
+        //     bppId: parsedData.context.bpp_id,
+
+        // })
+
+        handleAARedirect(parsedData.context.transaction_id, consentHandler, mobileNumber, parsedData.context.bpp_id);
+
+        //here we will call the second select api for with AA lender
+        if (parsedData?.message?.order?.items?.[0]?.xinput?.form_response?.submission_id) {
+          const updatedPayload = {
+            transactionId: parsedData.context.transaction_id,
+            bppId: parsedData.context.bpp_id,
+            bppUri: parsedData.context.bpp_uri,
+            providerId: parsedData.message.order.provider?.id,
+            itemId: parsedData.message.order.items?.[0]?.id,
+            formId: parsedData.message.order.items?.[0]?.xinput?.form?.id,
+            submissionId: parsedData?.message?.order?.items?.[0]?.xinput?.form_response?.submission_id,
+            version: parsedData.context?.version,
+            productName: parsedData?.message?.order.provider.descriptor?.name || "NA",
+            //added afterwards
+            mobileNumber: mobileNumber,
+            stage: 1,
+            status: "APPROVED"
+          };
+
+          setPayloadForSelect(updatedPayload);
+          handleSelectApi(updatedPayload);
+        }
+
+
+      } else {
+        console.log("consent handler not present");
+      }
+
       // setLenders((prevLenders) => {
       //     const newLenders = [parsedData, ...prevLenders];
       //     console.log(`Total lenders after callback: ${newLenders.length}`);
@@ -541,7 +610,78 @@ const Ondclist = () => {
     }
   }, []);
 
+  const handleSelectApi = async (updatedPayload) => {
+    try {
+      const selectResponse = await select(updatedPayload);
+
+      //   setConsentDetails([...consentDetails, {
+      //     bppId : updatedPayload.bppId,
+      //     redirectUrl : selectResponse.data
+      //   }])
+
+      console.log("The value that we got from aa second select response is : ", selectResponse);
+    } catch (error) {
+      console.log("error we are getting while calling select api from ondcList : ", error);
+    }
+  }
+
   useWebSocketONDCSelect(handleWebSocketMessageForSelect);
+
+  const handleAARedirect = async (transactionId, consentHandlerId, mobileNumber, bppId) => {
+
+    var minValue = 0;
+    try {
+      // for (const tempLender of lenders) {
+      //   if (tempLender.context.bpp_id === bppId) {
+
+      //     minValue =
+      //       tempLender?.message?.catalog?.providers?.[0]?.items?.[0]
+      //         ?.tags?.[0]?.list?.[4]?.value;
+      //   }
+      // }
+      const lenderFound = lendersRef.current.find(
+        (l) => l.context?.bpp_id === bppId
+      );
+
+      if (lenderFound) {
+        minValue =
+          lenderFound?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]
+            ?.list?.[4]?.value || 0;
+      }
+    } catch (error) {
+      console.log("error while iterating lenders array");
+    }
+
+    try {
+
+      const frontendUrl = "https://www.arysefin.com/";
+      // const redirectUrl = `http://localhost:3000/ondc/loanapprovefetch?minAmt=${minValue}&bppId=${bppId}&transactionId=${transactionId}&mobileNumber=${mobileNumber}`;
+      const redirectUrl = `${frontendUrl}ondc/loanapprovefetch?minAmt=${minValue}&bppId=${bppId}&transactionId=${transactionId}&mobileNumber=${mobileNumber}`;
+
+      // encode the URL so it won't break on &
+      const safeRedirectUrl = encodeURIComponent(redirectUrl);
+
+      const formData = new FormData();
+      formData.append("transactionId", transactionId);
+      formData.append("srcref", consentHandlerId);
+      formData.append("mobileNumber", mobileNumber);
+      formData.append("redirectUrl", safeRedirectUrl);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}finvuRedirect`, formData);
+
+      setConsentDetails((prevConsentDetails) => [
+        ...prevConsentDetails,
+        {
+          bppId: bppId,
+          redirectUrl: response.data
+        }
+      ]);
+
+      console.log("The response that we got from finvu is : ", response);
+    } catch (error) {
+      console.log("error in handleAARedirect : ", error);
+    }
+
+  }
 
   useEffect(() => {
     if (onSelectResponses.length > 0) {
@@ -665,7 +805,7 @@ const Ondclist = () => {
 
       const payload = {
         mobilenumber: mobileNumber,
-        dob: formSubmissionData?.dob ||  userDetails.mobilenumber,
+        dob: formSubmissionData?.dob || userDetails.dob,
         profession: formSubmissionData?.employmentType || userDetails.profession,
         income: formSubmissionData?.income || userDetails.income,
         payment_type: userDetails?.payment_type, //
