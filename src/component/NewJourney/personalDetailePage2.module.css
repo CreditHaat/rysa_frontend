@@ -290,6 +290,66 @@
     cursor: pointer;
 }
 
+.backbtn:hover {
+  /* background-color: #005bb5; */
+}
+
+.backbtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.backbtn span:after {
+  content: '\00ab'; /* « (left double arrow for 'back') */
+  position: absolute;
+  opacity: 0;
+  top: -2px;
+  left: -20px;
+  transition: 0.5s;
+  font-size: 18px;
+}
+
+.backbtn:hover span {
+  padding-left: 25px;
+}
+
+.backbtn:hover span:after {
+  opacity: 1;
+  left: 0;
+}
+.backbtn:active {
+    width: 26%;
+    height: 62px;
+    background-color: #FFF;
+    color: #868686;
+    text-align: center;
+    border-radius: 30px;
+    font-weight: 600;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+    border: 1px solid rgba(122, 122, 122, 0.18);
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.35);
+}.backbtn:active {
+    width: 26%;
+    height: 62px;
+    background-color: #FFF;
+    color: #868686;
+    text-align: center;
+    border-radius: 30px;
+    font-weight: 600;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+    border: 1px solid rgba(122, 122, 122, 0.18);
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.35);
+}
 .emptyspace {
     width: 5%;
 }
@@ -308,6 +368,59 @@
     cursor: pointer;
 }
 
+.nextbtn {
+    width: 70%;
+    height: 60px;
+    background-color: #6039d2;
+    color: white;
+    /* font-size: 28px; */
+    text-align: center;
+    border-radius: 30px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+}
+.nextbtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.nextbtn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: -7px;
+  right: -20px;
+  transition: 0.5s;
+  font-size: 24px;
+}
+
+.nextbtn:hover span {
+  padding-right: 25px;
+}
+
+.nextbtn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.nextbtn:active{
+    width: 71%;
+    height: 62px;
+    background-color: #6039d2;
+    color: white;
+    /* font-size: 18px; */      
+    font-weight: 600;
+    text-align: center;
+    border-radius: 30px;
+    border: 2px solid #6039d2;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.35);
+
+}
 /* Gender Selection Styles */
 .genderContainer {
     display: flex;
@@ -331,35 +444,35 @@
 }
 
 .genderOption:hover {
-    border-color: #9747FF;
+    border-color: #6039d2;
     background-color: #F8F4FF;
 }
 
 .genderSelected {
-    border-color: #9747FF !important;
-    background-color: #F7F6FD !important;
-    box-shadow: 0 0 0 1px #9747FF;
+    border-color: #6039d2 !important;
+    background-color: #6039d2 !important;
+    box-shadow: 0 0 0 1px #6039d2;
 }
 
 .genderIcon {
     font-size: 24px;
     margin-bottom: 4px;
-    color: #9747FF;
+    color: #6039d2;
 }
 
 .genderSelected .genderIcon {
-    color: #9747FF;
+    color: #6039d2;
 }
 
 .genderText {
     font-size: 14px;
     font-weight: 500;
-    color: #333333;
+    color: #6039d2;
     font-family: 'Outfit', sans-serif;
 }
 
 .genderSelected .genderText {
-    color: #9747FF;
+    color: #6039d2;
     font-weight: 600;
 }
 

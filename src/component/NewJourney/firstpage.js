@@ -421,7 +421,7 @@ function FirstPage() {
                                         onClick={handleCheckEligibility}
                                         disabled={isLoading}
                                     >
-                                        {isLoading ? 'Checking...' : 'Check eligibility'}
+                                        <span>{isLoading ? 'Checking...' : 'Check eligibility'}</span>
                                     </button>
                                    <div className={styles.textBottomSheText}>
   <p>
@@ -545,7 +545,7 @@ The maximum Annual Interest Rate (APR) can go up to 36%</p>
                 onClick={handleVerifyOTP}
                 disabled={isLoading}
             >
-                {isLoading ? 'Verifying...' : 'Verify'}
+                <span>{isLoading ? 'Verifying...' : 'Verify'}</span>
             </button>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import React,{Suspense} from "react";
 // import Selfiepage from "../../../component/Yubi/SelfiePageNew";
 import Rejectpage from "../../../component/Yubi/rejectionpage";
+import NewRejectionPage from "@/component/Yubi/newrejectionpage";
 // import { useSearchParams } from "next/navigation";
 
 export default function Page({ params }) {
@@ -15,7 +16,8 @@ export default function Page({ params }) {
    
       <Suspense fallback={<></>}>
          <div>
-      <Rejectpage />
+      {/* <Rejectpage /> */}
+      <NewRejectionPage />
       </div>
       </Suspense>
 

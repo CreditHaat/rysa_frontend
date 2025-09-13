@@ -602,8 +602,8 @@ if (response.data.status === "APPROVED") {
                             >
                                 <div className={styles.genderIcon}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#9747FF"/>
-                                        <path d="M12 14C8.67 14 2 15.67 2 19V20C2 20.55 2.45 21 3 21H21C21.55 21 22 20.55 22 20V19C22 15.67 15.33 14 12 14Z" fill="#9747FF"/>
+                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#6039d2"/>
+                                        <path d="M12 14C8.67 14 2 15.67 2 19V20C2 20.55 2.45 21 3 21H21C21.55 21 22 20.55 22 20V19C22 15.67 15.33 14 12 14Z" fill="#6039d2"/>
                                     </svg>
                                 </div>
                                 <span className={styles.genderText}>Male</span>
@@ -613,9 +613,9 @@ if (response.data.status === "APPROVED") {
                                 onClick={() => handleGenderSelect('Female')}
                             >
                                 <div className={styles.genderIcon}>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#9747FF"/>
-                                        <path d="M12 14C9.5 14 7.5 14.5 6 15.5C5.5 15.8 5.2 16.3 5.2 16.9V17.5C5.2 18.3 5.9 19 6.7 19H8.5L9.5 21H14.5L15.5 19H17.3C18.1 19 18.8 18.3 18.8 17.5V16.9C18.8 16.3 18.5 15.8 18 15.5C16.5 14.5 14.5 14 12 14Z" fill="#9747FF"/>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
+                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#6039d2"/>
+                                        <path d="M12 14C9.5 14 7.5 14.5 6 15.5C5.5 15.8 5.2 16.3 5.2 16.9V17.5C5.2 18.3 5.9 19 6.7 19H8.5L9.5 21H14.5L15.5 19H17.3C18.1 19 18.8 18.3 18.8 17.5V16.9C18.8 16.3 18.5 15.8 18 15.5C16.5 14.5 14.5 14 12 14Z" fill="#6039d2"/>
                                     </svg>
                                 </div>
                                 <span className={styles.genderText}>Female</span>
@@ -649,9 +649,9 @@ if (response.data.status === "APPROVED") {
                     
                     {/* Button part */}
                     <div className={styles.btn}>
-                        <div className={styles.backbtn}onClick={handleBack}>Back</div>
+                        <div className={styles.backbtn}onClick={handleBack}><span> Back </span></div>
                         <div className={styles.emptyspace}></div>
-                        <div className={styles.nextbtn} onClick={handleNext}>Next</div>
+                        <div className={styles.nextbtn} onClick={handleNext}><span> Next </span></div>
                     </div>
                 </div>
                 

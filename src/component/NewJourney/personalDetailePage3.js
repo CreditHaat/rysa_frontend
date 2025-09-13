@@ -214,11 +214,11 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
           {/* Buttons */}
           <div className={styles.btn}>
             <div className={styles.backbtn} onClick={handleBack}>
-              Back
+              <span> Back </span>
             </div>
             <div className={styles.emptyspace}></div>
             <div className={styles.nextbtn} onClick={handleNext}>
-              Submit
+              <span> Submitt </span>
             </div>
           </div>
         </div>

@@ -360,13 +360,13 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
                                 {/* back button  */}
                                 <div className={styles.backbtn} 
                                 onClick={handleBack}
-                                >Back</div>
+                                ><span> Back </span></div>
                                 {/* emptyspace */}
                                 <div className={styles.emptyspace}></div>
                                 {/* next button  */}
                                 <div className={styles.nextbtn} 
                                 onClick={handleNext}
-                                >Next</div>
+                                ><span> Next </span></div>
                             </div>
                 </div>
                 {/* BottomSheet for employ type  */}
