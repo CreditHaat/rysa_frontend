@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormData }) {
-
+    const [loading, setLoading] = useState(false);//mast the screen or loader
     // Form field states - initialize with mainFormData values
     const [panNumber, setPanNumber] = useState(mainFormData?.panNumber || '');
     const [fullName, setFullName] = useState(mainFormData?.fullName || '');
@@ -18,7 +18,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         Male: 1,
         Female: 2,
         Other: 3,
-        };
+    };
     const [formErrors, setFormErrors] = useState({
         panNumber: "",
         fullName: "",
@@ -26,15 +26,15 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         selectedGender: "",
         selectedDate: "",
     });
-    
-    
+
+
     // Error states for all fields
     const [panError, setPanError] = useState('');
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [genderError, setGenderError] = useState('');
     const [dobError, setDobError] = useState('');
-    
+
     // DOB Date Picker States
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
@@ -66,16 +66,16 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         const regex = /^(\d{2})-(\d{2})-(\d{4})$/;
         const match = dateString.match(regex);
         if (!match) return false;
-        
+
         const day = parseInt(match[1], 10);
         const month = parseInt(match[2], 10);
         const year = parseInt(match[3], 10);
-        
+
         const date = new Date(year, month - 1, day);
-        return date.getFullYear() === year && 
-               date.getMonth() === month - 1 && 
-               date.getDate() === day &&
-               year >= 1900 && year <= new Date().getFullYear();
+        return date.getFullYear() === year &&
+            date.getMonth() === month - 1 &&
+            date.getDate() === day &&
+            year >= 1900 && year <= new Date().getFullYear();
     };
 
     // Field validation handlers
@@ -90,7 +90,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                     return 'Invalid PAN format. Should be 5 letters + 4 digits + 1 letter (e.g., HAGSF7384H)';
                 }
                 return '';
-            
+
             case 'name':
                 if (!value.trim()) {
                     return 'Name is required';
@@ -98,7 +98,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                     return 'Please enter a valid name (only letters and spaces, minimum 2 characters)';
                 }
                 return '';
-            
+
             case 'email':
                 if (!value.trim()) {
                     return 'Email is required';
@@ -106,13 +106,13 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                     return 'Please enter a valid email address';
                 }
                 return '';
-            
+
             case 'gender':
                 if (!value) {
                     return 'Please select your gender';
                 }
                 return '';
-            
+
             case 'dob':
                 if (!value.trim()) {
                     return 'Date of birth is required';
@@ -120,7 +120,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                     return 'Please enter a valid date in DD-MM-YYYY format';
                 }
                 return '';
-            
+
             default:
                 return '';
         }
@@ -176,7 +176,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
     const handlePANChange = (e) => {
         const inputValue = e.target.value;
         const formattedValue = formatPANInput(inputValue);
-        
+
         setPanNumber(formattedValue);
         // Update parent formData immediately
         setFormData(prev => ({
@@ -184,7 +184,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
             panNumber: formattedValue
         }));
         clearError('pan');
-        
+
         if (formattedValue.length === 10) {
             const error = validateField('pan', formattedValue);
             setPanError(error);
@@ -326,7 +326,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
             selectedDate: formatted
         }));
         clearError('dob');
-        
+
         if (isValidDate(formatted)) {
             const [day, month, year] = formatted.split('-').map(Number);
             setCurrentMonth(month - 1);
@@ -398,102 +398,105 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         if (!isCurrentMonth) return false;
         const today = new Date();
         return day === today.getDate() &&
-               currentMonth === today.getMonth() &&
-               currentYear === today.getFullYear();
+            currentMonth === today.getMonth() &&
+            currentYear === today.getFullYear();
     };
 
     // Handle next button click
     const handleNext = async () => {
-  if (validateAllFields()) {
-    try {
-      const payload = {
-        mobileNumber: mainFormData?.mobileNumber, // Page 1
-        pan: panNumber,
-        firstName: fullName, // backend will split it
-        email: email,
-        gender: mainFormData?.genderValue, //for backend we are sending integer value
-        dob: selectedDate,
-      };
+        if (validateAllFields()) {
+            try {
+                setLoading(true);
+                const payload = {
+                    mobileNumber: mainFormData?.mobileNumber, // Page 1
+                    pan: panNumber,
+                    firstName: fullName, // backend will split it
+                    email: email,
+                    gender: mainFormData?.genderValue, //for backend we are sending integer value
+                    dob: selectedDate,
+                };
 
-  const response = await axios.post(
-  `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page3`,
-  payload,
-  {
-    headers: {
-      "Content-Type": "application/json",
-      token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=",
-    },
-  }
-);
+                const response = await axios.post(
+                    `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/page3`,
+                    payload,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            token: "Y3JlZGl0aGFhdHRlc3RzZXJ2ZXI=",
+                        },
+                    }
+                );
 
-console.log("response of page 3 api is:", response);
+                console.log("response of page 3 api is:", response);
 
-// Correct check
-if (response.data.status === "APPROVED") {
-  console.log("Data saved successfully");
+                // Correct check
+                if (response.data.status === "APPROVED") {
+                    console.log("Data saved successfully");
 
-  // Split name
-  const nameParts = fullName.trim().split(" ");
-  let firstName = "";
-  let middleName = "";
-  let lastName = "";
+                    // Split name
+                    const nameParts = fullName.trim().split(" ");
+                    let firstName = "";
+                    let middleName = "";
+                    let lastName = "";
 
-  if (nameParts.length === 1) {
-    firstName = nameParts[0];
-  } else if (nameParts.length === 2) {
-    firstName = nameParts[0];
-    lastName = nameParts[1];
-  } else if (nameParts.length >= 3) {
-    firstName = nameParts[0];
-    lastName = nameParts[nameParts.length - 1];
-    middleName = nameParts.slice(1, -1).join(" ");
-  }
+                    if (nameParts.length === 1) {
+                        firstName = nameParts[0];
+                    } else if (nameParts.length === 2) {
+                        firstName = nameParts[0];
+                        lastName = nameParts[1];
+                    } else if (nameParts.length >= 3) {
+                        firstName = nameParts[0];
+                        lastName = nameParts[nameParts.length - 1];
+                        middleName = nameParts.slice(1, -1).join(" ");
+                    }
 
-  // OTP API payload
-  const otpPayload = {
-    Mobilenumber: mainFormData?.mobileNumber,
-    firstname: firstName,
-    middlename: middleName,
-    lastname: lastName,
-    email: email,
-    pan: panNumber,
-  };
+                    // OTP API payload
+                    const otpPayload = {
+                        Mobilenumber: mainFormData?.mobileNumber,
+                        firstname: firstName,
+                        middlename: middleName,
+                        lastname: lastName,
+                        email: email,
+                        pan: panNumber,
+                    };
 
-  // Call OTP API
-  const otpResponse = await axios.post(
-    `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/sendJourneyOTP`,
-    otpPayload,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        token: "Y3JlZGl0aGFhdHRlc3RzZXI=",
-      },
-    }
-  );
+                    // Call OTP API
+                    const otpResponse = await axios.post(
+                        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/sendJourneyOTP`,
+                        otpPayload,
+                        {
+                            headers: {
+                                "Content-Type": "application/json",
+                                token: "Y3JlZGl0aGFhdHRlc3RzZXI=",
+                            },
+                        }
+                    );
 
-  console.log("OTP API response:", otpResponse.data);
+                    console.log("OTP API response:", otpResponse.data);
 
-} else {
-  console.log("Failed to save data:", response.data);
-}
+                } else {
+                    console.log("Failed to save data:", response.data);
+                }
 
-      // save bhi hoga + next page open bhi hoga
-      setFormData((prev) => ({
-        ...prev,
-        panNumber,
-        fullName,
-        email,
-        selectedGender,
-        selectedDate,
-      }));
-      setActiveContainer("PersonalDetailePage3");
+                // save bhi hoga + next page open bhi hoga
+                setFormData((prev) => ({
+                    ...prev,
+                    panNumber,
+                    fullName,
+                    email,
+                    selectedGender,
+                    selectedDate,
+                }));
+                setActiveContainer("PersonalDetailePage3");
 
-    } catch (error) {
-      console.error("Error saving Page 3 data:", error);
-      alert("Something went wrong while saving data");
-    }
-  }
-};
+            } catch (error) {
+                console.error("Error saving Page 3 data:", error);
+                alert("Something went wrong while saving data");
+            } finally {
+                setLoading(false); // stop loading
+            }
+        }
+    };
 
 
     const handleBack = () => {
@@ -511,23 +514,28 @@ if (response.data.status === "APPROVED") {
 
     return (
         <div className={styles.Block}>
+            {loading && (
+                <div className={styles.overlay}>
+                    <div className={styles.spinner}></div>
+                </div>
+            )}
             <div className={styles.mainHeaderPart} >
                 {/* mynew */}
-            <div className={styles.topchildren}>
-                            <div className={styles.logoContainer}>
-                                <Image
-                                    src="/AryseFin_logo.png"
-                                    width={80}
-                                    height={80}
-                                    className={styles.logo2}
-                                    alt="Aryse_Fin logo"
-                                    priority
-                                />
-                            </div>
-                        </div>
+                <div className={styles.topchildren}>
+                    <div className={styles.logoContainer}>
+                        <Image
+                            src="/AryseFin_logo.png"
+                            width={80}
+                            height={80}
+                            className={styles.logo2}
+                            alt="Aryse_Fin logo"
+                            priority
+                        />
+                    </div>
+                </div>
 
 
-                        {/* mynew */}
+                {/* mynew */}
             </div>
             <div className={styles.mainForm}>
                 <div className={styles.header}>
@@ -551,13 +559,13 @@ if (response.data.status === "APPROVED") {
                     <div className={styles.formheading}>
                         Personal Details
                     </div>
-                    
+
                     {/* PAN No field with validation */}
                     <div className={`${styles.fields} ${panError ? styles.fieldError : ''}`}>
                         <span className={styles.fieldName}>PAN</span>
-                        <input 
-                            type='text' 
-                            name='PAN' 
+                        <input
+                            type='text'
+                            name='PAN'
                             className={styles.inputfield}
                             value={panNumber}
                             onChange={handlePANChange}
@@ -565,7 +573,7 @@ if (response.data.status === "APPROVED") {
                             maxLength={10}
                         />
                     </div>
-                    
+
                     {/* Name as PAN field with validation */}
                     <div className={`${styles.fields} ${nameError ? styles.fieldError : ''}`}>
                         <span className={styles.fieldName}>Name as on PAN</span>
@@ -578,7 +586,7 @@ if (response.data.status === "APPROVED") {
                             onBlur={handleNameBlur}
                         />
                     </div>
-                    
+
                     {/* Email field with validation */}
                     <div className={`${styles.fields} ${emailError ? styles.fieldError : ''}`}>
                         <span className={styles.fieldName}> Personal email</span>
@@ -591,53 +599,56 @@ if (response.data.status === "APPROVED") {
                             onBlur={handleEmailBlur}
                         />
                     </div>
-                    
+
                     {/* Gender field with validation */}
                     <div className={styles.fields1}>
                         <span className={styles.gendertitle} >Gender</span>
+                        
                         <div className={styles.genderContainer}>
-                            <div 
+                            <div
                                 className={`${styles.genderOption} ${selectedGender === 'Male' ? styles.genderSelected : ''} ${genderError ? styles.genderOptionError : ''}`}
                                 onClick={() => handleGenderSelect('Male')}
                             >
                                 <div className={styles.genderIcon}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#9747FF"/>
-                                        <path d="M12 14C8.67 14 2 15.67 2 19V20C2 20.55 2.45 21 3 21H21C21.55 21 22 20.55 22 20V19C22 15.67 15.33 14 12 14Z" fill="#9747FF"/>
+                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#6039d2" />
+                                        <path d="M12 14C8.67 14 2 15.67 2 19V20C2 20.55 2.45 21 3 21H21C21.55 21 22 20.55 22 20V19C22 15.67 15.33 14 12 14Z" fill="#6039d2" />
                                     </svg>
                                 </div>
                                 <span className={styles.genderText}>Male</span>
                             </div>
-                            <div 
+                            <div
                                 className={`${styles.genderOption} ${selectedGender === 'Female' ? styles.genderSelected : ''} ${genderError ? styles.genderOptionError : ''}`}
                                 onClick={() => handleGenderSelect('Female')}
                             >
                                 <div className={styles.genderIcon}>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#9747FF"/>
-                                        <path d="M12 14C9.5 14 7.5 14.5 6 15.5C5.5 15.8 5.2 16.3 5.2 16.9V17.5C5.2 18.3 5.9 19 6.7 19H8.5L9.5 21H14.5L15.5 19H17.3C18.1 19 18.8 18.3 18.8 17.5V16.9C18.8 16.3 18.5 15.8 18 15.5C16.5 14.5 14.5 14 12 14Z" fill="#9747FF"/>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" >
+                                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="#6039d2" />
+                                        <path d="M12 14C9.5 14 7.5 14.5 6 15.5C5.5 15.8 5.2 16.3 5.2 16.9V17.5C5.2 18.3 5.9 19 6.7 19H8.5L9.5 21H14.5L15.5 19H17.3C18.1 19 18.8 18.3 18.8 17.5V16.9C18.8 16.3 18.5 15.8 18 15.5C16.5 14.5 14.5 14 12 14Z" fill="#6039d2" />
                                     </svg>
                                 </div>
                                 <span className={styles.genderText}>Female</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     {/* DOB field with validation */}
                     <div className={`${styles.fields} ${dobError ? styles.fieldError : ''}`}>
                         <span className={styles.fieldName}>DOB</span>
                         <div className={styles.dobInputContainer}>
                             <input
                                 type='text'
-                                name='dateOfBirth' 
+                                name='dateOfBirth'
                                 className={`${styles.inputfield} ${styles.dobInput}`}
+
                                 value={selectedDate}
                                 placeholder="DD-MM-YYYY"
                                 onChange={handleDateInputChange}
                                 onBlur={handleDateBlur}
                                 maxLength={10}
+                                // inputMode="numeric"
                             />
-                            <button 
+                            <button
                                 type="button"
                                 className={styles.calendarButton}
                                 onClick={() => setShowDatePicker(!showDatePicker)}
@@ -646,15 +657,15 @@ if (response.data.status === "APPROVED") {
                             </button>
                         </div>
                     </div>
-                    
+
                     {/* Button part */}
                     <div className={styles.btn}>
-                        <div className={styles.backbtn}onClick={handleBack}>Back</div>
+                        <div className={styles.backbtn} onClick={handleBack}><span> Back </span></div>
                         <div className={styles.emptyspace}></div>
-                        <div className={styles.nextbtn} onClick={handleNext}>Next</div>
+                        <div className={styles.nextbtn} onClick={handleNext}><span> Next </span></div>
                     </div>
                 </div>
-                
+
                 {/* Date Picker Modal */}
                 {showDatePicker && (
                     <div
@@ -678,7 +689,7 @@ if (response.data.status === "APPROVED") {
                                         <button onClick={() => handleYearChange('up')} className={styles.navButton}>›</button>
                                     </div>
                                 </div>
-                                <button 
+                                <button
                                     className={styles.closeButton}
                                     onClick={() => setShowDatePicker(false)}
                                 >
@@ -698,13 +709,10 @@ if (response.data.status === "APPROVED") {
                                         key={index}
                                         onClick={() => handleDateClick(dateObj.day, dateObj.isCurrentMonth)}
                                         disabled={!dateObj.isCurrentMonth}
-                                        className={`${styles.calendarDay} ${
-                                            !dateObj.isCurrentMonth ? styles.disabledDay : ''
-                                        } ${
-                                            isSelected(dateObj.day, dateObj.isCurrentMonth) ? styles.selectedDay : ''
-                                        } ${
-                                            isToday(dateObj.day, dateObj.isCurrentMonth) ? styles.todayDay : ''
-                                        }`}
+                                        className={`${styles.calendarDay} ${!dateObj.isCurrentMonth ? styles.disabledDay : ''
+                                            } ${isSelected(dateObj.day, dateObj.isCurrentMonth) ? styles.selectedDay : ''
+                                            } ${isToday(dateObj.day, dateObj.isCurrentMonth) ? styles.todayDay : ''
+                                            }`}
                                     >
                                         {dateObj.day}
                                     </button>

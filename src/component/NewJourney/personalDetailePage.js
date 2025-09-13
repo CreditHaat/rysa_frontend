@@ -13,7 +13,8 @@ import { style } from '@mui/system';
 
 
 function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContainer }) {
-   // Props properly receive 
+    const [loading, setLoading] = useState(false);//mast the screen or loader
+    // Props properly receive 
     console.log("Received mainFormData:", mainFormData); // Debug log
 
     const [showSheet, setShowSheet] = useState(false);
@@ -28,26 +29,26 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
         paymentType: "",
         monthlyIncome: "",
     });
-//       const [formData, setFormData] = useState({
-//     // Page 1
-//     pinCode: "",
-//     address: "",
-//     employmentType: "",
-//     paymentType: "",
-//     monthlyIncome: "",
-//     // Page 2
-//     panNumber: "",
-//     fullName: "",
-//     email: "",
-//     selectedGender: "",
-//     selectedDate: "",
-//     // Page 3
-//     companyName: "",
-//     workEmail: "",
-//     workPINCode: "",
-//   });
+    //       const [formData, setFormData] = useState({
+    //     // Page 1
+    //     pinCode: "",
+    //     address: "",
+    //     employmentType: "",
+    //     paymentType: "",
+    //     monthlyIncome: "",
+    //     // Page 2
+    //     panNumber: "",
+    //     fullName: "",
+    //     email: "",
+    //     selectedGender: "",
+    //     selectedDate: "",
+    //     // Page 3
+    //     companyName: "",
+    //     workEmail: "",
+    //     workPINCode: "",
+    //   });
 
-    
+
     // const [formData, setFormData] = useState({
     //     pinCode: "",
     //     address: "",
@@ -148,7 +149,7 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
     };
 
     // Handle next button click
-        const employmentMapping = {
+    const employmentMapping = {
         "Salaried": 1,
         "Self employed": 2,
         "Business": 3,
@@ -162,13 +163,14 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
 
     const handleNext = async () => {
         console.log("Mobile Number being sent:", mainFormData.mobileNumber); // Debug log
-        
+
         if (validateForm()) {
             console.log("Form is valid, sending to backend...");
 
             try {
+                setLoading(true);
                 const payload = {
-                    mobileNumber: mainFormData.mobileNumber, 
+                    mobileNumber: mainFormData.mobileNumber,
                     residentialPincode: mainFormData.pinCode,
                     address: mainFormData.address,
                     employmentType: employmentMapping[mainFormData.employmentType] || null,
@@ -194,11 +196,13 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
                 if (response.data.status === "APPROVED") {
                     setActiveContainer("PersonalDetailePage2");
                 } else {
-                    setActiveContainer("RejectPage");
+                    setActiveContainer("NewRejectionPage");
                 }
             } catch (error) {
                 console.error("Error while calling API:", error);
                 alert("Something went wrong");
+            } finally {
+                setLoading(false); // stop loading
             }
         } else {
             console.log("Form has errors");
@@ -211,7 +215,7 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
 
     return (
         <>
-        {/* {activeContainer === "PersonalDetailePage2" && (
+            {/* {activeContainer === "PersonalDetailePage2" && (
         <PersonalDetailePage2
           mainFormData={formData}
           setFormData={setFormData}
@@ -227,212 +231,217 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
         />
       )}
             {activeContainer === "personalDetailePage" && ( */}
-        <div className={styles.container}>
-            <div className={styles.mainHeaderPart} >
-                {/* mynew */}
-            <div className={styles.topchildren}>
-                            <div className={styles.logoContainer}>
-                                <Image
-                                    src="/AryseFin_logo.png"
-                                    width={80}
-                                    height={80}
-                                    className={styles.logo2}
-                                    alt="Aryse_Fin logo"
-                                    priority
-                                />
+            <div className={styles.container}>
+            {loading && (
+        <div className={styles.overlay}>
+          <div className={styles.spinner}></div>
+        </div>
+      )}
+                <div className={styles.mainHeaderPart} >
+                    {/* mynew */}
+                    <div className={styles.topchildren}>
+                        <div className={styles.logoContainer}>
+                            <Image
+                                src="/AryseFin_logo.png"
+                                width={80}
+                                height={80}
+                                className={styles.logo2}
+                                alt="Aryse_Fin logo"
+                                priority
+                            />
+                        </div>
+                    </div>
+
+
+                    {/* mynew */}
+                </div>
+                <div className={styles.mainForm}>
+                    <div className={styles.header}>
+                        <div className={styles.progressBarContainer}>
+                            {/* first no:1 progress bar */}
+                            <div className={styles.progressBar}>
+                                <div className={styles.stepNumber}>1</div>
+                                <div
+                                    className={styles.progressBarFill}
+                                // style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                            {/* first no:2 progress bar */}
+                            <div className={styles.progressBar}>
+                                <div className={styles.stepNumber2}>2</div>
+                                <div
+                                    className={styles.progressBarFill2}
+                                // style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                            {/* first no:3 progress bar */}
+                            <div className={styles.progressBarlast}>
+                                <div className={styles.stepNumberLast}>3</div>
                             </div>
                         </div>
+                        {/* <div className={styles.headering}><h3>personal Details</h3></div> */}
+                    </div>
+                    {/* form field start form here */}
 
-
-                        {/* mynew */}
-            </div>
-            <div className={styles.mainForm}>
-                <div className={styles.header}>
-                    <div className={styles.progressBarContainer}>
-                        {/* first no:1 progress bar */}
-                        <div className={styles.progressBar}>
-                            <div className={styles.stepNumber}>1</div>
-                            <div
-                                className={styles.progressBarFill}
-                            // style={{ width: `${progress}%` }}
-                            ></div>
+                    <div className={styles.form}>
+                        <div className={styles.formheading}>
+                            Personal Details
                         </div>
-                        {/* first no:2 progress bar */}
-                        <div className={styles.progressBar}>
-                            <div className={styles.stepNumber2}>2</div>
-                            <div
-                                className={styles.progressBarFill2}
-                            // style={{ width: `${progress}%` }}
-                            ></div>
-                        </div>
-                        {/* first no:3 progress bar */}
-                        <div className={styles.progressBarlast}>
-                            <div className={styles.stepNumberLast}>3</div>
-                        </div>
-                    </div>
-                    {/* <div className={styles.headering}><h3>personal Details</h3></div> */}
-                </div>
-                {/* form field start form here */}
+                        {/* first field */}
+                        <div className={`${styles.fields} ${formErrors.pinCode ? styles.fieldserror : ""}`}>
+                            <span className={styles.fieldName}>Pincode </span>
+                            <input
+                                type="number"
+                                name="pinCode"
+                                value={mainFormData.pinCode || ''}
+                                onChange={(e) => {
+                                    if (e.target.value.length <= 6) {
+                                        handleInputChange(e);
+                                    }
+                                }}
+                                className={styles.inputfield}
+                            />
 
-                <div className={styles.form}>
-                    <div className={styles.formheading}>
-                        Personal Details
-                    </div>
-                    {/* first field */}
-                    <div className={`${styles.fields} ${formErrors.pinCode ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Pincode </span>
-                      <input
-                        type="number"
-                        name="pinCode"
-                        value={mainFormData.pinCode || ''}
-                        onChange={(e) => {
-                        if (e.target.value.length <= 6) {
-                        handleInputChange(e);
-                         }
-                         }}
-                        className={styles.inputfield}
-                      />
-
-                    </div>
-                    {/* second field */}
-                    <div className={`${styles.fields} ${formErrors.address ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Residential address</span>
-                        <input 
-                            type='text' 
-                            name='address' 
-                            value={mainFormData.address || ''}
-                            onChange={handleInputChange}
-                            className={styles.inputfield} 
-                        />
-                        {/* {formErrors.address && (
-                            <span className={styles.errorText}>{formErrors.address}</span>
-                        )} */}
-                    </div>
-                    {/* third field */}
-                    <div className={`${styles.fields2} ${formErrors.employmentType ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Employment type</span>
-                        <div className={styles.inputWrapper}>
+                        </div>
+                        {/* second field */}
+                        <div className={`${styles.fields} ${formErrors.address ? styles.fieldserror : ""}`}>
+                            <span className={styles.fieldName}>Residential address</span>
                             <input
                                 type='text'
-                                name='employmentType'
-                                value={mainFormData.employmentType || ''}
-                                // value={formData.employmentType || ""}
-                                className={styles.inputfield1}
-                                readOnly
-                                onClick={() => setShowSheet(true)}
+                                name='address'
+                                value={mainFormData.address || ''}
+                                onChange={handleInputChange}
+                                className={styles.inputfield}
                             />
-                            <div className={styles.iconContainer} onClick={() => setShowSheet(true)}>
-                                <FaChevronDown className={styles.iconInput} />
+                            {/* {formErrors.address && (
+                            <span className={styles.errorText}>{formErrors.address}</span>
+                        )} */}
+                        </div>
+                        {/* third field */}
+                        <div className={`${styles.fields2} ${formErrors.employmentType ? styles.fieldserror : ""}`}>
+                            <span className={styles.fieldName}>Employment type</span>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type='text'
+                                    name='employmentType'
+                                    value={mainFormData.employmentType || ''}
+                                    // value={formData.employmentType || ""}
+                                    className={styles.inputfield1}
+                                    readOnly
+                                    onClick={() => setShowSheet(true)}
+                                />
+                                <div className={styles.iconContainer} onClick={() => setShowSheet(true)}>
+                                    <FaChevronDown className={styles.iconInput} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {/* fourth field */}
-                    <div className={`${styles.fields2} ${formErrors.paymentType ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Payment type</span>
-                        <div className={styles.inputWrapper}>
+                        {/* fourth field */}
+                        <div className={`${styles.fields2} ${formErrors.paymentType ? styles.fieldserror : ""}`}>
+                            <span className={styles.fieldName}>Payment type</span>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type="text"
+                                    name="paymentType"
+                                    // value={paymentType}
+                                    value={mainFormData.paymentType || ""}
+                                    className={styles.inputfield1}
+                                    readOnly
+                                    onClick={() => setShowSheetPayment(true)}
+                                />
+                                <div className={styles.iconContainer} onClick={() => setShowSheetPayment(true)}>
+                                    <FaChevronDown className={styles.iconInput} />
+                                </div>
+                            </div>
+                        </div>
+                        {/* fifth field */}
+                        <div className={`${styles.fields} ${formErrors.monthlyIncome ? styles.fieldserror : ""}`}>
+                            <span className={styles.fieldName}>Monthly income</span>
                             <input
-                                type="text"
-                                name="paymentType"
-                                // value={paymentType}
-                                value={mainFormData.paymentType || ""}
-                                className={styles.inputfield1}
-                                readOnly
-                                onClick={() => setShowSheetPayment(true)}
+                                type='number'
+                                name='monthlyIncome'
+                                value={mainFormData.monthlyIncome || ''}
+                                onChange={handleInputChange}
+                                className={styles.inputfield}
                             />
-                            <div className={styles.iconContainer} onClick={() => setShowSheetPayment(true)}>
-                                <FaChevronDown className={styles.iconInput} />
-                            </div>
                         </div>
-                    </div>
-                    {/* fifth field */}
-                    <div className={`${styles.fields} ${formErrors.monthlyIncome ? styles.fieldserror : ""}`}>
-                        <span className={styles.fieldName}>Monthly income</span>
-                        <input 
-                            type='number' 
-                            name='monthlyIncome' 
-                            value={mainFormData.monthlyIncome || ''}
-                            onChange={handleInputChange}
-                            className={styles.inputfield} 
-                        />
-                    </div>
-                    {/* button part here */}
-                    <div className={styles.btn}>
-                                {/* back button  */}
-                                <div className={styles.backbtn} 
+                        {/* button part here */}
+                        <div className={styles.btn}>
+                            {/* back button  */}
+                            <div className={styles.backbtn}
                                 onClick={handleBack}
-                                >Back</div>
-                                {/* emptyspace */}
-                                <div className={styles.emptyspace}></div>
-                                {/* next button  */}
-                                <div className={styles.nextbtn} 
+                            ><span> Back </span></div>
+                            {/* emptyspace */}
+                            <div className={styles.emptyspace}></div>
+                            {/* next button  */}
+                            <div className={styles.nextbtn}
                                 onClick={handleNext}
-                                >Next</div>
+                            ><span> Next </span></div>
+                        </div>
+                    </div>
+                    {/* BottomSheet for employ type  */}
+                    {showSheet && (
+                        <div
+                            className={styles.bottomSheetOverlay}
+                            onClick={() => setShowSheet(false)}
+                        >
+                            <div
+                                className={styles.bottomSheet}
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div
+                                    className={styles.sheetOption}
+                                    onClick={() => handleSelectProfession("Salaried")}
+                                >
+                                    Salaried
+                                </div>
+                                <div
+                                    className={styles.sheetOption}
+                                    onClick={() => handleSelectProfession("Self employed")}
+                                >
+                                    Self employed
+                                </div>
+                                <div
+                                    className={styles.sheetOption}
+                                    onClick={() => handleSelectProfession("Business")}
+                                >
+                                    Business
+                                </div>
                             </div>
+                        </div>
+                    )}
+                    {/* bottom sheet payment */}
+                    {showSheetPayment && (
+                        <div
+                            className={styles.bottomSheetOverlay}
+                            onClick={() => setShowSheetPayment(false)}
+                        >
+                            <div
+                                className={styles.bottomSheet}
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div
+                                    className={styles.sheetOption}
+                                    onClick={() => handleSelectPaymentType("Bank Transfer")}
+                                >
+                                    Bank Transfer
+                                </div>
+                                <div
+                                    className={styles.sheetOption}
+                                    onClick={() => handleSelectPaymentType("Cash")}
+                                >
+                                    Cash
+                                </div>
+                                <div
+                                    className={styles.sheetOption}
+                                    onClick={() => handleSelectPaymentType("Cheque")}
+                                >
+                                    Cheque
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
-                {/* BottomSheet for employ type  */}
-                {showSheet && (
-                    <div
-                        className={styles.bottomSheetOverlay}
-                        onClick={() => setShowSheet(false)}
-                    >
-                        <div
-                            className={styles.bottomSheet}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div
-                                className={styles.sheetOption}
-                                onClick={() => handleSelectProfession("Salaried")}
-                            >
-                                Salaried
-                            </div>
-                            <div
-                                className={styles.sheetOption}
-                                onClick={() => handleSelectProfession("Self employed")}
-                            >
-                                Self employed
-                            </div>
-                            <div
-                                className={styles.sheetOption}
-                                onClick={() => handleSelectProfession("Business")}
-                            >
-                                Business
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {/* bottom sheet payment */}
-                {showSheetPayment && (
-                    <div
-                        className={styles.bottomSheetOverlay}
-                        onClick={() => setShowSheetPayment(false)}
-                    >
-                        <div
-                            className={styles.bottomSheet}
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div
-                                className={styles.sheetOption}
-                                onClick={() => handleSelectPaymentType("Bank Transfer")}
-                            >
-                                Bank Transfer
-                            </div>
-                            <div
-                                className={styles.sheetOption}
-                                onClick={() => handleSelectPaymentType("Cash")}
-                            >
-                                Cash
-                            </div>
-                            <div
-                                className={styles.sheetOption}
-                                onClick={() => handleSelectPaymentType("Cheque")}
-                            >
-                                Cheque
-                            </div>
-                        </div>
-                    </div>
-                )}
             </div>
-        </div>
             {/* )} */}
         </>
     )
