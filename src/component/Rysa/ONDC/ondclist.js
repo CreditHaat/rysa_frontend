@@ -793,7 +793,8 @@ const Ondclist = () => {
         email: userDetailsResponse?.data?.email || "",
         officeaddresspincode: userDetailsResponse?.data?.workPincode || "",
         maritalstatus: userDetailsResponse?.data?.maritalStatus || "",
-        company: userDetailsResponse?.data?.company || ""
+        company: userDetailsResponse?.data?.company || "",
+        creditProfile: userDetailsResponse?.data?.creditProfile || ""
 
       };
       if (userDetailsResponse.status === 200) {
@@ -824,6 +825,7 @@ const Ondclist = () => {
         // email: ONDCFormData.email,
         agentid: 357046965,
         agent: "arysefinlead",
+        creditprofile: userDetails.creditProfile
       };
 
       const response = await axios.post(
