@@ -290,9 +290,7 @@
     cursor: pointer;
 }
 
-.backbtn:hover {
-  /* background-color: #005bb5; */
-}
+
 
 .backbtn span {
   cursor: pointer;
@@ -450,7 +448,7 @@
 
 .genderSelected {
     border-color: #6039d2 !important;
-    background-color: #6039d2 !important;
+    background-color: #F7F6FD !important;
     box-shadow: 0 0 0 1px #6039d2;
 }
 
@@ -828,3 +826,30 @@
     outline: 2px solid red;
     outline-offset: -2px;
 } */
+ .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7); /* semi-transparent mask */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* above everything */
+  pointer-events: all;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3; /* Light gray */
+  border-top: 6px solid #9747FF; /* Purple color */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

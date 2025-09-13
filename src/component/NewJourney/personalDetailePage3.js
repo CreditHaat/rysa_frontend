@@ -163,7 +163,8 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
               className={styles.inputfield}
             />
             {/* Suggestions Dropdown */}
-            {showSuggestions && suggestions.length > 0 && (
+            {/* {showSuggestions && suggestions.length > 0 && (
+              <div className={styles.companyList}>
               <ul className={styles.suggestionBox}>
                 {suggestions.map((s, i) => (
                   <li
@@ -175,7 +176,21 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
                   </li>
                 ))}
               </ul>
-            )}
+              </>
+            )} */}
+              {showSuggestions && suggestions.length > 0 && (
+    <ul className={styles.suggestionBox}>
+      {suggestions.map((s, i) => (
+        <li
+          key={i}
+          className={styles.suggestionItem}
+          onClick={() => handleSuggestionClick(s)}
+        >
+          {s}
+        </li>
+      ))}
+    </ul>
+  )}
           </div>
 
           {/* Work Email */}

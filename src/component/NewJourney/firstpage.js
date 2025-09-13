@@ -4,7 +4,8 @@ import styles from "./firstpage.module.css";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import PersonalDetailePage from './personalDetailePage';
-import RejectPage from '../Yubi/rejectionpage';
+// import RejectPage from '../Yubi/rejectionpage';
+import NewRejectionPage from '../Yubi/newrejectionpage';
 import PersonalDetailePage2 from './personalDetailePage2';
 import PersonalDetailePage3 from './personalDetailePage3';
 import axios from "axios";
@@ -145,9 +146,11 @@ function FirstPage() {
                 console.log("OTP API response:", resOtp.data);
 
                 // Show OTP bottom sheet
-                setShowOTPbottomsheet(true);
-                // setTimeout(() => otpRefs.current[0]?.focus(), 100);
-                setTimeout(() => otpRef.current?.focus(), 100);
+                 // Clear OTP input before showing popup
+            setOtp('');
+            setOtpError('');
+            setShowOTPbottomsheet(true);
+            setTimeout(() => otpRef.current?.focus(), 100);
 
 
             } catch (err) {
@@ -282,9 +285,9 @@ function FirstPage() {
             />
         );
     }
-    if (activeContainer === "RejectPage") {
+    if (activeContainer === "NewRejectionPage") {
     return (
-        <RejectPage
+        <NewRejectionPage
             mainFormData={mainFormData}
             setFormData={setMainFormData}
             setActiveContainer={setActiveContainer}

@@ -18,7 +18,7 @@ function NewRejectionPage() {
     const [interestRate, setInterestRate] = useState("");
 
     const handleNextClick = () => {
-        window.location.href = "https://app.credithaat.com";
+        window.location.href = "https://app.credithaat.com/pl_journey";
     };
     return (
         <div className={styles.MainContainer}>
