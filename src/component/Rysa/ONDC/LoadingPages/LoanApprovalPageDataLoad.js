@@ -173,6 +173,9 @@ const roboto = Roboto({
 
 const LoadingPage = () => {
 
+  const [showPage, setShowPage] = useState(null);
+  const [submissionId, setSubmissionId] = useState(null);
+
   const { uid, setUId, isWebsocketConnectionEstablished, setIsWebsocketConnectionEstablished } = useContext(UIDContext);
 
   const searchParams = useSearchParams();
@@ -233,9 +236,20 @@ const LoadingPage = () => {
 
     // setSettlementBAP(bapAmount);
     // setSettlementBPP(bppAmount);
-
+    return bppAmount;
 
   };
+
+  useEffect(()=>{
+    if(Object.keys(SelectedLenderData).length !== 0 && submissionId !== null && Object.keys(initPayload).length !== 0){
+
+        if(showPage === "BankDetails"){
+            //here we will redirect the user to the bankDetailsPage if submission id is present in onStatus
+            router.push("/ondc/bankdetails");
+        }
+
+    }
+},[SelectedLenderData, showPage, initPayload])
 
   useEffect(() => {
     if (Object.keys(SelectedLenderData).length !== 0 && Object.keys([payloadForSelect]).length !== 0) {
@@ -244,7 +258,7 @@ const LoadingPage = () => {
       // router.push(`/ondc/loanapproval?minAmt=${minAmt}`);
 
       //here we will write code to check the callback that we got from the backend is on_select and if on_select if its cur is 1 that means we have to show the user a loanDetails page 
-      if (SelectedLenderData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur === 1 && SelectedLenderData?.context?.action === "on_select" ) {
+      if (showPage === "BeforeBankDetails" && SelectedLenderData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur === 1 && SelectedLenderData?.context?.action === "on_select") {
 
         const bffPercentage = 1;
 
@@ -317,12 +331,12 @@ const LoadingPage = () => {
 
         }
 
-      }else if(SelectedLenderData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur === 0 && SelectedLenderData?.context?.action === "on_select"){
+      } else if (SelectedLenderData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur === 0 && SelectedLenderData?.context?.action === "on_select") {
         router.push(`/ondc/loanapproval?minAmt=${minAmt}`);
       }
 
     }
-  }, [SelectedLenderData, payloadForSelect])
+  }, [SelectedLenderData, payloadForSelect, showPage])
 
   const handleDataFetch = async () => {
     try {
@@ -350,6 +364,95 @@ const LoadingPage = () => {
 
   const findLenderByBppForSingleObject = (bppToFind, transactionId, backendData) => {
     try {
+      //here content2 will be on_status if we have on_status in our backendData then we will check for api type
+      if (backendData?.content2) {
+
+        //here first we will get the onStatus from content2 and then will check the submissionId is present or not
+        //present then ok else we will return the user from here
+        const onStatusData = JSON.parse(backendData?.content2?.content);
+        if (onStatusData?.message?.order?.items?.[0]?.xinput?.form_response?.submission_id) {
+
+          setSubmissionId(onStatusData?.message?.order?.items?.[0]?.xinput?.form_response?.submission_id);
+
+          const parsedData = onStatusData;
+
+          const initPayload2 = {
+            transactionId: parsedData.context.transaction_id,
+            bppId: parsedData.context.bpp_id,
+            bppUri: parsedData?.context?.bpp_uri || "NA",
+            providerId: parsedData?.message?.order?.provider?.id || "NA",
+            itemId: parsedData?.message?.order?.items?.[0]?.id || "NA",
+            // formId: parsedData?.message?.order?.items?.[0]?.xinput?.form?.id,
+            submissionId: parsedData?.message?.order?.items?.[0]?.xinput?.form_response?.submission_id || "NA",
+            bankCode: "NA",
+            accountNumber: "NA",
+            vpa: "user@upi",
+            // settlementAmount: "1666.67",
+            settlementAmount: globalSettlementAmount,
+            initAttempt: 1
+          }
+
+          setInitPayload(prev => ({
+            ...prev,
+            ...initPayload2
+          }));
+
+        } else {
+          return;
+        }
+
+        const onSelectData = JSON.parse(backendData?.content1?.content);
+        if (onSelectData?.context?.action === "on_select") {
+
+          const bffPercentage = 1;
+          //here we will set the neccessary data for bankDetails page
+          // const onSelectData = backendData?.content1.content.context;
+          setSelectedLenderData(onSelectData);
+
+          const parsedData = onSelectData;
+
+          //here we will write a logic to set the settlementAmount
+          const principalEntry = parsedData?.message?.order?.quote?.breakup?.find(
+            (item) => item.title === "PRINCIPAL"
+          );
+          const principal = parseFloat(principalEntry?.price?.value || 0);
+
+          // 2. Extract Processing Fee (PF)
+          const processingFeeEntry = parsedData?.message?.order?.quote?.breakup?.find(
+            (item) => item.title === "PROCESSING_FEE"
+          );
+          const processingFee = parseFloat(processingFeeEntry?.price?.value || 0);
+
+          // const term = parsedData?.message?.order?.items?.[0]?.tags?.[0]?.list?.[1]?.value;
+          const termRaw = parsedData?.message?.order?.items?.[0]?.tags?.[0]?.list?.[1]?.value || "";
+          // Extract digits only
+          const term = termRaw.replace(/\D/g, "");
+          console.log(term); // "5"
+          console.log("The loan term that we are getting is : ", term);
+
+          const returnSettlementAmount = handleCalculate(principal, processingFee, term, bffPercentage);
+
+          // setKycForm(parsedData.message.order.items[0].xinput.form.url);
+
+          // setInitPayload({ ...initPayload, formId: parsedData.message.order.items[0].xinput.form.id, settlementAmount: returnSettlementAmount });
+          setInitPayload(prev => ({
+            ...prev,
+            formId: parsedData.message.order.items[0].xinput.form.id,
+            settlementAmount: returnSettlementAmount,
+          }));
+          // setShowBankDetailsPage(true);
+          setShowPage("BankDetails");
+          setFormSubmissionData({
+            ...formSubmissionData,
+            contactNumber: mobileNumber
+          })
+
+          return;
+
+        }
+
+      }
+
       const parsedContent = JSON.parse(backendData.content);
 
       console.log("The data before setting the selected lender data is : ", SelectedLenderData);
@@ -381,6 +484,7 @@ const LoadingPage = () => {
         })
 
         setPayloadForSelect(updatedPayload);
+        setShowPage("BeforeBankDetails");
         // handleSelectApi(updatedPayload);
         //   }
       }
