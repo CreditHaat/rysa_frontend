@@ -18,7 +18,7 @@ import "./NewBlFirstPage.module.css";
 import per from "../../../../public/Group_10.png";
 import { Roboto } from "next/font/google";
 import { useSearchParams } from "next/navigation";
-import logo2 from "./images/Aryse_Fin.png";
+import logo2 from "./images/AryseFin_logo.png";
 import LendersLoader from "./LoadingPages/Auto_start_timer";
 import { select } from "./apis/ondcapi";
 
@@ -880,12 +880,12 @@ const Ondclist = () => {
                   alt="NA"
                   style={{
                     alignContent: "center",
-                    width: "200px",
-                    height: "100px",
-                    top: "-4",
+                    width: "auto",
+                    height: "auto",
+                    // top: "",
                   }}
-                // height={50}
-                // width={50}
+                height={150}
+                width={150}
                 />
               </div>
             </div>
@@ -1102,7 +1102,7 @@ const Ondclist = () => {
                                         className={styles.cardButton}
                                         onClick={(e) => getLendersListRysa(e)}
                                       >
-                                        Get Loan
+                                        <span>Get Loan</span>
                                       </button>
                                     }
                                   </div>

@@ -7,7 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 // import hdb from "../../components/Yubi/newplimages/HDB.png";
 import ondclogo from "./images/ondc_registered_logo.png";
-import logo2 from "../../Rysa/ONDC/images/Aryse_Fin.png";
+import logo2 from "../../Rysa/ONDC/images/AryseFin_logo.png";
 // import logo2 from './images/Rysa_logo2.png';
 // import { Roboto } from "next/font/google";
 import SelectedLenderContext from "./context/SelectedLenderContext";
@@ -473,7 +473,7 @@ const LoanApprovalPage = () => {
 
         router.push("/ondc/loanoffer");
 
-      }else if(parsedData?.error || parsedData?.message?.ack?.status === "NACK"){
+      } else if (parsedData?.error || parsedData?.message?.ack?.status === "NACK") {
         window.location.href = `/yubi/RejectionPage`;
       }
 
@@ -493,7 +493,7 @@ const LoanApprovalPage = () => {
   return (
 
     <>
-    {!SelectedLenderData || Object.keys(SelectedLenderData).length === 0 ? (<>loading data .........</>):(<></>)}
+      {!SelectedLenderData || Object.keys(SelectedLenderData).length === 0 ? (<>loading data .........</>) : (<></>)}
       {/* {
       hittingInitApi && (<>processing.....</>)
     } */}
@@ -506,9 +506,14 @@ const LoanApprovalPage = () => {
                   <Image
                     src={logo2}
                     alt="NA"
-                    style={{ alignContent: "center", width: "200px", height: "100px", top: "-4" }}
-                  // height={50}
-                  // width={50}
+                    style={{
+                      alignContent: "center",
+                      width: "auto",
+                      height: "auto",
+                      // top: "",
+                    }}
+                    height={150}
+                    width={150}
                   />
                 </div>
               </div>
@@ -586,9 +591,9 @@ const LoanApprovalPage = () => {
                       <div className="Long-button">
                         <button
                           type="submit"
-                          className="form-submit"
+                          className="nextbtn"
                         >
-                          Next
+                          <span>Next</span>
                         </button>
                       </div>
                     </div>

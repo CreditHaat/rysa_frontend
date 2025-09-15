@@ -26,7 +26,7 @@ import useWebSocketONDCstatus from "./Websocket/useWebSocketONDCstatus";
 import HittingApisLoader from "./LoadingPages/HittingApisLoader";
 import { useRouter } from 'next/navigation';
 import OnSearchContext from "./context/OnSearchContext";
-import logo2 from "../../Rysa/ONDC/images/Aryse_Fin.png";
+import logo2 from "../../Rysa/ONDC/images/AryseFin_logo.png";
 // import logo2 from "../../Rysa/ONDC/images/Rysa_logo2.png";
 import { Roboto } from 'next/font/google';
 import FormError from "./LoadingPages/formError";
@@ -76,9 +76,9 @@ const Bankdetails = () => {
     // branchName: "",
     // salarySlipLink: "",
   });
-  
+
   const formDataRef = useRef(formData);
-  
+
   const [formErrors, setFormErrors] = useState({});
   const [activeContainer, setActiveContainer] = useState("BankDetails");
   const accountnameRef = useRef(null);
@@ -86,7 +86,7 @@ const Bankdetails = () => {
   const branchNameRef = useRef(null);
   const IFSCRef = useRef(null);
   const accountNumberRef = useRef(null);
-  
+
   const CustomOption = ({
     data,
     innerRef,
@@ -128,7 +128,7 @@ const Bankdetails = () => {
       />
     </div>
   );
-  
+
   const customStyles = {
     input: (provided) => ({
       ...provided,
@@ -170,7 +170,7 @@ const Bankdetails = () => {
       display: "none",
     }),
   };
-  
+
   const customStyles2 = {
     control: (provided) => ({
       ...provided,
@@ -192,20 +192,20 @@ const Bankdetails = () => {
       height: '36px',
     }),
   };
-  
-  
+
+
   const handleaccountnameChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, accountname: value });
     setFormErrors((prevErrors) => ({ ...prevErrors, accountname: "" }));
   };
-  
-  
+
+
   const handleIFSCChange = (e) => {
     const value = e.target.value.toUpperCase();
     setFormData({ ...formData, IFSC: value });
     setFormErrors((prevErrors) => ({ ...prevErrors, IFSC: "" }));
-    
+
     if (value && value.length === 11) {
       if (accountNumberRef.current) {
         accountNumberRef.current.focus();
@@ -224,8 +224,8 @@ const Bankdetails = () => {
     const errors = {};
     let isValid = true;
     const data = new FormData();
-    
-    
+
+
     if (!formData.accountname) {
       errors.accountname = "Account holder name is required";
       isValid = false;
@@ -233,12 +233,12 @@ const Bankdetails = () => {
       errors.accountname = "Account holder name must be at least 2 characters";
       isValid = false;
     }
-    
+
     if (!formData.accountType) {
       errors.accountType = "Please select account type";
       isValid = false;
     }
-    
+
     if (!formData.IFSC) {
       errors.IFSC = "IFSC code is required";
       isValid = false;
@@ -246,7 +246,7 @@ const Bankdetails = () => {
       errors.IFSC = "Please enter a valid IFSC code";
       isValid = false;
     }
-    
+
     if (!formData.accountNumber) {
       errors.accountNumber = "Account number is required";
       isValid = false;
@@ -255,11 +255,11 @@ const Bankdetails = () => {
         "Please enter a valid account number (9-18 digits)";
       isValid = false;
     }
-    
+
     setFormErrors(errors);
     return isValid;
   };
-  
+
   // const handleSubmit = async (e) => {
 
   //   // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
@@ -318,12 +318,12 @@ const Bankdetails = () => {
       externalFormWindowRef.current.focus();
     }
   };
-  
+
   const [firstTimeSubmitFlag, setFirstTimeSubmitFlag] = useState(true);//we created this flag just to see that user is submitting the bank details form at first or is he submitting it again due to some reason
-  
-  
+
+
   const handleSubmit = async (e) => {
-  
+
     // externalFormWindowRef.current = window.open("/ondc/redirecting", "_blank");
 
     formDataRef.current = formData;
@@ -353,7 +353,7 @@ const Bankdetails = () => {
           //form data to save
           formType: "KYC Form",//1 is for bank Details
           version: SelectedLenderData.context.version
-          
+
           // vpa: "user@upi",
           // settlementAmount: "1666.67"
         };
@@ -432,7 +432,7 @@ const Bankdetails = () => {
 
       const parsedData = JSON.parse(data.content);
       setOnInitData(parsedData);
-      
+
       //here we should be creating one global variable or context which will hold this onstatus callback
       if (parsedData?.message?.order?.items?.[0]?.xinput?.form?.url) {
         setInitPayload(prev => ({
@@ -452,7 +452,7 @@ const Bankdetails = () => {
           console.log("Inside if for Account Information Form");
           console.log("parsedData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur for Account Information is : ", parsedData?.message?.order?.items?.[0]?.xinput?.head?.index?.cur);
           const formUrl = parsedData?.message?.order?.items?.[0]?.xinput?.form?.url.replace("/get/", "/post/");
-          
+
           const paymentId = parsedData?.message?.order?.payments?.[0]?.id;
 
           setGlobalFormUrl(formUrl);
@@ -511,7 +511,7 @@ const Bankdetails = () => {
         console.log("Got the response from bankDetails form : ", response);
 
         // if (response.data.status === "Successful" && response.data.submission_id) {
-          if(response?.data?.submission_id){
+        if (response?.data?.submission_id) {
 
           const updatedInitPayload = {
             ...initPayload,
@@ -550,7 +550,7 @@ const Bankdetails = () => {
           // router.push("/ondc/form-error");
         }
 
-      }else {
+      } else {
         console.log("Not hitting any apis now because of incorrect response in response.status is not 200", response);
         externalFormWindowRef.current.close();
         setWaitingLoader(false);//here we will close the loader which is used to show the waiting for callbacks screen
@@ -601,7 +601,7 @@ const Bankdetails = () => {
         //   //here we will call the init api with the values(taken from onStatus ) which it will need
         //here we are calling the 3rd init api that is the last init3 api
 
-        console.log("The onOnitData before calling the last init is : ",onOnitData);
+        console.log("The onOnitData before calling the last init is : ", onOnitData);
 
         const initPayload = {
 
@@ -638,7 +638,7 @@ const Bankdetails = () => {
         //   // paymentId: parsedData?.message?.order?.payments?.[0]?.id
         // }));
 
-        
+
 
         if (!lastInitRef.current) {
           console.log("caling handle init from onStatus and lastInitRef is : ", lastInitRef.current);
@@ -684,216 +684,221 @@ const Bankdetails = () => {
   return (
     <>
 
-    {
+      {
         !showFormError ?
           (<>
             {
-        !waitingLoader ?
-          (<>
-            <div className={`${roboto.className} container-block`}>
-              <div className="card-block">
-                <div className="header-block">
-                  <div className="headerLogo">
-                  <Image
-                    src={logo2}
-                    alt="NA"
-                    style={{alignContent:"center",width:"200px",height:"100px", top:"-4"}}
-                    // height={50}
-                    // width={50}
-                  />
-                </div>
-                </div>
-                <div className="cardForm-block">
-                  <div className="content-block">
-                    <form onSubmit={handleSubmit}>
-                      <p className="para">Please provide your bank details</p>
-
-                      {/* Account holder name field */}
-                      <div className="fill-form">
-                        <div
-                          className="fill-form"
-                          style={{ position: "relative" }}
-                        >
-                          <input
-                            type="text"
-                            id="accountname"
-                            name="accountname"
-                            placeholder="Account holder name"
-                            value={formData.accountname}
-                            className="enter-field"
-                            onChange={handleaccountnameChange}
-                          />
-                          <span
-                            className="enter-icon"
+              !waitingLoader ?
+                (<>
+                  <div className={`${roboto.className} container-block`}>
+                    <div className="card-block">
+                      <div className="header-block">
+                        <div className="headerLogo">
+                          <Image
+                            src={logo2}
+                            alt="NA"
                             style={{
-                              position: "absolute",
-                              right: "15px",
-                              top: "50%",
-                              transform: "translateY(-50%)",
-                              cursor: "pointer",
-                              color: "#00000061",
+                              alignContent: "center",
+                              width: "auto",
+                              height: "auto",
+                              // top: "",
                             }}
-                          >
-                            <FaUser />
-                          </span>
+                            height={150}
+                            width={150}
+                          />
                         </div>
-                        {formErrors.accountname && (
-                          <span className="error1">{formErrors.accountname}</span>
-                        )}
                       </div>
+                      <div className="cardForm-block">
+                        <div className="content-block">
+                          <form onSubmit={handleSubmit}>
+                            <p className="para">Please provide your bank details</p>
 
-                      {/* Account Type */}
-                      {/* Account Type Dropdown */}
-                      <div className="fill-form">
-                        {/* <label htmlFor="accountType" style={{ marginBottom: "8px", fontWeight: "500", display: "block" }}>
+                            {/* Account holder name field */}
+                            <div className="fill-form">
+                              <div
+                                className="fill-form"
+                                style={{ position: "relative" }}
+                              >
+                                <input
+                                  type="text"
+                                  id="accountname"
+                                  name="accountname"
+                                  placeholder="Account holder name"
+                                  value={formData.accountname}
+                                  className="enter-field"
+                                  onChange={handleaccountnameChange}
+                                />
+                                <span
+                                  className="enter-icon"
+                                  style={{
+                                    position: "absolute",
+                                    right: "15px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    cursor: "pointer",
+                                    color: "#00000061",
+                                  }}
+                                >
+                                  <FaUser />
+                                </span>
+                              </div>
+                              {formErrors.accountname && (
+                                <span className="error1">{formErrors.accountname}</span>
+                              )}
+                            </div>
+
+                            {/* Account Type */}
+                            {/* Account Type Dropdown */}
+                            <div className="fill-form">
+                              {/* <label htmlFor="accountType" style={{ marginBottom: "8px", fontWeight: "500", display: "block" }}>
                           Select Account Type
                         </label> */}
-                        <Select
-                          classNamePrefix="myselect1"
-                          className="select"
-                          id="accountType"
-                          name="accountType"
-                          placeholder="Choose account type"
-                          options={[
-                            { value: "saving", label: "Saving" },
-                            { value: "current", label: "Current" },
-                          ]}
-                          value={
-                            formData.accountType
-                              ? { value: formData.accountType, label: formData.accountType }
-                              : null
-                          }
-                          onChange={(selectedOption) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              accountType: selectedOption.value,
-                            }))
-                          }
-                        // styles={customStyles}
-                        styles={{
-                            control: (provided) => ({
-                              ...provided,
-                              borderRadius: '10px',
-                              minHeight: '50px',
-                              height: '50px',
-                              fontSize: '14px',
-                            }),
-                            menu: (provided) => ({
-                              ...provided,
-                              borderRadius: '10px',
-                            }),
-                          }}
-                        />
+                              <Select
+                                classNamePrefix="myselect1"
+                                className="select"
+                                id="accountType"
+                                name="accountType"
+                                placeholder="Choose account type"
+                                options={[
+                                  { value: "saving", label: "Saving" },
+                                  { value: "current", label: "Current" },
+                                ]}
+                                value={
+                                  formData.accountType
+                                    ? { value: formData.accountType, label: formData.accountType }
+                                    : null
+                                }
+                                onChange={(selectedOption) =>
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    accountType: selectedOption.value,
+                                  }))
+                                }
+                                // styles={customStyles}
+                                styles={{
+                                  control: (provided) => ({
+                                    ...provided,
+                                    borderRadius: '10px',
+                                    minHeight: '50px',
+                                    height: '50px',
+                                    fontSize: '14px',
+                                  }),
+                                  menu: (provided) => ({
+                                    ...provided,
+                                    borderRadius: '10px',
+                                  }),
+                                }}
+                              />
 
-                        {formErrors.accountType && (
-                          <span className="error">{formErrors.accountType}</span>
-                        )}
+                              {formErrors.accountType && (
+                                <span className="error">{formErrors.accountType}</span>
+                              )}
 
-                      </div>
-                      {/* </div> */}
+                            </div>
+                            {/* </div> */}
 
-                      {/* IFSC Field */}
-                      <div className="fill-form">
-                        <div
-                          //   className={styles.inputWrapper}
-                          style={{ position: "relative" }}
-                        >
-                          <input
-                            ref={IFSCRef}
-                            type="text"
-                            id="IFSC"
-                            name="IFSC"
-                            placeholder="Enter IFSC"
-                            value={formData.IFSC}
-                            onChange={handleIFSCChange}
-                            className="enter-field"
-                            autoCapitalize="words"
-                          />
+                            {/* IFSC Field */}
+                            <div className="fill-form">
+                              <div
+                                //   className={styles.inputWrapper}
+                                style={{ position: "relative" }}
+                              >
+                                <input
+                                  ref={IFSCRef}
+                                  type="text"
+                                  id="IFSC"
+                                  name="IFSC"
+                                  placeholder="Enter IFSC"
+                                  value={formData.IFSC}
+                                  onChange={handleIFSCChange}
+                                  className="enter-field"
+                                  autoCapitalize="words"
+                                />
 
-                          <span
-                            className="enter-icon"
-                            style={{
-                              position: "absolute",
-                              right: "10px",
-                              top: "50%",
-                              transform: "translateY(-50%)",
-                              color: "#00000061",
-                            }}
-                          >
-                            <FaBuilding />
-                          </span>
+                                <span
+                                  className="enter-icon"
+                                  style={{
+                                    position: "absolute",
+                                    right: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: "#00000061",
+                                  }}
+                                >
+                                  <FaBuilding />
+                                </span>
+                              </div>
+                              {formErrors.IFSC && (
+                                <span className="error">{formErrors.IFSC}</span>
+                              )}
+                            </div>
+
+                            {/* Account number Field */}
+                            <div className="fill-form">
+                              <div
+                                //   className={styles.inputWrapper}
+                                style={{ position: "relative" }}
+                              >
+                                <input
+                                  ref={accountNumberRef}
+                                  type="number"
+                                  id="accountNumber"
+                                  name="accountNumber"
+                                  placeholder="Enter account number"
+                                  value={formData.accountNumber}
+                                  onChange={handleaccountNumberChange}
+                                  className="enter-field"
+                                />
+                                <span
+                                  className="enter-icon"
+                                  style={{
+                                    position: "absolute",
+                                    right: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: "#00000061",
+                                  }}
+                                >
+                                  <FaCreditCard />
+                                </span>
+                              </div>
+                              {formErrors.accountNumber && (
+                                <span className="error">{formErrors.accountNumber}</span>
+                              )}
+                            </div>
+
+                            {/* Submit Button */}
+                            <div className="Long-button">
+                              <button
+                                type="submit"
+                                className="nextbtn"
+                              >
+                                <span>Next</span>
+                              </button>
+                            </div>
+
+                          </form>
                         </div>
-                        {formErrors.IFSC && (
-                          <span className="error">{formErrors.IFSC}</span>
-                        )}
                       </div>
+                    </div>
+                  </div >
+                </>) :
+                (<>
+                  {/* Processing APIs... */}
+                  <HittingApisLoader />
 
-                      {/* Account number Field */}
-                      <div className="fill-form">
-                        <div
-                          //   className={styles.inputWrapper}
-                          style={{ position: "relative" }}
-                        >
-                          <input
-                            ref={accountNumberRef}
-                            type="number"
-                            id="accountNumber"
-                            name="accountNumber"
-                            placeholder="Enter account number"
-                            value={formData.accountNumber}
-                            onChange={handleaccountNumberChange}
-                            className="enter-field"
-                          />
-                          <span
-                            className="enter-icon"
-                            style={{
-                              position: "absolute",
-                              right: "10px",
-                              top: "50%",
-                              transform: "translateY(-50%)",
-                              color: "#00000061",
-                            }}
-                          >
-                            <FaCreditCard />
-                          </span>
-                        </div>
-                        {formErrors.accountNumber && (
-                          <span className="error">{formErrors.accountNumber}</span>
-                        )}
-                      </div>
-
-                      {/* Submit Button */}
-                      <div className="Long-button">
-                        <button
-                          type="submit"
-                          className="form-submit"
-                        >
-                          Next
-                        </button>
-                      </div>
-
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div >
+                </>)
+            }
           </>) :
           (<>
-            {/* Processing APIs... */}
-            <HittingApisLoader />
-
-          </>)
-      }
-          </>):
-          (<>
             {
-        showFormError &&
-        <FormError setShowFormError={setShowFormError} />
-      }
+              showFormError &&
+              <FormError setShowFormError={setShowFormError} />
+            }
           </>)
-    }
+      }
 
-      
+
 
 
 

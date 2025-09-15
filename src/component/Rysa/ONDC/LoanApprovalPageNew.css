@@ -12,7 +12,8 @@
   padding: 0px 0 0 4px;
   color: #ffffff;
   font-weight: 600;
-  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  /* background: linear-gradient(to right, #f3b2f5 50%, #a78afa); */
+  background: #6039d2;
   font-size: 17px;
   z-index: 1;
    margin-top: -20px;
@@ -32,7 +33,8 @@
    .loan-block{
    width: 432px;
    /* background-color: red; */
-   background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+   /* background: linear-gradient(to right, #f3b2f5 50%, #a78afa); */
+background-color: #6039d2;
    border-bottom-left-radius: 25px;
    border-bottom-right-radius: 25px;
    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -285,6 +287,64 @@
        cursor: pointer;
        font-size: 16px;
    }
+   .nextbtn {
+
+    width: 100%;
+    font-size: 16px;
+    height: 60px;
+    background-color: #6039d2;
+    color: white;
+    /* font-size: 28px; */
+    text-align: center;
+    border-radius: 30px;
+    /* float: right; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.nextbtn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.nextbtn span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: -7px;
+    right: -20px;
+    transition: 0.5s;
+    font-size: 24px;
+}
+
+.nextbtn:hover span {
+    padding-right: 25px;
+}
+
+.nextbtn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.nextbtn:active {
+    width: 100%;
+    height: 62px;
+    background-color: #6039d2;
+    color: white;
+    /* font-size: 18px; */
+    font-weight: 600;
+    text-align: center;
+    border-radius: 30px;
+    border: 2px solid #6039d2;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.35);
+
+}
+
   
    .Long-button {
      position: fixed;
@@ -296,7 +356,11 @@
      padding-bottom: 20px;
      background-color: white;
      border-top: 1px solid #e5e7eb;
+     justify-content: center;
+     justify-items: center;
+     align-items: center;
    } 
+
    .sliderAmount{
     color:#777;
    }

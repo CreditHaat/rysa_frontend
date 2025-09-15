@@ -29,14 +29,14 @@ const AutoStartTimer = () => {
   const getTimerColor = () => {
     if (isCompleted) return "text-green-500";
     if (timeLeft <= 10) return "text-green-500";
-    if (timeLeft <= 20) return "text-red-500";
+    if (timeLeft <= 20) return "text-green-500";
     return "text-red-500";
   };
 
   const getBackgroundColor = () => {
     if (isCompleted) return "bg-green-50 border-green-200";
     if (timeLeft <= 10) return "bg-green-50 border-green-200";
-    if (timeLeft <= 20) return "bg-red-50 border-red-200";
+    if (timeLeft <= 20) return "bg-green-50 border-green-200";
     return "bg-red-50 border-red-200";
   };
 
