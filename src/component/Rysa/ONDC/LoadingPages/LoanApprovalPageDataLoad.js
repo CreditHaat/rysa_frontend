@@ -354,7 +354,7 @@ const LoadingPage = () => {
 
       const bppId = "pahal.lenderbridge.uat.ignosis.ai";
       // const sortedData = findLenderByBpp(bppId, transactionId, response.data);
-      const sortedData = findLenderByBppForSingleObject(bppId, transactionId, response.data);
+      const sortedData = findLenderByBppForSingleObject(bppIdFromURL, transactionId, response.data);
       console.log("sorted Data is : ", sortedData);
 
     } catch (error) {
