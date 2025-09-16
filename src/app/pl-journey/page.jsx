@@ -1,31 +1,24 @@
 'use client'
 import React from 'react'
-import { Outfit } from "next/font/google";
-import PersonalDetailPage from "../../component/NewJourney/personalDetailePage";
-import PersonalDetailPage2 from "../../component/NewJourney/personalDetailePage2";
-import PersonalDetailPage3 from "../../component/NewJourney/personalDetailePage3";
-import FirstPage from '@/component/NewJourney/firstpage';
+import { Roboto } from 'next/font/google';
+import RysaForm1 from '../../component/Rysa/rysaform/RysaNewPage';
+import PlOTPBottomSheet from '@/component/Rysa/rysaform/NewPlOtpBottomSheet/PlOTPBottomSheet';
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
+const roboto = Roboto({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  display: 'swap',
 });
-function page() {
-  // Dummy company object (तू backend मधून फक्त structure असाच ठेव)
-
-
+function page() { 
   return (
-    <div className={outfit.className}>
+    <div className={roboto.className}>
       <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      />
-      
-      {/* <PersonalDetailPage /> */}
-      {/* <PersonalDetailPage2 /> */}
-      {/* <PersonalDetailPage3 /> */}
-      <FirstPage/>
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          />
+  
+      <RysaForm1 />
+      {/* <PlOTPBottomSheet/> */}
     </div>
   )
 }
