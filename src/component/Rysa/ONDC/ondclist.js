@@ -82,6 +82,14 @@ const Ondclist = () => {
     const timer = setTimeout(() => {
       // console.log("⏰ Callback executed after 50 seconds!");
       setLoading(false);
+      // console.log("The confirm lenders length is : ",confirmLendersRef.current.length," and is : ",confirmLendersRef);
+          if(confirmLendersRef.current.length === 0){
+            // console.log("The confirm lenders length is : ",confirmLendersRef.current.length," and is : ",confirmLendersRef," and the ");
+            
+            router.push(`/ondc/rejection?mobileNumber=${mobileNumber}`);
+
+            // window.location.href = `https://app.credithaat.com/RejectionPage?mobileNumber=${mobileNumber}`;
+          }
       // ✅ Place your logic here (API call, state update, etc.)
     }, 60000); // 50,000 ms = 30 seconds
 
@@ -124,11 +132,14 @@ const Ondclist = () => {
   const [onSelectResponses, setOnSelectResponses] = useState([]);
   var onSelectResponsesTemp;
 
+  const confirmLendersRef = useRef([]);
+
   //making this just to set the confirmlendersref so that we can use the loan offer form it
   // const confirmLendersRef = useRef(null);
 
   useEffect(() => {
     console.log("confirm lenders updated and they are :: ", confirmLenders);
+    confirmLendersRef.current = confirmLenders;
   }, [confirmLenders]);
 
   // Update ref whenever lenders state changes
@@ -740,10 +751,24 @@ const Ondclist = () => {
           "The response that we got from the getSortedProducts is : ",
           response
         );
-        if (Object.keys(response.data).length > 1) {
+        // if (Object.keys(response.data).length > 1) {
+        //   console.log("setting the sortedProduct flag as true");
+        //   setGotSortedProductFlag(true);
+        //   // useWebSocketONDC(handleWebSocketMessage);
+        // }
+        // else if(Object.keys(response.data).length === 0) {
+        //   window.location.href = `https://app.credithaat.com/RejectionPage?$mobileNumber=${mobilenumber}`;
+        // }
+        if (Object.keys(response.data).length >= 1) {
           console.log("setting the sortedProduct flag as true");
           setGotSortedProductFlag(true);
           // useWebSocketONDC(handleWebSocketMessage);
+        }
+        else if(Object.keys(response.data).length === 0) {
+          // getLendersListRysa();
+          router.push(`ondc/rejection?mobileNumber=${mobilenumber}`);
+          // window.location.href = `https://app.credithaat.com/RejectionPage?$mobileNumber=${mobilenumber}`;
+          //here we will call the rejection page of yogita
         }
       }
 

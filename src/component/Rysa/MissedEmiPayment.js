@@ -170,10 +170,12 @@ export default function MissedEmiPayment() {
       // );
 
       const loanId = disbursedLoanId;
-      const response = await axios.post(
-        `http://localhost:8080/fetchMissedEmiByLoan`,
-        { loanId }
-      );
+      // const response = await axios.post(
+      //   `http://localhost:8080/fetchMissedEmiByLoan`,
+      //   { loanId }
+      // );
+
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}fetchMissedEmiByLoan`,{loanId});
 
       if (response.status === 200) {
         console.log("The response got is : ", response);
