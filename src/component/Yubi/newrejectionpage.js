@@ -57,9 +57,9 @@ function NewRejectionPage({mainFormData}) {
                 // dob: userDetails.dob,
                 //profession: userDetails.profession,
                 income: userDetails.income,
-                //payment_type: userDetails?.payment_type, //
+                profession: userDetails?.profession, //
                 payment_type: paymentMapping[userDetails?.payment_type] ?? null,
-                profession: employmentMapping[userDetails?.profession] ?? null,
+                //profession: employmentMapping[userDetails?.profession] ?? null,
 
                 pincode: userDetails.pincode,
                 // firstname: userDetails.firstname,
