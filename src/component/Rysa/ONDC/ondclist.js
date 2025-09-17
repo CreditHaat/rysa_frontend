@@ -29,6 +29,8 @@ const roboto = Roboto({
 
 const Ondclist = () => {
 
+  const router = useRouter();
+
   const [consentDetails, setConsentDetails] = useState([]);
   const [globalMinValue, setGlobalMinValue] = useState(0);
 
@@ -99,8 +101,6 @@ const Ondclist = () => {
   // const [mobileNumber, setMobileNumber] = useState("8329223729");//we will be changing this afterwards
 
   const [loading, setLoading] = useState(true);
-
-  const router = useRouter();
 
   const {
     uid,
