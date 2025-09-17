@@ -6,6 +6,7 @@ import { SelectedLenderProvider } from "@/component/Rysa/ONDC/context/SelectedLe
 import { OnStatusProvider } from "@/component/Rysa/ONDC/context/OnStatusProvider";
 import { FinalLoanOfferProvider } from "@/component/Rysa/ONDC/context/FinalLoanOfferProvider";
 import {SelectedLoanProvider} from "@/component/Rysa/RysaContexts/SelectedLoanProvider";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,20 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         {/* Google Tag Manager */}
+         <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GT09YWSLG0"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-GT09YWSLG0');
+          `}
+        </Script>
+        {/* End Google Tag Manager */}
         <UIDProvider>
           <OnSearchProvider>
             <SelectedLenderProvider>
