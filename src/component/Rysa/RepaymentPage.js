@@ -3,7 +3,13 @@
 
 import React, { useState } from "react";
 import styles from "./RepaymentPage.module.css";
+import { Outfit } from "next/font/google";
 
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 export default function RepaymentPage() {
   // Simulated backend values
   const emiAmount = 5000;
@@ -46,7 +52,8 @@ export default function RepaymentPage() {
   };
 
   return (
-    <div className={styles.container}>
+    // <div className={styles.container}>
+    <div className={`${styles.container} ${outfit.className}`}>
       <form className={styles.card} onSubmit={handleSubmit}>
         <div>
         <h2 className={styles.heading}>Repayment</h2>

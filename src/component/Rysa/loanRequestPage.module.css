@@ -1,7 +1,7 @@
 .container {
   max-width: 432px;
   margin: 0 auto;
-  background: #F3F4F6;
+  /* background: #6039d2; */
   min-height: 100vh;
   /* border-radius: 15px; */
   border-bottom-left-radius: 15px; 
@@ -11,16 +11,16 @@
   .headerTop {
   width: 100%;
   max-width: 432px;
-  /* height: 200px; */
+  height: 120px;
   padding: 0px 0 0 4px;
   color: #ffffff;
   font-weight: 600;
-  background: linear-gradient(to right, #f3b2f5 50%, #a78afa);
+  background: #6039d2;
   /* background: red; */
   font-size: 17px;
   z-index: 1;
-   margin-top: -20px;
-  margin-bottom: -25px; 
+   /* margin-top: -20px; */
+  /* margin-bottom: -25px;  */
   /* border-top-left-radius: 16px; */
   /* border-top-right-radius: 16px; */
 }
@@ -28,9 +28,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    border-radius: 10px 10px 0px 0px;
-    padding-bottom: 12px;
+    height: auto;
+    /* border-radius: 10px 0px 0px 0px; */
+    padding-top: 4px;
+    height: auto;
+    width: auto;
  }
 
 .header {
@@ -45,9 +47,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: -15px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  margin-top: -32px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
 }
 
 .dropdown {

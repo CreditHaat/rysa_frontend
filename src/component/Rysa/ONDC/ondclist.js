@@ -21,11 +21,18 @@ import { useSearchParams } from "next/navigation";
 import logo2 from "./images/AryseFin_logo.png";
 import LendersLoader from "./LoadingPages/Auto_start_timer";
 import { select } from "./apis/ondcapi";
+import { Outfit } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["400", "700"],
+const outfit = Outfit({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
+
+// const roboto = Roboto({
+//   weight: ["400", "700"],
+//   subsets: ["latin"],
+// });
 
 const Ondclist = () => {
 
@@ -895,7 +902,8 @@ const Ondclist = () => {
     <>
       {!loading ? (
         <>
-          <div className={styles.numberStart}>
+          {/* <div className={styles.numberStart}>  */}
+          <div className={`${styles.numberStart} ${outfit}`}> 
             <div className={styles.numberOneDiv}>
               {" "}
               {/*header*/}
@@ -917,7 +925,7 @@ const Ondclist = () => {
             {/*header end*/}
             <div className={styles.numberTwoDiv}>
               <div
-                className={`${roboto.className} ${styles.listpageContainer}`}
+                className={`${outfit.className} ${styles.listpageContainer}`}
               >
                 {/* <div> */}
                 {/* <div>

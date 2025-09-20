@@ -1,8 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
+import { Outfit } from "next/font/google";
 
-const AutoStartTimer = () => {
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});const AutoStartTimer = () => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -41,7 +46,8 @@ const AutoStartTimer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    // <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className={`min-h-screen bg-gray-100 flex items-center justify-center p-4 ${outfit}`}>
       <div
         className={`max-w-sm w-full ${getBackgroundColor()} rounded-xl shadow-lg p-6 transition-all duration-300 border-2`}
       >

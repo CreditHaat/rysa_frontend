@@ -192,7 +192,8 @@ function NewRejectionPage({mainFormData}) {
     //     }
     // }
     return (
-        <div className={styles.MainContainer}>
+        // <div className={styles.MainContainer}>
+        <div className={`${styles.MainContainer} ${outfit.className}`}>
             <div className={styles.container}>
 
                 <div className={styles.wrongDiv}>

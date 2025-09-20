@@ -30,10 +30,12 @@ import logo2 from "../../Rysa/ONDC/images/AryseFin_logo.png";
 // import logo2 from "../../Rysa/ONDC/images/Rysa_logo2.png";
 import { Roboto } from 'next/font/google';
 import FormError from "./LoadingPages/formError";
+import { Outfit } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["400", "700"],
+const outfit = Outfit({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
 const Bankdetails = () => {
@@ -690,7 +692,7 @@ const Bankdetails = () => {
             {
               !waitingLoader ?
                 (<>
-                  <div className={`${roboto.className} container-block`}>
+                  <div className={`${outfit.className} container-block`}>
                     <div className="card-block">
                       <div className="header-block">
                         <div className="headerLogo">

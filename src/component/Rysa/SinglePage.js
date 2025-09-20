@@ -13,6 +13,13 @@ import {
 import styles from "./singlePage.module.css";
 import logo from "../../../public/Aryse_Fin.png";
 import { useRouter } from "next/navigation";
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 export default function SinglePage() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,7 +35,8 @@ export default function SinglePage() {
 
   return (
     <>
-      <div className={styles.topMostDiv}>
+      {/* <div className={styles.topMostDiv}> */}
+      <div className={`${styles.topMostDiv} ${outfit.className}`}>
         <div className={styles.container}>
           {/* Navigation Header */}
           <nav className={styles.navbar}>
@@ -103,7 +111,7 @@ export default function SinglePage() {
                   in 24 hours.
                 </p>
                 <button className={styles.applyBtn} onClick={handleApplyClick}>
-                  Apply Now
+                  <span>Apply Now</span>
                 </button>
               </div>
 

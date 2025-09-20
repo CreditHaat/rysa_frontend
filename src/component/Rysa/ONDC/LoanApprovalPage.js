@@ -26,10 +26,12 @@ import FinalLoanOfferContext from "./context/FinalLoanOfferContext";
 import { Roboto } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
 import { calculateSettlement } from "./apis/settlementCalculator";
+import { Outfit } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["400", "700"],
+const outfit = Outfit({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
 const LoanApprovalPage = () => {
@@ -499,7 +501,7 @@ const LoanApprovalPage = () => {
     } */}
       {
         !waitingForCallback ? (<>
-          <div className={`${roboto.className} pageContainerloanpage`}>
+          <div className={`${outfit.className} pageContainerloanpage`}>
             <div className="loan-block">
               <div className="header-block">
                 <div className="headerLogo">

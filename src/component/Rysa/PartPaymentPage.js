@@ -9,6 +9,13 @@ import useWebSocketONDCUpdate from "./ONDC/Websocket/useWebSocketONDCUpdate";
 import CallbackLoader from "./ONDC/LoadingPages/CallbackLoader";
 // import UIDContext from "../context/UIDContext";
 import UIDContext from "./context/UIDContext";
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 
 export default function PartPaymentPage() {
 
@@ -144,7 +151,9 @@ export default function PartPaymentPage() {
   return (
     <>
       {
-        !waitingForCallback ? (<> <div className={styles.container}>
+        !waitingForCallback ? (<> 
+        {/* <div className={styles.container}> */}
+        <div className={`${styles.container} ${outfit.className}`}>
           <div className={styles.headingDiv}>
             <h2 className={styles.heading}>Part Payment</h2>
           </div>

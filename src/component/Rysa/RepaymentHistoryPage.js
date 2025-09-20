@@ -2,6 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './repaymentHistoryPage.module.css';
 import hdb from '../../../public/Jays/HDB.png';
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 const RepaymentHistoryPage = ({ 
   loanData = {
     loanAmount: 56666,
@@ -37,7 +44,8 @@ const RepaymentHistoryPage = ({
   };
 
   return (
-    <main className={styles.page}>
+    // <main className={styles.page}>
+    <main className={`${styles.page} ${outfit.className}`}>
       {/* <div className={styles.mainCard}></div> */}
       {/*—‑ हेडर ‑—*/}
       {/* <header className={styles.header}>Review Loan Application</header> */}
