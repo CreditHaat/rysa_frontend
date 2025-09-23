@@ -7,6 +7,13 @@ import useWebSocketONDCUpdate from "./ONDC/Websocket/useWebSocketONDCUpdate";
 import CallbackLoader from "./ONDC/LoadingPages/CallbackLoader";
 // import UIDContext from "../context/UIDContext";
 import UIDContext from "./context/UIDContext";
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 
 export default function PreCloserPage() {
 
@@ -155,7 +162,8 @@ export default function PreCloserPage() {
   // };
 
   return (
-    <div className={styles.firstContainer}>
+    // <div className={styles.firstContainer}>
+    <div className={`${styles.firstContainer} ${outfit.className}`}>
     <div className={styles.container}>
       <div  className={styles.header}>
       <h1 className={styles.heading}>Loan Pre-Closure</h1>

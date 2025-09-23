@@ -21,10 +21,12 @@ import IframePage from '../../component/Rysa/IframeScreen';
 import RysaComingSoonPage from "../../component/Rysa/RysaComingSoPage";
 // import NewBankD from '../../component/Rysa/Bank_Details.js';
 
-const roboto = Roboto({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  display: 'swap',
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 function page() {
   // Dummy company object (तू backend मधून फक्त structure असाच ठेव)
@@ -63,12 +65,12 @@ function page() {
     window.location.href = link;
   };
   return (
-    <div className={roboto.className}>
+    <div className={outfit.className}>
       <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
           />
-      <SinglePage/>   
+      {/* <SinglePage/>    */}
       {/* <LoanFrom />   */}
        {/* <NewBlListPage
       companies={companies}
@@ -84,7 +86,7 @@ function page() {
       {/* <LoanRequestPage/> */}
       {/* <RepaymentPage/> */}
        {/* <PreCloserPage/> */}
-       {/* <PartPaymentPage/> */}
+       <PartPaymentPage/>
        {/* <WaitingPage/>  */}
        {/* <SubmitPage/> */}
        {/* <SubmitButtonPage/> */}

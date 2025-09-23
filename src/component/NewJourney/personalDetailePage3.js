@@ -233,7 +233,7 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
             </div>
             <div className={styles.emptyspace}></div>
             <div className={styles.nextbtn} onClick={handleNext}>
-              <span> Submitt </span>
+              <span> Submit </span>
             </div>
           </div>
         </div>

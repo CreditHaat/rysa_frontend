@@ -2,6 +2,13 @@
 import Image from 'next/image';
 import styles from './ReviewLoan.module.css';
 import hdb from '../../../public/Jays/HDB.png';
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 export default function ReviewLoanPage() {
   const summary = {
     loanAmount: 50000,
@@ -32,7 +39,8 @@ export default function ReviewLoanPage() {
   const cur = n => `₹ ${n.toLocaleString()}`;
 
   return (
-    <main className={styles.page}>
+    // <main className={styles.page}>
+    <main className={`${styles.page} ${outfit.className}`}>
       {/* <div className={styles.mainCard}></div> */}
       {/*—‑ हेडर ‑—*/}
       {/* <header className={styles.header}>Review Loan Application</header> */}

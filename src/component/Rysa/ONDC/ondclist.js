@@ -16,16 +16,23 @@ import { useRouter } from "next/navigation";
 import styles from "./styleondclist.module.css";
 import "./NewBlFirstPage.module.css";
 import per from "../../../../public/Group_10.png";
-import { Roboto } from "next/font/google";
+import { Handlee, Roboto } from "next/font/google";
 import { useSearchParams } from "next/navigation";
 import logo2 from "./images/AryseFin_logo.png";
 import LendersLoader from "./LoadingPages/Auto_start_timer";
 import { select } from "./apis/ondcapi";
+import { Outfit } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["400", "700"],
+const outfit = Outfit({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
+
+// const roboto = Roboto({
+//   weight: ["400", "700"],
+//   subsets: ["latin"],
+// });
 
 const Ondclist = () => {
 
@@ -83,15 +90,16 @@ const Ondclist = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // console.log("⏰ Callback executed after 50 seconds!");
-      setLoading(false);
+      // setLoading(false);
       // console.log("The confirm lenders length is : ",confirmLendersRef.current.length," and is : ",confirmLendersRef);
-          if(confirmLendersRef.current.length === 0){
-            // console.log("The confirm lenders length is : ",confirmLendersRef.current.length," and is : ",confirmLendersRef," and the ");
-            
-            router.push(`/ondc/rejection?mobileNumber=${mobileNumber}`);
-
-            // window.location.href = `https://app.credithaat.com/RejectionPage?mobileNumber=${mobileNumber}`;
-          }
+      if (confirmLendersRef.current.length === 0) {
+        handleEmbeddedRedirection();
+        // router.push(`/ondc/rejection?mobileNumber=${mobileNumber}`);
+        // router.push(`https://app.credithaat.com/embedded_journey?mobileNumber=${mobileNumber}`);
+      }
+      setTimeout(() => {
+        setLoading(false);
+      }, 61000);
       // ✅ Place your logic here (API call, state update, etc.)
     }, 60000); // 50,000 ms = 30 seconds
 
@@ -99,6 +107,46 @@ const Ondclist = () => {
   }, []);
 
   // const [mobileNumber, setMobileNumber] = useState("8329223729");//we will be changing this afterwards
+
+  const handleEmbeddedRedirection = async () => {
+
+    try {
+      const formData = new FormData();
+      formData.append("mobileNumber", mobileNumber);
+      formData.append("agent", "arysefinlead");
+      formData.append("agentId", "357046965");
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/redirectUser`, formData);
+
+      if(response.status === 200){
+
+        if (response.data.data?.redirectionlink) {
+          let redirectUrl = response.data.data.redirectionlink;
+          // If URL already has ?, append with &, otherwise add ?
+          redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
+          window.location.href = redirectUrl;
+        }
+
+        if (response.data.code === 200 && response.data.data?.redirectionlink) {
+              let redirectUrl = response.data.data.redirectionlink;
+  
+          //     // If URL already has ?, append with &, otherwise add ?
+              redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
+  
+              window.location.href = redirectUrl;
+  
+        } else {
+          console.error(
+            "API did not return a valid redirect link",
+            response.data
+          );
+        }
+      }
+      
+
+    } catch (error) {
+      console.log("error in handleEmbeddedRedirection : ", error);
+    }
+  };
 
   const [loading, setLoading] = useState(true);
 
@@ -697,7 +745,7 @@ const Ondclist = () => {
   useEffect(() => {
     if (onSelectResponses.length > 0) {
       console.log("The on select responses are : ", onSelectResponses);
-      setLoading(false);
+      // setLoading(false);
     }
   }, [onSelectResponses]);
 
@@ -765,8 +813,11 @@ const Ondclist = () => {
           // useWebSocketONDC(handleWebSocketMessage);
         }
         else if(Object.keys(response.data).length === 0) {
+
+          handleEmbeddedRedirection();
+
           // getLendersListRysa();
-          router.push(`ondc/rejection?mobileNumber=${mobilenumber}`);
+          // router.push(`ondc/rejection?mobileNumber=${mobilenumber}`);
           // window.location.href = `https://app.credithaat.com/RejectionPage?$mobileNumber=${mobilenumber}`;
           //here we will call the rejection page of yogita
         }
@@ -895,7 +946,8 @@ const Ondclist = () => {
     <>
       {!loading ? (
         <>
-          <div className={styles.numberStart}>
+          {/* <div className={styles.numberStart}>  */}
+          <div className={`${styles.numberStart} ${outfit}`}> 
             <div className={styles.numberOneDiv}>
               {" "}
               {/*header*/}
@@ -917,7 +969,7 @@ const Ondclist = () => {
             {/*header end*/}
             <div className={styles.numberTwoDiv}>
               <div
-                className={`${roboto.className} ${styles.listpageContainer}`}
+                className={`${outfit.className} ${styles.listpageContainer}`}
               >
                 {/* <div> */}
                 {/* <div>

@@ -164,10 +164,18 @@ import React from "react";
 import styles from "./loanRequestPage.module.css";
 import LoanDetailsModal from "./LoanDetailsModal.js";
 import hdb from "../../../public/Jays/HDB.png";
+import logo2 from "../../../public/AryseFin_logo.png"
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import SelectedLoanContext from "./RysaContexts/SelectedLoanContext";
 import { useContext } from "react";
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 
 const LoanRequestPage = () => {
 
@@ -202,10 +210,10 @@ const LoanRequestPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+     <div className={`${styles.container} ${outfit.className}`}>
       <div className={styles.headerTop}>
         <div className={styles.headerLogo}>
-          <Image
+          {/* <Image
             src={hdb}
             alt="Hdb tag"
             style={{
@@ -214,7 +222,19 @@ const LoanRequestPage = () => {
               height: "auto",
               top: "-4",
             }}
-          />
+          /> */}
+          <Image
+                  src={logo2}
+                  alt="NA"
+                  style={{
+                    alignContent: "center",
+                    width: "auto",
+                    height: "auto",
+                    // top: "",
+                  }}
+                height={150}
+                width={150}
+                />
         </div>
       </div>
 

@@ -5,6 +5,13 @@ import React,{useState} from "react";
 import styles from "./loginPage.module.css";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
+import { Outfit } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 
 export default function LoginPage() {
 
@@ -20,7 +27,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className={styles.container}>
+    // <div className={styles.container}>
+    <div className={`${styles.container} ${outfit.className}`}>
       <div className={styles.card}>
 
 
