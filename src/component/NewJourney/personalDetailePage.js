@@ -174,7 +174,7 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
                     residentialPincode: mainFormData.pinCode,
                     address: mainFormData.address,
                     employmentType: employmentMapping[mainFormData.employmentType] || null,
-                    paymentType: paymentMapping[mainFormData.paymentType] || null,
+                    paymentType: paymentMapping[mainFormData.paymentType] ?? null,
                     monthlyIncome: mainFormData.monthlyIncome,
                 };
 
@@ -196,7 +196,8 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
                 if (response.data.status === "APPROVED") {
                     setActiveContainer("PersonalDetailePage2");
                 } else {
-                    setActiveContainer("NewRejectionPage");
+                    // setActiveContainer("NewRejectionPage");
+                    handleEmbeddedRedirection();
                 }
             } catch (error) {
                 console.error("Error while calling API:", error);
@@ -208,6 +209,38 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
             console.log("Form has errors");
         }
     };
+
+    const handleEmbeddedRedirection = async () => {
+
+        try {
+          const formData = new FormData();
+          formData.append("mobileNumber", mainFormData.mobileNumber);
+          formData.append("agent", "arysefinlead");
+          formData.append("agentId", "357046965");
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}api/redirectUser`, formData);
+    
+          if(response.status === 200){
+            if (response.data.code === 200 && response.data.data?.redirectionlink) {
+                  let redirectUrl = response.data.data.redirectionlink;
+      
+              //     // If URL already has ?, append with &, otherwise add ?
+                  redirectUrl += redirectUrl.includes("?") ? "&sso=yes" : "?sso=yes";
+      
+                  window.location.href = redirectUrl;
+      
+            } else {
+              console.error(
+                "API did not return a valid redirect link",
+                response.data
+              );
+            }
+          }
+          
+    
+        } catch (error) {
+          console.log("error in handleEmbeddedRedirection : ", error);
+        }
+      };
 
     const handleBack = () => {
         setActiveContainer("FirstPage");
