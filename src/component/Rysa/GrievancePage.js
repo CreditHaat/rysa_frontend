@@ -2,28 +2,72 @@
 import styles from './GrievancePage.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import logo from '../../../public/arysefin-dark logo.png';
+import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 export default function GrievancePage() {
   return (
     <div className={styles.container}>
       {/* Header */}
 
       <header className={styles.header}>
-        <div className={styles.nav}>
-          <div className={styles.logo}>
-            <Image
-              src="/Aryse_Fin.png"
-              alt="AryseFin Logo"
-              width={50}      // You can adjust width
-              height={50}      // You can adjust height
-            />
+        <nav className={styles.navbar}>
+          <div className={styles.navContainer}>
+            {/* Logo */}
+            <div className={styles.logoNav}>
+              <a href='https://arysefin.com/'><Image
+                src={logo}
+                alt="Logo"
+                width={80}
+                height={65}
+              //   className="object-contain"
+              /></a>
+            </div>
+
+            {/* हंबरगर बटन */}
+            {/* <div className={styles.navRightHumberger}>
+                <button onClick={toggleMenu} className={styles.hamburgerBtn}>
+                  {isOpen ? <FaTimes /> : <FaBars />}
+                </button>
+              </div>
+
+              {isOpen && (
+                <div className={styles.humberView}>
+                  <a href="#" className={styles.navLinkHumberger}>
+                    Home
+                  </a>
+                  <a href="#" className={styles.navLinkHumberger}>
+                    Loans
+                  </a>
+                  <a href="#" className={styles.navLinkHumberger}>
+                    About
+                  </a>
+                </div>
+              )} */}
+
+            {/* Navigation Links */}
+            {/* <div className={styles.navRight}>
+                <div className={styles.navLinks}>
+                  <div className={styles.navAncor}>
+                    <a href="#" className={styles.navLink}>
+                      Home
+                    </a>
+                  </div>
+                  <div className={styles.navAncor}>
+                    <a href="#" className={styles.navLink}>
+                      Loans
+                    </a>
+                  </div>
+                  <div className={styles.navAncor}>
+                    <a href="#" className={styles.navLink}>
+                      About
+                    </a>
+                  </div>
+                </div>
+                <button className={styles.loginBtn}>Login</button>
+              </div> */}
+            {/* Login Button */}
           </div>
-          {/* <nav className={styles.navigation}>
-            <a href="#" className={styles.navLink}>HOME</a>
-            <a href="#" className={styles.navLink}>PRODUCT</a>
-            <a href="#" className={styles.navLink}><span className={styles.navSpan}>CONTACT US</span></a>
-          </nav> */}
-        </div>
+        </nav>
       </header>
 
       {/* Main Content */}
@@ -109,19 +153,74 @@ export default function GrievancePage() {
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <div className={styles.containerFooter}>
-          <p className={styles.description}>
-            Starting with credit, AryseFin is on a mission to bring relevant .
-          </p>
+        <div className={styles.mainFD}>
+          <div className={styles.combineThree}>
+            <div className={styles.flogo}>
+              <a href='https://arysefin.com/'><Image
+                src="/AryseFin_logo.png"
+                alt="Logo"
+                width={80}
+                height={80}
+                className="object-contain"
+              /></a>
+              <p className={styles.logoText}>
+                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                easy, transparent, and human.
+              </p>
+            </div>
+            <div className={styles.fresource}>
+              <div className={styles.textDecore}>
+                <h3 className={styles.heading}>Resources</h3>
+                <h4><Link href="/lenderpage">Lending Partners</Link></h4>
+                <h4><Link href="/acquisition_partners">Acquisition Partners</Link></h4>
+                <h4><Link href="/Grievance">Grievance Redressal Process</Link></h4>
+                <h4>
+                  <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
+                    RBI Sachet Portal
+                  </a>
+                </h4>
+              </div>
+            </div>
+            {/*  */}
+            <div className={styles.fcity}>
+              <div className={styles.textDecore}>
+                <h3 className={styles.heading}>Quick Links</h3>
+                <h4>
+                  <Link href="/TermAndCondition">
+                    Terms of service
+                  </Link>
+                </h4>
+                <h4>
+                  <Link href="/PrivacyAndPolicy">
+                    Privacy Policy
+                  </Link>
+                </h4>
+                <h4>
+                  <Link href="/support">
+                    Contact us
+                  </Link>
+                </h4>
+              </div>
+            </div>
+            {/* combine 2 end */}
+          </div>
+          <div className={styles.lastMD}>
+            <div className={styles.iconAndCopyRight}>
+              <div>©2025 Vibhuprada Services Private Limited.</div>
+              <div className={styles.middleText}> <p>All rights reserved</p></div>
 
-          <div className={styles.quickLinks}>
-            <h3 className={styles.quickLinksTitle}>Quick Links</h3>
-            <ul className={styles.linksList}>
-              <li><a href="#" className={styles.link}>About</a></li>
-              <li><a href="#" className={styles.link}>Careers</a></li>
-              <li><a href="#" className={styles.link}>SBlog</a></li>
-              <li><a href="#" className={styles.link}>FAQs</a></li>
-            </ul>
+              <div className={styles.iconF}>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                  <FaInstagram />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                  <FaFacebook />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                  <FaLinkedin />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

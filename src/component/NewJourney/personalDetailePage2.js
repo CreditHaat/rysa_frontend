@@ -1,7 +1,9 @@
+// 
+
 "use client";
 import React from 'react'
 import styles from "./personalDetailePage2.module.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 
@@ -46,6 +48,21 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
     ];
 
     const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+    // CHANGE 1: Generate years array for dropdown (from 1950 to current year + 1)
+    const generateYears = () => {
+        const currentYear = new Date().getFullYear();
+        const years = [];
+        // for (let year = 1950; year <= currentYear + 1; year++) {
+        //     years.push(year);
+        // }
+        for (let year = 1950; year <= 2050; year++) {
+            years.push(year);
+        }
+        return years.reverse(); // Most recent years first
+    };
+
+    const years = generateYears();
 
     // Validation functions
     const validatePAN = (pan) => {
@@ -113,11 +130,33 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                 }
                 return '';
 
+            // case 'dob':
+            //     if (!value.trim()) {
+            //         return 'Date of birth is required';
+            //     } else if (!isValidDate(value)) {
+            //         return 'Please enter a valid date in DD-MM-YYYY format';
+            //     }
             case 'dob':
                 if (!value.trim()) {
                     return 'Date of birth is required';
                 } else if (!isValidDate(value)) {
                     return 'Please enter a valid date in DD-MM-YYYY format';
+                } else {
+                    const [day, month, year] = value.split('-').map(Number);
+                    const dob = new Date(year, month - 1, day);
+                    const today = new Date();
+
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const monthDiff = today.getMonth() - dob.getMonth();
+                    const dayDiff = today.getDate() - dob.getDate();
+
+                    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                        age--;
+                    }
+
+                    if (age < 18) {
+                        return 'You must be at least 18 years old';
+                    }
                 }
                 return '';
 
@@ -339,41 +378,56 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         setDobError(error);
     };
 
-    const handlePrevMonth = () => {
-        if (currentMonth === 0) {
-            setCurrentMonth(11);
-            setCurrentYear(currentYear - 1);
-        } else {
-            setCurrentMonth(currentMonth - 1);
-        }
+    // CHANGE 2: Replace navigation functions with dropdown handlers
+    const handleMonthChange = (e) => {
+        setCurrentMonth(parseInt(e.target.value));
     };
 
-    const handleNextMonth = () => {
-        if (currentMonth === 11) {
-            setCurrentMonth(0);
-            setCurrentYear(currentYear + 1);
-        } else {
-            setCurrentMonth(currentMonth + 1);
-        }
+    const handleYearChange = (e) => {
+        setCurrentYear(parseInt(e.target.value));
     };
 
-    const handleYearChange = (direction) => {
-        setCurrentYear(prevYear => direction === 'up' ? prevYear + 1 : prevYear - 1);
-    };
-
+    // FIXED: Enhanced handleToday function
     const handleToday = () => {
         const today = new Date();
-        const formattedDate = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
+        const day = today.getDate();
+        const month = today.getMonth(); // 0-based (0 = January)
+        const year = today.getFullYear();
+
+        console.log('Today button clicked:', {
+            day,
+            month: month + 1, // Display month (1-based)
+            year,
+            currentMonth: month,
+            currentYear: year
+        });
+
+        // Format the date string (DD-MM-YYYY)
+        const formattedDate = `${String(day).padStart(2, '0')}-${String(month + 1).padStart(2, '0')}-${year}`;
+
+        // Update all states in the correct order
         setSelectedDate(formattedDate);
+        setCurrentMonth(month); // Set to actual current month (0-based)
+        setCurrentYear(year);   // Set to actual current year
+
         // Update parent formData immediately
         setFormData(prev => ({
             ...prev,
             selectedDate: formattedDate
         }));
-        setCurrentMonth(today.getMonth());
-        setCurrentYear(today.getFullYear());
-        setShowDatePicker(false);
+
+        // Clear any errors
         clearError('dob');
+        setDobError('');
+
+        // Close the date picker
+        setShowDatePicker(false);
+
+        console.log('States updated:', {
+            selectedDate: formattedDate,
+            currentMonth: month,
+            currentYear: year
+        });
     };
 
     const handleClear = () => {
@@ -386,20 +440,37 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         setShowDatePicker(false);
     };
 
+    // FIXED: Enhanced isSelected function
     const isSelected = (day, isCurrentMonth) => {
         if (!isCurrentMonth || !selectedDate || !isValidDate(selectedDate)) return false;
-        const [selectedDay, selectedMonth, selectedYear] = selectedDate.split('-').map(Number);
-        return selectedDay === day &&
-            selectedMonth === (currentMonth + 1) &&
-            selectedYear === currentYear;
+
+        try {
+            const [selectedDay, selectedMonth, selectedYear] = selectedDate.split('-').map(Number);
+            const isMatch = selectedDay === day &&
+                selectedMonth === (currentMonth + 1) &&
+                selectedYear === currentYear;
+
+            return isMatch;
+        } catch (error) {
+            console.error('Error in isSelected:', error);
+            return false;
+        }
     };
 
+    // FIXED: Enhanced isToday function
     const isToday = (day, isCurrentMonth) => {
         if (!isCurrentMonth) return false;
+
         const today = new Date();
-        return day === today.getDate() &&
-            currentMonth === today.getMonth() &&
-            currentYear === today.getFullYear();
+        const todayDay = today.getDate();
+        const todayMonth = today.getMonth(); // 0-based
+        const todayYear = today.getFullYear();
+
+        const isTodayMatch = day === todayDay &&
+            currentMonth === todayMonth &&
+            currentYear === todayYear;
+
+        return isTodayMatch;
     };
 
     // Handle next button click
@@ -511,7 +582,10 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
         // }));
         setActiveContainer("PersonalDetailePage");
     };
-
+    // scroll page top 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
     return (
         <div className={styles.Block}>
             {loading && (
@@ -603,7 +677,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                     {/* Gender field with validation */}
                     <div className={styles.fields1}>
                         <span className={styles.gendertitle} >Gender</span>
-                        
+
                         <div className={styles.genderContainer}>
                             <div
                                 className={`${styles.genderOption} ${selectedGender === 'Male' ? styles.genderSelected : ''} ${genderError ? styles.genderOptionError : ''}`}
@@ -646,7 +720,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                                 onChange={handleDateInputChange}
                                 onBlur={handleDateBlur}
                                 maxLength={10}
-                                // inputMode="numeric"
+                            // inputMode="numeric"
                             />
                             <button
                                 type="button"
@@ -666,7 +740,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                     </div>
                 </div>
 
-                {/* Date Picker Modal */}
+                {/* CHANGE 3: Updated Date Picker Modal with Dropdowns */}
                 {showDatePicker && (
                     <div
                         className={styles.datePickerOverlay}
@@ -679,14 +753,30 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                             <div className={styles.datePickerHeader}>
                                 <div className={styles.monthYearSelector}>
                                     <div className={styles.monthSelector}>
-                                        <button onClick={handlePrevMonth} className={styles.navButton}>‹</button>
-                                        <span className={styles.monthDisplay}>{months[currentMonth]}</span>
-                                        <button onClick={handleNextMonth} className={styles.navButton}>›</button>
+                                        <select
+                                            value={currentMonth}
+                                            onChange={handleMonthChange}
+                                            className={styles.monthDropdown}
+                                        >
+                                            {months.map((month, index) => (
+                                                <option key={index} value={index}>
+                                                    {month}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className={styles.yearSelector}>
-                                        <button onClick={() => handleYearChange('down')} className={styles.navButton}>‹</button>
-                                        <span className={styles.yearDisplay}>{currentYear}</span>
-                                        <button onClick={() => handleYearChange('up')} className={styles.navButton}>›</button>
+                                        <select
+                                            value={currentYear}
+                                            onChange={handleYearChange}
+                                            className={styles.yearDropdown}
+                                        >
+                                            {years.map((year) => (
+                                                <option key={year} value={year}>
+                                                    {year}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <button
