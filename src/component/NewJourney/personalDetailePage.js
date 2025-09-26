@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import styles from "./personalDetailePage.module.css";
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import Image from 'next/image';
 import { FaChevronDown } from "react-icons/fa";
 import axios from "axios";
@@ -245,6 +245,10 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
     const handleBack = () => {
         setActiveContainer("FirstPage");
     };
+    // scroll page top 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     return (
         <>
@@ -429,9 +433,9 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
                                 </div>
                                 <div
                                     className={styles.sheetOption}
-                                    onClick={() => handleSelectProfession("Self employed")}
+                                    onClick={() => handleSelectProfession("Self Employed")}
                                 >
-                                    Self employed
+                                    Self Employed
                                 </div>
                                 <div
                                     className={styles.sheetOption}

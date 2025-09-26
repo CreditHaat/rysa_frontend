@@ -63,11 +63,16 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
   };
 
   // Validate form
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
   const validateForm = () => {
     const newErrors = {
       companyName: !mainFormData.companyName?.trim(),
-      workEmail: !mainFormData.workEmail?.trim(),
-      workPINCode: !mainFormData.workPINCode?.trim(),
+      workEmail: !mainFormData.workEmail?.trim() || !validateEmail(mainFormData.workEmail),
+      workPINCode: !mainFormData.workPINCode?.trim() || mainFormData.workPINCode.length !== 6,
     };
 
     setErrors(newErrors);
@@ -211,6 +216,7 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
             <input
               type="number"
               name="workPINCode"
+              maxLength={6}
               value={mainFormData.workPINCode || ""}
               onChange={(e) => {
                 if (e.target.value.length <= 6) {
@@ -219,11 +225,6 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
               }}
               className={styles.inputfield}
             />
-            {errors.workPINCode &&
-              mainFormData.workPINCode &&
-              mainFormData.workPINCode.length !== 6 && (
-                <span className={styles.errorText}>PIN Code must be exactly 6 digits</span>
-              )}
           </div>
 
           {/* Buttons */}
