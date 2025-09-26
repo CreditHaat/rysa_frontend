@@ -14,6 +14,7 @@ import SelectedLenderContext from "./context/SelectedLenderContext";
 import useWebSocketONDCstatus from "./Websocket/useWebSocketONDCstatus";
 import CallbackLoader from "./LoadingPages/CallbackLoader";
 import OnSearchContext from "./context/OnSearchContext";
+import axios from 'axios';
 
 export default function ReviewLoanPage() {
 
@@ -105,8 +106,26 @@ const contCharges={
 
   const handleNextClick=()=>{
     // router.push("/ondc/bankdetails");
+    handleStageChange();
     externalFormWindowRef.current = window.open(kycForm, "_blank");
     setWaitingForCallback(true);
+  }
+
+  const handleStageChange = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("stage", 3);
+      formData.append("transactionId", finalLoanOffer.transactionId);
+      formData.append("mobileNumber", formSubmissionData.contactNumber);
+      formData.append("gatewayUrl", "https://www.arysefin.com/ondc/loanoffer");
+      formData.append("platformId", "O");
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}saveStage`, formData);
+
+      console.log("The response that we got from the handleStageChange is :  ", response);
+
+    } catch (error) {
+      console.log("error while saving data");
+    }
   }
 
   const handleWebSocketMessageForStatus = useCallback((data) => {

@@ -99,9 +99,9 @@ const Ondclist = () => {
       }
       setTimeout(() => {
         setLoading(false);
-      }, 61000);
+      }, 76000);
       // ✅ Place your logic here (API call, state update, etc.)
-    }, 60000); // 50,000 ms = 30 seconds
+    }, 75000); // 50,000 ms = 30 seconds
 
     return () => clearTimeout(timer); // cleanup if component unmounts
   }, []);

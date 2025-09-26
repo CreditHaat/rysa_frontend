@@ -291,10 +291,12 @@ const LoadingPage = () => {
           groDesignation: parsedData.message.order.provider.tags[0].list[3].value,
           groContactNo: parsedData.message.order.provider.tags[0].list[2].value,
           groAddress: parsedData.message.order.provider.tags[0].list[4].value,
-          groEmail: parsedData.message.order.provider.tags[0].list[1].value
+          groEmail: parsedData.message.order.provider.tags[0].list[1].value,
 
           // emiAmount: ,
           // emiTenure: 
+          //passing transactionId
+          transactionId : parsedData.context.transaction_id
         })
 
         if ((parsedData.message.order.items[0].xinput.form.url)) {

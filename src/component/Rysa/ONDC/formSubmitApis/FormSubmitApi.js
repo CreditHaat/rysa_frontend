@@ -189,7 +189,7 @@ export const selectLoanAmountForm = async (formUrl, amount, formId) => {
         // const formData = new URLSearchParams();
         const formData = new FormData();
         formData.append("requestAmount", amount);
-        formData.append("requestTerm", 5);
+        // formData.append("requestTerm", 5);
         formData.append("formId", formId);
         // formData.append("")
 
