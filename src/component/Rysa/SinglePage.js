@@ -5,13 +5,9 @@ import { useState, useRef, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { FaMoneyBillWave, FaChartLine, FaHandHoldingUsd } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInstagram,
-  faFacebook,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
+import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 import styles from "./singlePage.module.css";
-import logo from "../../../public/Aryse_Fin.png";
+import logo from "../../../public/arysefin-dark logo.png";
 import { useRouter } from "next/navigation";
 import { Outfit } from "next/font/google";
 
@@ -37,67 +33,24 @@ export default function SinglePage() {
     <>
       {/* <div className={styles.topMostDiv}> */}
       <div className={`${styles.topMostDiv} ${outfit.className}`}>
-        <div className={styles.container}>
-          {/* Navigation Header */}
+
+        {/* Navigation Header */}
+        <header className={styles.header}>
           <nav className={styles.navbar}>
             <div className={styles.navContainer}>
               {/* Logo */}
               <div className={styles.logoNav}>
-                <Image
+                <a href='https://arysefin.com/'><Image
                   src={logo}
                   alt="Logo"
                   width={80}
                   height={65}
-                //   className="object-contain"
-                />
+                /></a>
               </div>
-
-              {/* हंबरगर बटन */}
-              {/* <div className={styles.navRightHumberger}>
-                <button onClick={toggleMenu} className={styles.hamburgerBtn}>
-                  {isOpen ? <FaTimes /> : <FaBars />}
-                </button>
-              </div>
-
-              {isOpen && (
-                <div className={styles.humberView}>
-                  <a href="#" className={styles.navLinkHumberger}>
-                    Home
-                  </a>
-                  <a href="#" className={styles.navLinkHumberger}>
-                    Loans
-                  </a>
-                  <a href="#" className={styles.navLinkHumberger}>
-                    About
-                  </a>
-                </div>
-              )} */}
-
-              {/* Navigation Links */}
-              {/* <div className={styles.navRight}>
-                <div className={styles.navLinks}>
-                  <div className={styles.navAncor}>
-                    <a href="#" className={styles.navLink}>
-                      Home
-                    </a>
-                  </div>
-                  <div className={styles.navAncor}>
-                    <a href="#" className={styles.navLink}>
-                      Loans
-                    </a>
-                  </div>
-                  <div className={styles.navAncor}>
-                    <a href="#" className={styles.navLink}>
-                      About
-                    </a>
-                  </div>
-                </div>
-                <button className={styles.loginBtn}>Login</button>
-              </div> */}
-              {/* Login Button */}
             </div>
           </nav>
-
+        </header>
+        <div className={styles.container}>
           {/* Hero Section */}
           <section className={styles.heroSection}>
             <div className={styles.heroContainer}>
@@ -398,83 +351,76 @@ export default function SinglePage() {
           <div className="w-full h-[50px] bg-[#f7f6fd]"></div>
           {/* footer part start */}
           <footer className={styles.footer}>
-            <div className={styles.footerMainContainer}>
-              {/* 🔵 Column 1: Logo + About */}
-              <div className={styles.footerlogoAndText}>
-                <div className={styles.footerLogo}>
-                  <Image
-                    src="/Aryse_Fin_w.png"
+            <div className={styles.mainFD}>
+              <div className={styles.combineThree}>
+                <div className={styles.flogo}>
+                  <a href='https://arysefin.com/'><Image
+                    src="/AryseFin_logo.png"
                     alt="Logo"
-                    width={60}
-                    height={60}
+                    width={80}
+                    height={80}
                     className="object-contain"
-                  />
+                  /></a>
+                  <p className={styles.logoText}>
+                    Aryse Fin is a lending service platform (LSP) that makes borrowing
+                    easy, transparent, and human.
+                  </p>
                 </div>
-                <p className={styles.footeraboutText}>
-                  Aryse Fin is a lending service platform (LSP) that makes borrowing
-                  easy, transparent, and human. Backed by trusted NBFCs and banks.
-                </p>
-                <div className={styles.footerTermText}>
-                  <h3 className="footerText1">
-                    <Link href="/TermAndCondition">
-                      <button className={styles.footerSpan1}>Terms &amp; Conditions</button>
-                    </Link>
-                    &nbsp;And&nbsp;
-                    <Link href="/PrivacyAndPolicy">
-                      <button className={styles.footerSpan}>Privacy Policy</button>
-                    </Link>
-                  </h3>
+                <div className={styles.fresource}>
+                  <div className={styles.textDecore}>
+                    <h3 className={styles.heading}>Resources</h3>
+                    <h4><Link href="/lenderpage">Lending Partners</Link></h4>
+                    <h4><Link href="/acquisition_partners">Acquisition Partners</Link></h4>
+                    <h4><Link href="/Grievance">Grievance Redressal Process</Link></h4>
+                    <h4>
+                      <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
+                        RBI Sachet Portal
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+                {/*  */}
+                <div className={styles.fcity}>
+                  <div className={styles.textDecore}>
+                    <h3 className={styles.heading}>Quick Links</h3>
+                    <h4>
+                      <Link href="/TermAndCondition">
+                        Terms of service
+                      </Link>
+                    </h4>
+                    <h4>
+                      <Link href="/PrivacyAndPolicy">
+                        Privacy Policy
+                      </Link>
+                    </h4>
+                    <h4>
+                      <Link href="/support">
+                        Contact us
+                      </Link>
+                    </h4>
+                  </div>
+                </div>
+                {/* combine 2 end */}
+              </div>
+              <div className={styles.lastMD}>
+                <div className={styles.iconAndCopyRight}>
+                  <div>©2025 Vibhuprada Services Private Limited.</div>
+                  <div className={styles.middleText}> <p>All rights reserved</p></div>
+
+                  <div className={styles.iconF}>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                      <FaInstagram />
+                    </a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                      <FaFacebook />
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                      <FaLinkedin />
+                    </a>
+                  </div>
                 </div>
               </div>
-
-              {/* 🟣 Column 2: Cities */}
-              {/* <div className={styles.footerCityLinks}>
-              <p className={styles.footercityText}>Personal Loan in Jaipur</p>
-              <p className={styles.footercityText}>Personal Loan in Lucknow</p>
-              <p className={styles.footercityText}>Personal Loan in Kanpur</p>
-              <p className={styles.footercityText}>Personal Loan in Nagpur</p>
-            </div> */}
-              {/* 🟢 Column 3: Loan Types */}
-              {/* <div className={styles.footerLoanLinks}>
-              <p className={styles.footerloanText}>Instant Cash Loan</p>
-              <p className={styles.footerloanText}>Personal Loan</p>
-            </div> */}
             </div>
-            {/* 🟡 Column 4: Quick Links */}
-            {/* <div className={styles.footerNavLink}>
-              <p className={styles.footernavPtag}>Quick Links</p>
-              <ul className={styles.footernavUrl}>
-                <li className={styles.footernavItem}>About</li>
-                <li className={styles.footernavItem}>Careers</li>
-                <li className={styles.footernavItem}>SBlog</li>
-                <li className={styles.footernavItem}>FAQs</li>
-              </ul>
-            </div> */}
-
-            {/* ✅ Social Icons */}
-
-            {/* <div className={styles.footersocialIcons}>
-      <a href="#" className={styles.iconInstagram}>
-        <i className="fab fa-instagram"></i>
-      </a>
-      <a href="#" className={styles.iconFacebook}>
-        <i className="fab fa-facebook"></i>
-      </a>
-      <a href="#" className={styles.iconLinkedin}>
-        <i className="fab fa-linkedin"></i>
-      </a>
-    </div> */}
-            {/* <div className={styles.footersocialIcons}>
-              <a href="#" className="hover:text-pink-300">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className="hover:text-blue-400">
-                <i className="fab fa-facebook"></i>
-              </a>
-              <a href="#" className="hover:text-blue-300">
-                <i className="fab fa-linkedin"></i>
-              </a>
-            </div> */}
           </footer>
         </main>
       </div>
