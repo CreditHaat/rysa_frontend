@@ -5,7 +5,7 @@ import Image from 'next/image';
 import logo from '../../../public/arysefin-dark logo.png'
 import Link from 'next/link';
 import Credithaat from '../../../public/Credithaat_logo.png';
-
+import ondclogo from '../../../public/ondcW_logo.png';
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 function Acquisition_partnerspage() {
     return (
@@ -16,13 +16,12 @@ function Acquisition_partnerspage() {
                     <div className={styles.navContainer}>
                         {/* Logo */}
                         <div className={styles.logoNav}>
-                            <a href='https://arysefin.com/'><Image
+                            <Link href='/'><Image
                                 src={logo}
                                 alt="Logo"
                                 width={80}
                                 height={65}
-                            //   className="object-contain"
-                            /></a>
+                            /></Link>
                         </div>
 
                         {/* हंबरगर बटन */}
@@ -84,7 +83,7 @@ function Acquisition_partnerspage() {
                                 height={50}
                                 alt='logo'
                             />
-                            <h3>Credithaat</h3>
+                            <h3>CreditHaat</h3>
                         </div>
                         <div className={styles.tANDb}>
                             <div className={styles.textContainer}>
@@ -110,13 +109,13 @@ function Acquisition_partnerspage() {
                 <div className={styles.mainFD}>
                     <div className={styles.combineThree}>
                         <div className={styles.flogo}>
-                            <a href='https://arysefin.com/'><Image
+                            <Link href='/'><Image
                                 src="/AryseFin_logo.png"
                                 alt="Logo"
                                 width={80}
                                 height={80}
                                 className="object-contain"
-                            /></a>
+                            /></Link>
                             <p className={styles.logoText}>
                                 Aryse Fin is a lending service platform (LSP) that makes borrowing
                                 easy, transparent, and human.
@@ -157,6 +156,15 @@ function Acquisition_partnerspage() {
                             </div>
                         </div>
                         {/* combine 2 end */}
+                    </div>
+                    <div className={styles.ondcLogoDiv}>
+                        <Image
+                            src={ondclogo}
+                            alt="Logo"
+                            width={80}
+                            height={65}
+                        />
+                        <p>Powered by</p>
                     </div>
                     <div className={styles.lastMD}>
                         <div className={styles.iconAndCopyRight}>

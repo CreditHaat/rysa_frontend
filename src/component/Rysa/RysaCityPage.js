@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Image from "next/image";
+import Link from 'next/link';
 import { FaRupeeSign } from 'react-icons/fa';
 import { MdOutlineAccessTime } from 'react-icons/md';
 import { GiSpeedometer } from 'react-icons/gi';
@@ -74,13 +75,12 @@ export default function RysaCityPage() {
           <div className={styles.navContainer}>
             {/* Logo */}
             <div className={styles.logoNav}>
-              <a href='https://arysefin.com/'><Image
+              <Link href='/'><Image
                 src={logo}
                 alt="Logo"
                 width={80}
                 height={65}
-              //   className="object-contain"
-              /></a>
+              /></Link>
             </div>
 
             {/* हंबरगर बटन */}

@@ -2149,7 +2149,9 @@ other mobile reposive code
   width: 100%;
   justify-items: right;
 }
-
+.ondcLogoDiv{
+  padding-top: 10px;
+}
 .lastMD {
   padding-top: 5px;
   width: 100%;

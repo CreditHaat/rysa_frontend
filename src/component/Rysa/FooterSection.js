@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import styles from "./FooterSection.module.css";
 import { Outfit } from "next/font/google";
-
+import ondclogo from '../../../public/ondcW_logo.png';
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -69,13 +69,13 @@ export default function FooterSection() {
         <div className={styles.mainFD}>
           <div className={styles.combineThree}>
             <div className={styles.flogo}>
-              <a href='https://arysefin.com/'><Image
+              <Link href='/'><Image
                 src="/AryseFin_logo.png"
                 alt="Logo"
                 width={80}
                 height={80}
                 className="object-contain"
-              /></a>
+              /></Link>
               <p className={styles.logoText}>
                 Aryse Fin is a lending service platform (LSP) that makes borrowing
                 easy, transparent, and human.
@@ -116,6 +116,15 @@ export default function FooterSection() {
               </div>
             </div>
             {/* combine 2 end */}
+          </div>
+          <div className={styles.ondcLogoDiv}>
+            <Image
+              src={ondclogo}
+              alt="Logo"
+              width={80}
+              height={65}
+            />
+            <p>Powered by</p>
           </div>
           <div className={styles.lastMD}>
             <div className={styles.iconAndCopyRight}>
