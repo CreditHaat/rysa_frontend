@@ -286,7 +286,7 @@ const TermAndCondition = () => {
                             <li>
                                 Principal Officer<br />
                                 Vibhuprada Services Private Limited<br />
-                                Office No. 07-12, 7th Floor, Tower B, Downtown City Vista,<br />
+                                Office No. 07 to 12, 7th Floor, Tower B, Downtown City Vista,<br />
                                 Survey Number 58/2, Fountain Road, Kharadi, Pune,<br />
                                 Pune, MH 411014, India
                             </li>
@@ -343,7 +343,7 @@ const TermAndCondition = () => {
                                 className="object-contain"
                             /></Link>
                             <p className={styles.logoText}>
-                                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                                AryseFin is a lending service platform (LSP) that makes borrowing
                                 easy, transparent, and human.
                             </p>
                         </div>
@@ -384,13 +384,14 @@ const TermAndCondition = () => {
                         {/* combine 2 end */}
                     </div>
                     <div className={styles.ondcLogoDiv}>
+                        <p>Powered by</p>
                         <Image
                             src={ondclogo}
                             alt="Logo"
                             width={80}
                             height={65}
                         />
-                        <p>Powered by</p>
+                        
                     </div>
                     <div className={styles.lastMD}>
                         <div className={styles.iconAndCopyRight}>
@@ -401,10 +402,10 @@ const TermAndCondition = () => {
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                                     <FaInstagram />
                                 </a>
-                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                                     <FaFacebook />
                                 </a>
-                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                                     <FaLinkedin />
                                 </a>
                             </div>

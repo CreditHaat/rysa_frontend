@@ -97,7 +97,7 @@ export default function GrievancePage() {
             </h2>
 
             <div className={styles.address}>
-              <p>Office No. 6 no 12, 7th Floor, Tower B,</p>
+              <p>Office No. 7 to 12, 7th Floor, Tower B,</p>
               <p>Downtown City Vista, Survey Number 58&#47;2,</p>
               <p>Fountain Road,</p>
               <p>Kharadi Pune MH 411014 IN.</p>
@@ -140,7 +140,7 @@ export default function GrievancePage() {
                 <span className={styles.label}>Office address:</span>
                 {/* <span className={styles.value}>HO</span> */}
                 <div className={styles.address}>
-                  <p>Office No. 6 no 12, 7th Floor, Tower B,</p>
+                  <p>Office No. 7 to 12, 7th Floor, Tower B,</p>
                   <p>Downtown City Vista, Survey Number 58&#47;2,</p>
                   <p>Fountain Road,</p>
                   <p>Kharadi Pune MH 411014 IN.</p>
@@ -164,7 +164,7 @@ export default function GrievancePage() {
                 className="object-contain"
               /></Link>
               <p className={styles.logoText}>
-                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                AryseFin is a lending service platform (LSP) that makes borrowing
                 easy, transparent, and human.
               </p>
             </div>
@@ -205,13 +205,14 @@ export default function GrievancePage() {
             {/* combine 2 end */}
           </div>
           <div className={styles.ondcLogoDiv}>
+            <p>Powered by</p>
                <Image
                 src={ondclogo}
                 alt="Logo"
                 width={80}
                 height={65}
               />
-              <p>Powered by</p>
+              
           </div>
           <div className={styles.lastMD}>
             <div className={styles.iconAndCopyRight}>
@@ -222,10 +223,10 @@ export default function GrievancePage() {
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                   <FaInstagram />
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                   <FaFacebook />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                   <FaLinkedin />
                 </a>
               </div>
