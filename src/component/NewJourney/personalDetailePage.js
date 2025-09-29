@@ -151,7 +151,7 @@ function PersonalDetailePage({ mainFormData = {}, setFormData, setActiveContaine
     // Handle next button click
     const employmentMapping = {
         "Salaried": 1,
-        "Self employed": 2,
+        "Self Employed": 2,
         "Business": 3,
     };
 
