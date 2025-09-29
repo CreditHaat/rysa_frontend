@@ -8,6 +8,7 @@ import Pahal from '../../../public/pahal_logo.png';
 import Kissht from '../../../public/kissht_logo.png';
 import BFL from '../../../public/bfl_logo.png';
 import ABCL from '../../../public/abcl-logo.gif';
+import ondclogo from '../../../public/ondcW_logo.png';
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 function Landerpage() {
     return (
@@ -18,13 +19,12 @@ function Landerpage() {
                     <div className={styles.navContainer}>
                         {/* Logo */}
                         <div className={styles.logoNav}>
-                            <a href='https://arysefin.com/'><Image
+                            <Link href='/'><Image
                                 src={logo}
                                 alt="Logo"
                                 width={80}
                                 height={65}
-                            //   className="object-contain"
-                            /></a>
+                            /></Link>
                         </div>
 
                         {/* हंबरगर बटन */}
@@ -249,15 +249,15 @@ function Landerpage() {
                 <div className={styles.mainFD}>
                     <div className={styles.combineThree}>
                         <div className={styles.flogo}>
-                            <a href='https://arysefin.com/'><Image
+                            <Link href='/'><Image
                                 src="/AryseFin_logo.png"
                                 alt="Logo"
                                 width={80}
                                 height={80}
                                 className="object-contain"
-                            /></a>
+                            /></Link>
                             <p className={styles.logoText}>
-                                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                                AryseFin is a lending service platform (LSP) that makes borrowing
                                 easy, transparent, and human.
                             </p>
                         </div>
@@ -297,6 +297,16 @@ function Landerpage() {
                         </div>
                         {/* combine 2 end */}
                     </div>
+                    <div className={styles.ondcLogoDiv}>
+                        <p>Powered by</p>
+                        <Image
+                            src={ondclogo}
+                            alt="Logo"
+                            width={80}
+                            height={65}
+                        />
+                        
+                    </div>
                     <div className={styles.lastMD}>
                         <div className={styles.iconAndCopyRight}>
                             <div>©2025 Vibhuprada Services Private Limited.</div>
@@ -306,10 +316,10 @@ function Landerpage() {
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                                     <FaInstagram />
                                 </a>
-                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                                     <FaFacebook />
                                 </a>
-                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                                     <FaLinkedin />
                                 </a>
                             </div>

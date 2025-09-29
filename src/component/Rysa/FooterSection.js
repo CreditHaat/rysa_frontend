@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import styles from "./FooterSection.module.css";
 import { Outfit } from "next/font/google";
-
+import ondclogo from '../../../public/ondcW_logo.png';
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -69,15 +69,15 @@ export default function FooterSection() {
         <div className={styles.mainFD}>
           <div className={styles.combineThree}>
             <div className={styles.flogo}>
-              <a href='https://arysefin.com/'><Image
+              <Link href='/'><Image
                 src="/AryseFin_logo.png"
                 alt="Logo"
                 width={80}
                 height={80}
                 className="object-contain"
-              /></a>
+              /></Link>
               <p className={styles.logoText}>
-                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                AryseFin is a lending service platform (LSP) that makes borrowing
                 easy, transparent, and human.
               </p>
             </div>
@@ -117,6 +117,16 @@ export default function FooterSection() {
             </div>
             {/* combine 2 end */}
           </div>
+          <div className={styles.ondcLogoDiv}>
+            <p>Powered by</p>
+            <Image
+              src={ondclogo}
+              alt="Logo"
+              width={80}
+              height={65}
+            />
+            
+          </div>
           <div className={styles.lastMD}>
             <div className={styles.iconAndCopyRight}>
               <div>©2025 Vibhuprada Services Private Limited.</div>
@@ -126,10 +136,10 @@ export default function FooterSection() {
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                   <FaInstagram />
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                   <FaFacebook />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                   <FaLinkedin />
                 </a>
               </div>

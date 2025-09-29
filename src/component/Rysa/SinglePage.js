@@ -10,6 +10,7 @@ import styles from "./singlePage.module.css";
 import logo from "../../../public/arysefin-dark logo.png";
 import { useRouter } from "next/navigation";
 import { Outfit } from "next/font/google";
+import ondclogo from '../../../public/ondcW_logo.png';
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -40,12 +41,12 @@ export default function SinglePage() {
             <div className={styles.navContainer}>
               {/* Logo */}
               <div className={styles.logoNav}>
-                <a href='https://arysefin.com/'><Image
+                <Link href='/'><Image
                   src={logo}
                   alt="Logo"
                   width={80}
                   height={65}
-                /></a>
+                /></Link>
               </div>
             </div>
           </nav>
@@ -60,7 +61,7 @@ export default function SinglePage() {
                   Smart Credit for Ambitious Indians
                 </h1>
                 <p className={styles.heroSubtitle}>
-                  Loans up to ₹10Lacs. Low interest and zero paperwork. Disbursal
+                  Loans up to ₹25 Lacs. Low interest and zero paperwork. Disbursal
                   in 24 hours.
                 </p>
                 <button className={styles.applyBtn} onClick={handleApplyClick}>
@@ -75,6 +76,7 @@ export default function SinglePage() {
                   alt="Happy woman with hands up"
                   width={500}
                   height={600}
+                  priority 
                   className={styles.heroImage}
                 />
               </div>
@@ -120,7 +122,7 @@ export default function SinglePage() {
                 <p>
                   From tier-1 cities to towns,
                   <br />
-                  Aryse Fin supports every borrower.
+                  AryseFin supports every borrower.
                 </p>
               </div>
             </div>
@@ -137,7 +139,7 @@ export default function SinglePage() {
               <div className={styles.textBox}>
                 <h2 className={styles.htag}>No Tension Loans</h2>
                 <p className={styles.ptag}>
-                  Aryse Fin works with India&rsquo;s top lenders &mdash; NBFCs and
+                  AryseFin works with India&rsquo;s top lenders &mdash; NBFCs and
                   Banks &mdash; to remove the stress from your loan.
                 </p>
               </div>
@@ -147,6 +149,7 @@ export default function SinglePage() {
                   alt="No Tension Loans"
                   width={600}
                   height={700}
+                  priority 
                   className="object-cover w-full h-full"
                 />
               </div>
@@ -159,6 +162,7 @@ export default function SinglePage() {
                   alt="Low Interest"
                   width={900}
                   height={1000}
+                  priority 
                   className="object-cover w-full h-full"
                 />
               </div>
@@ -189,6 +193,7 @@ export default function SinglePage() {
                   alt="Easy Use"
                   width={900}
                   height={1000}
+                  priority 
                   className="object-cover w-full h-full"
                 />
               </div>
@@ -201,13 +206,14 @@ export default function SinglePage() {
                   alt="Future with LSP"
                   width={900}
                   height={1000}
+                  priority 
                   className="object-cover w-full h-full"
                 />
               </div>
               <div className={styles.textBox}>
                 <h3 className={styles.htag}>Built for Everyday People.</h3>
                 <p className={styles.ptag}>
-                  You don&rsquo;t need a perfect score. Aryse Fin helps real people
+                  You don&rsquo;t need a perfect score. AryseFin helps real people
                   build real credit
                 </p>
               </div>
@@ -327,7 +333,7 @@ export default function SinglePage() {
                 Trusted by Thousands
               </h2>
               <p className="text-md text-gray-600 mt-5 mb-8">
-                Join the Aryse Fin family today
+                Join the AryseFin family today
               </p>
             </div>
 
@@ -354,15 +360,15 @@ export default function SinglePage() {
             <div className={styles.mainFD}>
               <div className={styles.combineThree}>
                 <div className={styles.flogo}>
-                  <a href='https://arysefin.com/'><Image
+                  <Link href='/'><Image
                     src="/AryseFin_logo.png"
                     alt="Logo"
                     width={80}
                     height={80}
                     className="object-contain"
-                  /></a>
+                  /></Link>
                   <p className={styles.logoText}>
-                    Aryse Fin is a lending service platform (LSP) that makes borrowing
+                    AryseFin is a lending service platform (LSP) that makes borrowing
                     easy, transparent, and human.
                   </p>
                 </div>
@@ -402,6 +408,16 @@ export default function SinglePage() {
                 </div>
                 {/* combine 2 end */}
               </div>
+              <div className={styles.ondcLogoDiv}>
+                <p>Powered by</p>
+                <Image
+                  src={ondclogo}
+                  alt="Logo"
+                  width={80}
+                  height={65}
+                />
+                
+              </div>
               <div className={styles.lastMD}>
                 <div className={styles.iconAndCopyRight}>
                   <div>©2025 Vibhuprada Services Private Limited.</div>
@@ -411,10 +427,10 @@ export default function SinglePage() {
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                       <FaInstagram />
                     </a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                       <FaFacebook />
                     </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                       <FaLinkedin />
                     </a>
                   </div>

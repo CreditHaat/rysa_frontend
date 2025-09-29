@@ -497,7 +497,9 @@
   width: 100%;
   justify-items: right;
 }
-
+.ondcLogoDiv{
+  padding-top: 10px;
+}
 .lastMD {
   width: 100%;
   min-width: 300px;

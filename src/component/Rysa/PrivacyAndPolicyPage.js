@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 import logo from '../../../public/arysefin-dark logo.png';
+import ondclogo from '../../../public/ondcW_logo.png';
 const TermAndCondition = () => {
     return (
         <div className={styles.container}>
@@ -12,13 +13,12 @@ const TermAndCondition = () => {
                     <div className={styles.navContainer}>
                         {/* Logo */}
                         <div className={styles.logoNav}>
-                            <a href='https://arysefin.com/'><Image
+                            <Link href='/'><Image
                                 src={logo}
                                 alt="Logo"
                                 width={80}
                                 height={65}
-                            //   className="object-contain"
-                            /></a>
+                            /></Link>
                         </div>
 
                         {/* हंबरगर बटन */}
@@ -286,7 +286,7 @@ const TermAndCondition = () => {
                             <li>
                                 Principal Officer<br />
                                 Vibhuprada Services Private Limited<br />
-                                Office No. 07-12, 7th Floor, Tower B, Downtown City Vista,<br />
+                                Office No. 07 to 12, 7th Floor, Tower B, Downtown City Vista,<br />
                                 Survey Number 58/2, Fountain Road, Kharadi, Pune,<br />
                                 Pune, MH 411014, India
                             </li>
@@ -335,15 +335,15 @@ const TermAndCondition = () => {
                 <div className={styles.mainFD}>
                     <div className={styles.combineThree}>
                         <div className={styles.flogo}>
-                            <a href='https://arysefin.com/'><Image
+                            <Link href='/'><Image
                                 src="/AryseFin_logo.png"
                                 alt="Logo"
                                 width={80}
                                 height={80}
                                 className="object-contain"
-                            /></a>
+                            /></Link>
                             <p className={styles.logoText}>
-                                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                                AryseFin is a lending service platform (LSP) that makes borrowing
                                 easy, transparent, and human.
                             </p>
                         </div>
@@ -383,6 +383,16 @@ const TermAndCondition = () => {
                         </div>
                         {/* combine 2 end */}
                     </div>
+                    <div className={styles.ondcLogoDiv}>
+                        <p>Powered by</p>
+                        <Image
+                            src={ondclogo}
+                            alt="Logo"
+                            width={80}
+                            height={65}
+                        />
+                        
+                    </div>
                     <div className={styles.lastMD}>
                         <div className={styles.iconAndCopyRight}>
                             <div>©2025 Vibhuprada Services Private Limited.</div>
@@ -392,10 +402,10 @@ const TermAndCondition = () => {
                                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                                     <FaInstagram />
                                 </a>
-                                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                                     <FaFacebook />
                                 </a>
-                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                                     <FaLinkedin />
                                 </a>
                             </div>

@@ -10,7 +10,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Outfit } from "next/font/google";
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
-
+import ondclogo from '../../../public/ondcW_logo.png';
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -73,12 +73,12 @@ const SupportPage = () => {
           <div className={styles.navContainer}>
             {/* Logo */}
             <div className={styles.logoNav}>
-              <a href='https://arysefin.com/'><Image
+              <Link href='/'><Image
                 src={logo}
                 alt="Logo"
                 width={80}
                 height={65}
-              /></a>
+              /></Link>
             </div>
           </div>
         </nav>
@@ -87,18 +87,23 @@ const SupportPage = () => {
         <div className={styles.content}>
           {/* left section */}
           <div className={styles.leftSection}>
-            <img
+            <Image
               src="/support_woman2.png"
               alt="Support representative"
               className={styles.supportImage}
-            />
+              height={700}
+              width={700}
+              objectFit='cover'
+              
+            /> 
+
           </div>
           {/* Right section */}
           <div className={styles.rightSection}>
             <div className={styles.formContainer}>
               <h2 className={styles.title}>Can we help you?</h2>
               <p className={styles.subtitle}>
-                Have any queries? We'd love to hear from you
+                Have any queries? We&apos;d love to hear from you
               </p>
 
               <form onSubmit={handleSubmit} className={styles.form}>
@@ -204,15 +209,15 @@ const SupportPage = () => {
         <div className={styles.mainFD}>
           <div className={styles.combineThree}>
             <div className={styles.flogo}>
-              <a href='https://arysefin.com/'><Image
+              <Link href='/'><Image
                 src="/AryseFin_logo.png"
                 alt="Logo"
                 width={80}
                 height={80}
                 className="object-contain"
-              /></a>
+              /></Link>
               <p className={styles.logoText}>
-                Aryse Fin is a lending service platform (LSP) that makes borrowing
+                AryseFin is a lending service platform (LSP) that makes borrowing
                 easy, transparent, and human.
               </p>
             </div>
@@ -252,6 +257,16 @@ const SupportPage = () => {
             </div>
             {/* combine 2 end */}
           </div>
+          <div className={styles.ondcLogoDiv}>
+             <p>Powered by</p>
+            <Image
+              src={ondclogo}
+              alt="Logo"
+              width={80}
+              height={65}
+            />
+           
+          </div>
           <div className={styles.lastMD}>
             <div className={styles.iconAndCopyRight}>
               <div>©2025 Vibhuprada Services Private Limited.</div>
@@ -261,10 +276,10 @@ const SupportPage = () => {
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                   <FaInstagram />
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                   <FaFacebook />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
                   <FaLinkedin />
                 </a>
               </div>
