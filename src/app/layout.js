@@ -104,6 +104,13 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         {/* ✅ End Google Tag Manager */}
+        {/* my meta tag */}
+        <meta
+          name="description"
+          content="Learn about our services and team."
+        />
+        <meta property="og:title" content="About My Website" />
+        <meta property="og:image" content="/images/og-banner.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
