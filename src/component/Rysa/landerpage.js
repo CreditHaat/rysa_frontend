@@ -313,9 +313,9 @@ function Landerpage() {
                             <div className={styles.middleText}> <p>All rights reserved</p></div>
 
                             <div className={styles.iconF}>
-                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                                {/* <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                                     <FaInstagram />
-                                </a>
+                                </a> */}
                                 <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
                                     <FaFacebook />
                                 </a>
