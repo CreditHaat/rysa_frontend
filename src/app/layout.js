@@ -91,8 +91,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/Aryse_Fin.png" />
-
+        <link rel="icon" href="Rysa_favicon3.png" />
+        <link rel="icon" sizes="80x80" href="Rysa_favicon3.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="Rysa_favicon3.png" />
         {/* ✅ Google Tag Manager (head) */}
         <Script id="gtm-head" strategy="beforeInteractive">
           {`
