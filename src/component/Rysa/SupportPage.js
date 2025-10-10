@@ -206,87 +206,87 @@ const SupportPage = () => {
 
       </div>
       <footer className={styles.footer}>
-        <div className={styles.mainFD}>
-          <div className={styles.combineThree}>
-            <div className={styles.flogo}>
-              <Link href='/'><Image
-                src="/AryseFin_logo.png"
-                alt="Logo"
-                width={80}
-                height={80}
-                className="object-contain"
-              /></Link>
-              <p className={styles.logoText}>
-                AryseFin is a lending service platform (LSP) that makes borrowing
-                easy, transparent, and human.
-              </p>
-            </div>
-            <div className={styles.fresource}>
-              <div className={styles.textDecore}>
-                <h3 className={styles.heading}>Resources</h3>
-                <h4><Link href="/lenderpage">Lending Partners</Link></h4>
-                <h4><Link href="/acquisition_partners">Acquisition Partners</Link></h4>
-                <h4><Link href="/Grievance">Grievance Redressal Process</Link></h4>
-                <h4>
-                  <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
-                    RBI Sachet Portal
-                  </a>
-                </h4>
+            <div className={styles.mainFD}>
+              <div className={styles.combineThree}>
+                <div className={styles.flogo}>
+                  <Link href='/'><Image
+                    src="/AryseFin_logo.png"
+                    alt="Logo"
+                    width={80}
+                    height={80}
+                    className="object-contain"
+                  /></Link>
+                  <p className={styles.logoText}>
+                    AryseFin is a lending service platform (LSP) that makes borrowing
+                    easy, transparent, and human.
+                  </p>
+                </div>
+                <div className={styles.fresource}>
+                  <div className={styles.textDecore}>
+                    <h3 className={styles.heading}>Resources</h3>
+                    <h4><Link href="/lenderpage">Lending partners</Link></h4>
+                    <h4><Link href="/acquisition_partners">Acquisition partners</Link></h4>
+                    <h4><Link href="/Grievance">Grievance Redressal process</Link></h4>
+                    <h4>
+                      <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
+                        RBI Sachet Portal
+                      </a>
+                    </h4>
+                  </div>
+                </div>
+                {/*  */}
+                <div className={styles.fcity}>
+                  <div className={styles.textDecore}>
+                    <h3 className={styles.heading}>Quick links</h3>
+                    <h4>
+                      <Link href="/TermAndCondition">
+                        Terms of service
+                      </Link>
+                    </h4>
+                    <h4>
+                      <Link href="/PrivacyAndPolicy">
+                        Privacy policy
+                      </Link>
+                    </h4>
+                    <h4>
+                      <Link href="/support">
+                        Contact us
+                      </Link>
+                    </h4>
+                  </div>
+                </div>
+                {/* combine 2 end */}
               </div>
-            </div>
-            {/*  */}
-            <div className={styles.fcity}>
-              <div className={styles.textDecore}>
-                <h3 className={styles.heading}>Quick Links</h3>
-                <h4>
-                  <Link href="/TermAndCondition">
-                    Terms of service
-                  </Link>
-                </h4>
-                <h4>
-                  <Link href="/PrivacyAndPolicy">
-                    Privacy Policy
-                  </Link>
-                </h4>
-                <h4>
-                  <Link href="/support">
-                    Contact us
-                  </Link>
-                </h4>
+              <div className={styles.ondcLogoDiv}>
+                <p>Powered by</p>
+                <Image
+                  src={ondclogo}
+                  alt="Logo"
+                  width={80}
+                  height={65}
+                />
+                
               </div>
-            </div>
-            {/* combine 2 end */}
-          </div>
-          <div className={styles.ondcLogoDiv}>
-             <p>Powered by</p>
-            <Image
-              src={ondclogo}
-              alt="Logo"
-              width={80}
-              height={65}
-            />
-           
-          </div>
-          <div className={styles.lastMD}>
-            <div className={styles.iconAndCopyRight}>
-              <div>©2025 Vibhuprada Services Private Limited.</div>
-              <div className={styles.middleText}> <p>All rights reserved</p></div>
+              <div className={styles.lastMD}>
+                <div className={styles.iconAndCopyRight}>
+                  <div>©2025 Vibhuprada Services Private Limited.</div>
+                  <div className={styles.middleText}> <p>All rights reserved</p></div>
 
-              <div className={styles.iconF}>
-                {/* <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                  <FaInstagram />
-                </a> */}
-                <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
-                  <FaFacebook />
-                </a>
-                <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
-                  <FaLinkedin />
-                </a>
+                  <div className={styles.iconF}>
+                    {/* <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                      <FaInstagram />
+                    </a> */}
+                    <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
+                      <FaFacebook />
+                    </a>
+                    <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
+                      <FaLinkedin />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </footer>
+          </footer>
     </div>
   );
 };

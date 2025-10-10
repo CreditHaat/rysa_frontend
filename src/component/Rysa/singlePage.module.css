@@ -44,6 +44,7 @@
   width: 100%;
   /* min-height: auto; */
   background: linear-gradient(to right, #f197b6, #8563ec);
+  /* background: linear-gradient(135deg, #eb48fa 0%, #421af2 100%); */
 }
 
 /* Navigation Styles */
@@ -195,7 +196,7 @@
 }
 
 .heroTitle {
-  font-size: 6rem;
+  font-size: 5.6rem;
   font-weight: 750;
   color: white;
   line-height: 1.1;
@@ -203,10 +204,17 @@
 }
 
 .heroSubtitle {
-  font-size: 1.30rem;
+  font-size: 1.0rem;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1rem;
   line-height: 1.6;
+}
+.subtitleChecks{
+   display: flex;
+  align-items: center; 
+  gap: 8px; 
+  margin-bottom: 0.5rem;
+  /* color: red; */
 }
 
 .applyBtn {
@@ -215,7 +223,7 @@
   color: white;
   /* border: 2px solid rgba(255, 255, 255, 0.3); */
   padding: 1rem 1rem;
-  border-radius: 2rem;
+  border-radius: 30px;
   font-size: 1.1rem;
   font-weight: 600;
   height: 60px;
@@ -278,7 +286,7 @@
   height: 100%;
   position: absolute;
   /* right: 0; */
-  bottom: -5px;
+  bottom: -12px;
   /* left: 95px; */
   /* width: 100px; Adjust as needed
   height: auto; */
@@ -521,7 +529,7 @@
 
   .heroImage {
     position: relative;
-    bottom: -45px;
+    bottom: -65px;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -546,7 +554,7 @@
 
   .heroImage {
     position: relative;
-    bottom: -45px;
+    bottom: -65px;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -571,7 +579,7 @@
 
   .heroImage {
     position: relative;
-    bottom: -45px;
+    bottom: -65px;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -629,6 +637,8 @@
   .heroSubtitle {
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    align-items: center;
+    justify-items: center;
   }
 
   .applyBtn {
@@ -676,12 +686,14 @@
     font-size: 1rem;
     margin-bottom: 1.5rem;
     line-height: 1.5;
+    align-items: center;
+    justify-items: center;
   }
 
   .applyBtn {
     padding: 1rem 2rem;
     font-size: 1rem;
-    border-radius: 1.5rem;
+    border-radius: 1.9rem;
   }
 
   .heroImageContainer {
@@ -707,6 +719,8 @@
 
   .heroSubtitle {
     font-size: 0.9rem;
+    align-items: center;
+    justify-items: center;
   }
 
   .applyBtn {
@@ -1957,14 +1971,14 @@ other mobile reposive code
 .footerMain {
 
   background-color: #f7f6fd;
-  /* font-family: 'Roboto', sans-serif; */
   color: #333;
 }
 
 /* Image Section */
 .footerHeroSection {
   position: relative;
-  margin-bottom: -50px;
+  /* margin-bottom: -50px; */
+  margin-bottom: -100px;
   width: 100%;
   height: 800px;
   background-image: url('/3boys.png');
@@ -2035,6 +2049,7 @@ other mobile reposive code
 
 
   .footerHeroSection {
+    margin-bottom: -40px;
     height: 400px;
     background-size: cover;
   }
