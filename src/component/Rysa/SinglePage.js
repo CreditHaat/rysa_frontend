@@ -6,6 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { FaMoneyBillWave, FaChartLine, FaHandHoldingUsd } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import styles from "./singlePage.module.css";
 import logo from "../../../public/arysefin-dark logo.png";
 import { useRouter } from "next/navigation";
@@ -58,14 +59,16 @@ export default function SinglePage() {
               {/* Left Content */}
               <div className={styles.heroContent}>
                 <h1 className={styles.heroTitle}>
-                  Smart Credit for Ambitious Indians
+                  Smart credit for ambitious <br/>indians
                 </h1>
-                <p className={styles.heroSubtitle}>
-                  Loans up to ₹25 Lacs. Low interest and zero paperwork. Disbursal
-                  in 24 hours.
-                </p>
+                <div className={styles.heroSubtitle}>
+                  <div className={styles.subtitleChecks}><FaCheck /><div>Unsecured personal loan upto ₹25 lacs</div></div>
+                  <div className={styles.subtitleChecks}><FaCheck /><div>Interest rate starting from 10.99% p.a {/* par annum */}</div></div>
+                  <div className={styles.subtitleChecks}><FaCheck /><div>Zero paperwork | 100% digital process</div></div>
+                  <div className={styles.subtitleChecks}><FaCheck /><div>Disbursal within 24 hours</div></div>
+                </div>
                 <button className={styles.applyBtn} onClick={handleApplyClick}>
-                  <span>Apply Now</span>
+                  <span>Apply now</span>
                 </button>
               </div>
 
@@ -92,7 +95,7 @@ export default function SinglePage() {
               <div className={styles.emptychild1}></div>
               <div className={styles.featureBox1}>
                 <FaMoneyBillWave className={styles.icon} />
-                <h3>Quick as a Click</h3>
+                <h3>Quick as a click</h3>
                 <p>
                   Loan approvals so fast, you&apos;ll barely blink -<br />
                   money in your account within 24-hours.
@@ -105,7 +108,7 @@ export default function SinglePage() {
               <div className={styles.emptychild2}></div>
               <div className={styles.featureBox2}>
                 <FaChartLine className={styles.icon} />
-                <h3>Loan that Breathe Easy</h3>
+                <h3>Loan that breathe easy</h3>
                 <p>
                   No heavy EMIs, no hidden drama. Just clear terms and repayments
                   that work for you..
@@ -118,7 +121,7 @@ export default function SinglePage() {
               <div className={styles.emptychild3}></div>
               <div className={styles.featureBox3}>
                 <FaHandHoldingUsd className={styles.icon} />
-                <h3>Indian Trusts Us</h3>
+                <h3>Indian trusts us</h3>
                 <p>
                   From tier-1 cities to towns,
                   <br />
@@ -137,7 +140,7 @@ export default function SinglePage() {
             <div className={styles.firstPart}>
               <div className={styles.circle}></div>
               <div className={styles.textBox}>
-                <h2 className={styles.htag}>No Tension Loans</h2>
+                <h2 className={styles.htag}>No tension loans</h2>
                 <p className={styles.ptag}>
                   AryseFin works with India&rsquo;s top lenders &mdash; NBFCs and
                   Banks &mdash; to remove the stress from your loan.
@@ -168,7 +171,7 @@ export default function SinglePage() {
               </div>
               <div className={styles.textBox}>
                 <h3 className={styles.htag}>
-                  Low Interest, <br /> Flexible Repayment
+                  Low interest, <br /> flexible repayment
                 </h3>
                 <p className={styles.ptag}>
                   Rates from just 13% pa. Repay in 3&ndash;60 months. Simple,
@@ -181,7 +184,7 @@ export default function SinglePage() {
             <div className={styles.thirdPart}>
               <div className={styles.circle}></div>
               <div className={styles.textBox}>
-                <h3 className={styles.htag}>Your Financial Companion</h3>
+                <h3 className={styles.htag}>Your financial companion</h3>
                 <p className={styles.ptag}>
                   Grow your credit profile, get higher limits, and unlock better
                   offers over time.
@@ -211,7 +214,7 @@ export default function SinglePage() {
                 />
               </div>
               <div className={styles.textBox}>
-                <h3 className={styles.htag}>Built for Everyday People.</h3>
+                <h3 className={styles.htag}>Built for everyday people.</h3>
                 <p className={styles.ptag}>
                   You don&rsquo;t need a perfect score. AryseFin helps real people
                   build real credit
@@ -321,21 +324,21 @@ export default function SinglePage() {
         <main className={styles.footerMain}>
           <div className={styles.footerHeroSection}>
             <h1 className={styles.footerHeroText}>
-              Fueling the Dreams
-              <br /> of Working India
+              Fueling the dreams
+              <br /> of working India
             </h1>
           </div>
 
           {/* ✅ STATS SECTION with U-SHAPE */}
-          <section className={styles.footerStatsSection}>
-            <div className={styles.footerStatsText}>
+          {/* <section className={styles.footerStatsSection}>
+             <div className={styles.footerStatsText}> 
               <h2 className="text-4xl font-bold text-black mt-12">
                 Trusted by Thousands
               </h2>
               <p className="text-md text-gray-600 mt-5 mb-8">
                 Join the AryseFin family today
               </p>
-            </div>
+             </div> 
 
             <div className={styles.footerstatsItems}>
               <div>
@@ -350,8 +353,8 @@ export default function SinglePage() {
                 <p className={styles.footerstatsNumber}>24 Hours</p>
                 <p className={styles.footerstatsLabel}>Quick Approval</p>
               </div>
-            </div>
-          </section>
+             </div>
+          </section> */}
 
           {/* White Box Section */}
           <div className="w-full h-[50px] bg-[#f7f6fd]"></div>
@@ -375,9 +378,9 @@ export default function SinglePage() {
                 <div className={styles.fresource}>
                   <div className={styles.textDecore}>
                     <h3 className={styles.heading}>Resources</h3>
-                    <h4><Link href="/lenderpage">Lending Partners</Link></h4>
-                    <h4><Link href="/acquisition_partners">Acquisition Partners</Link></h4>
-                    <h4><Link href="/Grievance">Grievance Redressal Process</Link></h4>
+                    <h4><Link href="/lenderpage">Lending partners</Link></h4>
+                    <h4><Link href="/acquisition_partners">Acquisition partners</Link></h4>
+                    <h4><Link href="/Grievance">Grievance Redressal process</Link></h4>
                     <h4>
                       <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
                         RBI Sachet Portal
@@ -388,7 +391,7 @@ export default function SinglePage() {
                 {/*  */}
                 <div className={styles.fcity}>
                   <div className={styles.textDecore}>
-                    <h3 className={styles.heading}>Quick Links</h3>
+                    <h3 className={styles.heading}>Quick links</h3>
                     <h4>
                       <Link href="/TermAndCondition">
                         Terms of service
@@ -396,7 +399,7 @@ export default function SinglePage() {
                     </h4>
                     <h4>
                       <Link href="/PrivacyAndPolicy">
-                        Privacy Policy
+                        Privacy policy
                       </Link>
                     </h4>
                     <h4>
