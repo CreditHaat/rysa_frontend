@@ -71,7 +71,7 @@ const DataLoadByUID = () => {
             // setLoading(false);
             // console.log("The confirm lenders length is : ",confirmLendersRef.current.length," and is : ",confirmLendersRef);
             if (confirmLendersRef.current.length === 0) {
-                // handleEmbeddedRedirection(); temporary just for testing purpose we are commenting it
+                handleEmbeddedRedirection(); //temporary just for testing purpose we are commenting it
                 // router.push(`/ondc/rejection?mobileNumber=${mobileNumber}`);
                 // router.push(`https://app.credithaat.com/embedded_journey?mobileNumber=${mobileNumber}`);
             }
@@ -79,7 +79,7 @@ const DataLoadByUID = () => {
                 setLoading(false);
             }, 1000);
             // ✅ Place your logic here (API call, state update, etc.)
-        }, 20000); // 50,000 ms = 30 seconds
+        }, 75000); // 50,000 ms = 30 seconds
 
         return () => clearTimeout(timer); // cleanup if component unmounts
     }, []);
