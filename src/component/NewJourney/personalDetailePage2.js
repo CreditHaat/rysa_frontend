@@ -6,9 +6,24 @@ import styles from "./personalDetailePage2.module.css";
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
-
+import { useContext } from "react";
+// import OnSearchContext from "./context/OnSearchContext";
+import OnSearchContext from '../Rysa/ONDC/context/OnSearchContext';
+// import { Search } from "@/component/Rysa/ONDC/apis/search_formsubmit";
+import {Search} from "../Rysa/ONDC/apis/search_formsubmit";
+import UIDContext from '../Rysa/context/UIDContext';
 
 function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormData }) {
+
+    const { uid, setUId, isWebsocketConnectionEstablished, setIsWebsocketConnectionEstablished} = useContext(UIDContext);
+
+    const {
+        formSubmissionData,
+        setFormSubmissionData,
+        payloadForSelect,
+        setPayloadForSelect,
+      } = useContext(OnSearchContext);
+
     const [loading, setLoading] = useState(false);//mast the screen or loader
     // Form field states - initialize with mainFormData values
     const [panNumber, setPanNumber] = useState(mainFormData?.panNumber || '');
@@ -542,6 +557,8 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                             },
                         }
                     );
+
+                    Search(setFormSubmissionData, formSubmissionData, mainFormData?.mobileNumber, uid, setUId);
 
                     console.log("OTP API response:", otpResponse.data);
 

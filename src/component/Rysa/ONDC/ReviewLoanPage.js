@@ -189,10 +189,13 @@ const contCharges={
         console.log("The submission id that we got is : ", submissionId);
         router.push("/ondc/bankdetails");
       } else {
-        console.log("Your application not accepted");
-        console.log("Your application not accepted", parsedData);
-        localStorage.setItem('mobileNumberForRejection', formSubmissionData.contactNumber);
-        window.location.href = `/ondc/RejectionPage?mobilenumber=${formSubmissionData.contactNumber}`;
+        const baseUrl = `/ondc/ondcrejection?mobilenumber=${formSubmissionData.contactNumber}`;
+        const transactionId = SelectedLenderData?.context?.transaction_id;
+        router.push(transactionId ? `${baseUrl}&transactionid=${transactionId}` : baseUrl);
+        // console.log("Your application not accepted");
+        // console.log("Your application not accepted", parsedData);
+        // localStorage.setItem('mobileNumberForRejection', formSubmissionData.contactNumber);
+        // window.location.href = `/ondc/RejectionPage?mobilenumber=${formSubmissionData.contactNumber}`;
       }
 
     } catch (error) {

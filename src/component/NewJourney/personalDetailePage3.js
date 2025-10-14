@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import styles from "./personalDetailePage3.module.css";
 import Image from "next/image";
 import axios from "axios";
+import {useRouter} from "next/navigation";
 
 function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormData }) {
+
+  const router = useRouter();
+
   // State for validation errors only (keep local)
   const [errors, setErrors] = useState({
     companyName: false,
@@ -105,7 +109,9 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
         // console.log("Full Backend Response:", response.data);
 
     
-          window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
+          // window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
+          // router.push(`/ondc/getData?mobilenumber=${mainFormData.mobileNumber}`);
+          router.push(`/ondc?mobilenumber=${mainFormData.mobileNumber}`);
 
       } catch (error) {
         console.error("Error in Page4 API:", error);

@@ -96,27 +96,15 @@ function FirstPage() {
 
       const queryParams = new URLSearchParams(window.location.search);
       const payloadPage1 = {
-        //     mobileNumber: finalMobile,
-        //     channel: queryParams.get("channel") || null,
-        //     agent: queryParams.get("source") || null,
-        //     agentId: queryParams.get("dsa") ? parseInt(queryParams.get("dsa")) : null,
-        //     subAgent: queryParams.get("sub_dsa") || null,
-        //     subSource: queryParams.get("sub_source") || null,
-        //     campaign: queryParams.get("campaign") || null,
-        //     urllink: window.location.search?.slice(1) || null
-        // };
-
-        //             const queryParams = new URLSearchParams(window.location.search);
-        // const payloadPage1 = {
         mobileNumber: finalMobile,
-
         //parameter mapping
         agentId: queryParams.get("dsa")
           ? parseInt(queryParams.get("dsa"))
           : null, // dsa → agent_id
         agent: queryParams.get("source") || null, // source → agent field
         channel: queryParams.get("channel") || null, // channel → channel
-
+        clickId: queryParams.get("clickid") || null,  // clickId
+        
         // Campaign(after ? mark all string as it is)
         campaign: window.location.search?.slice(1) || null,
         subAgent: queryParams.get("sub_dsa") || null,
