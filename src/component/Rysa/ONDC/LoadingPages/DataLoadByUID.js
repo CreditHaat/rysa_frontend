@@ -23,6 +23,7 @@ import logo2 from "../images/AryseFin_logo.png";
 import clock from "../images/clock.png";
 import per from "../../../../../public/Group_10.png";
 import Image from "next/image";
+import { select } from "../apis/ondcapi";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -31,6 +32,8 @@ const outfit = Outfit({
 });
 
 const DataLoadByUID = () => {
+
+    const lendersRef = useRef([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -71,6 +74,7 @@ const DataLoadByUID = () => {
             // setLoading(false);
             // console.log("The confirm lenders length is : ",confirmLendersRef.current.length," and is : ",confirmLendersRef);
             if (confirmLendersRef.current.length === 0) {
+                handleMISStatus();
                 handleEmbeddedRedirection(); //temporary just for testing purpose we are commenting it
                 // router.push(`/ondc/rejection?mobileNumber=${mobileNumber}`);
                 // router.push(`https://app.credithaat.com/embedded_journey?mobileNumber=${mobileNumber}`);
@@ -79,7 +83,7 @@ const DataLoadByUID = () => {
                 setLoading(false);
             }, 1000);
             // ✅ Place your logic here (API call, state update, etc.)
-        }, 75000); // 50,000 ms = 30 seconds
+        }, 60000); // 50,000 ms = 30 seconds
 
         return () => clearTimeout(timer); // cleanup if component unmounts
     }, []);
@@ -346,7 +350,7 @@ const DataLoadByUID = () => {
             // encode the URL so it won't break on &
             const safeRedirectUrl = encodeURIComponent(redirectUrl);
 
-            const formData = new FormData(); c
+            const formData = new FormData();
             formData.append("transactionId", transactionId);
             formData.append("srcref", consentHandlerId);
             formData.append("mobileNumber", mobileNumber);
