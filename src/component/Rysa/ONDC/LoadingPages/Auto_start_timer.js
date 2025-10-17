@@ -8,7 +8,7 @@ const outfit = Outfit({
   weight: ["400", "700"],
   display: "swap",
 });const AutoStartTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(75);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const outfit = Outfit({
   }, []);
 
   const getCircleProgress = () => {
-    const progress = ((75 - timeLeft) / 75) * 283; // 283 is circumference
+    const progress = ((60 - timeLeft) / 60) * 283; // 283 is circumference
     return progress;
   };
 
