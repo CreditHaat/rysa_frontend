@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { generateTransactionId } from "../KeyGenerationApis/KeyGeneration";
 
-export const Search = async (setFormSubmissionData, formSubmissionData, mobileNumber, uid, setUId) => {
+export const Search = async (setFormSubmissionData, formSubmissionData, mobileNumber, panNumber, uid, setUId) => {
 
 
 
@@ -12,7 +12,7 @@ export const Search = async (setFormSubmissionData, formSubmissionData, mobileNu
     }
 
     //If here we haven't hit the search api before for this user then firstly we will check the bre and getSortedProducts for this user
-    const sortedLendersResponse = await getSortedLenders(mobileNumber);
+    const sortedLendersResponse = await getSortedLenders(mobileNumber, panNumber);
     // if()
     if (sortedLendersResponse === false) {
         //here we shall be reidrecting to embedded list of credithaat because user got no product
@@ -156,7 +156,7 @@ const callbacksLoadByMobileNumber = async (mobileNumber) => {
     }
 }
 
-const getSortedLenders = async (mobileNumber) => {
+const getSortedLenders = async (mobileNumber, panNumber) => {
     try {
         const formData = new FormData();
         formData.append("mobile", mobileNumber);
@@ -171,6 +171,48 @@ const getSortedLenders = async (mobileNumber) => {
 
         if (response.status === 200) {
             if (Object.keys(response.data).length >= 1) {
+                    try {
+          const otpPayload = {
+            Mobilenumber: mobileNumber,
+            pan: panNumber,
+          };
+          const digitapResponse = await axios.post(
+            `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/digitapapi`,
+            otpPayload
+          );
+
+          console.log("digitap uan api response is as below:", digitapResponse);
+
+          let message = "";
+          try {
+            // The response structure shows `msg` is a stringified JSON
+            const parsedMsg = JSON.parse(digitapResponse.data.msg);
+            message = parsedMsg?.message || "";
+          } catch (e) {
+            console.warn("⚠️ Failed to parse msg JSON:", e);
+          }
+
+          // Step 3️⃣ — If message contains "No record(s) found", hit the PAN API
+          if (message.includes("No record(s) found")) {
+            console.log("ℹ️ No record found — hitting PAN API...");
+
+            const digitapPanResponse = await axios.post(
+              `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/digitappanapi`,
+              otpPayload
+            );
+
+            console.log(
+              "✅ Digitap PAN API Response:",
+              digitapPanResponse.data
+            );
+            // return digitapPanResponse.data;
+          } else {
+            console.log("✅ Record found — using UAN API response.");
+            // return digitapResponse.data;
+          }
+        } catch (error) {
+          console.log("digitap error", error);
+        }
                 console.log("setting the sortedProduct flag as true");
                 // setGotSortedProductFlag(true);
                 // useWebSocketONDC(handleWebSocketMessage);

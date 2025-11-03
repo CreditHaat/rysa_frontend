@@ -558,7 +558,7 @@ function PersonalDetailePage2({ mainFormData = {}, setActiveContainer, setFormDa
                         }
                     );
 
-                    Search(setFormSubmissionData, formSubmissionData, mainFormData?.mobileNumber, uid, setUId);
+                    Search(setFormSubmissionData, formSubmissionData, mainFormData?.mobileNumber, panNumber, uid, setUId);
 
                     console.log("OTP API response:", otpResponse.data);
 
