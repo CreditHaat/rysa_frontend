@@ -51,7 +51,7 @@ const SMSWaiting = () => {
         );
         console.log("✅ generateKfsDocument:", res.data);
         if (res.data.code === -1) {
-          router.push(`/yubi/RejectionPage`);
+          router.push(`/yubi/Rejectpage?clientLoanId=${clientLoanId}`);
           return;
         }
       } catch (err) {

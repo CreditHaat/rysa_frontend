@@ -174,6 +174,7 @@ export default function SubmitPage() {
   useEffect(() => {
     if (clientLoanId) {
       fetchSanctionDetails();
+      localStorage.clear();
     }
   }, [clientLoanId]);
 

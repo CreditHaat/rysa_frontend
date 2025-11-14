@@ -105,7 +105,7 @@ export default function CallbackListener({
             console.warn(
               "❌ AA initiation failed. Redirecting to rejection page..."
             );
-            window.location.href = "/yubi/RejectionPage"; // 🔁 Change this to your actual rejection page route
+            window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
             return;
           }
           const redirection_url = aaResponse.data?.obj?.redirection_url;
@@ -147,7 +147,7 @@ export default function CallbackListener({
         );
 
         if (kycResponse.data.code === -1) {
-          window.location.href = `/yubi/RejectionPage`;
+          window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
         }
         const kycRedirectUrl = kycResponse.data?.obj;
         if (kycRedirectUrl) {
@@ -167,12 +167,22 @@ export default function CallbackListener({
       const clientLoanId = localStorage.getItem("hdbClientLoanId");
       if (!clientLoanId) return;
 
+      // if (status.toLowerCase() === "success") {
+      //   console.log(
+      //     "✅ Selfie KYC success! Waiting for bank account webhook..."
+      //   );
+      //   localStorage.setItem("journeyStage", "ReferenceDetails");
+      // }
       if (status.toLowerCase() === "success") {
-        console.log(
-          "✅ Selfie KYC success! Waiting for bank account webhook..."
-        );
+        console.log("✅ KYC success — proceeding to next step...");
         localStorage.setItem("journeyStage", "ReferenceDetails");
+        return; // exit after success
       }
+
+      // ❌ Case 2: KYC failed or rejected
+      console.warn(`❌ KYC failed with status: ${status}`);
+      localStorage.setItem("journeyStage", "Rejected");
+      window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
     }
 
     // === ✅ 4) Handle Loan Status Webhook ===
@@ -215,6 +225,7 @@ export default function CallbackListener({
         console.error("❌ Disbursement failed:", failureMessage);
         localStorage.setItem("disbursementStatus", "failed");
         localStorage.setItem("disbursementFailureMessage", failureMessage);
+        window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
       }
     }
 

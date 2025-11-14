@@ -37,7 +37,7 @@ const WaitingPageLoanAgreement = () => {
 
           console.log("✅ Loan Agreement API called:", res.data);
           if (res.data.code === -1) {
-            window.location.href = `/yubi/RejectionPage`;
+            window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
             return;
           }
         } catch (err) {
@@ -69,17 +69,20 @@ const WaitingPageLoanAgreement = () => {
           console.log("✅ Loan Agreement doc generated webhook received!");
 
           try {
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}requestEsign`, {
-              clientLoanId,
-              // email: "user@example.com",
-              // phone: "9999999999",
-              // firstName: "John",
-              // lastName: "Doe",
-            });
+            const res = await axios.post(
+              `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}requestEsign`,
+              {
+                clientLoanId,
+                // email: "user@example.com",
+                // phone: "9999999999",
+                // firstName: "John",
+                // lastName: "Doe",
+              }
+            );
             console.log("✅ eSign API Response:", res.data);
 
             if (res.data.code === -1) {
-              window.location.href = `/yubi/RejectionPage`;
+              window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
               return;
             }
 

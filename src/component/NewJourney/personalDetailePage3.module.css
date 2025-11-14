@@ -227,7 +227,44 @@
     outline: none;
     border: none;
 }
-
+.fields2 {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 25px 10px 25px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(122, 122, 122, 0.18);
+    background: #FFF;
+    margin-top: 30px;
+}
+.inputfield1 {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 12px 40px 12px 10px;
+}
+.iconContainer {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #F3F3F3;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.iconInput {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+}
+.inputWrapper {
+    position: relative;
+    width: 100%;
+}
 /* button css */
 .btn {
     width: 100%;
@@ -412,4 +449,98 @@
 .selectedItem {
   background-color: #007bff;  /* or your theme color */
   color: white;
+}
+
+/* bottomsheet code here */
+
+.bottomSheetOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1000;
+}
+
+.bottomSheet {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    max-height: 50vh;
+    min-height: 340px;
+    padding: 25px 30px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    scrollbar-width: none;
+    transform: translateY(0);
+    /* Remove the translateY(100%) */
+    animation: slideUp 0.3s ease-out;
+    /* Optional: add slide animation */
+}
+
+/* Optional: Add slide-up animation */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.sheetOption {
+    width: 100%;
+    height: 65px;
+    background-color: #F9EFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    padding: 14px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+    background-color: #F9EFFF;
+    border-radius: 10px;
+}
+
+.sheetOption:hover {
+    background-color: #e3d3fd;
+}
+
+.sheetOption:last-child {
+    margin-bottom: 0;
+}
+
+ .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7); /* semi-transparent mask */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* above everything */
+  pointer-events: all;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3; /* Light gray */
+  border-top: 6px solid #9747FF; /* Purple color */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

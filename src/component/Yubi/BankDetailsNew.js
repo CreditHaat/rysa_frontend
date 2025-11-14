@@ -439,7 +439,7 @@ const BankDetails = () => {
         );
 
         if (response.data.code === -1) {
-          window.location.href = `/yubi/RejectionPage`;
+          window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
           return;
         }
 

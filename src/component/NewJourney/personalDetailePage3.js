@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import styles from "./personalDetailePage3.module.css";
 import Image from "next/image";
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import { FaChevronDown } from "react-icons/fa";
 
-function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormData }) {
-
+function PersonalDetailePage3({
+  mainFormData = {},
+  setActiveContainer,
+  setFormData,
+}) {
   const router = useRouter();
 
   // State for validation errors only (keep local)
@@ -14,11 +18,15 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
     companyName: false,
     workEmail: false,
     workPINCode: false,
+    fatherName: false,
+    maritalStatus: false,
+    spouseName: false,
   });
 
   // Autocomplete state
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSheetMaritalStatus, setShowSheetMaritalStatus] = useState(false);
 
   // Handle input changes → update parent formData
   const handleInputChange = async (e) => {
@@ -56,6 +64,21 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
     }
   };
 
+  const handleSelectMaritalStatus = (status) => {
+    setFormData((prev) => ({ ...prev, maritalStatus: status }));
+    setShowSheetMaritalStatus(false);
+
+    // Clear errors if any exist
+    if (errors.maritalStatus) {
+      setErrors((prev) => ({ ...prev, maritalStatus: false }));
+    }
+
+    // If not married, clear spouse name
+    if (status !== "Married") {
+      setFormData((prev) => ({ ...prev, spouseName: "" }));
+    }
+  };
+
   // When user selects a suggestion
   const handleSuggestionClick = (suggestion) => {
     setFormData((prev) => ({
@@ -70,17 +93,42 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-};
+  };
 
   const validateForm = () => {
     const newErrors = {
       companyName: !mainFormData.companyName?.trim(),
-      workEmail: !mainFormData.workEmail?.trim() || !validateEmail(mainFormData.workEmail),
-      workPINCode: !mainFormData.workPINCode?.trim() || mainFormData.workPINCode.length !== 6,
+      workEmail:
+        !mainFormData.workEmail?.trim() ||
+        !validateEmail(mainFormData.workEmail),
+      workPINCode:
+        !mainFormData.workPINCode?.trim() ||
+        mainFormData.workPINCode.length !== 6,
+      fatherName: !mainFormData.fatherName?.trim(),
+      maritalStatus: !mainFormData.maritalStatus?.trim(),
+      spouseName:
+        mainFormData.maritalStatus === "Married" &&
+        !mainFormData.spouseName?.trim(),
     };
 
     setErrors(newErrors);
     return !Object.values(newErrors).some((error) => error);
+  };
+
+  const mapMaritalStatus = (status) => {
+    if (!status) return null;
+    switch (status.trim().toLowerCase()) {
+      case "married":
+        return 1;
+      case "unmarried":
+        return 2;
+      case "divorced":
+        return 3;
+      case "widowed":
+        return 4;
+      default:
+        return null;
+    }
   };
 
   const handleNext = async () => {
@@ -91,6 +139,9 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
           companyName: mainFormData.companyName,
           workEmail: mainFormData.workEmail,
           workPincode: mainFormData.workPINCode,
+          fatherName: mainFormData.fatherName,
+          maritalStatus: mapMaritalStatus(mainFormData.maritalStatus),
+          spouseName: mainFormData.spouseName || "",
         };
 
         const response = await axios.post(
@@ -108,11 +159,9 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
         // console.log("Payload Sent:", payload);
         // console.log("Full Backend Response:", response.data);
 
-    
-          // window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
-          // router.push(`/ondc/getData?mobilenumber=${mainFormData.mobileNumber}`);
-          router.push(`/ondc?mobilenumber=${mainFormData.mobileNumber}`);
-
+        // window.location.href = `https://www.arysefin.com/ondc?mobilenumber=${mainFormData.mobileNumber}`;
+        // router.push(`/ondc/getData?mobilenumber=${mainFormData.mobileNumber}`);
+        router.push(`/ondc?mobilenumber=${mainFormData.mobileNumber}`);
       } catch (error) {
         console.error("Error in Page4 API:", error);
       }
@@ -163,13 +212,19 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
           <div className={styles.formheading}>Work Details</div>
 
           {/* Company Name */}
-          <div className={`${styles.fields} ${errors.companyName ? styles.errorField : ""}`}>
+          <div
+            className={`${styles.fields} ${
+              errors.companyName ? styles.errorField : ""
+            }`}
+          >
             <span className={styles.fieldName}>Company name</span>
             <input
               type="text"
               name="companyName"
               value={mainFormData.companyName || ""}
-              onFocus={() => mainFormData.companyName && setShowSuggestions(true)}
+              onFocus={() =>
+                mainFormData.companyName && setShowSuggestions(true)
+              }
               onChange={handleInputChange}
               className={styles.inputfield}
             />
@@ -189,23 +244,27 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
               </ul>
               </>
             )} */}
-              {showSuggestions && suggestions.length > 0 && (
-    <ul className={styles.suggestionBox}>
-      {suggestions.map((s, i) => (
-        <li
-          key={i}
-          className={styles.suggestionItem}
-          onClick={() => handleSuggestionClick(s)}
-        >
-          {s}
-        </li>
-      ))}
-    </ul>
-  )}
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className={styles.suggestionBox}>
+                {suggestions.map((s, i) => (
+                  <li
+                    key={i}
+                    className={styles.suggestionItem}
+                    onClick={() => handleSuggestionClick(s)}
+                  >
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Work Email */}
-          <div className={`${styles.fields} ${errors.workEmail ? styles.errorField : ""}`}>
+          <div
+            className={`${styles.fields} ${
+              errors.workEmail ? styles.errorField : ""
+            }`}
+          >
             <span className={styles.fieldName}>Work email</span>
             <input
               type="email"
@@ -217,7 +276,11 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
           </div>
 
           {/* Work PIN Code */}
-          <div className={`${styles.fields} ${errors.workPINCode ? styles.errorField : ""}`}>
+          <div
+            className={`${styles.fields} ${
+              errors.workPINCode ? styles.errorField : ""
+            }`}
+          >
             <span className={styles.fieldName}>Work pincode</span>
             <input
               type="number"
@@ -233,6 +296,64 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
             />
           </div>
 
+          <div
+            className={`${styles.fields} ${
+              errors.fatherName ? styles.errorField : ""
+            }`}
+          >
+            <span className={styles.fieldName}>Father name</span>
+            <input
+              type="text"
+              name="fatherName"
+              value={mainFormData.fatherName || ""}
+              onChange={handleInputChange}
+              className={styles.inputfield}
+            />
+          </div>
+
+          {/* maritalStatus */}
+          <div
+            className={`${styles.fields2} ${
+              errors.maritalStatus ? styles.errorField : ""
+            }`}
+          >
+            <span className={styles.fieldName}>Marital status</span>
+            <div className={styles.inputWrapper}>
+              <input
+                type="text"
+                name="maritalStatus"
+                value={mainFormData.maritalStatus || ""}
+                className={styles.inputfield1}
+                readOnly
+                onClick={() => setShowSheetMaritalStatus(true)}
+              />
+              <div
+                className={styles.iconContainer}
+                onClick={() => setShowSheetMaritalStatus(true)}
+              >
+                <FaChevronDown className={styles.iconInput} />
+              </div>
+            </div>
+          </div>
+
+          {/* spouseName - Only show if Married */}
+          {mainFormData.maritalStatus === "Married" && (
+            <div
+              className={`${styles.fields} ${
+                errors.spouseName ? styles.errorField : ""
+              }`}
+            >
+              <span className={styles.fieldName}>Spouse name</span>
+              <input
+                type="text"
+                name="spouseName"
+                value={mainFormData.spouseName || ""}
+                onChange={handleInputChange}
+                className={styles.inputfield}
+              />
+            </div>
+          )}
+
           {/* Buttons */}
           <div className={styles.btn}>
             <div className={styles.backbtn} onClick={handleBack}>
@@ -243,6 +364,42 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
               <span> Submit </span>
             </div>
           </div>
+          {showSheetMaritalStatus && (
+            <div
+              className={styles.bottomSheetOverlay}
+              onClick={() => setShowSheetMaritalStatus(false)}
+            >
+              <div
+                className={styles.bottomSheet}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div
+                  className={styles.sheetOption}
+                  onClick={() => handleSelectMaritalStatus("Married")}
+                >
+                  Married
+                </div>
+                <div
+                  className={styles.sheetOption}
+                  onClick={() => handleSelectMaritalStatus("Unmarried")}
+                >
+                  Unmarried
+                </div>
+                <div
+                  className={styles.sheetOption}
+                  onClick={() => handleSelectMaritalStatus("Divorced")}
+                >
+                  Divorced
+                </div>
+                <div
+                  className={styles.sheetOption}
+                  onClick={() => handleSelectMaritalStatus("Widowed")}
+                >
+                  Widowed
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -250,7 +407,6 @@ function PersonalDetailePage3({ mainFormData = {}, setActiveContainer, setFormDa
 }
 
 export default PersonalDetailePage3;
-
 
 // "use client";
 // import React, { useState } from "react";
@@ -281,7 +437,6 @@ export default PersonalDetailePage3;
 //       }));
 //     }
 //   };
-  
 
 //   // Validate form
 //   const validateForm = () => {
@@ -341,12 +496,9 @@ export default PersonalDetailePage3;
 //   }
 // };
 
-
 //   const handleBack = () => {
 //     setActiveContainer("PersonalDetailePage2");
 //   };
-
-
 
 //   return (
 //     <div className={styles.container}>
@@ -364,7 +516,6 @@ export default PersonalDetailePage3;
 //                                 />
 //                             </div>
 //                         </div>
-
 
 //                         {/* mynew */}
 
@@ -470,5 +621,3 @@ export default PersonalDetailePage3;
 // }
 
 // export default PersonalDetailePage3;
-
-

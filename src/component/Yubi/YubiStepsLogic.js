@@ -33,7 +33,7 @@ export default function useYubiStepsLogic(setStepText) {
         console.log("✅ requestId response:", requestId);
 
         if (reqIdResp.data.code === -1) {
-          window.location.href = `/yubi/RejectionPage`;
+          window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
           return;
         }
 
@@ -50,7 +50,7 @@ export default function useYubiStepsLogic(setStepText) {
         console.log("✅ retrieveReport response:", retrieveResp.data);
 
         if (retrieveResp.data.code === -1) {
-          window.location.href = `/yubi/RejectionPage`;
+          window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
           return;
         }
 

@@ -268,7 +268,7 @@ const SelfiePageNew = () => {
 
       // 🚨 Check if API returned rejection
       if (updateKycResp.data.code === -1) {
-        window.location.href = `/yubi/RejectionPage`;
+        window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
       }
 
       setActiveContainer("SelfieWaiting");

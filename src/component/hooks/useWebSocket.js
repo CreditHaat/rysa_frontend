@@ -6,7 +6,9 @@ export default function useWebSocket(onMessage) {
   const clientRef = useRef(null);
 
   const connect = () => {
-    const socket = new SockJS("https://uat.getrysa.com/ws");
+    // const socket = new SockJS("https://uat.getrysa.com/ws");
+
+    const socket = new SockJS("https://los.arysefin.com/ws");
 
     const client = new Client({
       webSocketFactory: () => socket,

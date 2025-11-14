@@ -62,7 +62,7 @@ const Kfscompleted = () => {
       );
       console.log("✅ Loan Agreement API Response:", res.data);
       if (res.data.code === -1) {
-        window.location.href = `/yubi/RejectionPage`;
+        window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
         return;
       }
     } catch (err) {
@@ -94,7 +94,7 @@ const Kfscompleted = () => {
             console.log("✅ eSign API Response:", res.data);
 
             if (res.data.code === -1) {
-              window.location.href = `/yubi/RejectionPage`;
+              window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
               return;
             }
 

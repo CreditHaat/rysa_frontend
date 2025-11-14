@@ -46,7 +46,7 @@ const Mandatecompleted = () => {
       console.log("response is:", response);
 
       if (response.data.code === -1) {
-        window.location.href = `/yubi/RejectionPage`;
+        window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
         return;
       }
       const redirectUrl = response?.data?.code;
@@ -57,7 +57,7 @@ const Mandatecompleted = () => {
         );
 
         if (response2.data.code === -1) {
-          window.location.href = `/yubi/RejectionPage`;
+          window.location.href = `/yubi/Rejectpage?clientLoanId=${clientLoanId}`;
           return;
         }
       } else {
@@ -79,7 +79,7 @@ const Mandatecompleted = () => {
         clientLoanId={clientLoanId}
         onFinalSanctionReady={() => {
           console.log("🌟 Final sanction ready! Redirecting...");
-          router.push("/SuccessPage");
+          router.push(`/yubi/SubmitePage?clientLoanId=${clientLoanId}`);
         }}
       />
       {isNextClicked ? (
