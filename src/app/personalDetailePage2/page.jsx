@@ -2,7 +2,8 @@
 import React from 'react'
 import { Outfit } from "next/font/google";
 import PersonalDetailPage from "../../component/NewJourney/personalDetailePage";
-import PersonalDetailPage2 from "../../component/NewJourney/personalDetailePage2";
+// import PersonalDetailPage2 from "../../component/NewJourney/personalDetailePage2";
+import PersonalDetailPage2 from "../../component/NewJourney/newPersonalDetailePage2";
 import PersonalDetailPage3 from "../../component/NewJourney/personalDetailePage3";
 
 const outfit = Outfit({

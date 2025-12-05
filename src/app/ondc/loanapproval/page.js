@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react'
-import LoanApprovalPage from '../../../component/Rysa/ONDC/LoanApprovalPage'
+import LoanApprovalPage from '../../../component/Rysa/ONDC/LoanApprovalPage_temp'
 
 const page = () => {
   return (

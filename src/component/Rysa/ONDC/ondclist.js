@@ -99,7 +99,7 @@ const Ondclist = () => {
       }
       setTimeout(() => {
         setLoading(false);
-      }, 76000);
+      }, 1000);
       // ✅ Place your logic here (API call, state update, etc.)
     }, 75000); // 50,000 ms = 30 seconds
 

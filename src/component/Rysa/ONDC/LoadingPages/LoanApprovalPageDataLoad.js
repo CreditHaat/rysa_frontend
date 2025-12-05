@@ -153,8 +153,7 @@
 
 "use client";
 import React, { useState, useEffect } from 'react';
-import "./LoadingPage.css";
-import { Roboto } from 'next/font/google';
+import styles from "./LoanApprovalPageDataLoad.module.css";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
@@ -165,13 +164,17 @@ import UIDContext from '../../context/UIDContext';
 import FinalLoanOfferContext from '../context/FinalLoanOfferContext';
 import { calculateSettlement } from '../apis/settlementCalculator';
 import OnStatusContext from "../context/OnStatusContext";
+import { Outfit } from "next/font/google";
 
-const roboto = Roboto({
-  weight: ["400", "700"],
+const outfit = Outfit({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
 const LoadingPage = () => {
+
+  const [onStatusFormStatus, setOnStatusFormStatus] = useState(null);
 
   const [showPage, setShowPage] = useState(null);
   const [submissionId, setSubmissionId] = useState(null);
@@ -240,16 +243,57 @@ const LoadingPage = () => {
 
   };
 
-  useEffect(()=>{
-    if(Object.keys(SelectedLenderData).length !== 0 && submissionId !== null && Object.keys(initPayload).length !== 0){
+//   useEffect(()=>{
+//     if(Object.keys(SelectedLenderData).length !== 0 && submissionId !== null && Object.keys(initPayload).length !== 0){
 
-        if(showPage === "BankDetails"){
-            //here we will redirect the user to the bankDetailsPage if submission id is present in onStatus
-            router.push("/ondc/bankdetails");
-        }
+//         if(showPage === "BankDetails"){
+//             //here we will redirect the user to the bankDetailsPage if submission id is present in onStatus
+//             router.push("/ondc/bankdetails");
+//         }
 
+//     }
+// },[SelectedLenderData, showPage, initPayload])
+
+useEffect(() => {
+
+  // 1) PENDING
+  if (onStatusFormStatus?.toLowerCase() === "pending") {
+    // alert("Your application is pending. In the meantime, you can view our other offers by clicking on show offers button.");
+
+    //here we will add new pending page instead of this rejection page
+
+    const baseUrl = `/ondc/ondcpending?mobilenumber=${mobileNumber}`;
+    const tId = transactionId;
+
+    router.push(
+      transactionId ? `${baseUrl}&transactionid=${tId}` : baseUrl
+    );
+  }
+
+  // 2) REJECTED (must come BEFORE "not rejected" logic)
+  else if (onStatusFormStatus?.toLowerCase() === "rejected") {
+    const baseUrl = `/ondc/ondcrejection?mobilenumber=${mobileNumber}`;
+    const tId = transactionId;
+
+    router.push(
+      transactionId ? `${baseUrl}&transactionid=${tId}` : baseUrl
+    );
+  }
+
+
+  // 3) NOT REJECTED
+  else if (
+    Object.keys(SelectedLenderData).length !== 0 &&
+    submissionId !== null &&
+    Object.keys(initPayload).length !== 0 &&
+    onStatusFormStatus
+  ) {
+    if (showPage === "BankDetails") {
+      router.push("/ondc/bankdetails");
     }
-},[SelectedLenderData, showPage, initPayload])
+  }
+
+}, [SelectedLenderData, showPage, initPayload, onStatusFormStatus]);
 
   useEffect(() => {
     if (Object.keys(SelectedLenderData).length !== 0 && Object.keys([payloadForSelect]).length !== 0) {
@@ -376,6 +420,9 @@ const LoadingPage = () => {
 
           setSubmissionId(onStatusData?.message?.order?.items?.[0]?.xinput?.form_response?.submission_id);
 
+          //added by tejas on 27/11/2025
+          setOnStatusFormStatus(onStatusData?.message?.order?.items?.[0]?.xinput?.form_response?.status || "NA");
+
           const parsedData = onStatusData;
 
           const initPayload2 = {
@@ -496,43 +543,215 @@ const LoadingPage = () => {
     return [];
   };
 
+  // timer css function here
+  // const [seconds, setSeconds] = useState(60);
+  //   const [showFact, setShowFact] = useState(false);
+  //   const [showFactText, setShowFactText] = useState(false);
+  
+  //   useEffect(() => {
+  //     // Timer countdown - 60 seconds to 0
+  //     const timer = setInterval(() => {
+  //       setSeconds((prev) => {
+  //         if (prev <= 1) {
+  //           clearInterval(timer);
+  //           return 0;
+  //         }
+  //         return prev - 1;
+  //       });
+  //     }, 10);
+  
+  //     // Show fun fact after 5 seconds (bottom to top animation)
+  //     const factTimer = setTimeout(() => {
+  //       setShowFact(true);
+  //     }, 250);
+  
+  //     // Show paragraph text 2 seconds after fun fact title
+  //     const factTextTimer = setTimeout(() => {
+  //       setShowFactText(true);
+  //     }, 300); // 5 seconds + 2 seconds = 7 seconds
+  
+  //     return () => {
+  //       clearInterval(timer);
+  //       clearTimeout(factTimer);
+  //       clearTimeout(factTextTimer);
+  //     };
+  //   }, []);
+  
+  //   // Calculate rotation angle for the sun (clockwise: 0-360 degrees)
+  //   const sunRotation = ((60 - seconds) / 60) * 360;
+  
+  //   // Calculate stroke dash offset for circular progress (clockwise)
+  //   const radius = 90;
+  //   const circumference = 2 * Math.PI * radius;
+  //   const strokeDashoffset = circumference * (seconds / 60);
+   const [showFact, setShowFact] = useState(false);
+  const [showFactText, setShowFactText] = useState(false);
+
+  useEffect(() => {
+    // Show fun fact title at 5 sec
+    const factTimer = setTimeout(() => {
+      setShowFact(true);
+    }, 5000);
+
+    // Show fun fact text at 7 sec
+    const factTextTimer = setTimeout(() => {
+      setShowFactText(true);
+    }, 7000);
+
+    return () => {
+      clearTimeout(factTimer);
+      clearTimeout(factTextTimer);
+    };
+  }, []);
+
   return (
-    <div className={`${roboto.className} waiting-table`}>
-      <div className="loading-circle">
-        <svg className="hourglass-icon" viewBox="0 0 24 24" fill="none">
-          <path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6z"
-            fill="#6039D2" stroke="#6039D2" strokeWidth="2.5" />
-        </svg>
+    // <div className={`${styles.loaderContainer} ${outfit.className}`}>
+    //   <div className={styles.content}>
+    //     <h1 className={styles.title}>Please wait</h1>
+    //     <p className={styles.subtitle}>
+    //       We are processing your
+    //       <br />
+    //       best investment in you...
+    //     </p>
+
+    //     <div className={styles.timerWrapper}>
+    //       {/* Purple gradient background with pulse animation */}
+    //       <div className={styles.purpleGlow}></div>
+          
+    //       {/* Rotating sun circle - moves clockwise */}
+    //       <div 
+    //         className={styles.sunGlow} 
+    //         style={{ 
+    //           transform: `rotate(${sunRotation}deg)`,
+    //           transition: 'transform 1s linear'
+    //         }}
+    //       ></div>
+
+    //       {/* Timer circle with animated border (clockwise) */}
+    //       <div className={styles.timerCircle}>
+    //         <svg className={styles.progressRing} width="200" height="200">
+    //           {/* Background circle - static */}
+    //           <circle
+    //             stroke="rgba(255, 255, 255, 0.3)"
+    //             strokeWidth="2"
+    //             fill="transparent"
+    //             r={radius}
+    //             cx="100"
+    //             cy="100"
+    //           />
+    //           {/* Progress circle - moves clockwise */}
+    //           <circle
+    //             className={styles.progressRingCircle}
+    //             stroke="white"
+    //             strokeWidth="3"
+    //             fill="transparent"
+    //             r={radius}
+    //             cx="100"
+    //             cy="100"
+    //             style={{
+    //               strokeDasharray: circumference,
+    //               strokeDashoffset: strokeDashoffset,
+    //             }}
+    //           />
+    //         </svg>
+    //         {/* <div className={styles.timerText}>
+    //           <div className={styles.secondsNumber}>{seconds}</div>
+    //           <div className={styles.secondsLabel}>seconds</div>
+    //         </div> */}
+    //       </div>
+    //     </div>
+
+    //     {/* Fun fact sliding from bottom to top */}
+    //     <div>
+    //       <div className={`${styles.factContainer} ${showFact ? styles.factVisible : ''}`}>
+    //         <p className={styles.factTitle}>Here is a fun fact:</p>
+    //       </div>
+          
+    //       <div className={`${styles.factContainer} ${showFactText ? styles.factVisible : ''}`}>
+    //         <p className={styles.factText}>
+    //           {/* A Red Door Can Mean a Paid-Off Mortgage:
+    //           <br />
+    //           In Scotland, a tradition exists where painting
+    //           <br />
+    //           one&#39;s front door red signifies that the
+    //           <br />
+    //           homeowner has fully paid off their mortgage. */}
+    //           Because sometimes, the shortest distance between<br />
+    //            you and your goals is a quick loan, not <br />divine intervention.
+    //         </p>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    <div className={styles.loaderContainer}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Please wait</h1>
+        <p className={styles.subtitle}>
+          We are processing your
+          <br />
+          best investment in you...
+        </p>
+
+        <div className={styles.timerWrapper}>
+          {/* Purple gradient background with pulse animation */}
+          <div className={styles.purpleGlow}></div>
+
+          {/* Rotating sun circle - moves clockwise INFINITE LOOP */}
+          <div className={styles.sunGlow}></div>
+
+          {/* Timer circle with animated border (clockwise) */}
+          <div className={styles.timerCircle}>
+            <svg className={styles.progressRing} width="200" height="200">
+              {/* Background circle - thin white line (patli line) */}
+              <circle
+                className={styles.progressRingBg}
+                r="90"
+                cx="100"
+                cy="100"
+                fill="none"
+                stroke="white"
+              />
+              <circle
+                className={styles.progressRingCircle}
+                r="90"
+                cx="100"
+                cy="100"
+                fill="none"
+                stroke="white"
+                strokeWidth="3"
+              />
+            </svg>
+            <div className={styles.timerText}>
+              {/* <div className={styles.secondsNumber}></div> */}
+              {/* <div className={styles.secondsLabel}>seconds</div> */}
+            </div>
+          </div>
+        </div>
+
+        {/* Fun fact sliding from bottom to top */}
+        <div>
+          <div
+            className={`${styles.factContainer} ${
+              showFact ? styles.factVisible : ""
+            }`}
+          >
+            <p className={styles.factTitle}>Here is a fun fact:</p>
+          </div>
+
+          <div
+            className={`${styles.factContainer} ${
+              showFactText ? styles.factVisible : ""
+            }`}
+          >
+            <p className={styles.factText}>
+              Because sometimes, the shortest distance between
+              <br />
+              you and your goals is a quick loan, not <br />
+              divine intervention.
+            </p>
+          </div>
+        </div>
       </div>
-
-      <div className="loading-text">
-        <h3 style={{ textAlign: "center" }}> <b>Redirecting ...</b> </h3>
-        <br></br>
-
-        <p className='para'>Do not press the back button or refresh the page</p>
-      </div>
-
-      {/* Submit Button */}
-      {/* <div className="Long-button"> */}
-      {/* <button
-                    type="submit"
-                    className="form-submit"
-                >
-                    Next
-                </button> */}
-      {/* </div> */}
-
-      {/* Submit Button */}
-      {/* <div className="btnContainer">
-                <button
-                  type="submit"
-                  className="nextBtn"
-                >
-                  Next
-                </button>
-              </div> */}
-
-
     </div>
   );
 };

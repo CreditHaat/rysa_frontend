@@ -1,6 +1,7 @@
 import Image from "next/image";
 import RysaComingSoonPage from "../component/Rysa/RysaComingSoPage";
-import SinglePage from '../component/Rysa/SinglePage';
+// import SinglePage from '../component/Rysa/SinglePage';
+import SinglePage from '../component/NewJourney/newhomepage';
 export default function Home() {
   return (
     <div>

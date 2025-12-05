@@ -9,7 +9,7 @@
 
 .card {
   width: 432px;
-  height: 100vh;
+  height:100vh;
   border-radius: 12px;
   background: #F7F6FD;
   position: relative;
@@ -99,11 +99,12 @@
   position: relative;
   z-index: 3;
   width: 100%;
-  padding: 10px 8px;
+  padding: 10px 20px;
   border-radius: 10px;
   border: 1px solid #f1efef;
   /* border-bottom: 2px solid #ccc; */
-  font-size: 15px;
+  font-size: 14px;
+  color: #000;
   outline: none;
   background-color: white;
   transition: all 0.3s ease;
@@ -118,6 +119,9 @@
   border-radius: 10px;
   border-color: #7b5dff;
   box-shadow: 2px 2px 2px 2px #7b5dff33;
+}
+.inputError{
+  border: 1 px solid red;
 }
 /* .input {
   position: relative;
