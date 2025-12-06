@@ -867,6 +867,9 @@ function Newhomepage() {
                 <Link href="/Grievance">Grievance Redressal</Link>
               </div>
               <div className={styles.contactLink}>
+                <Link href="/gradiation">Gradation</Link>
+              </div>
+              <div className={styles.contactLink}>
                 <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
                   RBI Sachet Portal
                 </a>

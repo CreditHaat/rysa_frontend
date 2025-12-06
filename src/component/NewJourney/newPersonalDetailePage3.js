@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./newPersonalDetailePage3.module.css";
 import Image from "next/image";
 import axios from "axios";
@@ -35,6 +35,33 @@ function NewPersonalDetailePage3({
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showSheetMaritalStatus, setShowSheetMaritalStatus] = useState(false);
+
+  useEffect(() => {
+    if (mainFormData.mobileNumber) {
+      fetchCompanyName(mainFormData.mobileNumber);
+    }
+  }, []);
+
+  const fetchCompanyName = async (mobile) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL_ARYSEFIN}api/getUserInfo`,
+        {
+          params: { mobileNumber: mobile },
+        }
+      );
+
+      const data = response.data;
+
+      // Only prefill if user has not typed anything
+      setFormData((prev) => ({
+        ...prev,
+        companyName: prev.companyName || data.companyName || "",
+      }));
+    } catch (err) {
+      console.error("Error fetching user info", err);
+    }
+  };
 
   // Handle input changes → update parent formData
   const handleInputChange = async (e) => {

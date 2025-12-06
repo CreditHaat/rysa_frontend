@@ -318,6 +318,16 @@
     line-height: 18px;
     color: #191A23;
 }
+.inputfield::-webkit-inner-spin-button,
+.inputfield::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputfield {
+  -moz-appearance: textfield; /* Firefox साठी */
+}
+
 
 /* button css */
 .btn {

@@ -170,6 +170,8 @@ import axios from "axios";
 import SelectedLoanContext from "./RysaContexts/SelectedLoanContext";
 import { useContext } from "react";
 import { Outfit } from "next/font/google";
+import RysaLoginContext from "./context/RysaLoginContext";
+import { useRouter } from "next/navigation";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -179,6 +181,10 @@ const outfit = Outfit({
 
 const LoanRequestPage = () => {
 
+  const router = useRouter();
+
+  const {isOtpVerified, setIsOtpVerified} = useContext(RysaLoginContext);
+
   const {selectedLoanData, setSelectedLoanData} = useContext(SelectedLoanContext);
 
   const searchParams = useSearchParams();
@@ -186,6 +192,16 @@ const LoanRequestPage = () => {
 
   const [loans, setLoans] = useState([]); // ✅ dynamic data
   const [selectedLoan, setSelectedLoan] = useState(null);
+
+  useEffect(()=>{
+    if(isOtpVerified===false){
+      // Windows.location.href = `https://www.arysefin.com/loginpage`;
+      router.push(`/loginpage`);
+    }else{
+      // Windows.location.href = `https://www.arysefin.com/loginpage`;
+      // router.push(`/loginpage`);
+    }
+  },[isOtpVerified])
 
   useEffect(() => {
     if (mobileNumber) {

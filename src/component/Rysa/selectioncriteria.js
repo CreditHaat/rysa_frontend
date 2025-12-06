@@ -176,11 +176,11 @@ const SupportPage = () => {
             applicable.
           </p>
           <h3>
-            We further match and list the lenders from our partner lenders
-            based on-
+            We further match and list the lenders from our partner lenders based
+            on-
           </h3>
 
-          <ul className={styles.listPoints} style={{marginTop:"-5px"}}>
+          <ul className={styles.listPoints} style={{ marginTop: "-5px" }}>
             <li>
               Lender specific cuts for income, employment type, geographic
               location, mode of payment and lender specific credit policies
@@ -285,6 +285,9 @@ const SupportPage = () => {
                 </div>
                 <div className={styles.contactLink}>
                   <Link href="/Grievance">Grievance Redressal</Link>
+                </div>
+                <div className={styles.contactLink}>
+                  <Link href="/gradiation">Gradation</Link>
                 </div>
                 <div className={styles.contactLink}>
                   <a

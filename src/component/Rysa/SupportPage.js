@@ -133,7 +133,6 @@ const SupportPage = () => {
         </nav>
       </div>
 
-
       <div className={outfit.className}>
         <div className={styles.container}>
           <div className={styles.content}>
@@ -260,52 +259,54 @@ const SupportPage = () => {
         </div>
         {/* footer */}
         <footer className={styles.footer}>
-        <div className={styles.footerParent}>
-          {/* first */}
-          <div className={styles.fistFooterSection}>
-            <div className={styles.firstChild}>
-              <Link href="/">
-                <Image
-                  src={logo2}
-                  alt="Logo"
-                  width={150}
-                  height={150}
-                  className={styles.footerIconAysefin}
-                />
-              </Link>
-            </div>
+          <div className={styles.footerParent}>
+            {/* first */}
+            <div className={styles.fistFooterSection}>
+              <div className={styles.firstChild}>
+                <Link href="/">
+                  <Image
+                    src={logo2}
+                    alt="Logo"
+                    width={150}
+                    height={150}
+                    className={styles.footerIconAysefin}
+                  />
+                </Link>
+              </div>
 
-            <div className={styles.firstChild}>
-              <div className={styles.infoAndIcon}>
-                <span className={styles.iconSapan1}>
-                  <FaEnvelope className={styles.iconF} />
-                </span>
-                <span>
-                  Email:{" "}
-                  <a href="mailto:support@arysefin.com">support@arysefin.com</a>{" "}
-                </span>
-              </div>
-              <div className={styles.infoAndIcon}>
-                <span className={styles.iconSapan2}>
-                  <FaPhoneAlt className={styles.iconF} />
-                </span>
-                <a href="tel:+020-4730-4552" className={styles.phoneLink}>
-                  <span>Phone: +020-4730-4552</span>
-                </a>
-              </div>
-              <div className={styles.infoAndIcon}>
-                <span className={styles.iconSapan}>
-                  <FaMapMarkerAlt className={styles.iconF} />
-                </span>
-                <span>
-                  Office No. 7 to 12, 7th Floor,
-                  <br /> Tower B,Downtown City Vista,
-                  <br /> Survey Number 58/2, <br />
-                  Fountain Road,Kharadi <br />
-                  Pune MH 411014 IN
-                </span>
-              </div>
-              {/* <div className={styles.infoAndIcon2}>
+              <div className={styles.firstChild}>
+                <div className={styles.infoAndIcon}>
+                  <span className={styles.iconSapan1}>
+                    <FaEnvelope className={styles.iconF} />
+                  </span>
+                  <span>
+                    Email:{" "}
+                    <a href="mailto:support@arysefin.com">
+                      support@arysefin.com
+                    </a>{" "}
+                  </span>
+                </div>
+                <div className={styles.infoAndIcon}>
+                  <span className={styles.iconSapan2}>
+                    <FaPhoneAlt className={styles.iconF} />
+                  </span>
+                  <a href="tel:+020-4730-4552" className={styles.phoneLink}>
+                    <span>Phone: +020-4730-4552</span>
+                  </a>
+                </div>
+                <div className={styles.infoAndIcon}>
+                  <span className={styles.iconSapan}>
+                    <FaMapMarkerAlt className={styles.iconF} />
+                  </span>
+                  <span>
+                    Office No. 7 to 12, 7th Floor,
+                    <br /> Tower B,Downtown City Vista,
+                    <br /> Survey Number 58/2, <br />
+                    Fountain Road,Kharadi <br />
+                    Pune MH 411014 IN
+                  </span>
+                </div>
+                {/* <div className={styles.infoAndIcon2}>
                 <div className={styles.socialIconBack}>
                   <FaLinkedinIn className={styles.socialIconF} />
                 </div>{" "}
@@ -313,77 +314,85 @@ const SupportPage = () => {
                   <FaFacebookF className={styles.socialIconF} />
                 </div>
               </div> */}
-            </div>
+              </div>
 
-            <div className={styles.firstChild}>
-              <div className={styles.contactLink}>
-                <Link href="/support">Contact Us</Link>
+              <div className={styles.firstChild}>
+                <div className={styles.contactLink}>
+                  <Link href="/support">Contact Us</Link>
+                </div>
+                <div className={styles.contactLink}>
+                  <Link href="/lenderpage">Responsible Lending</Link>
+                </div>
+                <div className={styles.contactLink}>
+                  <Link href="/acquisition_partners">Acquisition partners</Link>
+                </div>
+                <div
+                  className={styles.contactLink}
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  style={{ cursor: "pointer" }}
+                >
+                  Sitemap
+                </div>
               </div>
-              <div className={styles.contactLink}>
-                <Link href="/lenderpage">Responsible Lending</Link>
-              </div>
-              <div className={styles.contactLink}>
-                <Link href="/acquisition_partners">Acquisition partners</Link>
-              </div>
-              <div
-                className={styles.contactLink}
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                style={{ cursor: "pointer" }}
-              >
-                Sitemap
-              </div>
-            </div>
 
-            <div className={styles.firstChild}>
-              {/* <div className={styles.contactLink}>Legal</div> */}
-              <div className={styles.contactLink}>
-                <Link href="/TermAndCondition">Terms & Conditions</Link>
-              </div>
-              <div className={styles.contactLink}>
-                <Link href="/PrivacyAndPolicy">Privacy Policy</Link>
-              </div>
-              <div className={styles.contactLink}>
-                <Link href="/Grievance">Grievance Redressal</Link>
-              </div>
-              <div className={styles.contactLink}>
-                <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
-                  RBI Sachet Portal
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* seconde */}
-          <div className={styles.fistFooterSection2}>
-            <div className={styles.firstChild2}></div>
-            <div className={styles.firstChild2}>
-              <div className={styles.infoAndIcon2}>
-                <div className={styles.socialIconBack}>
+              <div className={styles.firstChild}>
+                {/* <div className={styles.contactLink}>Legal</div> */}
+                <div className={styles.contactLink}>
+                  <Link href="/TermAndCondition">Terms & Conditions</Link>
+                </div>
+                <div className={styles.contactLink}>
+                  <Link href="/PrivacyAndPolicy">Privacy Policy</Link>
+                </div>
+                <div className={styles.contactLink}>
+                  <Link href="/Grievance">Grievance Redressal</Link>
+                </div>
+                <div className={styles.contactLink}>
+                  <Link href="/gradiation">Gradation</Link>
+                </div>
+                <div className={styles.contactLink}>
                   <a
-                    href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true"
-                    target="_blank"
+                    href="https://sachet.rbi.org.in/"
                     rel="noopener noreferrer"
                   >
-                    <FaLinkedinIn className={styles.socialIconF} />
-                  </a>
-                </div>{" "}
-                <div className={styles.socialIconBack}>
-                  <a
-                    href="https://www.facebook.com/profile.php?id=61580792857656"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaFacebookF className={styles.socialIconF} />
+                    RBI Sachet Portal
                   </a>
                 </div>
               </div>
             </div>
+            {/* seconde */}
+            <div className={styles.fistFooterSection2}>
+              <div className={styles.firstChild2}></div>
+              <div className={styles.firstChild2}>
+                <div className={styles.infoAndIcon2}>
+                  <div className={styles.socialIconBack}>
+                    <a
+                      href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaLinkedinIn className={styles.socialIconF} />
+                    </a>
+                  </div>{" "}
+                  <div className={styles.socialIconBack}>
+                    <a
+                      href="https://www.facebook.com/profile.php?id=61580792857656"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaFacebookF className={styles.socialIconF} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* last */}
+            <div className={styles.lastChild}>
+              © 2025 Arysefin. All Rights Reserved.
+            </div>
           </div>
-          {/* last */}
-          <div className={styles.lastChild}>
-            © 2025 Arysefin. All Rights Reserved.
-          </div>
-        </div>
-      </footer>
+        </footer>
       </div>
     </>
   );

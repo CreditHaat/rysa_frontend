@@ -71,6 +71,7 @@ import { SelectedLenderProvider } from "@/component/Rysa/ONDC/context/SelectedLe
 import { OnStatusProvider } from "@/component/Rysa/ONDC/context/OnStatusProvider";
 import { FinalLoanOfferProvider } from "@/component/Rysa/ONDC/context/FinalLoanOfferProvider";
 import { SelectedLoanProvider } from "@/component/Rysa/RysaContexts/SelectedLoanProvider";
+import { RysaLoginProvider } from "@/component/Rysa/context/RysaLoginProvider";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -147,7 +148,11 @@ export default function RootLayout({ children }) {
             <SelectedLenderProvider>
               <OnStatusProvider>
                 <FinalLoanOfferProvider>
-                  <SelectedLoanProvider>{children}</SelectedLoanProvider>
+                  <SelectedLoanProvider>
+                    <RysaLoginProvider>
+                      {children}
+                    </RysaLoginProvider>
+                  </SelectedLoanProvider>
                 </FinalLoanOfferProvider>
               </OnStatusProvider>
             </SelectedLenderProvider>

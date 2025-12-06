@@ -10,7 +10,7 @@
 // import axios from "axios";
 
 // function NewLandingPage() {
-//   const handleBoxClick = (inputRef) => { // new11 input fuction 
+//   const handleBoxClick = (inputRef) => { // new11 input fuction
 //     inputRef.current?.focus();
 //   };
 //     const mobileRef = useRef(null);
@@ -183,12 +183,12 @@
 //     e.preventDefault();
 //     const pastedData = e.clipboardData.getData('text');
 //     const numericValue = pastedData.replace(/[^0-9]/g, '').slice(0, 6);
-    
+
 //     if (numericValue.length === 6) {
 //       const otpArray = numericValue.split('');
 //       setOtp(otpArray);
 //       setOtpError('');
-      
+
 //       // Focus last input
 //       setTimeout(() => {
 //         otpRefs.current[5]?.focus();
@@ -254,7 +254,7 @@
 //   useEffect(() => {
 //     if (showOTPbottomsheet && 'OTPCredential' in window) {
 //       const abortController = new AbortController();
-      
+
 //       navigator.credentials.get({
 //         otp: { transport: ['sms'] },
 //         signal: abortController.signal
@@ -265,7 +265,7 @@
 //           const otpArray = otp.code.split('');
 //           setOtp(otpArray);
 //           setOtpError('');
-          
+
 //           // Optional: Auto verify after filling
 //           setTimeout(() => {
 //             handleVerifyOTP();
@@ -734,6 +734,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "./newladingpage.module.css";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import NewRejectionPage from "../Yubi/newrejectionpage";
 import NewPersonalDetailePage1 from "./newPersonalDetailePage1";
@@ -1380,6 +1381,13 @@ function NewLandingPage() {
                       <p style={{ color: "red" }}>{errors.consent}</p>
                     )}
                   </div>
+                 <div className={styles.formGroup}>
+                    <div className={styles.showText}>
+                     By continuing; it is accepted that I have read/understood 
+                     approach for gradation risk.<span style={{color: "#6039D2"}}><Link href="/gradiation">(gradation risk policy)</Link></span>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>

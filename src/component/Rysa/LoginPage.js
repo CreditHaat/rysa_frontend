@@ -6,6 +6,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Outfit } from "next/font/google";
 import axios from "axios";
+// import RysaLoginContext from "../Rysa/context/UIDContext";
+import RysaLoginContext from "./context/RysaLoginContext";
+import { useContext } from "react";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -14,6 +17,8 @@ const outfit = Outfit({
 });
 
 export default function LoginPage() {
+
+  const {isOtpVerified, setIsOtpVerified} = useContext(RysaLoginContext);
 
   const [otpError, setOtpError] = useState("");
 
@@ -123,6 +128,7 @@ export default function LoginPage() {
       console.log("Verify OTP response is :: ",response);
 
       if (response.data.code === 0) {
+        setIsOtpVerified(true);
         // setShowOTPbottomsheet(false);
         // setMainFormData((prev) => ({
         //   ...prev,
