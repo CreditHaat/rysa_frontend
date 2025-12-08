@@ -1,334 +1,412 @@
 "use client";
-import React from 'react';
-import styles from './landerpage.module.css';
-import Image from 'next/image';
-import logo from '../../../public/arysefin-dark logo.png'
-import Link from 'next/link';
-import Pahal from '../../../public/pahal_logo.png';
-import Kissht from '../../../public/kissht_logo.png';
-import BFL from '../../../public/bfl_logo.png';
-import ABCL from '../../../public/abcl-logo.gif';
-import ondclogo from '../../../public/ondcW_logo.png';
-import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
+import React from "react";
+import styles from "./landerpage.module.css";
+import Image from "next/image";
+import logo from "../../../public/arysefin-dark logo.png";
+import Link from "next/link";
+import Pahal from "../../../public/pahal_logo.png";
+import Kissht from "../../../public/kissht_logo.png";
+import BFL from "../../../public/bfl_logo.png";
+import ABCL from "../../../public/abcl-logo.gif";
+import ondclogo from "../../../public/ondcW_logo.png";
+import { useState } from "react";
+import {
+  FaBars,
+  FaInstagram,
+  FaFacebookF,
+  FaLinkedinIn,
+  FaTimes,
+  FaFacebook,
+  FaLinkedin,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+import logo2 from "../../../public/arysefin-white logo.png";
 function Landerpage() {
-    return (
-        <div className={styles.container}>
-            {/* nav bar */}
-            <header className={styles.header}>
-                <nav className={styles.navbar}>
-                    <div className={styles.navContainer}>
-                        {/* Logo */}
-                        <div className={styles.logoNav}>
-                            <Link href='/'><Image
-                                src={logo}
-                                alt="Logo"
-                                width={80}
-                                height={65}
-                            /></Link>
-                        </div>
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <div className={styles.navdiv}>
+        <nav className={styles.nav1}>
+          <div className={styles.logo}>
+            <Link href="/">
+              <Image src={logo} alt="Logo" width={100} height={100} />
+            </Link>
+          </div>
 
-                        {/* हंबरगर बटन */}
-                        {/* <div className={styles.navRightHumberger}>
-                <button onClick={toggleMenu} className={styles.hamburgerBtn}>
-                  {isOpen ? <FaTimes /> : <FaBars />}
-                </button>
-              </div>
+          {/* Right side - Hamburger */}
+          <div className={styles.menuIcon} onClick={() => setIsOpen(true)}>
+            <FaBars />
+          </div>
 
-              {isOpen && (
-                <div className={styles.humberView}>
-                  <a href="#" className={styles.navLinkHumberger}>
-                    Home
-                  </a>
-                  <a href="#" className={styles.navLinkHumberger}>
-                    Loans
-                  </a>
-                  <a href="#" className={styles.navLinkHumberger}>
-                    About
-                  </a>
-                </div>
-              )} */}
-
-                        {/* Navigation Links */}
-                        {/* <div className={styles.navRight}>
-                <div className={styles.navLinks}>
-                  <div className={styles.navAncor}>
-                    <a href="#" className={styles.navLink}>
-                      Home
-                    </a>
-                  </div>
-                  <div className={styles.navAncor}>
-                    <a href="#" className={styles.navLink}>
-                      Loans
-                    </a>
-                  </div>
-                  <div className={styles.navAncor}>
-                    <a href="#" className={styles.navLink}>
-                      About
-                    </a>
-                  </div>
-                </div>
-                <button className={styles.loginBtn}>Login</button>
-              </div> */}
-                        {/* Login Button */}
-                    </div>
-                </nav>
-            </header>
-            {/* main section */}
-            <div className={styles.section}>
-                <div className={styles.lederDiv}>
-                    <h3>Lending Partner Of <span>AryseFin</span></h3>
-                    {/* first */}
-                    <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={Pahal}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Pahal</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* seconde box */}
-                    <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={Kissht}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Kissht</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* 3 box */}
-                    <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={BFL}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Bajaj Finserv Limited</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* 4 box */}
-                    <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={ABCL}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Aditya Birla Capital Limited</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* 5 box */}
-                    {/* <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={logo}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Aryse_Fin</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div> */}
-                    {/* 6 box */}
-                    {/* <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={logo}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Aryse_Fin</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div> */}
-                    {/* 7 box */}
-                    {/* <div className={styles.imageTextButton}>
-                        <div>
-                            <Image
-                                src={logo}
-                                width={80}
-                                height={50}
-                                alt='logo'
-                            />
-                            <h3>Aryse_Fin</h3>
-                        </div>
-                        <div className={styles.tANDb}>
-                            <div className={styles.textContainer}>
-                                <p>Amount range:₹20,000-₹5,00,000<br />
-                                    Features:Personal Loans for<br /> Salaried Individuals
-                                </p>
-                            </div>
-                            <div className={styles.onlybtn}>
-                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
-                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
-                            </div>
-                        </div>
-                    </div> */}
-                    {/* 8 */}
-
-                </div>
-
+          {/* Sidebar Menu */}
+          <div className={`${styles.sidebar} ${isOpen ? styles.show : ""}`}>
+            {/*show  cha w kadala*/}
+            <div className={styles.closeIcon} onClick={() => setIsOpen(false)}>
+              <FaTimes />
             </div>
 
-            {/* footer section */}
-            <footer className={styles.footer}>
-            <div className={styles.mainFD}>
-              <div className={styles.combineThree}>
-                <div className={styles.flogo}>
-                  <Link href='/'><Image
-                    src="/AryseFin_logo.png"
-                    alt="Logo"
-                    width={80}
-                    height={80}
-                    className="object-contain"
-                  /></Link>
-                  <p className={styles.logoText}>
-                    AryseFin is a lending service platform (LSP) that makes borrowing
-                    easy, transparent, and human.
+            <ul className={styles.menuList}>
+              {/* <li>About us</li> */}
+              {/* <li>Apply for loan</li> */}
+              {/* <li>Quick pay</li> */}
+            </ul>
+
+            <button className={styles.loginBtn}>
+              <Link href="/loginpage">Log in</Link>
+            </button>
+            <div className={styles.heightDiv}></div>
+            <div className={styles.socialIcons}>
+              <div className={styles.infoAndIcon2}>
+                <div className={styles.socialIconBack}>
+                  <FaLinkedinIn className={styles.socialIconF} />
+                </div>{" "}
+                <div className={styles.socialIconBack}>
+                  <FaFacebookF className={styles.socialIconF} />
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Right side - Hamburger  end*/}
+
+          <div className={styles.navLinks}>
+            {/* <div>About us</div> */}
+            {/* <div>Apply for loan</div> */}
+            {/* <div>Quick pay</div> */}
+            <button className={styles.loginButton}>
+              <Link href="/loginpage">Log in</Link>
+            </button>
+          </div>
+        </nav>
+      </div>
+      <div className={styles.container}>
+        {/* main section */}
+        <div className={styles.section}>
+          <div className={styles.lederDiv}>
+            <h3>
+              Lending Partner Of <span>AryseFin</span>
+            </h3>
+            {/* first */}
+            <div className={styles.imageTextButton}>
+              <div>
+                <Image src={Pahal} width={80} height={50} alt="logo" />
+                <h3>Pahal</h3>
+              </div>
+              <div className={styles.tANDb}>
+                <div className={styles.textContainer}>
+                  <p>
+                    Amount range:₹20,000-₹5,00,000
+                    <br />
+                    Features:Personal Loans for
+                    <br /> Salaried Individuals
                   </p>
                 </div>
-                <div className={styles.fresource}>
-                  <div className={styles.textDecore}>
-                    <h3 className={styles.heading}>Resources</h3>
-                    <h4><Link href="/lenderpage">Lending partners</Link></h4>
-                    <h4><Link href="/acquisition_partners">Acquisition partners</Link></h4>
-                    <h4><Link href="/Grievance">Grievance Redressal process</Link></h4>
-                    <h4>
-                      <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
-                        RBI Sachet Portal
-                      </a>
-                    </h4>
+                <div className={styles.onlybtn}>
+                  <div className={styles.btnContiner}>
+                    <button className={styles.btn}>
+                      <Link href="/personal-loan"><span>Apply Now </span></Link>
+                    </button>
                   </div>
-                </div>
-                {/*  */}
-                <div className={styles.fcity}>
-                  <div className={styles.textDecore}>
-                    <h3 className={styles.heading}>Quick links</h3>
-                    <h4>
-                      <Link href="/TermAndCondition">
-                        Terms of service
-                      </Link>
-                    </h4>
-                    <h4>
-                      <Link href="/PrivacyAndPolicy">
-                        Privacy policy
-                      </Link>
-                    </h4>
-                    <h4>
-                      <Link href="/support">
-                        Contact us
-                      </Link>
-                    </h4>
-                  </div>
-                </div>
-                {/* combine 2 end */}
-              </div>
-              <div className={styles.ondcLogoDiv}>
-                <p>Powered by</p>
-                <Image
-                  src={ondclogo}
-                  alt="Logo"
-                  width={80}
-                  height={65}
-                />
-                
-              </div>
-              <div className={styles.lastMD}>
-                <div className={styles.iconAndCopyRight}>
-                  <div>©2025 Vibhuprada Services Private Limited.</div>
-                  <div className={styles.middleText}> <p>All rights reserved</p></div>
-
-                  <div className={styles.iconF}>
-                    {/* <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                      <FaInstagram />
-                    </a> */}
-                    <a href="https://www.facebook.com/profile.php?id=61580792857656" target="_blank" rel="noopener noreferrer">
-                      <FaFacebook />
-                    </a>
-                    <a href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
-                      <FaLinkedin />
-                    </a>
+                  <div className={styles.btnContainer}>
+                    <button className={styles.btn}>
+                      <Link href="/"><span>Know More </span></Link>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </footer>
+            {/* seconde box */}
+            <div className={styles.imageTextButton}>
+              <div>
+                <Image src={Kissht} width={80} height={50} alt="logo" />
+                <h3>Kissht</h3>
+              </div>
+              <div className={styles.tANDb}>
+                <div className={styles.textContainer}>
+                  <p>
+                    Amount range:₹20,000-₹5,00,000
+                    <br />
+                    Features:Personal Loans for
+                    <br /> Salaried Individuals
+                  </p>
+                </div>
+                <div className={styles.onlybtn}>
+                  <div className={styles.btnContiner}>
+                    <button className={styles.btn}>
+                      <Link href="/personal-loan"><span>Apply Now </span></Link>
+                    </button>
+                  </div>
+                  <div className={styles.btnContainer}>
+                    <button className={styles.btn}>
+                      <a href="https://www.kissht.com/customer-grievance" target="_blank">
+                      <span>Know More </span>
+                      </a>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* 3 box */}
+            <div className={styles.imageTextButton}>
+              <div>
+                <Image src={BFL} width={80} height={50} alt="logo" />
+                <h3>Bajaj Finserv Limited</h3>
+              </div>
+              <div className={styles.tANDb}>
+                <div className={styles.textContainer}>
+                  <p>
+                    Amount range:₹20,000-₹5,00,000
+                    <br />
+                    Features:Personal Loans for
+                    <br /> Salaried Individuals
+                  </p>
+                </div>
+                <div className={styles.onlybtn}>
+                  <div className={styles.btnContiner}>
+                    <button className={styles.btn}>
+                      <Link href="/personal-loan"><span>Apply Now </span></Link>
+                    </button>
+                  </div>
+                  <div className={styles.btnContainer}>
+                    <button className={styles.btn}>
+                      <Link href="/"><span>Know More </span></Link>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* 4 box */}
+            <div className={styles.imageTextButton}>
+              <div>
+                <Image src={ABCL} width={80} height={50} alt="logo" />
+                <h3>Aditya Birla Capital Limited</h3>
+              </div>
+              <div className={styles.tANDb}>
+                <div className={styles.textContainer}>
+                  <p>
+                    Amount range:₹20,000-₹5,00,000
+                    <br />
+                    Features:Personal Loans for
+                    <br /> Salaried Individuals
+                  </p>
+                </div>
+                <div className={styles.onlybtn}>
+                  <div className={styles.btnContiner}>
+                    <button className={styles.btn}>
+                      <Link href="/personal-loan"><span>Apply Now </span></Link>
+                    </button>
+                  </div>
+                  <div className={styles.btnContainer}>
+                    <button className={styles.btn}>
+                     <Link href="/"><span>Know More </span></Link>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* 5 box */}
+            {/* <div className={styles.imageTextButton}>
+                        <div>
+                            <Image
+                                src={logo}
+                                width={80}
+                                height={50}
+                                alt='logo'
+                            />
+                            <h3>Aryse_Fin</h3>
+                        </div>
+                        <div className={styles.tANDb}>
+                            <div className={styles.textContainer}>
+                                <p>Amount range:₹20,000-₹5,00,000<br />
+                                    Features:Personal Loans for<br /> Salaried Individuals
+                                </p>
+                            </div>
+                            <div className={styles.onlybtn}>
+                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
+                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
+                            </div>
+                        </div>
+                    </div> */}
+            {/* 6 box */}
+            {/* <div className={styles.imageTextButton}>
+                        <div>
+                            <Image
+                                src={logo}
+                                width={80}
+                                height={50}
+                                alt='logo'
+                            />
+                            <h3>Aryse_Fin</h3>
+                        </div>
+                        <div className={styles.tANDb}>
+                            <div className={styles.textContainer}>
+                                <p>Amount range:₹20,000-₹5,00,000<br />
+                                    Features:Personal Loans for<br /> Salaried Individuals
+                                </p>
+                            </div>
+                            <div className={styles.onlybtn}>
+                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
+                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
+                            </div>
+                        </div>
+                    </div> */}
+            {/* 7 box */}
+            {/* <div className={styles.imageTextButton}>
+                        <div>
+                            <Image
+                                src={logo}
+                                width={80}
+                                height={50}
+                                alt='logo'
+                            />
+                            <h3>Aryse_Fin</h3>
+                        </div>
+                        <div className={styles.tANDb}>
+                            <div className={styles.textContainer}>
+                                <p>Amount range:₹20,000-₹5,00,000<br />
+                                    Features:Personal Loans for<br /> Salaried Individuals
+                                </p>
+                            </div>
+                            <div className={styles.onlybtn}>
+                                <div className={styles.btnContiner}><button className={styles.btn}><span>Apply Now </span></button></div>
+                                <div className={styles.btnContainer}><button className={styles.btn}><span>Know More </span></button></div>
+                            </div>
+                        </div>
+                    </div> */}
+            {/* 8 */}
+          </div>
         </div>
-    )
+
+        {/* footer section */}
+        <footer className={styles.footer}>
+        <div className={styles.footerParent}>
+          {/* first */}
+          <div className={styles.fistFooterSection}>
+            <div className={styles.firstChild}>
+              <Link href="/">
+                <Image
+                  src={logo2}
+                  alt="Logo"
+                  width={150}
+                  height={150}
+                  className={styles.footerIconAysefin}
+                />
+              </Link>
+            </div>
+
+            <div className={styles.firstChild}>
+              <div className={styles.infoAndIcon}>
+                <span className={styles.iconSapan1}>
+                  <FaEnvelope className={styles.iconF} />
+                </span>
+                <span>
+                  Email:{" "}
+                  <a href="mailto:support@arysefin.com">support@arysefin.com</a>{" "}
+                </span>
+              </div>
+              <div className={styles.infoAndIcon}>
+                <span className={styles.iconSapan2}>
+                  <FaPhoneAlt className={styles.iconF} />
+                </span>
+                <a href="tel:+020-4730-4552" className={styles.phoneLink}>
+                  <span>Phone: +020-4730-4552</span>
+                </a>
+              </div>
+              <div className={styles.infoAndIcon}>
+                <span className={styles.iconSapan}>
+                  <FaMapMarkerAlt className={styles.iconF} />
+                </span>
+                <span>
+                  Office No. 7 to 12, 7th Floor,
+                  <br /> Tower B,Downtown City Vista,
+                  <br /> Survey Number 58/2, <br />
+                  Fountain Road,Kharadi <br />
+                  Pune MH 411014 IN
+                </span>
+              </div>
+              {/* <div className={styles.infoAndIcon2}>
+                <div className={styles.socialIconBack}>
+                  <FaLinkedinIn className={styles.socialIconF} />
+                </div>{" "}
+                <div className={styles.socialIconBack}>
+                  <FaFacebookF className={styles.socialIconF} />
+                </div>
+              </div> */}
+            </div>
+
+            <div className={styles.firstChild}>
+              <div className={styles.contactLink}>
+                <Link href="/support">Contact Us</Link>
+              </div>
+              <div className={styles.contactLink}>
+                <Link href="/lenderpage">Responsible Lending</Link>
+              </div>
+              <div className={styles.contactLink}>
+                <Link href="/acquisition_partners">Acquisition partners</Link>
+              </div>
+              <div
+                className={styles.contactLink}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                style={{ cursor: "pointer" }}
+              >
+                Sitemap
+              </div>
+            </div>
+
+            <div className={styles.firstChild}>
+              {/* <div className={styles.contactLink}>Legal</div> */}
+              <div className={styles.contactLink}>
+                <Link href="/TermAndCondition">Terms & Conditions</Link>
+              </div>
+              <div className={styles.contactLink}>
+                <Link href="/PrivacyAndPolicy">Privacy Policy</Link>
+              </div>
+              <div className={styles.contactLink}>
+                <Link href="/Grievance">Grievance Redressal</Link>
+              </div>
+              <div className={styles.contactLink}>
+                <a href="https://sachet.rbi.org.in/" rel="noopener noreferrer">
+                  RBI Sachet Portal
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* seconde */}
+          <div className={styles.fistFooterSection2}>
+            <div className={styles.firstChild2}></div>
+            <div className={styles.firstChild2}>
+              <div className={styles.infoAndIcon2}>
+                <div className={styles.socialIconBack}>
+                  <a
+                    href="https://www.linkedin.com/company/arysefin/about/?viewAsMember=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedinIn className={styles.socialIconF} />
+                  </a>
+                </div>{" "}
+                <div className={styles.socialIconBack}>
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61580792857656"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebookF className={styles.socialIconF} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* last */}
+          <div className={styles.lastChild}>
+            © 2025 Arysefin. All Rights Reserved.
+          </div>
+        </div>
+      </footer>
+      </div>
+    </>
+  );
 }
 
 export default Landerpage;

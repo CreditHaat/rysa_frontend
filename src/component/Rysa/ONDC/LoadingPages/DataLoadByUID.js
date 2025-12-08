@@ -1,7 +1,7 @@
 "use client";
 
 //here we will need to write the logic if select api is not hitted
-
+import { FiTag, FiClock } from "react-icons/fi";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useContext } from "react";
 import axios from "axios";
@@ -12,12 +12,12 @@ import useWebSocketONDCSelect from "../Websocket/useWebSocketONDCSelect";
 import UIDContext from "../../context/UIDContext";
 import OnSearchContext from "../context/OnSearchContext";
 // import LendersLoader from './LendersLoader';
-import LendersLoader from "../LoadingPages/Auto_start_timer";
+import LendersLoader from "./Auto_start_timer";
 // import clock from "./images/clock.png";
 // import clock from "../images/clock.png";
 import SelectedLenderContext from "../context/SelectedLenderContext";
 // import styles from "./styleondclist.module.css";
-import styles from "../styleondclist.module.css";
+import styles from "./NewDataLoadByUID.module.css";
 import { Outfit } from "next/font/google";
 import logo2 from "../images/AryseFin_logo.png";
 import clock from "../images/clock.png";
@@ -32,6 +32,10 @@ const outfit = Outfit({
 });
 
 const DataLoadByUID = () => {
+
+  const [noOfferLenders, setNoOfferLenders] = useState();
+  const [filteredNoOfferLenders, setFilteredNoOfferLenders] = useState([]);
+
   // const [hdbFound, setHdbFound] = useState(false);
   const [hdbRecord, setHdbRecord] = useState([]);
 
@@ -71,6 +75,23 @@ const DataLoadByUID = () => {
   // 8810550688
 
   useEffect(() => {
+    if (!noOfferLenders) return;
+
+    let filtered = [...noOfferLenders];
+
+    // Remove lenders present in confirmLenders
+    filtered = filtered.filter(noOffer =>
+      !confirmLenders.some(confirm =>
+        confirm?.context?.bpp_id === noOffer?.bppId
+      )
+    );
+
+    console.log("FINAL Filtered:", filtered);
+    setFilteredNoOfferLenders(filtered);
+
+  }, [noOfferLenders, confirmLenders]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       // console.log("⏰ Callback executed after 50 seconds!");
       // setLoading(false);
@@ -96,6 +117,7 @@ const DataLoadByUID = () => {
     }
     // callbacksLoadByMobileNumber();
     getHdbProduct(mobileNumber);
+    getAllProducts();
   }, []);
 
   const confirmLendersRef = useRef([]);
@@ -284,14 +306,14 @@ const DataLoadByUID = () => {
 
         setConfirmLenders((prev) => {
           const confirmPresent = prev.some(
-            (cf) => cf.context.bpp_id === parsedData.context.bpp_id
+            (cf) => cf?.context?.bpp_id === parsedData?.context?.bpp_id
           );
 
           if (confirmPresent) {
             // remove old and add new
             return [
               ...prev.filter(
-                (lender) => lender.context.bpp_id !== parsedData.context.bpp_id
+                (lender) => lender?.context?.bpp_id !== parsedData?.context?.bpp_id
               ),
               parsedData,
             ];
@@ -733,243 +755,501 @@ const DataLoadByUID = () => {
     }
   };
 
+  // value convert into commas function here
+  const formatINR = (value) => {
+    //change11
+    if (!value) return "N/A";
+    return new Intl.NumberFormat("en-IN", {
+      maximumFractionDigits: 0,
+    }).format(Number(value));
+  };
+
+  const getAllProducts = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_REACT_APP_BASE_URL}getAllOnProducts`);
+      if (response.status === 200) {
+        setNoOfferLenders(response.data);
+        console.log("The noOfferLenders that we got is : ", response.data);
+      }
+
+    } catch (error) {
+      console.log("error in getAllProducts");
+    }
+  }
   return (
     <>
-      {!loading ? (
-        <>
-          {/* <div className={styles.numberStart}>  */}
-          <div className={`${styles.numberStart} ${outfit}`}>
-            <div className={styles.numberOneDiv}>
-              {" "}
-              {/*header*/}
-              <div className={styles.headerLogo}>
-                <Image
-                  src={logo2}
-                  alt="NA"
-                  style={{
-                    alignContent: "center",
-                    width: "auto",
-                    height: "auto",
-                    // top: "",
-                  }}
-                  height={150}
-                  width={150}
-                />
-              </div>
-            </div>
-            {/*header end*/}
-            <div className={styles.numberTwoDiv}>
-              <div
-                className={`${outfit.className} ${styles.listpageContainer}`}
-              >
-                {/* <div> */}
-                {/* <div>
-                                    <p>WebSocket Connected: {isWebsocketConnectionEstablished ? 'Yes' : 'No'}</p>
-                                    <p>Searching: {isSearching ? 'Yes' : 'No'}</p>
-                                    <p>Has Searched: {hasSearched ? 'Yes' : 'No'}</p>
-                                    <p>Callbacks Received: {receivedCallbacks}</p>
-                                    <p>Total Lenders: {lenders.length}</p>
-                                    <button onClick={manualSearch} disabled={isSearching}>
-                                        {isSearching ? 'Searching...' : 'Manual Search'}
-                                    </button>
-                                </div> */}
-
-                {/* Display lenders data */}
-
-                {hdbRecord && hdbRecord.length > 0 && (
-                  <div className={styles.allnewcardContainer}>
-                    {hdbRecord.map((lender, index) => (
-                      <div
-                        className={styles.newcardContainer}
-                        key={lender.id || index}
-                      >
-                        {!lender.error && (
-                          <div className="newcard-container">
-                            <div className={styles.cardLogo}>
-                              <img
-                                src={lender.url || "/default-logo.png"} // fallback image
-                                alt="Lender Logo"
-                                width={100}
-                                height={40}
-                                style={{ objectFit: "contain" }}
-                              />
-                            </div>
-
-                            <div className={styles.cardBody}>
-                              <h1 className={styles.amount}>
-                                INR {lender.max_loanamount || "N/A"}
-                              </h1>
-                              <p className={styles.maxAmount}>Max. Amount</p>
-                            </div>
-
-                            <div className={styles.cardInfo}>
-                              <div className={styles.infoItem}>
-                                <Image
-                                  src={clock}
-                                  width={15}
-                                  height={15}
-                                  alt="clock"
-                                />
-                                {lender.maxTenure || "NA"}
-                              </div>
-                              <div className={styles.infoItem}>
-                                <Image
-                                  src={per}
-                                  alt="percentage image"
-                                  width={15}
-                                  height={15}
-                                />
-                                <p>Interest {lender.maxInterest || "N/A"}</p>
-                              </div>
-                            </div>
-
-                            <div>
-                              <button
-                                className={styles.cardButton}
-                                onClick={() => handleGetLoanClickForHdb(lender)}
-                              >
-                                Get Loan
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
+      {/* new start */}
+      <>
+        {!loading ? (
+          <>
+            {/* <div className={styles.numberStart}>  */}
+            <div className={`${styles.container} ${outfit}`}>
+              <div className={styles.mainHeaderPart}>
+                {/* header */}
+                <div className={styles.topchildren}>
+                  <div className={styles.logoContainer}>
+                    <Image
+                      src="/arysefin-dark logo.png"
+                      width={80}
+                      height={80}
+                      className={styles.logo2}
+                      alt="Aryse_Fin logo"
+                      priority
+                    />
                   </div>
-                )}
+                </div>
+              </div>
+              {/* =========== */}
+              <div className={styles.textDiv}>
+                <h3>Popular loans</h3>
+                <p>
+                  Here are some best loan providers suggested for you,
+                  <br /> please check according to your requirement.
+                </p>
+              </div>
+              {/*header end*/}
+              <div>
+                {/*delete*/}
+                <div>
+                  {hdbRecord && hdbRecord.length > 0 && (
+                    <div>
+                      {hdbRecord.map((lender, index) => (
+                        <div key={lender.id || index}>
+                          {!lender.error && (
+                            <div>
+                              {/* floder svg */}
+                              <div className={styles.svgDiv}>
+                                <svg
+                                  width="400"
+                                  height="350"
+                                  viewBox="0 0 400 350"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  {/* ✅ Step 1: Define gradient inside <defs> */}
+                                  <defs>
+                                    <linearGradient
+                                      id="folderGradient"
+                                      x1="0%"
+                                      y1="0%"
+                                      x2="0%"
+                                      y2="100%"
+                                    >
+                                      <stop offset="0%" stopColor="#FFFFFF" />{" "}
+                                      {/* Top color */}
+                                      <stop
+                                        offset="100%"
+                                        stopColor="#EFEAFF"
+                                      />{" "}
+                                      {/* Bottom color */}
+                                    </linearGradient>
+                                  </defs>
+                                  <path
+                                    d="M 10 22 
+           Q 10 2, 30 2 
+           L 120 2 
+           L 140 30 
+           L 210 30 
+           Q 220 30, 230 30 
+           L 360 30
+           Q 380 30, 380 50
+           L 380 250
+           Q 380 270, 360 270 
+           L 30 270 
+           Q 10 270, 10 250 
+           Z"
+                                    fill="url(#folderGradient)"
+                                    // fillOpacity="0.6"
+                                    // fill="white"
+                                    // stroke="black"
+                                    // stroke-width="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    // strokeWidth="2.5"
+                                  />
+                                </svg>
+                              </div>
 
-                {confirmLenders.length > 0 ? (
-                  <>
-                    <div className={styles.allnewcardContainer}>
-                      {confirmLenders
-                        .filter(
-                          (lender) =>
-                            lender.productName?.toLowerCase() !== "hdb"
-                        )
-                        .map((lender, index) => (
-                          <div className={styles.newcardContainer} key={index}>
-                            {!lender.error ? (
-                              <>
-                                <div className="newcard-container">
-                                  {/* {!lender.error?(<> */}
+                              <div className={styles.lenderInfo}>
+                                {/* card image */}
+                                <div className={styles.cardLogo}>
+                                  <img
+                                    src={lender.logo || "/default-logo.png"} // fallback image
+                                    // src="/ondc_registered_logo.png"
+                                    alt="Lender Logo"
+                                    width={100}
+                                    height={40}
+                                    style={{ objectFit: "contain" }}
+                                  />
+                                </div>
 
-                                  <div className={styles.cardLogo}>
-                                    {/* <Image
-                                                    src={lender?.message?.catalog?.providers?.[0]?.descriptor?.images?.[0]?.url || clock}
-                                                    // src={clock}
-                                                    alt="Logo"
-                                                    width={100}
-                                                    height={40}
-                                                    className="logo-image"
-                                                    style={{ width: "auto" }}
-                                                    /> */}
-                                    <img
-                                      // src={lender?.message?.catalog?.providers?.[0]?.descriptor?.images?.[0]?.url}
-                                      src={
-                                        lender?.message?.order?.provider
-                                          ?.descriptor?.images?.[0]?.url
-                                      }
-                                      //   alt="Lender Logo"
-                                      alt={
-                                        lender?.message?.order?.provider
-                                          ?.descriptor?.name || "Lender Logo"
-                                      }
-                                      width={100}
-                                      height={40}
-                                      //   onError={(e) => { e.currentTarget.src = clock }}
-                                      style={{ objectFit: "contain" }}
-                                    />{" "}
-                                    {/* Display image here */}
-                                  </div>
-                                  {/* <div className="subcardheader">
-                                                    <p className="card-subtitle">{lender.product}</p>
-                                                    </div> */}
-                                  <div className={styles.cardBody}>
-                                    {/* <h1 className={styles.amount}>INR {lender?.message?.catalog?.providers?.[0]?.items?.[0]?.tags?.[0]?.list?.[5]?.value || "N/A"} */}
+                                {/* card amount */}
+                                <div className={styles.amount}>
+                                  {/* <h1> */}
+                                    {/* ₹ */}
+                                    {/* INR {lender.max_loanamount || "N/A"} */}
+                                  {/* </h1> */}
+                                  <h1> {/*change11*/}
+                                    ₹ {formatINR(lender.max_loanamount)}
+                                  </h1>
+                                  <p>Max. Amount</p>
+                                </div>
 
-                                    {/* <h1 className={styles.amount}>INR {lender?.message?.order?.items?.[0]?.price?.value || "N/A"} */}
-                                    <h1 className={styles.amount}>
-                                      INR{" "}
-                                      {lender?.message?.order?.quote
-                                        ?.breakup?.[0]?.price?.value || "N/A"}
-                                    </h1>
-                                    <p className={styles.maxAmount}>
-                                      Max. Amount
-                                    </p>
+                                {/* time & interes*/}
+                                <div className={styles.timeAndIntrest}>
+                                  <div className={styles.icontAndText}>
+                                    <FiClock className={styles.cardIcon} />
+                                    <span>5 months</span>
                                   </div>
-                                  <div className={styles.cardInfo}>
-                                    <div className={styles.infoItem}>
-                                      {/* <span role="img" aria-label="clock">⏱</span>{lender.description} */}
-                                      <span role="img" aria-label="clock">
-                                        <Image
-                                          src={clock}
-                                          width={15}
-                                          height={15}
-                                          alt="clock"
-                                        />
-                                      </span>
-                                      {lender?.message?.order?.items?.[0]
-                                        ?.tags?.[0]?.list?.[1]?.value || "NA"}
-                                    </div>
-                                    <div className={styles.infoItem}>
-                                      {/* <span role="img" aria-label="interest">💰</span>{lender.interest} */}
-                                      {/* <span role="img" aria-label="interest"></span> */}
-                                      <span role="img" aria-label="percentage">
-                                        <Image
-                                          src={per}
-                                          alt="percentage image"
-                                          width={15}
-                                          height={15}
-                                        />
-                                      </span>
-                                      {
-                                        /* {lender.interest} */ <p>
-                                          Interest{" "}
-                                          {
-                                            lender?.message?.order?.items[0]
-                                              ?.tags[0]?.list[0]?.value
-                                          }
-                                        </p>
-                                      }
-                                    </div>
+
+                                  <div className={styles.icontAndText}>
+                                    <FiTag className={styles.cardIcon} />
+                                    <span>
+                                      Rate of interest{" "}
+                                      {lender.maxInterest || "N/A"}
+                                    </span>
                                   </div>
+                                </div>
+                                {/* button */}
+                                <button
+                                  className={styles.btn}
+                                  onClick={() =>
+                                    handleGetLoanClickForHdb(lender)
+                                  }
+                                >
+                                  {" "}
+                                  Get loan
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {confirmLenders.length > 0 ? (
+                    <>
+                      <div className={styles.allnewcardContainer}>
+                        {confirmLenders
+                          .filter(
+                            (lender) =>
+                              lender.productName?.toLowerCase() !== "hdb"
+                          )
+                          .map((lender, index) => (
+                            <div
+                              className={styles.newcardContainer}
+                              key={index}
+                            >
+                              {!lender.error ? (
+                                <>
                                   <div>
-                                    {
+                                    {/* floder svg */}
+                                    <div className={styles.svgDiv}>
+                                      <svg
+                                        width="400"
+                                        height="350"
+                                        viewBox="0 0 400 350"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        {/* ✅ Step 1: Define gradient inside <defs> */}
+                                        <defs>
+                                          <linearGradient
+                                            id="folderGradient"
+                                            x1="0%"
+                                            y1="0%"
+                                            x2="0%"
+                                            y2="100%"
+                                          >
+                                            <stop
+                                              offset="0%"
+                                              stopColor="#FFFFFF"
+                                            />{" "}
+                                            {/* Top color */}
+                                            <stop
+                                              offset="100%"
+                                              stopColor="#EFEAFF"
+                                            />{" "}
+                                            {/* Bottom color */}
+                                          </linearGradient>
+                                        </defs>
+                                        <path
+                                          d="M 10 22 
+           Q 10 2, 30 2 
+           L 120 2 
+           L 140 30 
+           L 210 30 
+           Q 220 30, 230 30 
+           L 360 30
+           Q 380 30, 380 50
+           L 380 250
+           Q 380 270, 360 270 
+           L 30 270 
+           Q 10 270, 10 250 
+           Z"
+                                          fill="url(#folderGradient)"
+                                          // fillOpacity="0.6"
+                                          // fill="white"
+                                          // stroke="black"
+                                          // stroke-width="2.5"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          // strokeWidth="2.5"
+                                        />
+                                      </svg>
+                                    </div>
+
+                                    <div className={styles.lenderInfo}>
+                                      {/* card image */}
+                                      <div className={styles.cardLogo}>
+                                        <img
+                                          //   src={lender.url || "/default-logo.png"} // fallback image
+                                          // // src="/ondc_registered_logo.png"
+                                          // alt="Lender Logo"
+                                          src={
+                                            lender?.message?.order?.provider
+                                              ?.descriptor?.images?.[0]?.url || "/default-logo.png"
+                                          }
+                                          //   alt="Lender Logo"
+                                          alt={
+                                            lender?.message?.order?.provider
+                                              ?.descriptor?.name ||
+                                            "Lender Logo"
+                                          }
+                                          width={100}
+                                          height={40}
+                                          style={{ objectFit: "contain" }}
+                                        />
+                                      </div>
+
+                                      {/* card amount */}
+                                      <div className={styles.amount}>
+                                        {/* <h1> */}
+                                          {/* ₹ */}
+                                          {/* INR {lender.max_loanamount || "N/A"} */}
+                                          {/* INR{" "} */}
+                                          {/* {lender?.message?.order?.quote */}
+                                            {/* ?.breakup?.[0]?.price?.value || */}
+                                            {/* "N/A"} */}
+                                        {/* </h1> */}
+                                        <h1>
+                                          {" "}
+                                          {/*change11*/}
+                                          ₹{" "}
+                                          {formatINR(
+                                            lender?.message?.order?.quote
+                                              ?.breakup?.[0]?.price?.value
+                                          )}
+                                        </h1>
+                                        <p>Max. Amount</p>
+                                      </div>
+
+                                      {/* time & interes*/}
+                                      <div className={styles.timeAndIntrest}>
+                                        <div className={styles.icontAndText}>
+                                          <FiClock
+                                            className={styles.cardIcon}
+                                          />
+                                          <span>5 months</span>
+                                        </div>
+
+                                        <div className={styles.icontAndText}>
+                                          <FiTag className={styles.cardIcon} />
+                                          <span>
+                                            Rate of interest{" "}
+                                            {
+                                              lender?.message?.order?.items[0]
+                                                ?.tags[0]?.list[0]?.value
+                                            }
+                                          </span>
+                                        </div>
+                                      </div>
+                                      {/* button */}
                                       <button
-                                        className={styles.cardButton}
+                                        className={styles.btn}
                                         onClick={() =>
                                           handleGetLoanClick(lender)
                                         }
                                       >
-                                        Get Loan
+                                        {" "}
+                                        Get loan
                                       </button>
-                                    }
+                                    </div>
                                   </div>
-                                </div>
-                              </>
-                            ) : null}
-                          </div>
-                        ))}
-                    </div>
-                  </>
-                ) : (
-                  // <div>Finding the lenders suitable for you...</div>
-                  //here we will show the credithaat lender to the lender i.e if no lender is present for that user
+                                </>
+                              ) : null}
+                            </div>
+                          ))}
+                      </div>
+                    </>
+                  ) : (
+                    // <div>Finding the lenders suitable for you...</div>
+                    //here we will show the credithaat lender to the lender i.e if no lender is present for that user
 
-                  <></>
-                )}
-                {/* </div> */}
+                    <></>
+                  )}
+                  {/* </div> */}
+
+                  {filteredNoOfferLenders && filteredNoOfferLenders.length ? (
+
+                    <>
+                      <div
+                        style={{
+                          textAlign: "center",
+                          border: "1px solid black",
+                          padding: "10px 15px",
+                          margin: "20px auto",
+                          width: "90%",
+                          borderRadius: "8px",
+                          fontWeight: "600",
+                          fontSize: "18px",
+                        }}
+                      >
+                        Unmatched Lenders
+                      </div>
+                      <div className={styles.allnewcardContainer}>
+                        {filteredNoOfferLenders.filter((lender) => lender?.productName?.toLowerCase() !== hdbRecord?.[0]?.productName?.toLowerCase())
+                          // .filter(
+                          //   (lender) =>
+                          //     lender.productName?.toLowerCase() !== "hdb"
+                          // )
+                          .map((lender, index) => (
+                            <div
+                              className={styles.newcardContainer}
+                              key={index}
+                            >
+                              {!lender.error ? (
+                                <>
+                                  <div>
+                                    {/* floder svg */}
+                                    <div className={styles.svgDiv}>
+                                      <svg
+                                        width="400"
+                                        height="350"
+                                        viewBox="0 0 400 350"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        {/* ✅ Step 1: Define gradient inside <defs> */}
+                                        <defs>
+                                          <linearGradient
+                                            id="folderGradient"
+                                            x1="0%"
+                                            y1="0%"
+                                            x2="0%"
+                                            y2="100%"
+                                          >
+                                            <stop offset="0%" stopColor="#FFFFFF" />{" "}
+                                            {/* Top color */}
+                                            <stop
+                                              offset="100%"
+                                              stopColor="#EFEAFF"
+                                            />{" "}
+                                            {/* Bottom color */}
+                                          </linearGradient>
+                                        </defs>
+                                        <path
+                                          d="M 10 22 
+                                            Q 10 2, 30 2 
+                                            L 120 2 
+                                            L 140 30 
+                                            L 210 30 
+                                            Q 220 30, 230 30 
+                                            L 360 30
+                                            Q 380 30, 380 50
+                                            L 380 250
+                                            Q 380 270, 360 270 
+                                            L 30 270 
+                                            Q 10 270, 10 250 
+                                            Z"
+                                          fill="url(#folderGradient)"
+                                          // fillOpacity="0.6"
+                                          // fill="white"
+                                          // stroke="black"
+                                          // stroke-width="2.5"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        // strokeWidth="2.5"
+                                        />
+                                      </svg>
+                                    </div>
+
+                                    <div className={styles.lenderInfo}>
+                                      {/* card image */}
+                                      <div className={styles.cardLogo}>
+                                        <img
+                                          src={lender.logo || "/default-logo.png"} // fallback image
+                                          // src="/ondc_registered_logo.png"
+                                          // src={lender.url}
+                                          alt="Lender Logo"
+                                          width={100}
+                                          height={40}
+                                          style={{ objectFit: "contain" }}
+                                        />
+                                      </div>
+
+                                      {/* card amount */}
+                                      <div className={styles.amount} style={{ filter: "blur(2px)" }}>
+                                        {/* <h1> */}
+                                        {/* ₹ */}
+                                        {/* INR {lender.max_loanamount || "N/A"} */}
+                                        {/* </h1> */}
+                                        <h1> {/*change11*/}
+                                          ₹ {formatINR(lender.max_loanamount)}
+                                        </h1>
+                                        <p>Max. Amount</p>
+                                      </div>
+
+                                      {/* time & interes*/}
+                                      <div className={styles.timeAndIntrest} style={{ filter: "blur(2px)" }}>
+                                        <div className={styles.icontAndText}>
+                                          <FiClock className={styles.cardIcon} />
+                                          <span>5 months</span>
+                                        </div>
+
+                                        <div className={styles.icontAndText} style={{ filter: "blur(2px)" }}>
+                                          <FiTag className={styles.cardIcon} />
+                                          <span>
+                                            Rate of interest{" "}
+                                            {lender.maxInterest || "N/A"}
+                                          </span>
+                                        </div>
+                                      </div>
+                                      {/* button */}
+                                      {/* <button
+                                          className={styles.btn}
+                                          onClick={() =>
+                                            handleGetLoanClickForHdb(lender)
+                                          }
+                                        >
+                                          {" "}
+                                          Get loan
+                                        </button> */}
+                                    </div>
+                                  </div>
+                                </>
+                              ) : null}
+                            </div>
+                          ))}
+                      </div>
+                    </>
+                  ) : (
+                    // <div>Finding the lenders suitable for you...</div>
+                    //here we will show the credithaat lender to the lender i.e if no lender is present for that user
+
+                    <></>
+                  )}
+
+                </div>
               </div>
+              {/*secondend*/}
             </div>
-            {/*secondend*/}
-          </div>
-          {/*numberStart div*/}
-        </>
-      ) : (
-        <>
-          <LendersLoader />
-        </>
-      )}
+            {/*numberStart div*/}
+          </>
+        ) : (
+          <>
+            <LendersLoader />
+          </>
+        )}
+      </>
     </>
   );
 };

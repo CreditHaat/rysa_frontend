@@ -1,152 +1,127 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Clock } from "lucide-react";
-import { Outfit } from "next/font/google";
+import React, { useState, useEffect } from 'react';
+import styles from './TimerAnimationPage.module.css';
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-});const AutoStartTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(60);
-  const [isCompleted, setIsCompleted] = useState(false);
+const AnimationLoadingpage = () => {
+  const [seconds, setSeconds] = useState(60);
+  const [showFact, setShowFact] = useState(false);
+  const [showFactText, setShowFactText] = useState(false);
 
   useEffect(() => {
-    // Timer automatically starts when component mounts
+    // Timer countdown - 60 seconds to 0
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
-          setIsCompleted(true);
+      setSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
           return 0;
         }
-        return prevTime - 1;
+        return prev - 1;
       });
     }, 1000);
 
-    return () => clearInterval(timer);
+    // Show fun fact after 5 seconds (bottom to top animation)
+    const factTimer = setTimeout(() => {
+      setShowFact(true);
+    }, 5000);
+
+    // Show paragraph text 2 seconds after fun fact title
+    const factTextTimer = setTimeout(() => {
+      setShowFactText(true);
+    }, 7000); // 5 seconds + 2 seconds = 7 seconds
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(factTimer);
+      clearTimeout(factTextTimer);
+    };
   }, []);
 
-  const getCircleProgress = () => {
-    const progress = ((60 - timeLeft) / 60) * 283; // 283 is circumference
-    return progress;
-  };
+  // Calculate rotation angle for the sun (clockwise: 0-360 degrees)
+  const sunRotation = ((60 - seconds) / 60) * 360;
 
-  const getTimerColor = () => {
-    if (isCompleted) return "text-green-500";
-    if (timeLeft <= 10) return "text-green-500";
-    if (timeLeft <= 20) return "text-green-500";
-    return "text-red-500";
-  };
-
-  const getBackgroundColor = () => {
-    if (isCompleted) return "bg-green-50 border-green-200";
-    if (timeLeft <= 10) return "bg-green-50 border-green-200";
-    if (timeLeft <= 20) return "bg-green-50 border-green-200";
-    return "bg-red-50 border-red-200";
-  };
+  // Calculate stroke dash offset for circular progress (clockwise)
+  const radius = 90;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference * (seconds / 60);
 
   return (
-    // <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-    <div className={`min-h-screen bg-gray-100 flex items-center justify-center p-4 ${outfit}`}>
-      <div
-        className={`max-w-sm w-full ${getBackgroundColor()} rounded-xl shadow-lg p-6 transition-all duration-300 border-2`}
-      >
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center mb-2">
-            <Clock className="w-5 h-5 text-gray-600 mr-2" />
-            <h2 className="text-lg font-semibold text-gray-800">Please Wait</h2>
-          </div>
-          <p className="text-gray-600 text-sm">
-            {isCompleted
-              ? "You can proceed now!"
-              : "Processing your request..."}
-          </p>
-        </div>
+    <div className={styles.loaderContainer}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Please wait</h1>
+        <p className={styles.subtitle}>
+          We are processing your
+          <br />
+          best investment in you...
+        </p>
 
-        {/* Circular Timer */}
-        <div className="relative flex items-center justify-center mb-6">
-          <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
-            {/* Background circle */}
-            <circle
-              cx="50"
-              cy="50"
-              r="45"
-              stroke="currentColor"
-              strokeWidth="3"
-              fill="none"
-              className="text-gray-300"
-            />
-            {/* Progress circle */}
-            <circle
-              cx="50"
-              cy="50"
-              r="45"
-              stroke="currentColor"
-              strokeWidth="6"
-              fill="none"
-              className={getTimerColor()}
-              strokeLinecap="round"
-              strokeDasharray="283"
-              strokeDashoffset={283 - getCircleProgress()}
-              style={{
-                transition: "stroke-dashoffset 1s linear",
-              }}
-            />
-          </svg>
+        <div className={styles.timerWrapper}>
+          {/* Purple gradient background with pulse animation */}
+          <div className={styles.purpleGlow}></div>
+          
+          {/* Rotating sun circle - moves clockwise */}
+          <div 
+            className={styles.sunGlow} 
+            style={{ 
+              transform: `rotate(${sunRotation}deg)`,
+              transition: 'transform 1s linear'
+            }}
+          ></div>
 
-          {/* Time display */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div
-                className={`text-2xl font-bold ${getTimerColor()} transition-colors duration-300`}
-              >
-                {timeLeft}
-              </div>
-              <div className="text-xs text-gray-500 mt-1">
-                {isCompleted ? "Done" : "seconds"}
-              </div>
+          {/* Timer circle with animated border (clockwise) */}
+          <div className={styles.timerCircle}>
+            <svg className={styles.progressRing} width="200" height="200">
+              {/* Background circle - static */}
+              <circle
+                stroke="rgba(255, 255, 255, 0.3)"
+                strokeWidth="2"
+                fill="transparent"
+                r={radius}
+                cx="100"
+                cy="100"
+              />
+              {/* Progress circle - moves clockwise */}
+              <circle
+                className={styles.progressRingCircle}
+                stroke="white"
+                strokeWidth="3"
+                fill="transparent"
+                r={radius}
+                cx="100"
+                cy="100"
+                style={{
+                  strokeDasharray: circumference,
+                  strokeDashoffset: strokeDashoffset,
+                }}
+              />
+            </svg>
+            <div className={styles.timerText}>
+              <div className={styles.secondsNumber}>{seconds}</div>
+              <div className={styles.secondsLabel}>seconds</div>
             </div>
           </div>
         </div>
 
-        {/* Status Message */}
-        <div className="text-center">
-          {isCompleted ? (
-            <div className="p-3 bg-green-100 border border-green-200 rounded-lg">
-              <p className="text-green-700 font-medium text-sm">
-                Finding best offers for you!
-              </p>
-            </div>
-          ) : (
-            <div className="p-3 bg-gray-100 border border-gray-200 rounded-lg">
-              <p className="text-gray-600 text-sm">
-                {timeLeft > 20
-                  ? "Please wait..."
-                  : timeLeft > 10
-                  ? "Almost ready..."
-                  : "Just a moment..."}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Progress Bar (Alternative visual) */}
-        {/* <div className="mt-4">
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div
-              className={`h-2 rounded-full transition-all duration-1000 ${
-                isCompleted ? 'bg-green-500' : 
-                timeLeft <= 10 ? 'bg-red-500' : 
-                timeLeft <= 20 ? 'bg-yellow-500' : 'bg-blue-500'
-              }`}
-              style={{ width: `${((30 - timeLeft) / 30) * 100}%` }}
-            />
+        {/* Fun fact sliding from bottom to top */}
+        <div>
+          <div className={`${styles.factContainer} ${showFact ? styles.factVisible : ''}`}>
+            <p className={styles.factTitle}>Here is a fun fact:</p>
           </div>
-        </div> */}
+          
+          <div className={`${styles.factContainer} ${showFactText ? styles.factVisible : ''}`}>
+            <p className={styles.factText}>
+              <span>A Red Door Can Mean a Paid-Off Mortgage:</span>
+              <br />
+              In Scotland, a tradition exists where painting
+              <br />
+              one&#39;s front door red signifies that the
+              <br />
+              homeowner has fully paid off their mortgage.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AutoStartTimer;
+export default AnimationLoadingpage;
